@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+
+	
+
+	<b hide="true" >
+		<ei width="1" min="0" max="800" />
+
+		<events width="1" min="0" max="2" />
+		<pt width="0.005" min="0.1" max="10.0" />
+		<bbc nBins="200" min="0" max="5000"/>
+		<zdc width="1" min="0" max="100"/>
+		<nTracks width="1" min="0" max="1450"/>
+		<vtxPerp width=".01" min="-4" max="4"/>
+		<vtx width="1" min="-100" max="100"/>
+		<vtxR width=".01" min="0" max="5"/>
+		<dca width=".01" min="-6" max="6"/>
+		<dcaMag width=".01" min="0" max="15"/>
+		<zVertex width="1" min="-100" max="100"/>
+		<eta width=".01" min="-3" max="3"/>
+		<tofMult width="2" min="0" max="1500" />
+		<refMult width="1" min="0" max="400" />
+		
+		<q width="0.005" min="0.1" max="2.1" />
+	</b>
+
+	<kong>
+		<histograms>
+			<Histo name="events" title="#Event" xBins="b.ei" yBins="b.events" />
+			<Histo name="eventsZ" title="#Events vs. Z" xBins="b.zVertex" />
+			<Histo name="bbc" title="BBC" xBins="b.ei" yBins="b.bbc" />
+			<Histo name="zdc" title="ZDC" xBins="b.ei" yBins="b.zdc" />
+		</histograms>
+	</kong>
+</config>
