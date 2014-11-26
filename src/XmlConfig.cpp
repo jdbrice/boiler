@@ -106,7 +106,13 @@ namespace jdb{
 		return ret;
 	}
 
-	
+	string XmlConfig::getString( string nodePath, string def ){
+		string snp = sanitize( nodePath );
+		if ( nodeExists[ snp ] && NULL != data[ snp ]){
+			return data[ snp ];
+		}
+		return def;
+	}
 
 	vector<string> XmlConfig::getStringVector( string nodePath ){
 		string value = getString( nodePath );

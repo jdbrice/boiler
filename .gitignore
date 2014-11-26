@@ -1,0 +1,3 @@
+#object types
+*.o
+/src/dictionary.*

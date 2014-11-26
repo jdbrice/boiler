@@ -13,7 +13,7 @@
 
 #pragma link C++ class jdb::ChainLoader-;
 #pragma link C++ class jdb::HistoBins-;
-#pragma link C++ class jdb::HistoBook+;
+#pragma link C++ class jdb::HistoBook-;
 
 
 #pragma link C++ defined_in "include/StringUtils.h";

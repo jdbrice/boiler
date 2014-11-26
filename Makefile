@@ -80,7 +80,7 @@ $(srcDir)/%$(objSuf): $(srcDir)/%$(srcSuf)
 	$(CXX) $(includes) $(CXXFLAGS) -c $< -o $@
 
 $(DictionaryObj): $(srcDir)/$(Dictionary).$(srcSuf)
-	$(CXX)  $(includes) -c $< -o $@
+	$(CXX)  $(includes) $(CXXFLAGS) -c $< -o $@
 	
 
 dll: $(jdbLibSo)

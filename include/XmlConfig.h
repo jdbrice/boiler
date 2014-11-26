@@ -93,13 +93,7 @@ namespace jdb {
 
 		void makeMap( TXMLNode * parent, string cp = "" );
 
-		inline string getString( string nodePath, string def = "" ){
-			string snp = sanitize( nodePath );
-			if ( nodeExists[ snp ] && NULL != data[ snp ]){
-				return data[ snp ];
-			}
-			return def;
-		}
+		string getString( string nodePath, string def = "" );
 		vector<string> getStringVector( string nodePath );
 		int getInt( string nodePath, int def = 0 );
 		vector<int> getIntVector( string nodePath );
