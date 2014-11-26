@@ -1,8 +1,8 @@
 
 
-void test( ){
+void unitTest_XmlConfig( ){
 
-	gSystem->Load( "lib/libJDB.so" );
+	gSystem->Load( "../lib/libJDB.so" );
 
 	using namespace jdb;
 	

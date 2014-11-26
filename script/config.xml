@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
 
-	
 
-	<b hide="true" >
+	<bins hide="true" >
 		<ei width="1" min="0" max="800" />
 
 		<events width="1" min="0" max="2" />
@@ -20,16 +19,15 @@
 		<eta width=".01" min="-3" max="3"/>
 		<tofMult width="2" min="0" max="1500" />
 		<refMult width="1" min="0" max="400" />
-		
 		<q width="0.005" min="0.1" max="2.1" />
-	</b>
+	</bins>
 
-	<kong>
-		<histograms>
-			<Histo name="events" title="#Event" xBins="b.ei" yBins="b.events" />
-			<Histo name="eventsZ" title="#Events vs. Z" xBins="b.zVertex" />
-			<Histo name="bbc" title="BBC" xBins="b.ei" yBins="b.bbc" />
-			<Histo name="zdc" title="ZDC" xBins="b.ei" yBins="b.zdc" />
-		</histograms>
-	</kong>
+	
+	<histograms>
+		<Histo name="events" title="#Event" xBins="bins.ei" yBins="bins.events" />
+		<Histo name="eventsZ" title="#Events vs. Z" xBins="bins.zVertex" />
+		<Histo name="bbc" title="BBC" xBins="bins.ei" yBins="bins.bbc" />
+		<Histo name="zdc" title="ZDC" xBins="bins.ei" yBins="bins.zdc" />
+	</histograms>
+	
 </config>
