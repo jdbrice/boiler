@@ -16,7 +16,7 @@
 #pragma link C++ class jdb::HistoBook-;
 
 
-#pragma link C++ defined_in "include/StringUtils.h";
-#pragma link C++ defined_in "include/Utils.h";
+#pragma link C++ defined_in "include/jdb/StringUtils.h";
+#pragma link C++ defined_in "include/jdb/Utils.h";
 
 #endif

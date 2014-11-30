@@ -10,10 +10,16 @@ void unitTest_XmlConfig( ){
 	XmlConfig cfg( "config.xml" );
 
 
-	HistoBook * book = new HistoBook( "out.root", &cfg );
+	vector<string> cs = cfg.getNodes( "unitTest_XmlConfig.manySame.Histo:name");
+	
+	for ( int i = 0; i <cs.size(); i++ ){
+		cout << cs[ i ] << endl;
+	}
 
-	book->makeAll( "kong.histograms" );
-
-	delete book;
-
+	cout << "\nSearching for nodes where :name=h1" << endl;
+	cs = cfg.getNodes( "unitTest_XmlConfig.manySame.Histo:name = h1");
+	
+	for ( int i = 0; i <cs.size(); i++ ){
+		cout << cs[ i ] << endl;
+	}
 }

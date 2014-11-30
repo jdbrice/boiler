@@ -1,6 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
 
+	<unitTest_XmlConfig>
+		<basic>
+			<var1>Hello World</var1>
+			<!-- get an int -->
+			<var2>125</var2>
+			<!-- get a double var -->
+			<var3>125.123</var3>
+			<!-- parses "true" and "false" can be any case -->
+			<var4>TrUe</var4>
+		</basic>
+		<withAttr>
+			<!-- Attributes can store any basic type also -->
+			<!-- nodes can be self-closing with the /> -->
+			<vars a1="I am a string" a2="12" a3="25.6" a4="false" />
+		</withAttr>
+
+		<manySame>
+			<Histo name="h1" title="# Events" nBins="100" minX="10" maxX="100" />
+			<Histo name="h2" title="Pt" nBins="100" minX="0" maxX="10" />
+			<Histo name="h3" title="#eta" widthX=".05" minX="-4" maxX="4" />
+
+			<Histo  title="#eta" widthX=".05" minX="-4" maxX="4" />
+			<Histo name="h5"  title="#eta" widthX=".05" minX="-4" maxX="4" />
+		</manySame>
+		
+
+	</unitTest_XmlConfig>
+
 
 	<bins hide="true" >
 		<ei width="1" min="0" max="800" />

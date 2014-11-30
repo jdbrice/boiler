@@ -172,6 +172,8 @@ namespace jdb{
 		}*/
 		TH1* get( string name, string sdir = "" );
 
+		TH1 * operator[]( string name );
+
 		/*jdoc{
 			"name" : "TH2* get2D( string name, string sdir = \"\" )",
 			"params" : [
@@ -216,17 +218,17 @@ namespace jdb{
 			"desc" : "This method checks for existance unlike using get(...)->Fill(...). If the histo DNE then an error is reported through the Logger and execution continues."
 		}*/
 		void fill( string name, double bin, double weight = 1);
-		void make1F( string name, string title, uint nBins, double low, double hi );
-		void make1D( string name, string title, uint nBins, double low, double hi );
-		void make1D( string name, string title, uint nBins, const Double_t* bins );
+		void make1F( string name, string title, int nBins, double low, double hi );
+		void make1D( string name, string title, int nBins, double low, double hi );
+		void make1D( string name, string title, int nBins, const Double_t* bins );
 		void make2D( 	string name, string title, 
-						uint nBinsX, double lowX, double hiX, uint nBinsY, double lowY, double hiY );
+						int nBinsX, double lowX, double hiX, int nBinsY, double lowY, double hiY );
 		void make2D( 	string name, string title, 
-						uint nBinsX, const Double_t* xBins, uint nBinsY, double lowY, double hiY );
+						int nBinsX, const Double_t* xBins, int nBinsY, double lowY, double hiY );
 		void make2D( 	string name, string title, 
-						uint nBinsX, double x1, double x2, uint nBinsY, const Double_t* yBins );
+						int nBinsX, double x1, double x2, int nBinsY, const Double_t* yBins );
 		void make2D( 	string name, string title, 
-						uint nBinsX, const Double_t* xBins, uint nBinsY, const Double_t*yBins );
+						int nBinsX, const Double_t* xBins, int nBinsY, const Double_t*yBins );
 		
 		/*jdoc{
 			"name" : "void make( XmlConfig * config, string nodeName )",

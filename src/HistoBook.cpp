@@ -317,7 +317,7 @@ namespace jdb{
 		}
 	}	//clone
 
-	void HistoBook::make1F( string name, string title, uint nBins, double low, double hi  ){
+	void HistoBook::make1F( string name, string title, int nBins, double low, double hi  ){
 		logger->info(__FUNCTION__) << "TH1F( " << name << ", " << title << ", " << nBins << ", " << low << ", " << hi << " )" << endl;
 		TH1F* h;
 		h = new TH1F( name.c_str(), title.c_str(), nBins, low, hi );
@@ -325,7 +325,7 @@ namespace jdb{
 		this->add( name, h );
 	}	//make1F
 
-	void HistoBook::make1D( string name, string title, uint nBins, double low, double hi  ){
+	void HistoBook::make1D( string name, string title, int nBins, double low, double hi  ){
 
 		logger->info(__FUNCTION__) << "TH1D( " << name << ", " << title << ", " << nBins << ", " << low << ", " << hi << " )" << endl;
 		TH1D* h;
@@ -334,7 +334,7 @@ namespace jdb{
 		this->add( name, h );
 	}	//make1D
 
-	void HistoBook::make1D( string name, string title, uint nBins, const Double_t* bins  ){
+	void HistoBook::make1D( string name, string title, int nBins, const Double_t* bins  ){
 		logger->info(__FUNCTION__) << "TH1D( " << name << ", " << title << ", " << nBins << ", " << "[]" <<  " )" << endl;
 		TH1D* h;
 		h = new TH1D( name.c_str(), title.c_str(), nBins, bins );
@@ -342,7 +342,7 @@ namespace jdb{
 		this->add( name, h );
 	}	//make1D
 
-	void HistoBook::make2D( string name, string title, uint nBinsX, double lowX, double hiX, uint nBinsY, double lowY, double hiY ){
+	void HistoBook::make2D( string name, string title, int nBinsX, double lowX, double hiX, int nBinsY, double lowY, double hiY ){
 
 		logger->info(__FUNCTION__) << "TH2D( " << name << ", " << title << ", " << nBinsX << ", " << lowX << ", " << hiX << ", " << nBinsY << ", " << lowY << ", " << hiY << " )" << endl;
 		TH2D* h;
@@ -352,7 +352,7 @@ namespace jdb{
 		this->add( name, h );
 	}	//make2D
 
-	void HistoBook::make2D( string name, string title, uint nBinsX, const Double_t* xBins, uint nBinsY, double lowY, double hiY ){
+	void HistoBook::make2D( string name, string title, int nBinsX, const Double_t* xBins, int nBinsY, double lowY, double hiY ){
 		logger->info(__FUNCTION__) << "TH2D( " << name << ", " << title << ", " << nBinsX << ", " << "[]" << ", " << nBinsY << ", " << lowY << ", " << hiY << " )" << endl;
 		TH2D* h;
 		h = new TH2D( name.c_str(), title.c_str(), nBinsX, xBins, nBinsY, lowY, hiY );
@@ -360,7 +360,7 @@ namespace jdb{
 		this->add( name, h );
 	}	//make2D
 
-	void HistoBook::make2D( string name, string title, uint nBinsX, double lowX, double hiX, uint nBinsY, const Double_t* yBins  ){
+	void HistoBook::make2D( string name, string title, int nBinsX, double lowX, double hiX, int nBinsY, const Double_t* yBins  ){
 		logger->info(__FUNCTION__) << "TH2D( " << name << ", " << title << ", " << nBinsX << ", " << lowX << ", " << hiX << ", " << nBinsY <<  "[] )" << endl;
 		TH2D* h;
 		h = new TH2D( name.c_str(), title.c_str(), nBinsX, lowX, hiX, nBinsY, yBins );
@@ -368,13 +368,14 @@ namespace jdb{
 		this->add( name, h );
 	}	//make2D
 
-	void HistoBook::make2D( string name, string title, uint nBinsX, const Double_t* xBins, uint nBinsY, const Double_t * yBins ){
+	void HistoBook::make2D( string name, string title, int nBinsX, const Double_t* xBins, int nBinsY, const Double_t * yBins ){
 		logger->info(__FUNCTION__) << "TH2D( " << name << ", " << title << ", " << nBinsX << ", " << "[]" << ", " << nBinsY << ", []" << " )" << endl;
 		TH2D* h;
 		h = new TH2D( name.c_str(), title.c_str(), nBinsX, xBins, nBinsY, yBins );
 
 		this->add( name, h );
 	}	//make2D
+
 
 	TH1* HistoBook::get( string name, string sdir  ){
 		if ( sdir.compare("") == 0)
@@ -385,6 +386,11 @@ namespace jdb{
 
 		return book[ ( sdir  + name  ) ];
 	}	//get
+
+	TH1* HistoBook::operator[]( string name ) {
+		return get( name );
+	}
+
 	TH2* HistoBook::get2D( string name, string sdir  ){
 		return ((TH2*)get( name, sdir ));
 	}	//get2D

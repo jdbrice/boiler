@@ -1,17 +1,19 @@
 #include "XmlConfig.h"
 
 using namespace std;
+
 namespace jdb{
 
 	XmlConfig::XmlConfig( string fname ){
 		logger.setClassSpace( "XmlConfig" );
 		logger.info( __FUNCTION__ ) << "Loading Xml Configuration from : " << fname << endl;
-		
+
 		// currently set may change
 		pathDelim = '.';
 		attrDelim = ':';
 		indexOpenDelim = "[";
 		indexCloseDelim = "]";
+		equalDelim = '=';
 
 		try {
 			TDOMParser * dp = new TDOMParser();
@@ -27,7 +29,6 @@ namespace jdb{
 			logger.error( __FUNCTION__ ) << "Could not parse XML" << endl;
 			cout << "ERROR : " << e.what() << endl;
 		}
-
 	}
 
 	XmlConfig::~XmlConfig(){
@@ -68,6 +69,7 @@ namespace jdb{
 			/**
 			 * Get attributes
 			 */
+			isAttribute[ path ] = false;
 			nodeExists[ path ] = true;
 			 if ( c->GetText()){
 			 	data[path] = trim( std::string(c->GetText()) );
@@ -81,6 +83,7 @@ namespace jdb{
 				string aPath = path + attrDelim + it->first;
 				data[ aPath ] = it->second;
 				nodeExists[ aPath ] = true;
+				isAttribute[ aPath ] = true;
 			}
 
 			makeMap( c, path );
@@ -285,6 +288,8 @@ namespace jdb{
 
 	vector<string> XmlConfig::childrenOf( string nodePath, int depth, bool attrs ){
 
+		if ( nodePath[ nodePath.length() - 1] != pathDelim )
+			nodePath += pathDelim;
 		vector<string> paths;
 		for ( map_it_type it = data.begin(); it != data.end(); it++ ){
 
@@ -311,8 +316,81 @@ namespace jdb{
 	//TODO sometime
 	vector<string> XmlConfig::getNodes( string nodePath ){
 
+		nodePath = sanitize( nodePath );
+		// for instance
+		// case 1) test.sub should return test.sub[0...N]
+		// case 2) test.sub:name should return all test.sub[0...N] with a name attribute
+		// case 3) test.sub:name=dan should return test.sub[]:name == dan -> true
 
+		vector<string> nodes = split( nodePath, pathDelim );
+		vector<string> attrs = split( nodePath, attrDelim );
+	
+		// case 1) no attr given, just find siblings like given
+		if ( attrs.size() <= 1  ){
+			
+			vector<string> paths;
+			for ( map_it_type it = data.begin(); it != data.end(); it++ ){
 
+				if ( isAttribute[ it->first ]  )
+					continue;
+				
+				string parent = (it->first).substr( 0, nodePath.length() );
+				if ( nodePath == parent ){
+					paths.push_back( it->first );
+				}
+			}
+			return paths;
+
+		} else if ( attrs.size() == 2 ) {
+			
+			// get everything up to attr delim
+			string baseNodePath = attrs[ 0 ];
+
+			// split off the conditional
+			vector<string> conds = split( attrs[ 1 ], equalDelim );
+			
+			// case 2) if no conditional is given just check for existance of attr
+			string attrName = attrs[ 1 ];
+			bool attrEquals = false;
+			string attrIs = "";
+
+			// case 3) if an equals is given
+			if ( conds.size() == 2 ){
+				attrIs = conds[ 1 ];
+				attrName = conds[ 0 ];
+				attrEquals = true;
+			}
+
+			vector<string> paths;
+			for ( map_it_type it = data.begin(); it != data.end(); it++ ){
+
+				if ( isAttribute[ it->first ] )
+					continue;
+
+				string wA = it->first + attrDelim + attrName;
+				
+				string parent = (it->first).substr( 0, baseNodePath.length() );
+
+				if ( baseNodePath == parent ){
+					bool aExists = exists( wA );
+					
+					// test for attribute existing
+					if ( !aExists ){
+						continue;
+					}
+					// if given, test for equality to value
+					if ( aExists && attrEquals && attrIs != getString( wA ) ){
+						continue;
+					}
+					
+					paths.push_back( it->first );
+				}
+			}
+			return paths;
+		}
+
+		vector<string> ret;
+		return ret;
 	}
 
 	//vector<string> nodesWhere( string nodePath, string attr, string equals )
