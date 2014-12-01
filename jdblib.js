@@ -108,7 +108,7 @@ var jDoc = {
                 "returns" : []
             },
             {
-                "desc" : "Example: \"( 0.0 -> 14.0 )\" ",
+                "desc" : "Example: \"( 0.0 -&gt; 14.0 )\" ",
                 "name" : "string toString()",
                 "paramDesc" : [],
                 "params" : [],
@@ -186,7 +186,7 @@ var jDoc = {
         "methods" : [
             {
                 "desc" : "Divides the range high - low into a fixed number of bins from low to high",
-                "name" : "static vector<double> makeNBins( int nBins, double low, double high )",
+                "name" : "static vector&lt;double&gt; makeNBins( int nBins, double low, double high )",
                 "paramDesc" : [
                     "Number of Bins",
                     "Lower edge of first bin",
@@ -203,7 +203,7 @@ var jDoc = {
             },
             {
                 "desc" : "Divides the range high - low into a fixed number of bins from low to high",
-                "name" : "static vector<double> makeFixedWidthBins( double binWidth, double low, double high )",
+                "name" : "static vector&lt;double&gt; makeFixedWidthBins( double binWidth, double low, double high )",
                 "paramDesc" : [
                     "Nominal width of each bin",
                     "Lower edge of first bin",
@@ -220,7 +220,7 @@ var jDoc = {
             },
             {
                 "desc" : "Finds the bin corresponding to a value in the given bins",
-                "name" : "static int findBin( vector<double> &bins, double val )",
+                "name" : "static int findBin( vector&lt;double&gt; &bins, double val )",
                 "paramDesc" : [
                     "Bins to search in",
                     "Search value"
@@ -326,7 +326,7 @@ var jDoc = {
         "properties" : [
             {
                 "desc" : "Vector containing the bin edges",
-                "name" : "vector< double > bins"
+                "name" : "vector&lt; double &gt; bins"
             },
             {
                 "desc" : "Nominal width of bins if fixed number or fixed width is used - not set for variable bin edges",
@@ -450,7 +450,7 @@ var jDoc = {
                 ]
             },
             {
-                "desc" : "This method checks for existance unlike using get(...)->Fill(...). If the histo DNE then an error is reported through the Logger and execution continues.",
+                "desc" : "This method checks for existance unlike using get(...)-&gt;Fill(...). If the histo DNE then an error is reported through the Logger and execution continues.",
                 "name" : "void fill( string name, double bin, double weight = 1)",
                 "paramDesc" : [
                     "Key in book",
@@ -465,7 +465,7 @@ var jDoc = {
                 "returns" : []
             },
             {
-                "desc" : "Makes a histogram from a node in a config file <br/><code>&lthName key=\"\" nBins=\"42\" minX=\"0\" maxX=\"10\" \\&gt</code>",
+                "desc" : "Makes a histogram from a node in a config file &lt;br/&gt;&lt;code&gt;&lthName key=\"\" nBins=\"42\" minX=\"0\" maxX=\"10\" \\&gt&lt;/code&gt;",
                 "name" : "void make( XmlConfig * config, string nodeName )",
                 "paramDesc" : [
                     "Config containing histogram schema",
@@ -504,7 +504,7 @@ var jDoc = {
                 "name" : "void save()"
             },
             {
-                "desc" : "Example: book->style( \"h1\" )->set( \"title\", \"science\" )->draw(); ",
+                "desc" : "Example: book-&gt;style( \"h1\" )-&gt;set( \"title\", \"science\" )-&gt;draw(); ",
                 "name" : "HistoBook* style( string hName )",
                 "paramDesc" : [
                     "Name of histogram to style"
@@ -879,7 +879,7 @@ var jDoc = {
         "desc" : "The XmlConfig class allows you to use XML for simple project configuration files.",
         "methods" : [
             {
-                "desc" : "Loads the XML file in and parses it using the TDOMParser. Successfully parsed xml will produce a document and a root node.",
+                "desc" : "Loads the XML file in and parses it using the TDOMParser. Successfully parsed xml will produce a document and a root node. The object is ready to use at this point.",
                 "name" : "XmlConfig( string filename )",
                 "paramDesc" : [
                     "The filename of the xml file to load"
@@ -919,7 +919,7 @@ var jDoc = {
             },
             {
                 "desc" : "Gets a vector from a comma delimeted list.<br/>For instance, if a node contains \"1, 3, 9, 7, 16\" then the vector whould contain 5 elements.<br/>",
-                "name" : "vector< string > getStringVector( string nodePath )",
+                "name" : "vector&lt; string &gt; getStringVector( string nodePath )",
                 "paramDesc" : [
                     "Path to node"
                 ],
@@ -947,7 +947,7 @@ var jDoc = {
             },
             {
                 "desc" : "See getStringVector(...).<br/>Converts a comma separated list into a vector of int types.<br/>Uses atoi(...) for string to int conversion.",
-                "name" : "vector< int > getIntVector( string nodePath )",
+                "name" : "vector&lt; int &gt; getIntVector( string nodePath )",
                 "paramDesc" : [
                     "Path to node"
                 ],
@@ -975,7 +975,7 @@ var jDoc = {
             },
             {
                 "desc" : "See getStringVector(...).<br/>Converts a comma separated list into a vector of int types.<br/>Uses atof(...) for string to double conversion.",
-                "name" : "vector< double > getDoubleVector( string nodePath )",
+                "name" : "vector&lt; double &gt; getDoubleVector( string nodePath )",
                 "paramDesc" : [
                     "Path to node"
                 ],
@@ -1015,6 +1015,75 @@ var jDoc = {
                 "returns" : [
                     "True: node exists",
                     "False: node does not exist"
+                ]
+            },
+            {
+                "desc" : "Gets a list of paths to all children of a given node. Very useful for automating tasks, building lots of objects, etc.",
+                "name" : "vector&lt; string &gt; childrenOf( string nodePath, int depth = -1, bool attrs = false )",
+                "paramDesc" : [
+                    "Path to node",
+                    "Depth to search for children",
+                    "Include attribute paths"
+                ],
+                "params" : [
+                    "nodePath",
+                    "depth",
+                    "attrs"
+                ],
+                "returns" : [
+                    "List of paths to children of the given node. Empty list for no children found"
+                ]
+            },
+            {
+                "desc" : "One path is added for each attribute of the given node or an empty list if no attributes are present. Use attributeName(...) to get only the attribute name from the full path.",
+                "name" : "vector&lt; string &gt; attributesOf( string nodePath )",
+                "paramDesc" : [
+                    "Path to node"
+                ],
+                "params" : [
+                    "nodePath"
+                ],
+                "returns" : [
+                    "List of paths to attributes."
+                ]
+            },
+            {
+                "desc" : "Can be used to find nodes matching a conditions<br/>Case 1 ) Queries like : \"group.node\" returns a list of paths to all nodes of the form \"group.node[0..N]\"<br/>Case 2 ) Queries like : \"group.node:name\" returns a list of paths to all nodes of the form \"group.node[0..N]\" when they contain a \"name\" attribute <br/>Case 3 ) Queries like : \"group.node:name=histo1\" returns a list of paths to all nodes of the form \"group.node[0..N]\" when they contain a name attribute and it equals \"histo1\"<br/>",
+                "name" : "vector&lt;string&gt; getNodes( string nodePath )",
+                "paramDesc" : [
+                    "Path to node"
+                ],
+                "params" : [
+                    "nodePath"
+                ],
+                "returns" : [
+                    "List of paths to nodes matching the query"
+                ]
+            },
+            {
+                "desc" : "Extracts the name of the final node (tag name )<br/><br/>For instnce:<br/>The node path \"node.sub.a\" yields \"a\" ",
+                "name" : "string tagName( string nodePath )",
+                "paramDesc" : [
+                    "Path to Node"
+                ],
+                "params" : [
+                    "nodePath"
+                ],
+                "returns" : [
+                    "The name of the tag pointed to by nodePath"
+                ]
+            },
+            {
+                "desc" : "Extracts the attribute name from a full node path.<br/><br/>For instance:<br/>The node path \"node.sub.a:name\" yields \"name\" ",
+                "name" : "string attributeName( string nodePath )",
+                "paramDesc" : [
+                    "Path to Node"
+                ],
+                "params" : [
+                    "nodePath"
+                ],
+                "returns" : [
+                    "The attribute name only"
                 ]
             }
         ],

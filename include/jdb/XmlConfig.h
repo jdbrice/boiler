@@ -89,7 +89,7 @@ namespace jdb {
 			"returns" : [
 				
 			],
-			"desc" : "Loads the XML file in and parses it using the TDOMParser. Successfully parsed xml will produce a document and a root node."
+			"desc" : "Loads the XML file in and parses it using the TDOMParser. Successfully parsed xml will produce a document and a root node. The object is ready to use at this point."
 		}*/
 		XmlConfig( string fname );
 		~XmlConfig();
@@ -243,9 +243,53 @@ namespace jdb {
 		}*/
 		bool exists( string nodePath );
 
-		
+		/*jdoc{
+			"name" : "vector< string > childrenOf( string nodePath, int depth = -1, bool attrs = false )",
+			"params" : [
+				"nodePath", "depth", "attrs"
+			],
+			"paramDesc" : [
+				"Path to node", "Depth to search for children", "Include attribute paths"
+			],
+			"returns" : [
+				"List of paths to children of the given node. Empty list for no children found"
+			],
+			"desc" : "Gets a list of paths to all children of a given node. Very useful for automating tasks, building lots of objects, etc."
+		}*/
 		vector<string> childrenOf( string nodePath, int depth = -1, bool attrs = false );
+
+		/*jdoc{
+			"name" : "vector< string > attributesOf( string nodePath )",
+			"params" : [
+				"nodePath"
+			],
+			"paramDesc" : [
+				"Path to node"
+			],
+			"returns" : [
+				"List of paths to attributes."
+			],
+			"desc" : "One path is added for each attribute of the given node or an empty list if no attributes are present. Use attributeName(...) to get only the attribute name from the full path."
+		}*/
 		vector<string> attributesOf( string nodePath );
+
+		/*jdoc{
+			"name" : "vector<string> getNodes( string nodePath )",
+			"params" : [
+				"nodePath"
+			],
+			"paramDesc" : [
+				"Path to node"
+			],
+			"returns" : [
+				"List of paths to nodes matching the query"
+			],
+			"desc" : "Can be used to find nodes matching a conditions
+			Case 1 ) Queries like : \"group.node\" returns a list of paths to all nodes of the form \"group.node[0..N]\"
+			Case 2 ) Queries like : \"group.node:name\" returns a list of paths to all nodes of the form \"group.node[0..N]\" when they contain a \"name\" attribute 
+			Case 3 ) Queries like : \"group.node:name=histo1\" returns a list of paths to all nodes of the form \"group.node[0..N]\" when they contain a name attribute and it equals \"histo1\"
+			"
+		}*/
 		vector<string> getNodes( string nodePath );
 
 		/**
@@ -256,8 +300,40 @@ namespace jdb {
 
 		
 
-		string tagName( string nName );
-		string attributeName( string nName );
+		/*jdoc{
+			"name" : "string tagName( string nodePath )",
+			"params" : [
+				"nodePath"
+			],
+			"paramDesc" : [
+				"Path to Node"
+			],
+			"returns" : [
+				"The name of the tag pointed to by nodePath"
+			],
+			"desc" : "Extracts the name of the final node (tag name )
+			
+			For instnce:
+			The node path \"node.sub.a\" yields \"a\" "
+		}*/
+		string tagName( string nodePath );
+		/*jdoc{
+			"name" : "string attributeName( string nodePath )",
+			"params" : [
+				"nodePath"
+			],
+			"paramDesc" : [
+				"Path to Node"
+			],
+			"returns" : [
+				"The attribute name only"
+			],
+			"desc" : "Extracts the attribute name from a full node path.
+			
+			For instance:
+			The node path \"node.sub.a:name\" yields \"name\" "
+		}*/
+		string attributeName( string nodePath );
 
 	protected:
 

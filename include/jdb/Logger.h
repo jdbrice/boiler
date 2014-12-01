@@ -6,6 +6,8 @@
 #include <iostream>
 #include <string>
 #include <iomanip>
+#include <map>
+#include <algorithm>
 using namespace std;
 
 
@@ -35,6 +37,7 @@ namespace jdb {
 			private: 
 				NullBuffer sb;
 		};
+
 
 	public:
 
@@ -177,6 +180,7 @@ namespace jdb {
 			return (*os);
 		}
 
+
 		/*jdoc{
 			"name" : "ostream & error( string functionName = \"\" )",
 			"params" : [
@@ -249,9 +253,18 @@ namespace jdb {
 			return llAll;
 		}
 
+		void summary() {
+
+			int w1 = 10;
+			info() << std::left << std::setw(w1) << "# of ERRORS : " << counts[ "error" ] << endl;
+			info() << std::left << std::setw(w1) << "# of Warnings : " << counts[ "warning" ] << endl;
+			info() << std::left << std::setw(w1) << "# of Info : " << counts[ "info" ] << endl;
+		}
+
 	protected:
 		
 		int logLevel;
+		map< string, int > counts;
 
 		void preMessage( string level = "", string functionName = "" ){
 
@@ -262,6 +275,13 @@ namespace jdb {
 				(*os) << std::left << std::setw(w1) << level << " : " << "[" << functionName << "] ";
 			else if ( level.length() >= 1 )
 				(*os) << "" << std::left << std::setw(w1) << level << " : ";
+
+			string tag = level;
+			// force level to lower case
+			transform(tag.begin(), tag.end(), tag.begin(), ::tolower);
+			if ( !counts[ tag ] )
+				counts[ tag ] = 0;
+			counts[ tag ]++;
 		}
 
 		std::ostream* os;

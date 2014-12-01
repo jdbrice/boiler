@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- A root node is required -->
+<!--  It can be anything <root></root>, it just has to exist -->
+<config>
+	<basic>
+		<!-- a basic string variable -->
+		<var1>Hello World</var1>
+		<!-- get an int -->
+		<var2>125</var2>
+		<!-- get a double -->
+		<var3>125.123</var3>
+		<!-- parses "true" and "false" can be any case -->
+		<var4>TrUe</var4>
+	</basic>
+
+	<withAttr>
+		<!-- Attributes can store any basic type also -->
+		<!-- nodes can be self-closing with the /> -->
+		<vars a1="I am a string" a2="12" a3="25.6" a4="false" />
+	</withAttr>
+
+	<!-- This block could easily be used in an automation step to produce all histograms-->
+	<manySame>
+		<Histo name="h1" title="# Events" nBins="100" minX="10" maxX="100" />
+		<Histo name="h2" title="Pt" nBins="100" minX="0" maxX="10" />
+		<Histo name="h3" title="#eta" widthX=".05" minX="-4" maxX="4" />
+
+		<Histo  title="#eta" widthX=".05" minX="-4" maxX="4" />
+		<Histo name="h5"  title="#eta" widthX=".05" minX="-4" maxX="4" />
+	</manySame>
+
+</config>

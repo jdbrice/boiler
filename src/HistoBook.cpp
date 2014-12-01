@@ -48,6 +48,7 @@ namespace jdb{
 
 		globalStyle();
 
+
 		// if an input was given merge it into the live record
 		if ( input.length() >= 5 ){
 			logger->info(__FUNCTION__) << "Loading : " << inDir << " from " << input << endl;
@@ -86,6 +87,7 @@ namespace jdb{
 		file->cd();
 
 		logger->info(__FUNCTION__) << "Output File : " << filename << " opened" << endl;
+
 
 		// make the legend and draw it once to apply styles etc.
 		// for some reason needed to make styling work on the first draw
@@ -262,7 +264,7 @@ namespace jdb{
 				bz = new HistoBins( config, nodeName, "Z" );
 
 			if ( "1D" == type || ( (bx->nBins() > 0) && (by->nBins() <= 0) && (bz->nBins() <= 0) )){
-
+				logger->info( __FUNCTION__ )<< bx->toString() << endl;
 				if ( bx->nBins() >= 1 )
 					make1D( hName, hTitle, bx->nBins(), bx->bins.data() );
 				else 
@@ -501,20 +503,28 @@ namespace jdb{
 
 		// get the list of attributes and set the style from that
 		vector< string > list = config->attributesOf( nodePath );
-
 		for ( int i = 0; i < list.size(); i++ ){
-
 			vector<string> params = config->getStringVector( list[ i ] );
-			set( list[ i ], params );
-
+			set( config->attributeName( list[ i ] ), params );
 		}
 
 		return this;
 	}
 	HistoBook* HistoBook::set( string opt, vector<string> params ){
 
+		//TODO : need to fix the logger + cout 
+		logger->info( __FUNCTION__ ) << "( " << opt << ", ";
+		for ( int i = 0; i < params.size(); i++ ){
+			cout << params[ i ] ;
+			if ( i != params.size() - 1 )
+				cout << ", ";
+		}
+		cout << " ) " << endl;
+
 		// force the param name to lowercase
 		transform(opt.begin(), opt.end(), opt.begin(), ::tolower);
+
+
 
 	    TH1* h = get( styling );
 	    if ( h ){
@@ -644,8 +654,8 @@ namespace jdb{
 			if ( h ){
 				// use the draw option set in its styling
 				h->Draw( drawOption.c_str() );
+				logger->info(__FUNCTION__) << styling << "->Draw( " << drawOption << " ) " << styling << endl;
 				drawOption = "";
-				logger->info(__FUNCTION__) << "Drawing " << styling << endl;
 			} else
 				logger->warn(__FUNCTION__) << styling << " does not exist " << endl;
 		} else {

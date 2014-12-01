@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	
+
+	<bins hide="true" >
+		<ei width="1" min="0" max="800" />
+	</bins>
+
+	
+	<histograms>
+		<Histo name="events" title="#Event" nBinsX="100" minX="-50" maxX="50" />
+	</histograms>
+
+	<styles>
+		<Style name="events" draw="pe" domain="-15, 15" lineWidth="3" lineColor="red"/>
+	</styles>
+	
+</config>

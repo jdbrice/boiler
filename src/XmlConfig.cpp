@@ -18,12 +18,22 @@ namespace jdb{
 		try {
 			TDOMParser * dp = new TDOMParser();
 			dp->SetValidate( false );
-			dp->ParseFile( fname.c_str() );
 
-			doc = dp->GetXMLDocument();
-			rootNode = doc->GetRootNode();
-
-			makeMap( rootNode, "" );
+			int error = dp->ParseFile( fname.c_str() );
+			if ( 0 != error )
+				logger.info( __FUNCTION__ ) << "XML parsed with error code : " << error << endl;
+			if ( dp && 0 == error ){
+				doc = dp->GetXMLDocument();
+				if ( doc && 0 == error ){
+					rootNode = doc->GetRootNode();
+					makeMap( rootNode, "" );
+				} else {
+					logger.error( __FUNCTION__ ) << "Unable to parse config file. All nodes must be within a root node, like <config> ... </config>" << endl;
+				}
+			} else {
+				logger.error( __FUNCTION__ ) << "Unable to parse config file, please check for formatting errors" << endl;
+			}
+			
 		} catch( exception &e ) {
 			logger.error( __FUNCTION__ ) << e.what() << endl;
 			logger.error( __FUNCTION__ ) << "Could not parse XML" << endl;
@@ -288,8 +298,10 @@ namespace jdb{
 
 	vector<string> XmlConfig::childrenOf( string nodePath, int depth, bool attrs ){
 
-		if ( nodePath[ nodePath.length() - 1] != pathDelim )
+		if ( 	nodePath[ nodePath.length() - 1] != pathDelim && 
+				nodePath[ nodePath.length() - 1] != attrDelim)
 			nodePath += pathDelim;
+	
 		vector<string> paths;
 		for ( map_it_type it = data.begin(); it != data.end(); it++ ){
 
@@ -313,7 +325,6 @@ namespace jdb{
 		return childrenOf( nodePath + attrDelim, -1, true );
 	}
 
-	//TODO sometime
 	vector<string> XmlConfig::getNodes( string nodePath ){
 
 		nodePath = sanitize( nodePath );
