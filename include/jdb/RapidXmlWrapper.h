@@ -7,7 +7,7 @@
 #include <exception>
 #include <vector>
 #include <iostream>
-#include <iomanip>
+#include <cstring>
 #include <fstream>
 #include <map>
 using namespace std;
