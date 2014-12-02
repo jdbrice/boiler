@@ -4,7 +4,7 @@ ARCH          = $(shell root-config --arch)
 
 
 #------------------------------------------------------------------------------
-Classes = Logger Reporter XmlConfig ChainLoader HistoBook TreeAnalyzer HistoAnalyzer TXmlConfig
+Classes = Logger Reporter XmlConfig ChainLoader HistoBook TreeAnalyzer HistoAnalyzer XmlConfig
 HeaderOnlyClasses = LoggerConfig StringUtils Utils ConfigPoint ConfigRange 
 ##-----------------------------------------------------------------------------
 
@@ -47,7 +47,7 @@ endif
 
 
 CXXFLAGS     += $(ROOTCFLAGS)
-LIBS          = $(ROOTLIBS) $(SYSLIBS) -lXMLParser
+LIBS          = $(ROOTLIBS) $(SYSLIBS)
 LDFLAGS 	+= $(ROOTLDFLAGS)
 
 

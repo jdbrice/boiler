@@ -1,5 +1,5 @@
-#ifndef TXML_CONFIG_H
-#define TXML_CONFIG_H
+#ifndef XML_CONFIG_H
+#define XML_CONFIG_H
 
 #ifndef __CINT__
 #include "RapidXmlWrapper.h"
@@ -23,7 +23,7 @@
 #include "Logger.h"
 
 namespace jdb {
-	class TXmlConfig
+	class XmlConfig
 	{
 	protected:
 	#ifndef __CINT__
@@ -58,8 +58,8 @@ namespace jdb {
 		//pjdco{ "name" : "indexCloseDelim", "desc" : "The delimeter for index open - Default is \"]\""}
 		string indexCloseDelim;
 	public:
-		TXmlConfig( string filename );
-		~TXmlConfig();
+		XmlConfig( string filename );
+		~XmlConfig();
 
 		/*jdoc{
 			"name" : "string operator[]( string nodePath )",
