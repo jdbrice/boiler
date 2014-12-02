@@ -1,4 +1,5 @@
 #object types
+*.pdf
 *.o
 /src/dictionary.*
 /lib/*
