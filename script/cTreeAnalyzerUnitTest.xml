@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- A root node is required -->
+<!--  It can be anything <root></root>, it just has to exist -->
+<config>
+	
+	<TreeAnalyzer>
+		
+		<input>
+			<dst treeName="tree" maxFiles="1" nEvents="1000" url="/Users/danielbrandenburg/bnl/local/data/RM14_015/"/>
+		</input>
+		<Reporter>
+			<output url="rpTreeAnalyzer.pdf"/>
+		</Reporter>
+		<Logger>
+			<logLevel>all</logLevel>
+		</Logger>
+
+		<histograms>
+			<Histo name="pt" title="p_T [GeV]" nBinsX="100" minX="0" maxX="10" />
+			<Histo name="pt1" title="p_T [GeV]" nBinsX="100" minX="0" maxX="10" />
+			<Histo name="pt2" title="p_T [GeV]" nBinsX="100" minX="0" maxX="10" />
+			<Histo name="pt3" title="p_T [GeV]" nBinsX="100" minX="0" maxX="10" />
+		</histograms>
+
+	</TreeAnalyzer>
+
+</config>
