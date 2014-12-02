@@ -1,6 +1,9 @@
-#ifndef XML_CONFIG_H
-#define XML_CONFIG_H
+#ifndef TXML_CONFIG_H
+#define TXML_CONFIG_H
 
+#ifndef __CINT__
+#include "RapidXmlWrapper.h"
+#endif
 
 /*
 	STD
@@ -13,31 +16,19 @@
 #include <map>
 #include <algorithm>
 #include <iomanip>
-/*
-	ROOT
- */
-#include "TXMLAttr.h"
-#include "TXMLNode.h"
-#include "TDOMParser.h"
-#include "TXMLDocument.h"
-#include "TCollection.h"
 
 /**
  * JDB
  */
 #include "Logger.h"
 
-using namespace std;
-
 namespace jdb {
-	
-	/*jdoc{
-		"class" : "XmlConfig",
-		"desc" : "The XmlConfig class allows you to use XML for simple project configuration files."
-	}*/
-	class XmlConfig
+	class TXmlConfig
 	{
 	protected:
+	#ifndef __CINT__
+		RapidXmlWrapper *rxw;
+	#endif
 
 		Logger logger;
 		
@@ -51,12 +42,6 @@ namespace jdb {
 
 		//pjdco{ "name" : "string filename", "desc" : "Filename of the config file"}
 		string filename;
-
-		//pjdco{ "name" : "TXMLDocument *doc", "desc" : "TXMLDocument returned by the DOM parser"}
-		TXMLDocument * doc;
-
-		//pjdco{ "name" : "TXMLNode *rootNode", "desc" : "The XML DOM's root node"}
-		TXMLNode * rootNode;
 
 		//pjdco{ "name" : "char attrDelim", "desc" : "The delimiter used for attributes - Default is \":\""}
 		char attrDelim;
@@ -72,27 +57,9 @@ namespace jdb {
 		
 		//pjdco{ "name" : "indexCloseDelim", "desc" : "The delimeter for index open - Default is \"]\""}
 		string indexCloseDelim;
-		
-
-
-
 	public:
-
-		/*jdoc{
-			"name" : "XmlConfig( string filename )",
-			"params" : [
-				"filename"
-			],
-			"paramDesc" : [
-				"The filename of the xml file to load"
-			],
-			"returns" : [
-				
-			],
-			"desc" : "Loads the XML file in and parses it using the TDOMParser. Successfully parsed xml will produce a document and a root node. The object is ready to use at this point."
-		}*/
-		XmlConfig( string fname );
-		~XmlConfig();
+		TXmlConfig( string filename );
+		~TXmlConfig();
 
 		/*jdoc{
 			"name" : "string operator[]( string nodePath )",
@@ -338,18 +305,14 @@ namespace jdb {
 	protected:
 
 		string manualToLower( string str );
-		void makeMap( TXMLNode * parent, string cp = "" );
 		string sanitize( string nodePath );
 
 		vector<string> vectorFromString( string data );
 		vector<string> &split(const string &s, char delim, vector<string> &elems);
-		map<string, string> attributes( TXMLNode * node );
+
 		
 	};
 }
-
-
-
 
 
 #endif

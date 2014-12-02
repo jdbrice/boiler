@@ -4,7 +4,7 @@ ARCH          = $(shell root-config --arch)
 
 
 #------------------------------------------------------------------------------
-Classes = Logger Reporter XmlConfig ChainLoader HistoBook TreeAnalyzer HistoAnalyzer
+Classes = Logger Reporter XmlConfig ChainLoader HistoBook TreeAnalyzer HistoAnalyzer TXmlConfig
 HeaderOnlyClasses = LoggerConfig StringUtils Utils ConfigPoint ConfigRange 
 ##-----------------------------------------------------------------------------
 

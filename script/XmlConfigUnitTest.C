@@ -53,7 +53,7 @@ void XmlConfigUnitTest( ){
 	l.info() << "Finding Attributs" << endl;
 	cs = cfg.attributesOf( "withAttr.vars" );
 	for ( int i = 0; i <cs.size(); i++ ){
-		l.info() << cs[ i ] << " = " << cfg[ cs[ i ] ] << endl;
+		l.info() << cs[ i ] << " = " << cfg.getString( cs[ i ] ) << endl;
 	}
 
 }

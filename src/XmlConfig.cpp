@@ -1,12 +1,14 @@
-#include "XmlConfig.h"
+#include "TXmlConfig.h"
 
-using namespace std;
 
 namespace jdb{
 
-	XmlConfig::XmlConfig( string fname ){
-		logger.setClassSpace( "XmlConfig" );
-		logger.info( __FUNCTION__ ) << "Loading Xml Configuration from : " << fname << endl;
+	TXmlConfig::TXmlConfig( string filename){
+
+		this->filename = filename;
+
+		logger.setClassSpace( "TXmlConfig" );
+		logger.info( __FUNCTION__ ) << "Loading Xml Configuration from : " << filename << endl;
 
 		// currently set may change
 		pathDelim = '.';
@@ -15,130 +17,47 @@ namespace jdb{
 		indexCloseDelim = "]";
 		equalDelim = '=';
 
-		try {
-			TDOMParser * dp = new TDOMParser();
-			dp->SetValidate( false );
+	
+		typedef map<string, string>::iterator map_it_type;
 
-			int error = dp->ParseFile( fname.c_str() );
-			if ( 0 != error )
-				logger.info( __FUNCTION__ ) << "XML parsed with error code : " << error << endl;
-			if ( dp && 0 == error ){
-				doc = dp->GetXMLDocument();
-				if ( doc && 0 == error ){
-					rootNode = doc->GetRootNode();
-					makeMap( rootNode, "" );
-				} else {
-					logger.error( __FUNCTION__ ) << "Unable to parse config file. All nodes must be within a root node, like <config> ... </config>" << endl;
-				}
-			} else {
-				logger.error( __FUNCTION__ ) << "Unable to parse config file, please check for formatting errors" << endl;
-			}
-			
-		} catch( exception &e ) {
-			logger.error( __FUNCTION__ ) << e.what() << endl;
-			logger.error( __FUNCTION__ ) << "Could not parse XML" << endl;
-			cout << "ERROR : " << e.what() << endl;
+		rxw = new RapidXmlWrapper( filename );
+		rxw->getMaps( &data, &isAttribute, &nodeExists );
+
+		/**
+		* Simple report
+		cout << "Found " << data.size() << " Nodes" << endl;
+		for ( map_it_type it = data.begin(); it != data.end(); it++ ){
+			cout << it->first << " : " << it->second << endl;
 		}
-	}
-
-	XmlConfig::~XmlConfig(){
+		*/
 
 	}
 
-	void XmlConfig::makeMap( TXMLNode * parent, string cp ){
-
-		TXMLNode * c = parent->GetChildren();
-		
-		std::map< string, int > index;
-
-		while ( c && c->HasNextNode() ){
-			string name = c->GetNodeName();
-			string nodeName = c->GetNodeName();
-			
-			if ( name == "text" || name == "comment" ){
-				c = c->GetNextNode();	
-				continue;
-			}
-
-			if ( !index[ nodeName ] )
-				index[ nodeName ] = 0;
-
-			stringstream sstr;
-			sstr << index[ nodeName ];
-			string path =  cp ;
-			if ( "" != cp )
-				path += pathDelim + nodeName;
-			else 
-				path += nodeName;
-			
-			if ( index[ nodeName ] >= 1 )
-				path += indexOpenDelim + sstr.str() + indexCloseDelim;
-
-			index[ nodeName ]++;
-
-			/**
-			 * Get attributes
-			 */
-			isAttribute[ path ] = false;
-			nodeExists[ path ] = true;
-			 if ( c->GetText()){
-			 	data[path] = trim( std::string(c->GetText()) );
-			 } else 
-			 	data[path] = "";
-				
-			
-			map<string, string> attrs = attributes( c );
-			// copy the map into this one
-			for ( map_it_type it = attrs.begin(); it != attrs.end(); it++ ){
-				string aPath = path + attrDelim + it->first;
-				data[ aPath ] = it->second;
-				nodeExists[ aPath ] = true;
-				isAttribute[ aPath ] = true;
-			}
-
-			makeMap( c, path );
-
-			c = c->GetNextNode();
-		}
+	TXmlConfig::~TXmlConfig(){
 
 	}
 
-	map<string, string> XmlConfig::attributes( TXMLNode * node ){
 
-		map<string, string> ret;
-		if ( node && node->HasAttributes() ){
-			TIter i( (TCollection*)node->GetAttributes() );
-			
-			TXMLAttr * cAttr;
-
-			while ( cAttr = (TXMLAttr*)i.Next() ){
-				ret[ cAttr->GetName() ] = cAttr->GetValue();	
-			}
-		}
-
-		return ret;
-	}
-
-	string XmlConfig::getString( string nodePath, string def ){
+	string TXmlConfig::getString( string nodePath, string def ){
 		string snp = sanitize( nodePath );
-		if ( nodeExists[ snp ] && NULL != data[ snp ]){
+		if ( nodeExists[ snp ] ){
 			return data[ snp ];
 		}
 		return def;
 	}
 
-	vector<string> XmlConfig::getStringVector( string nodePath ){
+	vector<string> TXmlConfig::getStringVector( string nodePath ){
 		string value = getString( nodePath );
 		return vectorFromString( value );
 	}
 
-	int XmlConfig::getInt( string nodePath, int def  ){
+	int TXmlConfig::getInt( string nodePath, int def  ){
 		string str = getString( nodePath, "" );
 		if ( "" != str && str.length() >= 1 )
 			return atoi( str.c_str() );
 		return def;
 	}
-	vector<int> XmlConfig::getIntVector( string nodePath ){
+	vector<int> TXmlConfig::getIntVector( string nodePath ){
 		vector<string> vec = getStringVector( nodePath );
 		vector<int> d;
 		for ( int i = 0; i < vec.size(); i++  ){
@@ -147,13 +66,13 @@ namespace jdb{
 		return d;
 	}
 
-	double XmlConfig::getDouble( string nodePath, double def  ){
+	double TXmlConfig::getDouble( string nodePath, double def  ){
 		string str = getString( nodePath, "" );
 		if ( "" != str && str.length() >= 1 )
 			return atof( str.c_str() );
 		return def;
 	}
-	vector<double> XmlConfig::getDoubleVector( string nodePath ){
+	vector<double> TXmlConfig::getDoubleVector( string nodePath ){
 		vector<string> vec = getStringVector( nodePath );
 		vector<double> d;
 		for ( int i = 0; i < vec.size(); i++  ){
@@ -162,12 +81,12 @@ namespace jdb{
 		return d;
 	}
 
-	float XmlConfig::getFloat( string nodePath, float def  ){
+	float TXmlConfig::getFloat( string nodePath, float def  ){
 		return (float) getDouble( nodePath, (double)def );
 	}
 
 
-	bool XmlConfig::getBool( string nodePath, bool def  ) {
+	bool TXmlConfig::getBool( string nodePath, bool def  ) {
 
 		string str = getString( nodePath );
 
@@ -189,14 +108,14 @@ namespace jdb{
 		return def;
 	}
 
-	bool XmlConfig::exists( string nodePath ){
+	bool TXmlConfig::exists( string nodePath ){
 		string snp = sanitize( nodePath );
 		if( nodeExists[ snp ] )
 			return true;
 		return false;
 	}
 
-	string XmlConfig::sanitize( string nodePath ){
+	string TXmlConfig::sanitize( string nodePath ){
 
 		/**
 		 * Remove internal whitespaces
@@ -221,7 +140,7 @@ namespace jdb{
 		return ret;
 	}
 
-	string XmlConfig::operator[]( string nodePath ){
+	string TXmlConfig::operator[]( string nodePath ){
 		if ( nodeExists[ nodePath ] )
 			return data[ nodePath ];
 
@@ -232,7 +151,7 @@ namespace jdb{
 		return "";
 	}
 
-	vector<string> & XmlConfig::split(const string &s, char delim, vector<string> &elems) {
+	vector<string> & TXmlConfig::split(const string &s, char delim, vector<string> &elems) {
 	    stringstream ss(s);
 	    string item;
 	    while (std::getline(ss, item, delim)) {
@@ -241,7 +160,7 @@ namespace jdb{
 	    return elems;
 	}
 
-	vector<string> XmlConfig::vectorFromString( string data ){
+	vector<string> TXmlConfig::vectorFromString( string data ){
 				
 		vector<string> d = split( data, ',' );
 		
@@ -252,7 +171,7 @@ namespace jdb{
 
 	}
 
-	std::string XmlConfig::trim(const std::string& str, const std::string& whitespace ) {
+	std::string TXmlConfig::trim(const std::string& str, const std::string& whitespace ) {
 	    std::size_t strBegin = str.find_first_not_of(whitespace);
 	    if (strBegin == std::string::npos)
 	        return ""; // no content
@@ -263,20 +182,20 @@ namespace jdb{
 	    return str.substr(strBegin, strRange);
 	}
 
-	vector<string> XmlConfig::split(const string &s, char delim) {
+	vector<string> TXmlConfig::split(const string &s, char delim) {
 	    vector<string> elems;
 	    split(s, delim, elems);
 	    return elems;
 	}
 
-	string XmlConfig::manualToLower( string str ){
+	string TXmlConfig::manualToLower( string str ){
 		string str2 = str;
 		for ( int i = 0; i < str.length(); i++ ){
 			str2[ i ] = std::tolower( str[ i ] );
 		}
 		return str2;
 	}
-	string XmlConfig::tagName( string nodePath ){
+	string TXmlConfig::tagName( string nodePath ){
 		vector<string> ntf = split( nodePath, pathDelim );
 		vector<string> attr = split( nodePath, attrDelim );
 		if ( attr.size() >= 2 ){
@@ -286,7 +205,7 @@ namespace jdb{
 			return ntf[ ntf.size() - 1 ];
 		return "";
 	}
-	string XmlConfig::attributeName( string nodePath ){
+	string TXmlConfig::attributeName( string nodePath ){
 		vector<string> ntf = split( nodePath, pathDelim );
 		vector<string> attr = split( nodePath, attrDelim );
 		if ( attr.size() >= 2 ){
@@ -296,7 +215,7 @@ namespace jdb{
 		return "";
 	}
 
-	vector<string> XmlConfig::childrenOf( string nodePath, int depth, bool attrs ){
+	vector<string> TXmlConfig::childrenOf( string nodePath, int depth, bool attrs ){
 
 		if ( 	nodePath[ nodePath.length() - 1] != pathDelim && 
 				nodePath[ nodePath.length() - 1] != attrDelim)
@@ -321,18 +240,18 @@ namespace jdb{
 
 	}
 
-	vector< string > XmlConfig::attributesOf( string nodePath ){
+	vector< string > TXmlConfig::attributesOf( string nodePath ){
 		return childrenOf( nodePath + attrDelim, -1, true );
 	}
 
-	vector<string> XmlConfig::getNodes( string nodePath ){
+	vector<string> TXmlConfig::getNodes( string nodePath ){
 
 		nodePath = sanitize( nodePath );
 		// for instance
 		// case 1) test.sub should return test.sub[0...N]
 		// case 2) test.sub:name should return all test.sub[0...N] with a name attribute
 		// case 3) test.sub:name=dan should return test.sub[]:name == dan -> true
-
+		cout << nodePath << endl;
 		vector<string> nodes = split( nodePath, pathDelim );
 		vector<string> attrs = split( nodePath, attrDelim );
 	
@@ -341,9 +260,10 @@ namespace jdb{
 			
 			vector<string> paths;
 			for ( map_it_type it = data.begin(); it != data.end(); it++ ){
-
+				
 				if ( isAttribute[ it->first ]  )
 					continue;
+
 				
 				string parent = (it->first).substr( 0, nodePath.length() );
 				if ( nodePath == parent ){
@@ -370,16 +290,17 @@ namespace jdb{
 				attrIs = conds[ 1 ];
 				attrName = conds[ 0 ];
 				attrEquals = true;
+			} else {
+				
 			}
 
 			vector<string> paths;
 			for ( map_it_type it = data.begin(); it != data.end(); it++ ){
 
 				if ( isAttribute[ it->first ] )
-					continue;
+					continue;				
 
 				string wA = it->first + attrDelim + attrName;
-				
 				string parent = (it->first).substr( 0, baseNodePath.length() );
 
 				if ( baseNodePath == parent ){
