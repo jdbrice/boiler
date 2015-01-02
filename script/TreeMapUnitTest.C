@@ -16,6 +16,9 @@ void TreeMapUnitTest( string fname = "cTreeMapUnitTest.xml" ){
 
 	int nEvents = tm.getEntries();
 
+	HistoBook book( "dTreeMapUnitTest.root", &cfg );
+	book.make1D( "pt", "pt [GeV]", 150, 0, 7.5 ); 
+
 	TaskTimer tt;
 	tt.start();
 	for ( int i = 0; i < nEvents; i++ ){
@@ -30,13 +33,15 @@ void TreeMapUnitTest( string fname = "cTreeMapUnitTest.xml" ){
 			int nHits = tm.get( "nHits", j );
 			int nHitsFit = tm.get( "nHitsFit", j );
 			float pt = tm.get( "pt", j );
-			cout << " pt " << pt << endl;
+			book.fill( "pt", pt );
+			//cout << " pt " << pt << endl;
 			//cout << "charge = " <<  << endl;
 		}
 
 	}
 
 	cout << "Finished in " << tt.elapsedTime() << endl;
+
 
 
 

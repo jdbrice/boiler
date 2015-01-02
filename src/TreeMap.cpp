@@ -9,7 +9,7 @@ namespace jdb{
 		lg.setClassSpace( "TreeMap" );
 
 		if ( 0 == chain )
-			cout << " Not a valid chain" << endl;
+			lg.info(__FUNCTION__) << " Not a valid chain" << endl;
 
 		this->chain = chain;
 
@@ -27,9 +27,8 @@ namespace jdb{
 		typedef std::map<string, Int_t*>::iterator sip_it_type;
 		for(sip_it_type iterator = intArrays.begin(); iterator != intArrays.end(); iterator++) {
 
-			
 			if ( iterator->second ){
-				cout << " need to delete " << iterator->first << endl;
+				lg.trace(__FUNCTION__) << "Releasing " << iterator->first << endl;
 				delete[] (intArrays[ iterator->first ]);
 			}
 
@@ -40,36 +39,33 @@ namespace jdb{
 
 	void TreeMap::mapTree(){
 
+		lg.info( __FUNCTION__ ) << endl;
+
 		nEntries = chain->GetEntries();
 		nTrees = chain->GetNtrees();
-		cout << " #Entries = " << nEntries << endl;
-		cout << " #Trees = " << nTrees << endl;
 
 		TObjArray * lfs = chain->GetListOfLeaves();
 		int l = lfs->GetEntries();
 
 		for ( int i = 0; i < l; i++ ){
+
+			// get info on this leaf
 			string tName = ((TLeafElement*)lfs->At( i ))->GetTypeName();
 			string name = ((TLeafElement*)lfs->At( i ))->GetName();
 			string title = ((TLeafElement*)lfs->At( i ))->GetTitle();
 
-			cout << tName << " " << title;
 			type[ name ] = tName;
 
+			// look for its size if it is an array
 			string::size_type open = title.find( "[", 0 );
 			string::size_type close = title.find( "]", 0 );
 			
 			if( open != string::npos && close != string::npos ) {
 				lengthName[ name ] = title.substr( open + 1, ( close - open - 1 ) );
-
 				isArray[ name ] = true;
-				//cout << " is an Array length " << lengthName[ name ];
 			} else {
 				isArray[ name ] = false;
 			}
-
-
-			cout << endl;
 		}
 
 		findLengths();
@@ -78,14 +74,12 @@ namespace jdb{
 
 	void TreeMap::findLengths() {
 
+		lg.info( __FUNCTION__ ) << endl;
+
 		typedef std::map<string, string>::iterator ss_it_type;
 		for(ss_it_type iterator = lengthName.begin(); iterator != lengthName.end(); iterator++) {
-		    // iterator->first = key
-		    // iterator->second = value
-		    // Repeat if you also want to iterate through the second map.
 		    
 		    string lp = iterator->second;
-		    //cout << "Length part " << lp << " = " << maxLength[ lp ]<<  endl;
 		    
 		    if ( maxLength[ lp ] <= 0 ){
 		    	int max = findMax( lp );
@@ -100,21 +94,6 @@ namespace jdb{
 
 	}
 
-	/*jdoc{
-		"name" : "",
-		"params" : [
-			
-		],
-		"paramDesc" : [
-			
-		],
-		"returns" : [
-			
-		],
-		"desc" : "
-		Selects a given number of trees from the chain and samples their maximum for the given branch.
-		"
-	}*/
 	int TreeMap::findMax( string name ){
 		
 		int nSamples = nTrees * 2;
@@ -149,7 +128,7 @@ namespace jdb{
 			// if it is an array then get the size
 			int aSize = -1;
 			if ( isArray[ name ]  ){
-				lg.info(__FUNCTION__) << " size of " << name << " = " << maxLength[ lengthName[ name ] ] << endl; 
+				//lg.info(__FUNCTION__) << "Size of " << name << " = " << maxLength[ lengthName[ name ] ] << endl; 
 				aSize = maxLength[ lengthName[ name ] ];
 			}
 
@@ -157,13 +136,17 @@ namespace jdb{
 				lg.warn(__FUNCTION__) << "Zero size for array " << name << endl;
 			}
 
+
+			if ( isArray[ name ] )
+					lg.info(__FUNCTION__) << "Addressing : " << tName << " " << name << "[" << lengthName[ name ] << " === " << maxLength[ lengthName[ name ]] << "]" << endl;
+				else
+					lg.info(__FUNCTION__) << "Addressing : " << tName << " " << title << endl;
 			/**
 			 * Blocks for each data type
 			 */
 			// Int_t
 			if ( "Int_t" == tName ){
-				cout << "Addressing : " << tName << " " << title << endl;
-				
+
 				branches[ name ] = 0;
 				
 				if ( 0 < aSize && isArray[ name ] ){
@@ -179,7 +162,7 @@ namespace jdb{
 			}
 			// UInt_t
 			if ( "UInt_t" == tName ){
-				cout << "Addressing : " << tName << " " << title << endl;
+				
 				
 				branches[ name ] = 0;
 				
@@ -196,7 +179,6 @@ namespace jdb{
 			}
 			// Char_t
 			if ( "Char_t" == tName ){
-				cout << "Addressing : " << tName << " " << title << endl;
 				
 				branches[ name ] = 0;
 				
@@ -213,7 +195,6 @@ namespace jdb{
 			}
 			// UChar_t
 			if ( "UChar_t" == tName ){
-				cout << "Addressing : " << tName << " " << title << endl;
 				
 				branches[ name ] = 0;
 				
@@ -230,7 +211,6 @@ namespace jdb{
 			}
 			// Short_t
 			if ( "Short_t" == tName ){
-				cout << "Addressing : " << tName << " " << title << endl;
 				
 				branches[ name ] = 0;
 				
@@ -247,7 +227,6 @@ namespace jdb{
 			}
 			// UShort_t
 			if ( "UShort_t" == tName ){
-				cout << "Addressing : " << tName << " " << title << endl;
 				
 				branches[ name ] = 0;
 				
@@ -264,7 +243,6 @@ namespace jdb{
 			}
 			// Float_t
 			if ( "Float_t" == tName ){
-				cout << "Addressing : " << tName << " " << title << endl;
 				
 				branches[ name ] = 0;
 				

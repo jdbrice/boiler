@@ -46,10 +46,12 @@ namespace jdb {
 		/*jdoc{ "name" : "static const int llWarn = 20", "desc" : "Show warnings and below"}*/
 		/*jdoc{ "name" : "static const int llError = 10", "desc" : "Show errors and below"}*/
 		/*jdoc{ "name" : "static const int llNone = 1", "desc" : "Show nothing"}*/
-		static const int llAll 		= 40;
+		static const int llAll 		= 60;
+		static const int llDebug 	= 50;
+		static const int llTrace 	= 40;
 		static const int llInfo		= 30;
 		static const int llWarn 	= 20;
-		static const int llError 	= 10;
+		static const int llError 	= 10;	
 		static const int llNone 	= 1;
 
 		/*jdoc{ "name" : "static const int llDefault = llWarn", "desc" : "The default log level"}*/
@@ -225,6 +227,50 @@ namespace jdb {
 			return (*os);
 		}
 
+		/*jdoc{
+			"name" : "ostream & trace( string functionName = \"\" )",
+			"params" : [
+				"functionName"
+			],
+			"paramDesc" : [
+				"Calling function name to be prepended to message"
+			],
+			"returns" : [
+				"An output stream for writing messages"
+			],
+			"desc" : "Shows all messages below llTrace"
+		}*/
+		ostream & trace( string functionName = "" ){
+			if ( logLevel < llInfo )
+				return ns;
+
+			preMessage( "Trace", functionName );
+			
+			return (*os);
+		}
+
+		/*jdoc{
+			"name" : "ostream & debug( string functionName = \"\" )",
+			"params" : [
+				"functionName"
+			],
+			"paramDesc" : [
+				"Calling function name to be prepended to message"
+			],
+			"returns" : [
+				"An output stream for writing messages"
+			],
+			"desc" : "Shows all messages below llTrace"
+		}*/
+		ostream & debug( string functionName = "" ){
+			if ( logLevel < llInfo )
+				return ns;
+
+			preMessage( "Debug", functionName );
+			
+			return (*os);
+		}
+
 		
 		/*jdoc{
 			"name" : "static int logLevelFromString( string ll )",
@@ -240,7 +286,11 @@ namespace jdb {
 			"desc" : "Can be one of [ info, warning, error, all, none ] default is all"
 		}*/
 		static int logLevelFromString( string ll ){
-			if ( "info" == ll )
+			if ( "debug" == ll )
+				return llDebug;
+			else if ( "trace" == ll )
+				return llTrace;
+			else if ( "info" == ll )
 				return llInfo;
 			else if ( "warning" == ll  )
 				return llWarn;
