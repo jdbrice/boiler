@@ -14,7 +14,7 @@ namespace jdb{
 							) {
 		
 
-		Logger * logger = new Logger( Logger::llDefault, "ChainLoader" );
+		Logger * logger = new Logger( Logger::llGlobal, "ChainLoader" );
 
 		logger->info(__FUNCTION__) << "Searching " << ntdir << " for ntuples" << endl;
 

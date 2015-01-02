@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- A root node is required -->
+<!--  It can be anything <root></root>, it just has to exist -->
+<config>
+			
+	<input>
+		<dst treeName="tree" maxFiles="2" nEvents="10000" url="/Users/danielbrandenburg/bnl/local/data/BBCMB14_015/"/>
+	</input>
+	
+	<Logger>
+		<logLevel>all</logLevel>
+	</Logger>
+
+
+</config>

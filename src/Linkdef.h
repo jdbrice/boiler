@@ -17,6 +17,9 @@
 #pragma link C++ class jdb::HistoBook-;
 
 #pragma link C++ class jdb::TreeAnalyzer-;
+#pragma link C++ class jdb::HistoAnalyzer-;
+
+#pragma link C++ class jdb::TreeMap-;
 
 #pragma link C++ defined_in "include/jdb/StringUtils.h";
 #pragma link C++ defined_in "include/jdb/Utils.h";

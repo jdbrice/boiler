@@ -26,14 +26,7 @@ namespace jdb{
 */
 namespace jdb{
 
-	class TaskTimer{
-	public:
-
-		clock_t startTime;
-		void start( ) { startTime = clock(); }
-		double elapsed( ) { return ( (clock() - startTime) / (double)CLOCKS_PER_SEC ); }
-		
-	};
+	
 
 	/**
 	 * String utilities that need >= c++ 2011
@@ -84,6 +77,22 @@ namespace jdb{
 		return trimTrailingZeros( ts( d ) );
 	}
 
+	class TaskTimer{
+	public:
+
+		clock_t startTime;
+		void start( ) { startTime = clock(); }
+		double elapsed( ) { return ( (clock() - startTime) / (double)CLOCKS_PER_SEC ); }
+		string elapsedTime() { 
+			int nDig = 3;
+			double et = elapsed();
+			if ( et >= 1 )
+				nDig = ceil( log10( et ) ) + 2;
+
+			return  ts(et, nDig) + " sec";
+		}
+
+	};
 	
 	/**
 	 * Plain text progress bar 
