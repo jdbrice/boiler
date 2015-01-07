@@ -1,0 +1,60 @@
+<class xmlns="http://jessevdk.github.com/cldoc/1.0" abstract="true" id="jdb::HistoAnalyzer" name="HistoAnalyzer">
+  <brief>jdoc{</brief>
+  <doc>"class" : "HistoAnalyzer",
+        "desc" : "Base class for creating histogram analysis projects"
+}</doc>
+  <constructor abstract="yes" id="jdb::HistoAnalyzer::HistoAnalyzer" name="HistoAnalyzer">
+    <brief>jdoc{</brief>
+    <doc>"name" : "HistoAnalyzer( XmlConfig * config, string nodePath )",
+        "params" : [ "config", "nodePath" ],
+        "paramDesc" : [ "Project config object",
+                "The node path containing configuration parameters"
+        ],
+        "returns" : [  ],
+        "desc" : ""
+}</doc>
+    <argument id="jdb::HistoAnalyzer::HistoAnalyzer::config" name="config">
+      <type name="XmlConfig" qualifier="*" ref="jdb::XmlConfig#jdb::XmlConfig" />
+    </argument>
+    <argument id="jdb::HistoAnalyzer::HistoAnalyzer::nodePath" name="nodePath">
+      <type name="std::string" />
+    </argument>
+  </constructor>
+  <destructor abstract="yes" id="jdb::HistoAnalyzer::~HistoAnalyzer" name="~HistoAnalyzer" />
+  <method id="jdb::HistoAnalyzer::make" name="make" virtual="yes">
+    <brief>jdoc{</brief>
+    <doc>"name" : "virtual void make()",
+        "params" : [ ],
+        "paramDesc" : [ ],
+        "returns" : [  ],
+        "desc" : "The maker function for publicly starting the job"
+}</doc>
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+  </method>
+  <field access="protected" id="jdb::HistoAnalyzer::logger" name="logger">
+    <brief>jdoc{ "name" : "Logger *logger", "desc" : "The logging object for the job"}</brief>
+    <type name="Logger" qualifier="*" ref="jdb::Logger#jdb::Logger" />
+  </field>
+  <field access="protected" id="jdb::HistoAnalyzer::cfg" name="cfg">
+    <brief>jdoc{"name" : "XmlConfig *cfg", "desc" : ""}</brief>
+    <type name="XmlConfig" qualifier="*" ref="jdb::XmlConfig#jdb::XmlConfig" />
+  </field>
+  <field access="protected" id="jdb::HistoAnalyzer::nodePath" name="nodePath">
+    <brief>jdoc{"name" : "string nodePath", "desc" : ""}</brief>
+    <type name="std::string" />
+  </field>
+  <field access="protected" id="jdb::HistoAnalyzer::book" name="book">
+    <brief>jdoc{"name" : "HistoBook *book", "desc" : ""}</brief>
+    <type name="HistoBook" qualifier="*" ref="jdb::HistoBook#jdb::HistoBook" />
+  </field>
+  <field access="protected" id="jdb::HistoAnalyzer::reporter" name="reporter">
+    <brief>jdoc{"name" : "Reporter *reporter", "desc" : ""}</brief>
+    <type name="Reporter" qualifier="*" ref="jdb::Reporter#jdb::Reporter" />
+  </field>
+  <field access="protected" id="jdb::HistoAnalyzer::inFile" name="inFile">
+    <brief>jdoc{"name" : "TFile *inFile", "desc" : "Input file with histogram data"}</brief>
+    <type name="TFile" qualifier="*" />
+  </field>
+</class>

@@ -10,47 +10,41 @@
 
 namespace jdb{
 
-	/*jdoc{
-		"class" : "ChainLoader",
-		"desc" : "Static class used for loading files into TChains. Can be used to load an entire directory, or files from a filelist.lis"
-	}
-	*/
+	/*
+	 *	Static use class for loading .root files into a TChain
+	 *
+	 * 	Static class used for loading files into TChains. 
+	 * 	Can be used to load an entire directory, or files from a filelist.lis
+	 * 
+	 */
 	class ChainLoader{
 
 	public:
-		/*jdoc{
-			"name" : "static void load( TChain * chain, string dir, int maxFiles = -1 )",
-			"returns" : [],
-			"params" : [ 
-				"chain",
-				"dir",
-				"maxFiles"
-			],
-			"paramDesc" : [
-				"A pointer to an initialize TChain ready to add files",
-				"The path to the directory containing .root files",
-				"Optional: maximum number of files to load into chain"
-			],
-			"desc" : "Loads .root tree files into a TChain"
-		}
-		*/
+	
+		/* Loads files in a directory to the TChain
+		 * @chain an initialized TChain to recieve the files
+		 * @ntdir path to directory containing .root files
+		 * @maxFiles maximum number of files to load
+		 *
+		 * Loads .root files containing TTrees into 
+		 * a TChain from the given directory. Make sure
+		 * that the TChain was created with the correct
+		 * tree name.
+		 */
 		static void load( TChain * chain, string ntdir, int maxFiles = -1 );
-		/*jdoc{
-			"name" : "static void loadList( TChain * chain, string listFile, int maxFiles = -1 )",
-			"returns" : [],
-			"params" : [ 
-				"chain",
-				"listFile",
-				"maxFiles"
-			],
-			"paramDesc" : [
-				"A pointer to an initialize TChain ready to add files",
-				"filename of a file containg the list of .root files to load",
-				"Optional: maximum number of files to load into chain"
-			],
-			"desc" : "Loads .root tree files into a TChain - used in parallel jobs"
-		}
-		*/
+		
+		/* Loads files in a directory to the TChain
+		 * @chain an initialized TChain to recieve the files
+		 * @listFile list of files to add to chain. Should 
+		 * use full pathto file
+		 * @maxFiles maximum number of files to load
+		 *
+		 * Loads .root files containing TTrees into 
+		 * a TChain from the given list file. This 
+		 * method allows parallel jobs to work on separate
+		 * file lists. Make sure that the TChain was 
+		 * created with the correct tree name.
+		 */
 		static void loadList( TChain * chain, string listFile, int maxFiles = -1 );
 	};
 

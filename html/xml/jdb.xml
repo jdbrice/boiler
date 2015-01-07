@@ -1,0 +1,147 @@
+<namespace xmlns="http://jessevdk.github.com/cldoc/1.0" id="jdb" name="jdb">
+  <brief>*</brief>
+  <doc>TTree Data Types to support
+
+        - C : a character string terminated by the 0 character
+        - B : an 8 bit signed integer (Char_t)
+        - b : an 8 bit unsigned integer (UChar_t)
+        - S : a 16 bit signed integer (Short_t)
+        - s : a 16 bit unsigned integer (UShort_t)
+        - I : a 32 bit signed integer (Int_t)
+        - i : a 32 bit unsigned integer (UInt_t)
+        - F : a 32 bit floating point (Float_t)
+        - D : a 64 bit floating point (Double_t)
+        - L : a 64 bit signed integer (Long64_t)
+        - l : a 64 bit unsigned integer (ULong64_t)
+        - O : [the letter 'o', not a zero] a boolean (Bool_t)
+</doc>
+  <class name="ChainLoader" ref="jdb::ChainLoader#jdb::ChainLoader" />
+  <class name="ConfigPoint" ref="jdb::ConfigPoint#jdb::ConfigPoint">
+    <brief>Config Point easily loads (x, y) points from XmlConfigs</brief>
+  </class>
+  <class name="ConfigRange" ref="jdb::ConfigRange#jdb::ConfigRange">
+    <brief>jdoc{</brief>
+  </class>
+  <class name="HistoAnalyzer" ref="jdb::HistoAnalyzer#jdb::HistoAnalyzer">
+    <brief>jdoc{</brief>
+  </class>
+  <class name="HistoBook" ref="jdb::HistoBook#jdb::HistoBook">
+    <brief>jdoc{</brief>
+  </class>
+  <class name="legendAlignment" ref="jdb::legendAlignment#jdb::legendAlignment">
+    <brief>*</brief>
+  </class>
+  <class name="Logger" ref="jdb::Logger#jdb::Logger">
+    <brief>jdoc{</brief>
+  </class>
+  <class name="LoggerConfig" ref="jdb::LoggerConfig#jdb::LoggerConfig" />
+  <class name="Reporter" ref="jdb::Reporter#jdb::Reporter">
+    <brief>jdoc{</brief>
+  </class>
+  <class name="TaskProgress" ref="jdb::TaskProgress#jdb::TaskProgress">
+    <brief>*</brief>
+  </class>
+  <class name="TaskTimer" ref="jdb::TaskTimer#jdb::TaskTimer" />
+  <class name="TreeAnalyzer" ref="jdb::TreeAnalyzer#jdb::TreeAnalyzer">
+    <brief>jdoc{</brief>
+  </class>
+  <class name="TreeMap" ref="jdb::TreeMap#jdb::TreeMap" />
+  <class name="XmlConfig" ref="jdb::XmlConfig#jdb::XmlConfig" />
+  <function id="dts" name="dts">
+    <return>
+      <type name="std::string" />
+    </return>
+    <argument id="dts::d" name="d">
+      <type builtin="yes" name="double" />
+    </argument>
+  </function>
+  <function id="progressBar" name="progressBar">
+    <brief>*</brief>
+    <doc>Plain text progress bar
+simply call inside loop
+</doc>
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+    <argument id="progressBar::i" name="i">
+      <type builtin="yes" name="int" />
+    </argument>
+    <argument id="progressBar::nevents" name="nevents">
+      <type builtin="yes" name="int" />
+    </argument>
+    <argument id="progressBar::textWidth" name="textWidth">
+      <type builtin="yes" name="int" />
+    </argument>
+    <argument id="progressBar::elapsedTime" name="elapsedTime">
+      <type builtin="yes" name="double" />
+    </argument>
+  </function>
+  <function id="trimTrailingZeros" name="trimTrailingZeros">
+    <brief>inefficient but works, TODO : think of better way</brief>
+    <return>
+      <type name="std::string" />
+    </return>
+    <argument id="trimTrailingZeros::in" name="in">
+      <type name="std::string" />
+    </argument>
+  </function>
+  <function id="ts" name="ts">
+    <brief>*</brief>
+    <doc>String utilities that need &gt;= c++ 2011
+
+
+std::string ts( int i, int len = -1);
+std::string ts( double d, int len = -1);
+std::string ts( float f, int len  = -1);
+std::string ts( unsigned int u, int len = -1);
+
+// inefficient but works, TODO : think of better way
+std::string trimTrailingZeros( string in );
+inline std::string dts( double d ){
+        return trimTrailingZeros( ts( d ) );
+}
+</doc>
+    <return>
+      <type name="std::string" />
+    </return>
+    <argument id="ts::i" name="i">
+      <type builtin="yes" name="int" />
+    </argument>
+    <argument id="ts::len" name="len">
+      <type builtin="yes" name="int" />
+    </argument>
+  </function>
+  <function id="ts" name="ts">
+    <return>
+      <type name="std::string" />
+    </return>
+    <argument id="ts::d" name="d">
+      <type builtin="yes" name="double" />
+    </argument>
+    <argument id="ts::len" name="len">
+      <type builtin="yes" name="int" />
+    </argument>
+  </function>
+  <function id="ts" name="ts">
+    <return>
+      <type name="std::string" />
+    </return>
+    <argument id="ts::f" name="f">
+      <type builtin="yes" name="float" />
+    </argument>
+    <argument id="ts::len" name="len">
+      <type builtin="yes" name="int" />
+    </argument>
+  </function>
+  <function id="ts" name="ts">
+    <return>
+      <type name="std::string" />
+    </return>
+    <argument id="ts::u" name="u">
+      <type builtin="yes" name="unsigned int" />
+    </argument>
+    <argument id="ts::len" name="len">
+      <type builtin="yes" name="int" />
+    </argument>
+  </function>
+</namespace>

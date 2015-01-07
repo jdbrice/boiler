@@ -62,7 +62,11 @@ namespace jdb{
 		map<string, Double_t> doubles;
 		
 
-		// maps of basic data type arrays
+		/*
+		 *
+		 * **Key** -   
+		 * **Value** -
+		 */
 		map<string, Int_t*> intArrays;
 		map<string, UInt_t*> uintArrays;
 		map<string, Char_t*> charArrays;
@@ -70,32 +74,58 @@ namespace jdb{
 		map<string, Short_t*> shortArrays;
 		map<string, UShort_t*> ushortArrays;
 		map<string, Float_t*> floatArrays;
+		map<string, Double_t*> doubleArrays;
 
-		// map of maximums for variable length arrays
+		/* 
+		 * Map of the length variables
+		 * **Key** is leaf name    
+		 * **Value** is the length of the array. Either a fixed number or the name of another leaf
+		 */
 		map<string, string> lengthName;
+		
+		/*
+		 *
+		 * **Key** -   
+		 * **Value** -
+		 */
 		map<string, Int_t> maxLength;
 
-		// map of branches
+		/*
+		 *
+		 * **Key** -   
+		 * **Value** -
+		 */
 		map<string, TBranch*> branches;
 
-		// branch info
+		/*
+		 *
+		 * **Key** -   
+		 * **Value** -
+		 */
 		map<string, bool> isArray;
+
+		/*
+		 *
+		 * **Key** -   
+		 * **Value** -
+		 */
 		map<string, string> type;
 
 	public:
 		TreeMap( TChain * chain );
 		~TreeMap();
 
-		void mapTree();
-		int findMax( string name );
-		void findLengths();
-		void setAddresses();
-
 		double get( string name, int index = 0 ); 
 		double operator[]( string bName );
 
 		int getEntries() { return nEntries; }
 		void getEntry( int i ) { chain->GetEntry( i ); }
+
+	protected:
+		void mapTree();
+		int findMax( string name );
+		void findLengths();
+		void setAddresses();
 
 
 		

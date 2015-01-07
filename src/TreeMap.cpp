@@ -128,7 +128,7 @@ namespace jdb{
 			// if it is an array then get the size
 			int aSize = -1;
 			if ( isArray[ name ]  ){
-				//lg.info(__FUNCTION__) << "Size of " << name << " = " << maxLength[ lengthName[ name ] ] << endl; 
+				lg.trace(__FUNCTION__) << "Size of " << name << " = " << maxLength[ lengthName[ name ] ] << endl; 
 				aSize = maxLength[ lengthName[ name ] ];
 			}
 
@@ -138,9 +138,10 @@ namespace jdb{
 
 
 			if ( isArray[ name ] )
-					lg.info(__FUNCTION__) << "Addressing : " << tName << " " << name << "[" << lengthName[ name ] << " === " << maxLength[ lengthName[ name ]] << "]" << endl;
-				else
-					lg.info(__FUNCTION__) << "Addressing : " << tName << " " << title << endl;
+				lg.info(__FUNCTION__) << "Addressing : " << tName << " " << name << "[" << lengthName[ name ] << " === " << maxLength[ lengthName[ name ]] << "]" << endl;
+			else
+				lg.info(__FUNCTION__) << "Addressing : " << tName << " " << title << endl;
+
 			/**
 			 * Blocks for each data type
 			 */
@@ -254,6 +255,22 @@ namespace jdb{
 					// not an array, just a single var
 					floats[ name ] = 0;
 					chain->SetBranchAddress( name.c_str(), &(floats[ name ]), &(branches[ name ] ) );
+					usable[ name ] = true;
+				}
+			}
+			// Double_t
+			if ( "Double_t" == tName ){
+				
+				branches[ name ] = 0;
+				
+				if ( 0 < aSize && isArray[ name ] ){
+					doubleArrays[ name ] = new Double_t[ aSize ];
+					chain->SetBranchAddress( name.c_str(), &(doubleArrays[ name ][0]), &(branches[ name ] ) );
+					usable[ name ] = true;
+				} else {
+					// not an array, just a single var
+					doubles[ name ] = 0;
+					chain->SetBranchAddress( name.c_str(), &(doubles[ name ]), &(branches[ name ] ) );
 					usable[ name ] = true;
 				}
 			}

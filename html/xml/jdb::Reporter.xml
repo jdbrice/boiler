@@ -1,0 +1,198 @@
+<class xmlns="http://jessevdk.github.com/cldoc/1.0" id="jdb::Reporter" interface="true" name="Reporter">
+  <brief>jdoc{</brief>
+  <doc>"class" : "Reporter",
+        "desc" : "A small utility class for creating PDF reports from ROOT canvas objects"
+}</doc>
+  <constructor abstract="yes" id="jdb::Reporter::Reporter" name="Reporter">
+    <brief>jdoc{</brief>
+    <doc>"name" : "Reporter( string filename, int w = 791, int h = 1024 )",
+        "params" : [
+                "filename", "w", "h"
+        ],
+        "paramDesc" : [
+                "Output filename", "width of pdf page", "height of page"
+        ],
+        "returns" : [
+
+        ],
+        "desc" : ""
+}</doc>
+    <argument id="jdb::Reporter::Reporter::filename" name="filename">
+      <type name="std::string" />
+    </argument>
+    <argument id="jdb::Reporter::Reporter::w" name="w">
+      <type builtin="yes" name="int" />
+    </argument>
+    <argument id="jdb::Reporter::Reporter::h" name="h">
+      <type builtin="yes" name="int" />
+    </argument>
+  </constructor>
+  <constructor abstract="yes" id="jdb::Reporter::Reporter" name="Reporter">
+    <brief>jdoc{</brief>
+    <doc>"name" : "Reporter( XmlConfig * config, string nodePath, string prefix = \"\" )",
+        "params" : [
+                "config", "nodePath", "prefix"
+        ],
+        "paramDesc" : [
+                "Project config", "Path to config node containing params", "prefix for parallel jobs - prepended"
+        ],
+        "returns" : [
+
+        ],
+        "desc" : ""
+}</doc>
+    <argument id="jdb::Reporter::Reporter::config" name="config">
+      <type name="XmlConfig" qualifier="*" ref="jdb::XmlConfig#jdb::XmlConfig" />
+    </argument>
+    <argument id="jdb::Reporter::Reporter::np" name="np">
+      <type name="std::string" />
+    </argument>
+    <argument id="jdb::Reporter::Reporter::prefix" name="prefix">
+      <type name="std::string" />
+    </argument>
+  </constructor>
+  <destructor abstract="yes" id="jdb::Reporter::~Reporter" name="~Reporter" />
+  <method abstract="yes" id="jdb::Reporter::cd" name="cd">
+    <brief>jdoc{</brief>
+    <doc>"name" : "void cd( int pad )",
+        "params" : [
+                "pad"
+        ],
+        "paramDesc" : [
+                "The pad to set as the current"
+        ],
+        "returns" : [
+
+        ],
+        "desc" : "The 0 pad is the entire page, individual pads start a 1"
+}</doc>
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+    <argument id="jdb::Reporter::cd::pad" name="pad">
+      <type builtin="yes" name="int" />
+    </argument>
+  </method>
+  <method abstract="yes" id="jdb::Reporter::cd" name="cd">
+    <brief>jdoc{</brief>
+    <doc>"name" : "void cd( int padX, int padY)",
+        "params" : [
+                "padX", "padY"
+        ],
+        "paramDesc" : [
+                "X coord of pad",
+                "Y coord of pad"
+        ],
+        "returns" : [
+
+        ],
+        "desc" : "Sets the padX, padY as the current pad. (1, 1) is the top left pad"
+}</doc>
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+    <argument id="jdb::Reporter::cd::padX" name="padX">
+      <type builtin="yes" name="int" />
+    </argument>
+    <argument id="jdb::Reporter::cd::padY" name="padY">
+      <type builtin="yes" name="int" />
+    </argument>
+  </method>
+  <method abstract="yes" id="jdb::Reporter::newPage" name="newPage">
+    <brief>jdoc{</brief>
+    <doc>"name" : "void newPage( int dx = 1, int dy = 1)",
+        "params" : [
+                "dx", "dy"
+        ],
+        "paramDesc" : [
+                "Optional: Number of divisions in x direction",
+                "Optional: Number of divisions in y direction"
+        ],
+        "returns" : [
+
+        ],
+        "desc" : "Creates a new page with sub-divided pads"
+}</doc>
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+    <argument id="jdb::Reporter::newPage::dx" name="dx">
+      <type builtin="yes" name="int" />
+    </argument>
+    <argument id="jdb::Reporter::newPage::dy" name="dy">
+      <type builtin="yes" name="int" />
+    </argument>
+  </method>
+  <method abstract="yes" id="jdb::Reporter::next" name="next">
+    <brief>jdoc{</brief>
+    <doc>"name" : "void next()",
+        "desc" : "Pushes to the next pad or next page"
+}</doc>
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+  </method>
+  <method abstract="yes" id="jdb::Reporter::saveImage" name="saveImage">
+    <brief>jdoc{</brief>
+    <doc>"name" : "void saveImage( string name )",
+        "params" : [
+                "name"
+        ],
+        "paramDesc" : [
+                "Output filename"
+        ],
+        "desc" : "Saves an image to the given filename. Must have suffix to determine format, ie .png, .jpg etc."
+}</doc>
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+    <argument id="jdb::Reporter::saveImage::name" name="name">
+      <type name="std::string" />
+    </argument>
+  </method>
+  <method abstract="yes" id="jdb::Reporter::savePage" name="savePage">
+    <brief>jdoc{</brief>
+    <doc>"name" : "void savePage( string name = \"\" )",
+        "params" : [
+                "name"
+        ],
+        "paramDesc" : [
+                "Optional: output filename"
+        ],
+        "desc" : "To add to the main report leave name off. Otherwise a single page PDF will be made with the given name"
+}</doc>
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+    <argument id="jdb::Reporter::savePage::name" name="name">
+      <type name="std::string" />
+    </argument>
+  </method>
+  <variable access="protected" id="jdb::Reporter::instances" name="instances">
+    <type builtin="yes" name="int" />
+  </variable>
+  <field access="protected" id="jdb::Reporter::cfg" name="cfg">
+    <type name="XmlConfig" qualifier="*" ref="jdb::XmlConfig#jdb::XmlConfig" />
+  </field>
+  <field access="protected" id="jdb::Reporter::nodePath" name="nodePath">
+    <type name="std::string" />
+  </field>
+  <field access="protected" id="jdb::Reporter::logger" name="logger">
+    <type name="Logger" qualifier="*" ref="jdb::Logger#jdb::Logger" />
+  </field>
+  <field access="protected" id="jdb::Reporter::canvas" name="canvas">
+    <type name="TCanvas" qualifier="*" />
+  </field>
+  <field access="protected" id="jdb::Reporter::currentPad" name="currentPad">
+    <type builtin="yes" name="int" />
+  </field>
+  <field access="protected" id="jdb::Reporter::dx" name="dx">
+    <type builtin="yes" name="int" />
+  </field>
+  <field access="protected" id="jdb::Reporter::dy" name="dy">
+    <type builtin="yes" name="int" />
+  </field>
+  <field access="protected" id="jdb::Reporter::filename" name="filename">
+    <type name="std::string" />
+  </field>
+</class>

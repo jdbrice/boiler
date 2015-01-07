@@ -1,0 +1,71 @@
+<class xmlns="http://jessevdk.github.com/cldoc/1.0" id="jdb::ConfigRange" name="ConfigRange">
+  <brief>jdoc{</brief>
+  <doc>"class" : "ConfigRange",
+        "desc" : "A range that can easily be initialized from a config file"
+}</doc>
+  <field id="jdb::ConfigRange::min" name="min">
+    <brief>jdoc{ "name" : "double min", "desc" : "Minimum value in range"}</brief>
+    <type builtin="yes" name="double" />
+  </field>
+  <field id="jdb::ConfigRange::max" name="max">
+    <brief>jdoc{ "name" : "double max", "desc" : "Maximum value in range"}</brief>
+    <type builtin="yes" name="double" />
+  </field>
+  <constructor id="jdb::ConfigRange::ConfigRange" name="ConfigRange">
+    <brief>jdoc{</brief>
+    <doc>"name" : "ConfigRange( XmlConfig * cfg, string np, double dMin = 0, double dMax = 0, string attrMin = \":min\", string attrMax = \":max\")",
+        "params" : [
+                "cfg", "nodePath", "dMin", "dMax", "attrMin", "attrMax"
+        ],
+        "paramDesc" : [
+                "Project config",
+                "Path to root node in config",
+                "Optional: Default min value",
+                "Optional: Default max value",
+                "Optional: Attribute to read from for min value",
+                "Optional: Attribute to read from for max value"
+        ],
+        "returns" : [
+
+        ],
+        "desc" : "Creates a range object from the project config. If values are not in the config the variables are initialized and set to the default"
+}</doc>
+    <argument id="jdb::ConfigRange::ConfigRange::cfg" name="cfg">
+      <type name="XmlConfig" qualifier="*" ref="jdb::XmlConfig#jdb::XmlConfig" />
+    </argument>
+    <argument id="jdb::ConfigRange::ConfigRange::np" name="np">
+      <type name="std::string" />
+    </argument>
+    <argument id="jdb::ConfigRange::ConfigRange::dMin" name="dMin">
+      <type builtin="yes" name="double" />
+    </argument>
+    <argument id="jdb::ConfigRange::ConfigRange::dMax" name="dMax">
+      <type builtin="yes" name="double" />
+    </argument>
+    <argument id="jdb::ConfigRange::ConfigRange::attrMin" name="attrMin">
+      <type name="std::string" />
+    </argument>
+    <argument id="jdb::ConfigRange::ConfigRange::attrMax" name="attrMax">
+      <type name="std::string" />
+    </argument>
+  </constructor>
+  <destructor id="jdb::ConfigRange::~ConfigRange" name="~ConfigRange" />
+  <method id="jdb::ConfigRange::toString" name="toString">
+    <brief>jdoc{</brief>
+    <doc>"name" : "string toString()",
+        "params" : [
+
+        ],
+        "paramDesc" : [
+
+        ],
+        "returns" : [
+                "String representation of the range"
+        ],
+        "desc" : "Example: \"( 0.0 -&gt; 14.0 )\" "
+}</doc>
+    <return>
+      <type name="std::string" />
+    </return>
+  </method>
+</class>

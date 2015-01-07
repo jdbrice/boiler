@@ -1,0 +1,15 @@
+<class xmlns="http://jessevdk.github.com/cldoc/1.0" id="jdb::LoggerConfig" name="LoggerConfig">
+  <constructor id="jdb::LoggerConfig::LoggerConfig" name="LoggerConfig" />
+  <destructor id="jdb::LoggerConfig::~LoggerConfig" name="~LoggerConfig" />
+  <method id="jdb::LoggerConfig::makeLogger" name="makeLogger" static="yes">
+    <return>
+      <type name="Logger" qualifier="*" ref="jdb::Logger#jdb::Logger" />
+    </return>
+    <argument id="jdb::LoggerConfig::makeLogger::config" name="config">
+      <type name="XmlConfig" qualifier="*" ref="jdb::XmlConfig#jdb::XmlConfig" />
+    </argument>
+    <argument id="jdb::LoggerConfig::makeLogger::nodePath" name="nodePath">
+      <type name="std::string" />
+    </argument>
+  </method>
+</class>

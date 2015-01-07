@@ -2,49 +2,41 @@
 #define CONFIG_POINT_H
 
 #include "XmlConfig.h"
+#include "Utils.h"
 
 namespace jdb{
-	/*jdoc{
-		"class" : "ConfigPoint",
-		"desc" : "A point that can easily be initialized from a config file"
-	}*/
+	
+	/*Config Point easily loads (x, y) points from XmlConfigs
+	 *
+	 * This class is a utility class used for quickly loading and aliasing point data in an xml config
+	 */
 	class ConfigPoint
 	{
 	public:
 
-		//jdoc{ "name" : "double x", "desc" : ""}
+		// x value
 		double x;
-		//jdoc{ "name" : "double y", "desc" : ""}
+		// y value
 		double y;
 
-		/*jdoc{
-			"name" : "ConfigPoint( XmlConfig * cfg, string nodePath, double dX = 0, double dY = 0, string attrX = \":x\", string attrY = \":y\")",
-			"params" : [
-				"cfg",
-				"nodePath",
-				"dX", 
-				"dY",
-				"attrX",
-				"attrY"
-
-			],
-			"paramDesc" : [
-				"Project config",
-				"Path to root node in config",
-				"Optional: Default x value",
-				"Optional: Default y value",
-				"Optional: Attribute to read from for x value",
-				"Optional: Attribute to read from for y value"
-			],
-			"returns" : [
-				
-			],
-			"desc" : "Creates a point object from the project config. If values are not in the config the variables are initialized and set to the default"
-		}*/
-		ConfigPoint( XmlConfig * cfg, string np, double dX = 0, double dY = 0, string attrX = ":x", string attrY = ":y"){
+	
+		/*Load point data from an XmlConfig
+		 *@cfg XmlConfig instance to load data from
+		 *@nodePath Path to the XmlNode containg point data
+		 *@dX Default = 0 : default x value if not found in node
+		 *@dY Default = 0 : default y value if not found in node
+		 *@attrX Default = ":x" : attribute tag to search for x value
+		 *@attrY Default = ":x" : attribute tag to search for y value
+		 *
+		 * This class reads in data from an XmlConfig instance. The underlying xml should contain a node at *nodePath* like 
+		 * ``` xml
+		 * <Point name="danny" x="100" y=":100" />
+		 * ```
+		 */
+		ConfigPoint( XmlConfig * cfg, std::string nodePath, double dX = 0, double dY = 0, string attrX = ":x", string attrY = ":y"){
 			if ( cfg ){
-				x = cfg->getDouble( np + attrX, dX );
-				y = cfg->getDouble( np + attrY, dY );
+				x = cfg->getDouble( nodePath + attrX, dX );
+				y = cfg->getDouble( nodePath + attrY, dY );
 			} else {
 				x = dX;
 				y = dY;
@@ -52,19 +44,10 @@ namespace jdb{
 		}
 		~ConfigPoint(){}
 
-		/*jdoc{
-			"name" : "string toString()",
-			"params" : [
-				
-			],
-			"paramDesc" : [
-				
-			],
-			"returns" : [
-				"String representation of point"
-			],
-			"desc" : "Example: \"( 0.0, 14.0 )\" "
-		}*/
+		/* Outputs the point as a human readable string
+		 *
+		 * @return A string representation of the point data in the format ( x, y )
+		 */
 		string toString(){
 			return ("( " + dts( x ) + ", " + dts( y ) + " )");
 		}

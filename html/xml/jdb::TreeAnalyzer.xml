@@ -1,0 +1,119 @@
+<class xmlns="http://jessevdk.github.com/cldoc/1.0" abstract="true" id="jdb::TreeAnalyzer" name="TreeAnalyzer">
+  <brief>jdoc{</brief>
+  <doc>"class" : "TreeAnalyzer",
+        "desc" : ""
+}</doc>
+  <constructor abstract="yes" id="jdb::TreeAnalyzer::TreeAnalyzer" name="TreeAnalyzer">
+    <brief>jdoc{</brief>
+    <doc>"name" : "TreeAnalyzer( XmlConfig * config, string nodePath, string fileList =\"\", string jobPrefix =\"\")",
+        "params" : [ "config", "nodePath", "fileList", "jobPrefix" ],
+        "paramDesc" : [ "Project's config object",
+                "The node path containing configuration parameters",
+                "Optional: File list for parallel jobs",
+                "Optional: Job prefix for parallel jobs. Will be prepended to output file names." ],
+        "returns" : [  ],
+        "desc" : ""
+}</doc>
+    <argument id="jdb::TreeAnalyzer::TreeAnalyzer::config" name="config">
+      <type name="XmlConfig" qualifier="*" ref="jdb::XmlConfig#jdb::XmlConfig" />
+    </argument>
+    <argument id="jdb::TreeAnalyzer::TreeAnalyzer::np" name="np">
+      <type name="std::string" />
+    </argument>
+    <argument id="jdb::TreeAnalyzer::TreeAnalyzer::fileList" name="fileList">
+      <type name="std::string" />
+    </argument>
+    <argument id="jdb::TreeAnalyzer::TreeAnalyzer::jobPrefix" name="jobPrefix">
+      <type name="std::string" />
+    </argument>
+  </constructor>
+  <destructor abstract="yes" id="jdb::TreeAnalyzer::~TreeAnalyzer" name="~TreeAnalyzer" />
+  <method abstract="yes" id="jdb::TreeAnalyzer::make" name="make" virtual="yes">
+    <brief>jdoc{</brief>
+    <doc>"name" : "virtual void make()",
+"params" : [ ],
+"paramDesc" : [ ],
+"returns" : [  ],
+"desc" : "The maker function for publicly starting the job"
+}</doc>
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+  </method>
+  <field access="protected" id="jdb::TreeAnalyzer::logger" name="logger">
+    <brief>jdoc{ "name" : "Logger *logger", "desc" : "The logging object for the job"}</brief>
+    <type name="Logger" qualifier="*" ref="jdb::Logger#jdb::Logger" />
+  </field>
+  <field access="protected" id="jdb::TreeAnalyzer::cfg" name="cfg">
+    <brief>jdoc{"name" : "XmlConfig *cfg", "desc" : "Project config"}</brief>
+    <type name="XmlConfig" qualifier="*" ref="jdb::XmlConfig#jdb::XmlConfig" />
+  </field>
+  <field access="protected" id="jdb::TreeAnalyzer::nodePath" name="nodePath">
+    <brief>jdoc{"name" : "string nodePath", "desc" : "Node path in config file"}</brief>
+    <type name="std::string" />
+  </field>
+  <field access="protected" id="jdb::TreeAnalyzer::book" name="book">
+    <brief>jdoc{"name" : "HistoBook *book", "desc" : "Store project histograms and data"}</brief>
+    <type name="HistoBook" qualifier="*" ref="jdb::HistoBook#jdb::HistoBook" />
+  </field>
+  <field access="protected" id="jdb::TreeAnalyzer::reporter" name="reporter">
+    <brief>jdoc{"name" : "Reporter *reporter", "desc" : "For generating generic reports"}</brief>
+    <type name="Reporter" qualifier="*" ref="jdb::Reporter#jdb::Reporter" />
+  </field>
+  <field access="protected" id="jdb::TreeAnalyzer::chain" name="chain">
+    <brief>jdoc{"name" : "TChain *chain", "desc" : "The chain object which gets automatically set up"}</brief>
+    <type name="TChain" qualifier="*" />
+  </field>
+  <field access="protected" id="jdb::TreeAnalyzer::nEventsToProcess" name="nEventsToProcess">
+    <brief>jdoc{"name" : "int nEventsToProcess", "desc" : ""}</brief>
+    <type builtin="yes" name="int" />
+  </field>
+  <method access="protected" id="jdb::TreeAnalyzer::analyzeEvent" name="analyzeEvent" virtual="yes">
+    <brief>jdoc{</brief>
+    <doc>"name" : "virtual void analyzeEvent()",
+"params" : [ ],
+"paramDesc" : [ ],
+"returns" : [  ],
+"desc" : "Analyzes a single event in the chain"
+}</doc>
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+  </method>
+  <method abstract="yes" access="protected" id="jdb::TreeAnalyzer::keepEvent" name="keepEvent" virtual="yes">
+    <brief>jdoc{</brief>
+    <doc>"name" : "virtual bool keepEvent()",
+"params" : [ ],
+"paramDesc" : [ ],
+"returns" : [ "true : Event should be processed", "false : Event should be skipped" ],
+"desc" : "Central function for event cuts"
+}</doc>
+    <return>
+      <type builtin="yes" name="bool" />
+    </return>
+  </method>
+  <method access="protected" id="jdb::TreeAnalyzer::postEventLoop" name="postEventLoop" virtual="yes">
+    <brief>jdoc{</brief>
+    <doc>"name" : "virtual void postEventLoop()",
+"params" : [ ],
+"paramDesc" : [ ],
+"returns" : [  ],
+"desc" : "Called after the event loop for cleanup, report generation, etc."
+}</doc>
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+  </method>
+  <method abstract="yes" access="protected" id="jdb::TreeAnalyzer::preEventLoop" name="preEventLoop" virtual="yes">
+    <brief>jdoc{</brief>
+    <doc>"name" : "virtual void preEventLoop()",
+"params" : [ ],
+"paramDesc" : [ ],
+"returns" : [  ],
+"desc" : "Called before the event loop for intialization"
+}</doc>
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+  </method>
+</class>
