@@ -15,7 +15,9 @@
         - l : a 64 bit unsigned integer (ULong64_t)
         - O : [the letter 'o', not a zero] a boolean (Bool_t)
 </doc>
-  <class name="ChainLoader" ref="jdb::ChainLoader#jdb::ChainLoader" />
+  <class name="ChainLoader" ref="jdb::ChainLoader#jdb::ChainLoader">
+    <brief>Static use class for loading .root files into a TChain</brief>
+  </class>
   <class name="ConfigPoint" ref="jdb::ConfigPoint#jdb::ConfigPoint">
     <brief>Config Point easily loads (x, y) points from XmlConfigs</brief>
   </class>

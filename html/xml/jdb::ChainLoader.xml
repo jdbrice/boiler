@@ -1,11 +1,27 @@
 <class xmlns="http://jessevdk.github.com/cldoc/1.0" id="jdb::ChainLoader" interface="true" name="ChainLoader">
-  <doc>
-	Static use class for loading .root files into a TChain
+  <brief>Static use class for loading .root files into a TChain</brief>
+  <doc>Static class used for loading files into TChains.
+Can be used to load an entire directory, or files from a filelist.lis
 
-	Static class used for loading files into TChains.
-	Can be used to load an entire directory, or files from a filelist.lis
+---
 
-</doc>
+**Headers** : "ChainLoader.h"   
+**Source** : "ChainLoader.cpp"
+
+
+### ChainLoader Example usage
+
+``` cpp
+TChain * chain = new TChain( "treeName" );
+ChainLoader::load( chain, "path_to_dir_containg_.roots", maxFilesToLoad );
+```
+
+Or if you are running parallel or want to load from a file list use:
+
+``` cpp
+TChain * chain = new TChain( "treeName" );
+ChainLoader::load( chain, "path_to_dir_listfile.lis", maxFilesToLoad );
+```</doc>
   <method abstract="yes" id="jdb::ChainLoader::load" name="load" static="yes">
     <brief> Loads files in a directory to the TChain</brief>
     <doc>Loads .root files containing TTrees into

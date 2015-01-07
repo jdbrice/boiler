@@ -109,10 +109,11 @@ $(jdbLibStatic): $(ClassObjs)
 
 
 doc:
-	@echo "Generating clDocs";					\
-	/Users/danielbrandenburg/bnl/local/cldoc/bin/usr/local/bin/clDoc generate $(includes) $(CXXFLAGS) -- 	\
+	@echo "Generating Documentations";			\
+	clDoc generate $(includes) $(CXXFLAGS) -- 	\
 			--report 							\
 			--output html						\
+			--merge html/mergedocs/				\
 			$(ClassHeaders)
 	python /Users/danielbrandenburg/bnl/local/work/boiler/html/sanitize_std.py html/xml/
 

@@ -10,12 +10,8 @@
 
 namespace jdb{
 
-	/*
-	 *	Static use class for loading .root files into a TChain
-	 *
-	 * 	Static class used for loading files into TChains. 
-	 * 	Can be used to load an entire directory, or files from a filelist.lis
-	 * 
+	/* 
+	 * see mergedoc/jdb::ChainLoader
 	 */
 	class ChainLoader{
 

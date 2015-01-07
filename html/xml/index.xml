@@ -1,7 +1,9 @@
 <index xmlns="http://jessevdk.github.com/cldoc/1.0">
   <namespace name="jdb" ref="jdb#jdb">
     <brief>*</brief>
-    <class name="ChainLoader" ref="jdb::ChainLoader#jdb::ChainLoader" />
+    <class name="ChainLoader" ref="jdb::ChainLoader#jdb::ChainLoader">
+      <brief>Static use class for loading .root files into a TChain</brief>
+    </class>
     <class name="ConfigPoint" ref="jdb::ConfigPoint#jdb::ConfigPoint">
       <brief>Config Point easily loads (x, y) points from XmlConfigs</brief>
     </class>
