@@ -31,7 +31,7 @@ return values.
       </undocumented>
     </type>
     <type documented="1" name="namespace" undocumented="0" />
-    <type documented="57" name="method" undocumented="44">
+    <type documented="59" name="method" undocumented="42">
       <undocumented id="jdb::HistoBook::clearLegend" name="clearLegend">
         <location column="3" file="include/jdb/HistoBook.h" line="285" />
       </undocumented>
@@ -146,23 +146,17 @@ return values.
       <undocumented id="jdb::TreeMap::setAddresses" name="setAddresses">
         <location column="3" file="include/jdb/TreeMap.h" line="128" />
       </undocumented>
-      <undocumented id="jdb::XmlConfig::getFloat" name="getFloat">
-        <location column="3" file="include/jdb/XmlConfig.h" line="176" />
-      </undocumented>
       <undocumented id="jdb::XmlConfig::manualToLower" name="manualToLower">
-        <location column="3" file="include/jdb/XmlConfig.h" line="307" />
+        <location column="3" file="include/jdb/XmlConfig.h" line="260" />
       </undocumented>
       <undocumented id="jdb::XmlConfig::sanitize" name="sanitize">
-        <location column="3" file="include/jdb/XmlConfig.h" line="308" />
+        <location column="3" file="include/jdb/XmlConfig.h" line="261" />
       </undocumented>
       <undocumented id="jdb::XmlConfig::split" name="split">
-        <location column="3" file="include/jdb/XmlConfig.h" line="311" />
-      </undocumented>
-      <undocumented id="jdb::XmlConfig::trim" name="trim">
-        <location column="3" file="include/jdb/XmlConfig.h" line="266" />
+        <location column="3" file="include/jdb/XmlConfig.h" line="264" />
       </undocumented>
       <undocumented id="jdb::XmlConfig::vectorFromString" name="vectorFromString">
-        <location column="3" file="include/jdb/XmlConfig.h" line="310" />
+        <location column="3" file="include/jdb/XmlConfig.h" line="263" />
       </undocumented>
     </type>
     <type documented="34" name="field" undocumented="51">
@@ -320,7 +314,7 @@ return values.
         <location column="3" file="include/jdb/XmlConfig.h" line="30" />
       </undocumented>
     </type>
-    <type documented="10" name="constructor" undocumented="6">
+    <type documented="11" name="constructor" undocumented="5">
       <undocumented id="jdb::Logger::NullStream::NullStream" name="NullStream">
         <location column="4" file="include/jdb/Logger.h" line="36" />
       </undocumented>
@@ -335,9 +329,6 @@ return values.
       </undocumented>
       <undocumented id="jdb::TreeMap::TreeMap" name="TreeMap">
         <location column="3" file="include/jdb/TreeMap.h" line="115" />
-      </undocumented>
-      <undocumented id="jdb::XmlConfig::XmlConfig" name="XmlConfig">
-        <location column="3" file="include/jdb/XmlConfig.h" line="61" />
       </undocumented>
     </type>
     <type documented="5" name="variable" undocumented="17">
@@ -395,10 +386,10 @@ return values.
     </type>
     <type documented="0" name="destructor" undocumented="9">
       <undocumented id="jdb::ConfigPoint::~ConfigPoint" name="~ConfigPoint">
-        <location column="3" file="include/jdb/ConfigPoint.h" line="45" />
+        <location column="3" file="include/jdb/ConfigPoint.h" line="47" />
       </undocumented>
       <undocumented id="jdb::ConfigRange::~ConfigRange" name="~ConfigRange">
-        <location column="3" file="include/jdb/ConfigRange.h" line="48" />
+        <location column="3" file="include/jdb/ConfigRange.h" line="46" />
       </undocumented>
       <undocumented id="jdb::HistoAnalyzer::~HistoAnalyzer" name="~HistoAnalyzer">
         <location column="3" file="include/jdb/HistoAnalyzer.h" line="60" />
@@ -419,10 +410,10 @@ return values.
         <location column="3" file="include/jdb/TreeMap.h" line="116" />
       </undocumented>
       <undocumented id="jdb::XmlConfig::~XmlConfig" name="~XmlConfig">
-        <location column="3" file="include/jdb/XmlConfig.h" line="62" />
+        <location column="3" file="include/jdb/XmlConfig.h" line="68" />
       </undocumented>
     </type>
-    <type documented="11" name="class" undocumented="5">
+    <type documented="12" name="class" undocumented="4">
       <undocumented id="jdb::Logger::NullStream" name="NullStream">
         <location column="3" file="include/jdb/Logger.h" line="34" />
       </undocumented>
@@ -434,9 +425,6 @@ return values.
       </undocumented>
       <undocumented id="jdb::TreeMap" name="TreeMap">
         <location column="2" file="include/jdb/TreeMap.h" line="36" />
-      </undocumented>
-      <undocumented id="jdb::XmlConfig" name="XmlConfig">
-        <location column="2" file="include/jdb/XmlConfig.h" line="26" />
       </undocumented>
     </type>
   </coverage>
@@ -541,86 +529,23 @@ return values.
       <undocumented name="name" />
     </function>
     <function id="jdb::XmlConfig::operator[]" name="operator[]">
-      <location column="3" file="include/jdb/XmlConfig.h" line="77" />
+      <location column="3" file="include/jdb/XmlConfig.h" line="74" />
       <undocumented-return />
-      <undocumented name="nodePath" />
-    </function>
-    <function id="jdb::XmlConfig::getString" name="getString">
-      <location column="3" file="include/jdb/XmlConfig.h" line="93" />
-      <undocumented-return />
-      <undocumented name="nodePath" />
-      <undocumented name="def" />
-    </function>
-    <function id="jdb::XmlConfig::getStringVector" name="getStringVector">
-      <location column="3" file="include/jdb/XmlConfig.h" line="110" />
-      <undocumented-return />
-      <undocumented name="nodePath" />
-    </function>
-    <function id="jdb::XmlConfig::getInt" name="getInt">
-      <location column="3" file="include/jdb/XmlConfig.h" line="125" />
-      <undocumented-return />
-      <undocumented name="nodePath" />
-      <undocumented name="def" />
+      <misspelled name="returns" />
     </function>
     <function id="jdb::XmlConfig::getIntVector" name="getIntVector">
-      <location column="3" file="include/jdb/XmlConfig.h" line="142" />
+      <location column="3" file="include/jdb/XmlConfig.h" line="124" />
       <undocumented-return />
-      <undocumented name="nodePath" />
-    </function>
-    <function id="jdb::XmlConfig::getDouble" name="getDouble">
-      <location column="3" file="include/jdb/XmlConfig.h" line="157" />
-      <undocumented-return />
-      <undocumented name="nodePath" />
-      <undocumented name="def" />
+      <misspelled name="return" />
     </function>
     <function id="jdb::XmlConfig::getDoubleVector" name="getDoubleVector">
-      <location column="3" file="include/jdb/XmlConfig.h" line="174" />
+      <location column="3" file="include/jdb/XmlConfig.h" line="142" />
       <undocumented-return />
-      <undocumented name="nodePath" />
+      <misspelled name="return" />
     </function>
-    <function id="jdb::XmlConfig::getBool" name="getBool">
-      <location column="3" file="include/jdb/XmlConfig.h" line="195" />
+    <function id="jdb::XmlConfig::trim" name="trim">
+      <location column="3" file="include/jdb/XmlConfig.h" line="232" />
       <undocumented-return />
-      <undocumented name="nodePath" />
-      <undocumented name="def" />
-    </function>
-    <function id="jdb::XmlConfig::exists" name="exists">
-      <location column="3" file="include/jdb/XmlConfig.h" line="211" />
-      <undocumented-return />
-      <undocumented name="nodePath" />
-    </function>
-    <function id="jdb::XmlConfig::childrenOf" name="childrenOf">
-      <location column="3" file="include/jdb/XmlConfig.h" line="226" />
-      <undocumented-return />
-      <undocumented name="nodePath" />
-      <undocumented name="depth" />
-      <undocumented name="attrs" />
-    </function>
-    <function id="jdb::XmlConfig::attributesOf" name="attributesOf">
-      <location column="3" file="include/jdb/XmlConfig.h" line="241" />
-      <undocumented-return />
-      <undocumented name="nodePath" />
-    </function>
-    <function id="jdb::XmlConfig::getNodes" name="getNodes">
-      <location column="3" file="include/jdb/XmlConfig.h" line="260" />
-      <undocumented-return />
-      <undocumented name="nodePath" />
-    </function>
-    <function id="jdb::XmlConfig::split" name="split">
-      <location column="3" file="include/jdb/XmlConfig.h" line="265" />
-      <undocumented-return />
-      <undocumented name="s" />
-      <undocumented name="delim" />
-    </function>
-    <function id="jdb::XmlConfig::tagName" name="tagName">
-      <location column="3" file="include/jdb/XmlConfig.h" line="286" />
-      <undocumented-return />
-      <undocumented name="nodePath" />
-    </function>
-    <function id="jdb::XmlConfig::attributeName" name="attributeName">
-      <location column="3" file="include/jdb/XmlConfig.h" line="303" />
-      <undocumented-return />
-      <undocumented name="nodePath" />
     </function>
     <function id="jdb::HistoBook::makeNBins" name="makeNBins">
       <location column="3" file="include/jdb/HistoBook.h" line="99" />
@@ -742,54 +667,16 @@ return values.
       <undocumented name="textWidth" />
     </function>
     <function id="jdb::ConfigRange::ConfigRange" name="ConfigRange">
-      <location column="3" file="include/jdb/ConfigRange.h" line="39" />
-      <undocumented name="attrMin" />
-      <undocumented name="cfg" />
-      <undocumented name="dMin" />
+      <location column="3" file="include/jdb/ConfigRange.h" line="37" />
       <undocumented name="np" />
-      <undocumented name="dMax" />
-      <undocumented name="attrMax" />
-    </function>
-    <function id="jdb::ConfigRange::toString" name="toString">
-      <location column="3" file="include/jdb/ConfigRange.h" line="63" />
-      <undocumented-return />
+      <misspelled name="nodePath" />
     </function>
   </arguments>
   <references>
-    <method id="jdb::XmlConfig::getStringVector" name="getStringVector">
-      <location column="3" file="include/jdb/XmlConfig.h" line="110" />
+    <method id="jdb::XmlConfig::getString" name="getString">
+      <location column="3" file="include/jdb/XmlConfig.h" line="97" />
       <doctype name="doc">
-        <ref name=" string " />
-      </doctype>
-    </method>
-    <method id="jdb::XmlConfig::getIntVector" name="getIntVector">
-      <location column="3" file="include/jdb/XmlConfig.h" line="142" />
-      <doctype name="doc">
-        <ref name=" int " />
-      </doctype>
-    </method>
-    <method id="jdb::XmlConfig::getDoubleVector" name="getDoubleVector">
-      <location column="3" file="include/jdb/XmlConfig.h" line="174" />
-      <doctype name="doc">
-        <ref name=" double " />
-      </doctype>
-    </method>
-    <method id="jdb::XmlConfig::childrenOf" name="childrenOf">
-      <location column="3" file="include/jdb/XmlConfig.h" line="226" />
-      <doctype name="doc">
-        <ref name=" string " />
-      </doctype>
-    </method>
-    <method id="jdb::XmlConfig::attributesOf" name="attributesOf">
-      <location column="3" file="include/jdb/XmlConfig.h" line="241" />
-      <doctype name="doc">
-        <ref name=" string " />
-      </doctype>
-    </method>
-    <method id="jdb::XmlConfig::getNodes" name="getNodes">
-      <location column="3" file="include/jdb/XmlConfig.h" line="260" />
-      <doctype name="doc">
-        <ref name="string" />
+        <ref name="cut1 /" />
       </doctype>
     </method>
     <method id="jdb::HistoBook::make" name="make">

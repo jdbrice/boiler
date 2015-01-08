@@ -6,36 +6,34 @@
 
 namespace jdb{
 
-	/*jdoc{
-		"class" : "ConfigRange",
-		"desc" : "A range that can easily be initialized from a config file"
-	}*/
+	/*ConfigRange easily loads (min -> max) ranges from XmlConfigs
+	 *
+	 * This class is a utility class used for quickly loading and aliasing range data in an xml config
+	 *
+	 * **Headers** : ConfigRange.h
+	 */
 	class ConfigRange
 	{
 	public:
-		//jdoc{ "name" : "double min", "desc" : "Minimum value in range"}
+		
+		//Minimum value in range
 		double min;
-		//jdoc{ "name" : "double max", "desc" : "Maximum value in range"}
+		//Maximum value in range
 		double max;
 
-		/*jdoc{
-			"name" : "ConfigRange( XmlConfig * cfg, string np, double dMin = 0, double dMax = 0, string attrMin = \":min\", string attrMax = \":max\")",
-			"params" : [
-				"cfg", "nodePath", "dMin", "dMax", "attrMin", "attrMax"
-			],
-			"paramDesc" : [
-				"Project config",
-				"Path to root node in config",
-				"Optional: Default min value",
-				"Optional: Default max value",
-				"Optional: Attribute to read from for min value",
-				"Optional: Attribute to read from for max value"
-			],
-			"returns" : [
-				
-			],
-			"desc" : "Creates a range object from the project config. If values are not in the config the variables are initialized and set to the default"
-		}*/
+		/*Load range data from an XmlConfig
+		 *@cfg XmlConfig instance to load data from
+		 *@nodePath Path to the XmlNode containg range data
+		 *@dMin Default = 0 : default x value if not found in node
+		 *@dMax Default = 0 : default y value if not found in node
+		 *@attrMin Default = ":min" : attribute tag to search for x value
+		 *@attrMax Default = ":max" : attribute tag to search for y value
+		 *
+		 * This class reads in data from an XmlConfig instance. The underlying xml should contain a node at *nodePath* like 
+		 * ``` xml
+		 * <Range name="danny" min="100" max=":100" />
+		 * ```
+		 */
 		ConfigRange( XmlConfig * cfg, string np, double dMin = 0, double dMax = 0, string attrMin = ":min", string attrMax = ":max"){
 			if ( cfg ){
 				min = cfg->getDouble( np + attrMin, dMin );
@@ -47,19 +45,10 @@ namespace jdb{
 		}
 		~ConfigRange(){}
 
-		/*jdoc{
-			"name" : "string toString()",
-			"params" : [
-				
-			],
-			"paramDesc" : [
-				
-			],
-			"returns" : [
-				"String representation of the range"
-			],
-			"desc" : "Example: \"( 0.0 -> 14.0 )\" "
-		}*/
+		/* Outputs the range as a human readable string
+		 *
+		 * @return A string representation of the range data in the format "( min -> max )"
+		 */
 		string toString(){
 			return ("( " + dts( min ) + " -> " + dts( max ) + " )");
 		}

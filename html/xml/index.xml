@@ -1,6 +1,6 @@
 <index xmlns="http://jessevdk.github.com/cldoc/1.0">
   <namespace name="jdb" ref="jdb#jdb">
-    <brief>*</brief>
+    <brief>A framework for using ROOT more efficiently.</brief>
     <class name="ChainLoader" ref="jdb::ChainLoader#jdb::ChainLoader">
       <brief>Static use class for loading .root files into a TChain</brief>
     </class>
@@ -8,7 +8,7 @@
       <brief>Config Point easily loads (x, y) points from XmlConfigs</brief>
     </class>
     <class name="ConfigRange" ref="jdb::ConfigRange#jdb::ConfigRange">
-      <brief>jdoc{</brief>
+      <brief>ConfigRange easily loads (min -&gt; max) ranges from XmlConfigs</brief>
     </class>
     <class name="HistoAnalyzer" ref="jdb::HistoAnalyzer#jdb::HistoAnalyzer">
       <brief>jdoc{</brief>
@@ -38,7 +38,9 @@
       <brief>jdoc{</brief>
     </class>
     <class name="TreeMap" ref="jdb::TreeMap#jdb::TreeMap" />
-    <class name="XmlConfig" ref="jdb::XmlConfig#jdb::XmlConfig" />
+    <class name="XmlConfig" ref="jdb::XmlConfig#jdb::XmlConfig">
+      <brief>Use xml formatted config files easily in projects</brief>
+    </class>
   </namespace>
   <report name="Documentation generator" ref="report" />
 </index>

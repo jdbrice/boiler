@@ -1,20 +1,9 @@
 <namespace xmlns="http://jessevdk.github.com/cldoc/1.0" id="jdb" name="jdb">
-  <brief>*</brief>
-  <doc>TTree Data Types to support
+  <brief>A framework for using ROOT more efficiently.</brief>
+  <doc>#Roobarb 
+A framework for using the data analysis package ROOT more efficiently and with fewer headaches.
 
-        - C : a character string terminated by the 0 character
-        - B : an 8 bit signed integer (Char_t)
-        - b : an 8 bit unsigned integer (UChar_t)
-        - S : a 16 bit signed integer (Short_t)
-        - s : a 16 bit unsigned integer (UShort_t)
-        - I : a 32 bit signed integer (Int_t)
-        - i : a 32 bit unsigned integer (UInt_t)
-        - F : a 32 bit floating point (Float_t)
-        - D : a 64 bit floating point (Double_t)
-        - L : a 64 bit signed integer (Long64_t)
-        - l : a 64 bit unsigned integer (ULong64_t)
-        - O : [the letter 'o', not a zero] a boolean (Bool_t)
-</doc>
+It can be used from the ROOT interpreter or as a library for compiled projects.</doc>
   <class name="ChainLoader" ref="jdb::ChainLoader#jdb::ChainLoader">
     <brief>Static use class for loading .root files into a TChain</brief>
   </class>
@@ -22,7 +11,7 @@
     <brief>Config Point easily loads (x, y) points from XmlConfigs</brief>
   </class>
   <class name="ConfigRange" ref="jdb::ConfigRange#jdb::ConfigRange">
-    <brief>jdoc{</brief>
+    <brief>ConfigRange easily loads (min -&gt; max) ranges from XmlConfigs</brief>
   </class>
   <class name="HistoAnalyzer" ref="jdb::HistoAnalyzer#jdb::HistoAnalyzer">
     <brief>jdoc{</brief>
@@ -48,7 +37,9 @@
     <brief>jdoc{</brief>
   </class>
   <class name="TreeMap" ref="jdb::TreeMap#jdb::TreeMap" />
-  <class name="XmlConfig" ref="jdb::XmlConfig#jdb::XmlConfig" />
+  <class name="XmlConfig" ref="jdb::XmlConfig#jdb::XmlConfig">
+    <brief>Use xml formatted config files easily in projects</brief>
+  </class>
   <function id="dts" name="dts">
     <return>
       <type name="std::string" />

@@ -1,377 +1,307 @@
 <class xmlns="http://jessevdk.github.com/cldoc/1.0" id="jdb::XmlConfig" interface="true" name="XmlConfig">
+  <brief>Use xml formatted config files easily in projects</brief>
+  <doc>Provides a high-level interface for xml formatted configuration files. </doc>
   <constructor abstract="yes" id="jdb::XmlConfig::XmlConfig" name="XmlConfig">
+    <brief> Creates an XmlConfig from the given xml file</brief>
+    <doc>Loads the file, parses its content and makes its data available
+</doc>
     <argument id="jdb::XmlConfig::XmlConfig::filename" name="filename">
+      <doc>The file containg valid xml to load</doc>
       <type name="std::string" />
     </argument>
   </constructor>
   <destructor abstract="yes" id="jdb::XmlConfig::~XmlConfig" name="~XmlConfig" />
   <method abstract="yes" id="jdb::XmlConfig::attributeName" name="attributeName">
-    <brief>jdoc{</brief>
-    <doc>"name" : "string attributeName( string nodePath )",
-        "params" : [
-                "nodePath"
-        ],
-        "paramDesc" : [
-                "Path to Node"
-        ],
-        "returns" : [
-                "The attribute name only"
-        ],
-        "desc" : "Extracts the attribute name from a full node path.
+    <brief> Get the attribute name from a full path</brief>
+    <doc>Extracts the attribute name from a full node path.
+For instance:
+The node path "category.sub.a:name" yields "name"
 
-        For instance:
-        The node path \"node.sub.a:name\" yields \"name\" "
-}</doc>
+</doc>
     <return>
+      <doc>The attribute name if the path contains one.
+Empty string otherwise</doc>
       <type name="std::string" />
     </return>
     <argument id="jdb::XmlConfig::attributeName::nodePath" name="nodePath">
+      <doc>Path to node. See getString(...)</doc>
       <type name="std::string" />
     </argument>
   </method>
   <method abstract="yes" id="jdb::XmlConfig::attributesOf" name="attributesOf">
-    <brief>jdoc{</brief>
-    <doc>"name" : "vector&amp;lt; string &amp;gt; attributesOf( string nodePath )",
-        "params" : [
-                "nodePath"
-        ],
-        "paramDesc" : [
-                "Path to node"
-        ],
-        "returns" : [
-                "List of paths to attributes."
-        ],
-        "desc" : "One path is added for each attribute of the given node or an empty list if no attributes are present. Use attributeName(...) to get only the attribute name from the full path."
-}</doc>
+    <brief> Get the attributes of a node</brief>
+    <doc>One path is added for each attribute of the given
+node or an empty list if no attributes
+are present. Use attributeName( attributePath ) to
+get only the attribute name from the full path.
+
+</doc>
     <return>
+      <doc>Vector of strings containg paths to each attribute</doc>
       <type name="std::vector&lt;std::string&gt;" />
     </return>
     <argument id="jdb::XmlConfig::attributesOf::nodePath" name="nodePath">
+      <doc>Path to node. See getString(...)</doc>
       <type name="std::string" />
     </argument>
   </method>
   <method abstract="yes" id="jdb::XmlConfig::childrenOf" name="childrenOf">
-    <brief>jdoc{</brief>
-    <doc>"name" : "vector&amp;lt; string &amp;gt; childrenOf( string nodePath, int depth = -1, bool attrs = false )",
-        "params" : [
-                "nodePath", "depth", "attrs"
-        ],
-        "paramDesc" : [
-                "Path to node", "Depth to search for children", "Include attribute paths"
-        ],
-        "returns" : [
-                "List of paths to children of the given node. Empty list for no children found"
-        ],
-        "desc" : "Gets a list of paths to all children of a given node. Very useful for automating tasks, building lots of objects, etc."
-}</doc>
+    <brief> Lists the children of a node</brief>
+    <doc>Gets a list of paths to all children of a given node.
+Very useful for automating tasks, building lots of objects, etc.
+
+</doc>
     <return>
+      <doc>Vector of strings containg paths to each node or attribute</doc>
       <type name="std::vector&lt;std::string&gt;" />
     </return>
     <argument id="jdb::XmlConfig::childrenOf::nodePath" name="nodePath">
+      <doc>Path to node. See getString(...)</doc>
       <type name="std::string" />
     </argument>
     <argument id="jdb::XmlConfig::childrenOf::depth" name="depth">
+      <doc>The number of levels to search for children</doc>
       <type builtin="yes" name="int" />
     </argument>
     <argument id="jdb::XmlConfig::childrenOf::attrs" name="attrs">
+      <doc>Show Attributes of node and children or not</doc>
       <type builtin="yes" name="bool" />
     </argument>
   </method>
   <method abstract="yes" id="jdb::XmlConfig::exists" name="exists">
-    <brief>jdoc{</brief>
-    <doc>"name" : "bool exists( string nodePath )",
-        "params" : [
-                "nodePath"
-        ],
-        "paramDesc" : [
-                "Path to node"
-        ],
-        "returns" : [
-                "True: node exists",
-                "False: node does not exist"
-        ],
-        "desc" : "Used to determine if a node exists"
-}</doc>
+    <brief> Determine whether a node exists in the xml or not</brief>
+    <doc>Searches the xml structure for the given node.
+</doc>
     <return>
+      <doc>**True** - node or attribute is found. **False** otherwise</doc>
       <type builtin="yes" name="bool" />
     </return>
     <argument id="jdb::XmlConfig::exists::nodePath" name="nodePath">
+      <doc>Path to node. See getString(...)</doc>
       <type name="std::string" />
     </argument>
   </method>
   <method abstract="yes" id="jdb::XmlConfig::getBool" name="getBool">
-    <brief>jdoc{</brief>
-    <doc>"name" : "bool getBool( string nodePath, bool def = false )",
-        "params" : [
-                "nodePath", "def"
-        ],
-        "paramDesc" : [
-                "Path to node", "Optional: Default value for node DNE"
-        ],
-        "returns" : [
-                "The node value converted to a bool or the default if the node DNE.",
-                "True: Int values &amp;gt;= 1 or case insensitive \"true\"  ",
-                "False: Int values &amp;lt; 1 or case insensitive \"false\"  "
-        ],
-        "desc" : "Gets a nodes value and returns it as an int type.
-        The strings \"true\" and \"false\" are also converted to the corresponding bool values.
-        The case is not important. This allows xml files to be easier to read."
-}</doc>
+    <brief> Gets a node or attribute as bool type</brief>
+    <doc>Can be string of any case "true", or "false"
+Uses atoi(...)  to convert string data to builtin type bool
+</doc>
     <return>
+      <doc>The underlying xml data at nodePath as an builtin type bool</doc>
       <type builtin="yes" name="bool" />
     </return>
     <argument id="jdb::XmlConfig::getBool::nodePath" name="nodePath">
+      <doc>Path to node. See getString(...)</doc>
       <type name="std::string" />
     </argument>
     <argument id="jdb::XmlConfig::getBool::def" name="def">
+      <doc>Default value if the endpoint DNE or conversion to bool fails</doc>
       <type builtin="yes" name="bool" />
     </argument>
   </method>
   <method abstract="yes" id="jdb::XmlConfig::getDouble" name="getDouble">
-    <brief>jdoc{</brief>
-    <doc>"name" : "double getDouble( string nodePath, double def = 0 )",
-        "params" : [
-                "nodePath", "def"
-        ],
-        "paramDesc" : [
-                "Path to node", "Optional: Default value for node DNE"
-        ],
-        "returns" : [
-                "The nodes value converted to a double or the default if the node DNE."
-        ],
-        "desc" : "Gets a nodes value and returns it as an double type"
-}</doc>
+    <brief> Gets a node or attribute as double type</brief>
+    <doc>Uses atof(...) to convert string data to builtin type double
+</doc>
     <return>
+      <doc>The underlying xml data at nodePath as an builtin type double</doc>
       <type builtin="yes" name="double" />
     </return>
     <argument id="jdb::XmlConfig::getDouble::nodePath" name="nodePath">
+      <doc>Path to node. See getString(...)</doc>
       <type name="std::string" />
     </argument>
     <argument id="jdb::XmlConfig::getDouble::def" name="def">
+      <doc>Default value if the endpoint DNE or conversion to double fails</doc>
       <type builtin="yes" name="double" />
     </argument>
   </method>
   <method abstract="yes" id="jdb::XmlConfig::getDoubleVector" name="getDoubleVector">
-    <brief>jdoc{</brief>
-    <doc>"name" : "vector&amp;lt; double &amp;gt; getDoubleVector( string nodePath )",
-        "params" : [
-                "nodePath"
-        ],
-        "paramDesc" : [
-                "Path to node"
-        ],
-        "returns" : [
-                "A vector of double types or an empty vector if the node DNE"
-        ],
-        "desc" : "See getStringVector(...).
-        Converts a comma separated list into a vector of int types.
-        Uses atof(...) for string to double conversion."
-}</doc>
+    <brief> Gets a vector of doubles from a comma delimeted list</brief>
     <return>
       <type name="std::vector&lt;double&gt;" />
     </return>
     <argument id="jdb::XmlConfig::getDoubleVector::nodePath" name="nodePath">
+      <doc>See getString(...)
+See getStringVector(...).
+Converts a comma separated list into a vector of double types.
+Uses atof(...) for string to double conversion.</doc>
       <type name="std::string" />
     </argument>
   </method>
   <method abstract="yes" id="jdb::XmlConfig::getFloat" name="getFloat">
+    <brief> Gets a node or attribute as foat type</brief>
+    <doc>Uses atof(...) and cast to convert string data to builtin type foat
+</doc>
     <return>
+      <doc>The underlying xml data at nodePath as an builtin type foat</doc>
       <type builtin="yes" name="float" />
     </return>
     <argument id="jdb::XmlConfig::getFloat::nodePath" name="nodePath">
+      <doc>Path to node. See getString(...)</doc>
       <type name="std::string" />
     </argument>
     <argument id="jdb::XmlConfig::getFloat::def" name="def">
+      <doc>Default value if the endpoint DNE or conversion to foat fails</doc>
       <type builtin="yes" name="float" />
     </argument>
   </method>
   <method abstract="yes" id="jdb::XmlConfig::getInt" name="getInt">
-    <brief>jdoc{</brief>
-    <doc>"name" : "int getInt( string nodePath, int def = 0 )",
-        "params" : [
-                "nodePath", "def"
-        ],
-        "paramDesc" : [
-                "Path to node", "Optional: Default value for node DNE"
-        ],
-        "returns" : [
-                "The nodes value converted to an integer or the default if the node DNE."
-        ],
-        "desc" : "Gets a nodes value and returns it as an int type"
-}</doc>
+    <brief> Gets a node or attribute as integer data</brief>
+    <doc>Uses atoi(...) to convert string data to builtin type int
+</doc>
     <return>
+      <doc>The underlying xml data at nodePath as an builtin type integer</doc>
       <type builtin="yes" name="int" />
     </return>
     <argument id="jdb::XmlConfig::getInt::nodePath" name="nodePath">
+      <doc>Path to node. See getString(...)</doc>
       <type name="std::string" />
     </argument>
     <argument id="jdb::XmlConfig::getInt::def" name="def">
+      <doc>Default value if the endpoint DNE or conversion to int fails</doc>
       <type builtin="yes" name="int" />
     </argument>
   </method>
   <method abstract="yes" id="jdb::XmlConfig::getIntVector" name="getIntVector">
-    <brief>jdoc{</brief>
-    <doc>"name" : "vector&amp;lt; int &amp;gt; getIntVector( string nodePath )",
-        "params" : [
-                "nodePath"
-        ],
-        "paramDesc" : [
-                "Path to node"
-        ],
-        "returns" : [
-                "A vector of int types or an empty vector if the node DNE"
-        ],
-        "desc" : "See getStringVector(...).
-        Converts a comma separated list into a vector of int types.
-        Uses atoi(...) for string to int conversion."
-}</doc>
+    <brief> Gets a vector of integers from a comma delimeted list</brief>
     <return>
       <type name="std::vector&lt;int&gt;" />
     </return>
     <argument id="jdb::XmlConfig::getIntVector::nodePath" name="nodePath">
+      <doc>See getString(...)
+See getStringVector(...).
+Converts a comma separated list into a vector of int types.
+Uses atoi(...) for string to int conversion.</doc>
       <type name="std::string" />
     </argument>
   </method>
   <method abstract="yes" id="jdb::XmlConfig::getNodes" name="getNodes">
-    <brief>jdoc{</brief>
-    <doc>"name" : "vector&amp;lt;string&amp;gt; getNodes( string nodePath )",
-        "params" : [
-                "nodePath"
-        ],
-        "paramDesc" : [
-                "Path to node"
-        ],
-        "returns" : [
-                "List of paths to nodes matching the query"
-        ],
-        "desc" : "Can be used to find nodes matching a conditions
-        Case 1 ) Queries like : \"group.node\" returns a list of paths to all nodes of the form \"group.node[0..N]\"
-        Case 2 ) Queries like : \"group.node:name\" returns a list of paths to all nodes of the form \"group.node[0..N]\" when they contain a \"name\" attribute
-        Case 3 ) Queries like : \"group.node:name=histo1\" returns a list of paths to all nodes of the form \"group.node[0..N]\" when they contain a name attribute and it equals \"histo1\"
-        "
-}</doc>
+    <brief> Find nodes based on search criteria</brief>
+    <doc>Can be used to find nodes matching a conditions
+
+**Case 1 )** Queries like : "group.node" returns a list
+of paths to all nodes of the form "group.node[0..N]"
+
+**Case 2 )** Queries like : "group.node:name" returns a
+list of paths to all nodes of the form "group.node[0..N]"
+when they contain a "*name*" attribute
+
+**Case 3 )** Queries like : "group.node:name=value"
+returns a list of paths to all nodes of the
+form "group.node[0..N]" when they contain a "*name*"
+attribute and it equals "*value*"
+
+</doc>
     <return>
+      <doc>A Vector of strings. One for each path to a
+node or attribute matching the query</doc>
       <type name="std::vector&lt;std::string&gt;" />
     </return>
     <argument id="jdb::XmlConfig::getNodes::nodePath" name="nodePath">
+      <doc>Path to node. See getString(...). May also
+contain conditional parts. See description.</doc>
       <type name="std::string" />
     </argument>
   </method>
   <method abstract="yes" id="jdb::XmlConfig::getString" name="getString">
-    <brief>jdoc{</brief>
-    <doc>"name" : "string getString( string nodePath, string def = \"\" )",
-        "params" : [
-                "nodePath", "def"
-        ],
-        "paramDesc" : [
-                "Path to node", "Optional: Default returned if node DNE"
-        ],
-        "returns" : [
-                "Value of node as an std::string"
-        ],
-        "desc" : "Gets the string value of a node or attribute.
-        If the node or attribute does not exist then the default valuse is returned. "
-}</doc>
+    <brief> Gets xml node or attribute data as a string</brief>
+    <doc>For an xml block like
+``` xml
+        &lt;root&gt;
+                &lt;data&gt;
+                        &lt;category&gt;
+                                &lt;cut1 name="cut1" /&gt;
+                        &lt;/category&gt;
+                &lt;/data&gt;
+        &lt;/root&gt;
+```
+The node "&amp;lt;cut1 /&amp;gt;" can be accessed using
+the nodePath = "data.category.cut1" and its
+attribute can be accessed using the nodePath =
+"data.category.cut1:name"
+
+</doc>
     <return>
+      <doc>The underlying xml data at nodePath as a string</doc>
       <type name="std::string" />
     </return>
     <argument id="jdb::XmlConfig::getString::nodePath" name="nodePath">
+      <doc>The path to the desired node from the root node. See examples below.</doc>
       <type name="std::string" />
     </argument>
     <argument id="jdb::XmlConfig::getString::def" name="def">
+      <doc>**Default** = "" The value to return if the node or attribute is not found</doc>
       <type name="std::string" />
     </argument>
   </method>
   <method abstract="yes" id="jdb::XmlConfig::getStringVector" name="getStringVector">
-    <brief>jdoc{</brief>
-    <doc>"name" : "vector&amp;lt; string &amp;gt; getStringVector( string nodePath )",
-        "params" : [
-                "nodePath"
-        ],
-        "paramDesc" : [
-                "Path to node"
-        ],
-        "returns" : [
-                "A vector of strings or an empty vector if the node DNE"
-        ],
-        "desc" : "Gets a vector from a comma delimeted list.
-        For instance, if a node contains \"1, 3, 9, 7, 16\" then the vector whould contain 5 elements.
-        "
-}</doc>
+    <brief> Gets a vector of strings from a comma delimeter list</brief>
     <return>
+      <doc>A vector of strings or an empty vector if the node DNE</doc>
       <type name="std::vector&lt;std::string&gt;" />
     </return>
     <argument id="jdb::XmlConfig::getStringVector::nodePath" name="nodePath">
+      <doc>Path to node. See getString.
+Gets a vector from a comma delimeted list.
+For instance, if a node contains "1, 3, 9, 7, 16" then the vector whould contain 5 elements</doc>
       <type name="std::string" />
     </argument>
   </method>
   <method abstract="yes" id="jdb::XmlConfig::operator[]" name="operator[]">
-    <brief>jdoc{</brief>
-    <doc>"name" : "string operator[]( string nodePath )",
-        "params" : [
-                "nodePath"
-        ],
-        "paramDesc" : [
-                "Path to node"
-        ],
-        "returns" : [
-                "Value of node as an std::string"
-        ],
-        "desc" : "Same as getString(...) but with the [] operator."
-}</doc>
+    <brief> Same as getString(...) but with the [] operator.</brief>
     <return>
       <type name="std::string" />
     </return>
     <argument id="jdb::XmlConfig::operator[]::nodePath" name="nodePath">
+      <doc>See getString(...)</doc>
       <type name="std::string" />
     </argument>
   </method>
   <method abstract="yes" id="jdb::XmlConfig::split" name="split">
-    <brief>*</brief>
-    <doc>Helper Methods
-</doc>
+    <brief>Splits a string into pieces by the delimeter character</brief>
     <return>
+      <doc>A vector of strings, one for each piece after
+splitting on the delimeting character. If the delimeting
+character is not found a zero length Vector is returned.</doc>
       <type name="std::vector&lt;std::string&gt;" />
     </return>
     <argument id="jdb::XmlConfig::split::s" name="s">
+      <doc>Input string to split</doc>
       <type name="std::string" qualifier=" const &amp;" />
     </argument>
     <argument id="jdb::XmlConfig::split::delim" name="delim">
+      <doc>delimeting character</doc>
       <type builtin="yes" name="char" />
     </argument>
   </method>
   <method abstract="yes" id="jdb::XmlConfig::tagName" name="tagName">
-    <brief>jdoc{</brief>
-    <doc>"name" : "string tagName( string nodePath )",
-        "params" : [
-                "nodePath"
-        ],
-        "paramDesc" : [
-                "Path to Node"
-        ],
-        "returns" : [
-                "The name of the tag pointed to by nodePath"
-        ],
-        "desc" : "Extracts the name of the final node (tag name )
+    <brief> Get just the tag name from a full path</brief>
+    <doc>Extracts the name of the final node (tag name )
+For instnce:
+The node path "category.sub.a" yields "a"
 
-        For instnce:
-        The node path \"node.sub.a\" yields \"a\" "
-}</doc>
+</doc>
     <return>
+      <doc>the tag name of the node pointed to by nodePath</doc>
       <type name="std::string" />
     </return>
     <argument id="jdb::XmlConfig::tagName::nodePath" name="nodePath">
+      <doc>Path to node. See getString(...)</doc>
       <type name="std::string" />
     </argument>
   </method>
   <method abstract="yes" id="jdb::XmlConfig::trim" name="trim">
+    <brief>Trims characters off the front and back of strings</brief>
     <return>
       <type name="std::string" />
     </return>
     <argument id="jdb::XmlConfig::trim::str" name="str">
+      <doc>Input string to trim</doc>
       <type name="std::string" qualifier=" const &amp;" />
     </argument>
     <argument id="jdb::XmlConfig::trim::whitespace" name="whitespace">
+      <doc>A string containing characters to trim. **Default** = " \t\n".</doc>
       <type name="std::string" qualifier=" const &amp;" />
     </argument>
   </method>
@@ -391,27 +321,27 @@
     <type name="std::map&lt;std::string, bool&gt;" />
   </field>
   <field access="protected" id="jdb::XmlConfig::filename" name="filename">
-    <brief>pjdco{ "name" : "string filename", "desc" : "Filename of the config file"}</brief>
+    <brief>Filename of the config file</brief>
     <type name="std::string" />
   </field>
   <field access="protected" id="jdb::XmlConfig::attrDelim" name="attrDelim">
-    <brief>pjdco{ "name" : "char attrDelim", "desc" : "The delimiter used for attributes - Default is \":\""}</brief>
+    <brief>The delimiter used for attributes - Default is ":"</brief>
     <type builtin="yes" name="char" />
   </field>
   <field access="protected" id="jdb::XmlConfig::pathDelim" name="pathDelim">
-    <brief>pjdco{ "name" : "char pathDelim", "desc" : "The delimiter used for paths - Default is \".\""}</brief>
+    <brief>The delimiter used for paths - Default is "."</brief>
     <type builtin="yes" name="char" />
   </field>
   <field access="protected" id="jdb::XmlConfig::equalDelim" name="equalDelim">
-    <brief>pjdco{ "name" : "char equalDelim", "desc" : ""}</brief>
+    <brief>The delimeter used for equality - Default is '='</brief>
     <type builtin="yes" name="char" />
   </field>
   <field access="protected" id="jdb::XmlConfig::indexOpenDelim" name="indexOpenDelim">
-    <brief>pjdco{ "name" : "indexOpenDelim", "desc" : "The delimeter for index open - Default is \"[\""}</brief>
+    <brief>The delimeter for index open - Default is "["</brief>
     <type name="std::string" />
   </field>
   <field access="protected" id="jdb::XmlConfig::indexCloseDelim" name="indexCloseDelim">
-    <brief>pjdco{ "name" : "indexCloseDelim", "desc" : "The delimeter for index open - Default is \"]\""}</brief>
+    <brief>The delimeter for index open - Default is "]"</brief>
     <type name="std::string" />
   </field>
   <typedef access="protected" id="jdb::XmlConfig::map_it_type" name="map_it_type">

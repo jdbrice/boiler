@@ -40,266 +40,219 @@ namespace jdb {
 		
 		typedef map<string, string>::iterator map_it_type;
 
-		//pjdco{ "name" : "string filename", "desc" : "Filename of the config file"}
+		//Filename of the config file
 		string filename;
 
-		//pjdco{ "name" : "char attrDelim", "desc" : "The delimiter used for attributes - Default is \":\""}
+		//The delimiter used for attributes - Default is ":"
 		char attrDelim;
 
-		//pjdco{ "name" : "char pathDelim", "desc" : "The delimiter used for paths - Default is \".\""}
+		//The delimiter used for paths - Default is "."
 		char pathDelim;
 
-		//pjdco{ "name" : "char equalDelim", "desc" : ""}
+		// The delimeter used for equality - Default is '='
 		char equalDelim;
 
-		//pjdco{ "name" : "indexOpenDelim", "desc" : "The delimeter for index open - Default is \"[\""}
+		//The delimeter for index open - Default is "["
 		string indexOpenDelim;
 		
-		//pjdco{ "name" : "indexCloseDelim", "desc" : "The delimeter for index open - Default is \"]\""}
+		//The delimeter for index open - Default is "]"
 		string indexCloseDelim;
 	public:
+
+		/* Creates an XmlConfig from the given xml file
+		 *@filename The file containg valid xml to load
+		 *
+		 * Loads the file, parses its content and makes its data available
+		 */
 		XmlConfig( string filename );
 		~XmlConfig();
 
-		/*jdoc{
-			"name" : "string operator[]( string nodePath )",
-			"params" : [
-				"nodePath"
-			],
-			"paramDesc" : [
-				"Path to node"
-			],
-			"returns" : [
-				"Value of node as an std::string"
-			],
-			"desc" : "Same as getString(...) but with the [] operator."
-		}*/
+		/* Same as getString(...) but with the [] operator.
+		 * @nodePath See getString(...)
+		 * @returns The underlying xml data at nodePath as a string
+		 */
 		string operator[]( string nodePath );
 		
-		/*jdoc{
-			"name" : "string getString( string nodePath, string def = \"\" )",
-			"params" : [
-				"nodePath", "def"
-			],
-			"paramDesc" : [
-				"Path to node", "Optional: Default returned if node DNE"
-			],
-			"returns" : [
-				"Value of node as an std::string"
-			],
-			"desc" : "Gets the string value of a node or attribute. 
-			If the node or attribute does not exist then the default valuse is returned. "
-		}*/
+		/* Gets xml node or attribute data as a string
+		   @nodePath The path to the desired node from the root node. See examples below.
+		   @def **Default** = "" The value to return if the node or attribute is not found
+
+		   For an xml block like
+		   ``` xml
+			<root>
+				<data>
+					<category>
+						<cut1 name="cut1" />
+					</category>
+				</data>
+			</root>
+		   ```
+		   The node "<cut1 />" can be accessed using 
+		   the nodePath = "data.category.cut1" and its 
+		   attribute can be accessed using the nodePath =
+		   "data.category.cut1:name"
+		   
+		   @return The underlying xml data at nodePath as a string
+		 */
 		string getString( string nodePath, string def = "" );
 
-		/*jdoc{
-			"name" : "vector< string > getStringVector( string nodePath )",
-			"params" : [
-				"nodePath"
-			],
-			"paramDesc" : [
-				"Path to node"
-			],
-			"returns" : [
-				"A vector of strings or an empty vector if the node DNE"
-			],
-			"desc" : "Gets a vector from a comma delimeted list.
-			For instance, if a node contains \"1, 3, 9, 7, 16\" then the vector whould contain 5 elements.
-			"
-		}*/
+		/* Gets a vector of strings from a comma delimeter list
+		 * @nodePath Path to node. See getString.
+		 * Gets a vector from a comma delimeted list. 
+		 * For instance, if a node contains "1, 3, 9, 7, 16" then the vector whould contain 5 elements
+		 *
+		 * @return A vector of strings or an empty vector if the node DNE
+		 */
 		vector<string> getStringVector( string nodePath );
 
-		/*jdoc{
-			"name" : "int getInt( string nodePath, int def = 0 )",
-			"params" : [
-				"nodePath", "def"
-			],
-			"paramDesc" : [
-				"Path to node", "Optional: Default value for node DNE"
-			],
-			"returns" : [
-				"The nodes value converted to an integer or the default if the node DNE."
-			],
-			"desc" : "Gets a nodes value and returns it as an int type"
-		}*/
+		/* Gets a node or attribute as integer data
+		 * @nodePath Path to node. See getString(...)
+		 * @def Default value if the endpoint DNE or conversion to int fails
+		 *
+		 * Uses atoi(...) to convert string data to builtin type int
+		 * @return The underlying xml data at nodePath as an builtin type integer
+		 */
 		int getInt( string nodePath, int def = 0 );
 
-		/*jdoc{
-			"name" : "vector< int > getIntVector( string nodePath )",
-			"params" : [
-				"nodePath"
-			],
-			"paramDesc" : [
-				"Path to node"
-			],
-			"returns" : [
-				"A vector of int types or an empty vector if the node DNE"
-			],
-			"desc" : "See getStringVector(...).
-			Converts a comma separated list into a vector of int types.
-			Uses atoi(...) for string to int conversion."
-		}*/
+		/* Gets a vector of integers from a comma delimeted list
+		 * @nodePath See getString(...)
+		 * See getStringVector(...).
+		 * Converts a comma separated list into a vector of int types. 
+		 * Uses atoi(...) for string to int conversion.
+		 * @return vector of integers, one for each item in the comma delimeted list
+		 */
 		vector<int> getIntVector( string nodePath );
 
-		/*jdoc{
-			"name" : "double getDouble( string nodePath, double def = 0 )",
-			"params" : [
-				"nodePath", "def"
-			],
-			"paramDesc" : [
-				"Path to node", "Optional: Default value for node DNE"
-			],
-			"returns" : [
-				"The nodes value converted to a double or the default if the node DNE."
-			],
-			"desc" : "Gets a nodes value and returns it as an double type"
-		}*/
+		/* Gets a node or attribute as double type
+		 * @nodePath Path to node. See getString(...)
+		 * @def Default value if the endpoint DNE or conversion to double fails
+		 *
+		 * Uses atof(...) to convert string data to builtin type double
+		 * @return The underlying xml data at nodePath as an builtin type double
+		 */
 		double getDouble( string nodePath, double def = 0 );
 
-		/*jdoc{
-			"name" : "vector< double > getDoubleVector( string nodePath )",
-			"params" : [
-				"nodePath"
-			],
-			"paramDesc" : [
-				"Path to node"
-			],
-			"returns" : [
-				"A vector of double types or an empty vector if the node DNE"
-			],
-			"desc" : "See getStringVector(...).
-			Converts a comma separated list into a vector of int types.
-			Uses atof(...) for string to double conversion."
-		}*/
+		/* Gets a vector of doubles from a comma delimeted list
+		 * @nodePath See getString(...)
+		 * See getStringVector(...).
+		 * Converts a comma separated list into a vector of double types. 
+		 * Uses atof(...) for string to double conversion.
+		 * @return vector of doubles, one for each item in the comma delimeted list
+		 */
 		vector<double> getDoubleVector( string nodePath );
 
+		/* Gets a node or attribute as foat type
+		 * @nodePath Path to node. See getString(...)
+		 * @def Default value if the endpoint DNE or conversion to foat fails
+		 *
+		 * Uses atof(...) and cast to convert string data to builtin type foat
+		 * @return The underlying xml data at nodePath as an builtin type foat
+		 */
 		float getFloat( string nodePath, float def = 0 );
 		
-		/*jdoc{
-			"name" : "bool getBool( string nodePath, bool def = false )",
-			"params" : [
-				"nodePath", "def"
-			],
-			"paramDesc" : [
-				"Path to node", "Optional: Default value for node DNE"
-			],
-			"returns" : [
-				"The node value converted to a bool or the default if the node DNE.",
-				"True: Int values &gt;= 1 or case insensitive \"true\"  ",
-				"False: Int values &lt; 1 or case insensitive \"false\"  "
-			],
-			"desc" : "Gets a nodes value and returns it as an int type.
-			The strings \"true\" and \"false\" are also converted to the corresponding bool values.
-			The case is not important. This allows xml files to be easier to read."
-		}*/
+		/* Gets a node or attribute as bool type
+		 * @nodePath Path to node. See getString(...)
+		 * @def Default value if the endpoint DNE or conversion to bool fails
+		 *
+		 * Can be string of any case "true", or "false"
+		 * Uses atoi(...)  to convert string data to builtin type bool
+		 * @return The underlying xml data at nodePath as an builtin type bool
+		 */
 		bool getBool( string nodePath, bool def = false );
 
-		/*jdoc{
-			"name" : "bool exists( string nodePath )",
-			"params" : [
-				"nodePath"
-			],
-			"paramDesc" : [
-				"Path to node"
-			],
-			"returns" : [
-				"True: node exists",
-				"False: node does not exist"
-			],
-			"desc" : "Used to determine if a node exists"
-		}*/
+		/* Determine whether a node exists in the xml or not
+		 * @nodePath Path to node. See getString(...)
+		 *
+		 * Searches the xml structure for the given node.
+		 * @return **True** - node or attribute is found. **False** otherwise
+		 */
 		bool exists( string nodePath );
 
-		/*jdoc{
-			"name" : "vector< string > childrenOf( string nodePath, int depth = -1, bool attrs = false )",
-			"params" : [
-				"nodePath", "depth", "attrs"
-			],
-			"paramDesc" : [
-				"Path to node", "Depth to search for children", "Include attribute paths"
-			],
-			"returns" : [
-				"List of paths to children of the given node. Empty list for no children found"
-			],
-			"desc" : "Gets a list of paths to all children of a given node. Very useful for automating tasks, building lots of objects, etc."
-		}*/
+		/* Lists the children of a node
+		 * @nodePath Path to node. See getString(...)
+		 * @depth The number of levels to search for children
+		 * @attrs Show Attributes of node and children or not
+		 * 
+		 * Gets a list of paths to all children of a given node. 
+		 * Very useful for automating tasks, building lots of objects, etc.
+		 *
+		 * @return Vector of strings containg paths to each node or attribute
+		 */
 		vector<string> childrenOf( string nodePath, int depth = -1, bool attrs = false );
 
-		/*jdoc{
-			"name" : "vector< string > attributesOf( string nodePath )",
-			"params" : [
-				"nodePath"
-			],
-			"paramDesc" : [
-				"Path to node"
-			],
-			"returns" : [
-				"List of paths to attributes."
-			],
-			"desc" : "One path is added for each attribute of the given node or an empty list if no attributes are present. Use attributeName(...) to get only the attribute name from the full path."
-		}*/
+		/* Get the attributes of a node
+		 * @nodePath Path to node. See getString(...)
+		 * 
+		 * One path is added for each attribute of the given
+		 * node or an empty list if no attributes 
+		 * are present. Use attributeName( attributePath ) to 
+		 * get only the attribute name from the full path.
+		 *
+		 * @return Vector of strings containg paths to each attribute
+		 */
 		vector<string> attributesOf( string nodePath );
 
-		/*jdoc{
-			"name" : "vector<string> getNodes( string nodePath )",
-			"params" : [
-				"nodePath"
-			],
-			"paramDesc" : [
-				"Path to node"
-			],
-			"returns" : [
-				"List of paths to nodes matching the query"
-			],
-			"desc" : "Can be used to find nodes matching a conditions
-			Case 1 ) Queries like : \"group.node\" returns a list of paths to all nodes of the form \"group.node[0..N]\"
-			Case 2 ) Queries like : \"group.node:name\" returns a list of paths to all nodes of the form \"group.node[0..N]\" when they contain a \"name\" attribute 
-			Case 3 ) Queries like : \"group.node:name=histo1\" returns a list of paths to all nodes of the form \"group.node[0..N]\" when they contain a name attribute and it equals \"histo1\"
-			"
-		}*/
+		/* Find nodes based on search criteria
+		 * @nodePath Path to node. See getString(...). May also 
+		 * contain conditional parts. See description.
+		 *
+		 * Can be used to find nodes matching a conditions   
+		 * 
+		 * **Case 1 )** Queries like : "group.node" returns a list 
+		 * of paths to all nodes of the form "group.node[0..N]"   
+		 * 
+		 * **Case 2 )** Queries like : "group.node:name" returns a 
+		 * list of paths to all nodes of the form "group.node[0..N]" 
+		 * when they contain a "*name*" attribute   
+		 * 
+		 * **Case 3 )** Queries like : "group.node:name=value" 
+		 * returns a list of paths to all nodes of the 
+		 * form "group.node[0..N]" when they contain a "*name*" 
+		 * attribute and it equals "*value*"
+		 *
+		 * @return A Vector of strings. One for each path to a 
+		 * node or attribute matching the query
+		 */
 		vector<string> getNodes( string nodePath );
 
-		/**
-		 * Helper Methods
+		/*Splits a string into pieces by the delimeter character
+		 *@s Input string to split
+		 *@delim delimeting character
+		 *
+		 *@return A vector of strings, one for each piece after 
+		 *splitting on the delimeting character. If the delimeting 
+		 *character is not found a zero length Vector is returned.
 		 */
 		vector<string> split(const string &s, char delim);
+
+		/*Trims characters off the front and back of strings
+		 *@str Input string to trim
+		 *@whitespace A string containing characters to trim. **Default** = " \t\n".
+		 */
 		std::string trim(const std::string& str, const std::string& whitespace = " \t\n");
 
 		
-
-		/*jdoc{
-			"name" : "string tagName( string nodePath )",
-			"params" : [
-				"nodePath"
-			],
-			"paramDesc" : [
-				"Path to Node"
-			],
-			"returns" : [
-				"The name of the tag pointed to by nodePath"
-			],
-			"desc" : "Extracts the name of the final node (tag name )
-			
-			For instnce:
-			The node path \"node.sub.a\" yields \"a\" "
-		}*/
+		/* Get just the tag name from a full path
+		 * @nodePath Path to node. See getString(...)
+		 *
+		 * Extracts the name of the final node (tag name )
+		 * For instnce:
+		 * The node path "category.sub.a" yields "a"
+		 *
+		 * @return the tag name of the node pointed to by nodePath
+		 */
 		string tagName( string nodePath );
-		/*jdoc{
-			"name" : "string attributeName( string nodePath )",
-			"params" : [
-				"nodePath"
-			],
-			"paramDesc" : [
-				"Path to Node"
-			],
-			"returns" : [
-				"The attribute name only"
-			],
-			"desc" : "Extracts the attribute name from a full node path.
-			
-			For instance:
-			The node path \"node.sub.a:name\" yields \"name\" "
-		}*/
+		
+		/* Get the attribute name from a full path
+		 *@nodePath Path to node. See getString(...)
+		 *
+		 * Extracts the attribute name from a full node path.
+		 * For instance:
+		 * The node path "category.sub.a:name" yields "name"
+		 *
+		 * @return The attribute name if the path contains one.
+		 * Empty string otherwise
+		 */
 		string attributeName( string nodePath );
 
 	protected:

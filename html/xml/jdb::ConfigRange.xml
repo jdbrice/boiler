@@ -1,70 +1,53 @@
 <class xmlns="http://jessevdk.github.com/cldoc/1.0" id="jdb::ConfigRange" name="ConfigRange">
-  <brief>jdoc{</brief>
-  <doc>"class" : "ConfigRange",
-        "desc" : "A range that can easily be initialized from a config file"
-}</doc>
+  <brief>ConfigRange easily loads (min -&gt; max) ranges from XmlConfigs</brief>
+  <doc>This class is a utility class used for quickly loading and aliasing range data in an xml config
+
+**Headers** : ConfigRange.h
+</doc>
   <field id="jdb::ConfigRange::min" name="min">
-    <brief>jdoc{ "name" : "double min", "desc" : "Minimum value in range"}</brief>
+    <brief>Minimum value in range</brief>
     <type builtin="yes" name="double" />
   </field>
   <field id="jdb::ConfigRange::max" name="max">
-    <brief>jdoc{ "name" : "double max", "desc" : "Maximum value in range"}</brief>
+    <brief>Maximum value in range</brief>
     <type builtin="yes" name="double" />
   </field>
   <constructor id="jdb::ConfigRange::ConfigRange" name="ConfigRange">
-    <brief>jdoc{</brief>
-    <doc>"name" : "ConfigRange( XmlConfig * cfg, string np, double dMin = 0, double dMax = 0, string attrMin = \":min\", string attrMax = \":max\")",
-        "params" : [
-                "cfg", "nodePath", "dMin", "dMax", "attrMin", "attrMax"
-        ],
-        "paramDesc" : [
-                "Project config",
-                "Path to root node in config",
-                "Optional: Default min value",
-                "Optional: Default max value",
-                "Optional: Attribute to read from for min value",
-                "Optional: Attribute to read from for max value"
-        ],
-        "returns" : [
-
-        ],
-        "desc" : "Creates a range object from the project config. If values are not in the config the variables are initialized and set to the default"
-}</doc>
+    <brief>Load range data from an XmlConfig</brief>
+    <doc>This class reads in data from an XmlConfig instance. The underlying xml should contain a node at *nodePath* like
+``` xml
+&lt;Range name="danny" min="100" max=":100" /&gt;
+```
+</doc>
     <argument id="jdb::ConfigRange::ConfigRange::cfg" name="cfg">
+      <doc>XmlConfig instance to load data from</doc>
       <type name="XmlConfig" qualifier="*" ref="jdb::XmlConfig#jdb::XmlConfig" />
     </argument>
     <argument id="jdb::ConfigRange::ConfigRange::np" name="np">
       <type name="std::string" />
     </argument>
     <argument id="jdb::ConfigRange::ConfigRange::dMin" name="dMin">
+      <doc>Default = 0 : default x value if not found in node</doc>
       <type builtin="yes" name="double" />
     </argument>
     <argument id="jdb::ConfigRange::ConfigRange::dMax" name="dMax">
+      <doc>Default = 0 : default y value if not found in node</doc>
       <type builtin="yes" name="double" />
     </argument>
     <argument id="jdb::ConfigRange::ConfigRange::attrMin" name="attrMin">
+      <doc>Default = ":min" : attribute tag to search for x value</doc>
       <type name="std::string" />
     </argument>
     <argument id="jdb::ConfigRange::ConfigRange::attrMax" name="attrMax">
+      <doc>Default = ":max" : attribute tag to search for y value</doc>
       <type name="std::string" />
     </argument>
   </constructor>
   <destructor id="jdb::ConfigRange::~ConfigRange" name="~ConfigRange" />
   <method id="jdb::ConfigRange::toString" name="toString">
-    <brief>jdoc{</brief>
-    <doc>"name" : "string toString()",
-        "params" : [
-
-        ],
-        "paramDesc" : [
-
-        ],
-        "returns" : [
-                "String representation of the range"
-        ],
-        "desc" : "Example: \"( 0.0 -&gt; 14.0 )\" "
-}</doc>
+    <brief> Outputs the range as a human readable string</brief>
     <return>
+      <doc>A string representation of the range data in the format "( min -&gt; max )"</doc>
       <type name="std::string" />
     </return>
   </method>

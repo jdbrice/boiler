@@ -7,8 +7,8 @@ Can be used to load an entire directory, or files from a filelist.lis
 
 ---
 
-**Headers** : "ChainLoader.h"   
-**Source** : "ChainLoader.cpp"
+**Headers** : ChainLoader.h 
+**Source** : ChainLoader.cpp
 
 
 ### ChainLoader Example usage

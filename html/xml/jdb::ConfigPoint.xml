@@ -1,6 +1,8 @@
 <class xmlns="http://jessevdk.github.com/cldoc/1.0" id="jdb::ConfigPoint" name="ConfigPoint">
   <brief>Config Point easily loads (x, y) points from XmlConfigs</brief>
   <doc>This class is a utility class used for quickly loading and aliasing point data in an xml config
+
+**Headers** : ConfigPoint.h
 </doc>
   <field id="jdb::ConfigPoint::x" name="x">
     <brief>x value</brief>
@@ -38,7 +40,7 @@
       <type name="std::string" />
     </argument>
     <argument id="jdb::ConfigPoint::ConfigPoint::attrY" name="attrY">
-      <doc>Default = ":x" : attribute tag to search for y value</doc>
+      <doc>Default = ":y" : attribute tag to search for y value</doc>
       <type name="std::string" />
     </argument>
   </constructor>
@@ -46,7 +48,7 @@
   <method id="jdb::ConfigPoint::toString" name="toString">
     <brief> Outputs the point as a human readable string</brief>
     <return>
-      <doc>A string representation of the point data in the format ( x, y )</doc>
+      <doc>A string representation of the point data in the format "( x, y )"</doc>
       <type name="std::string" />
     </return>
   </method>

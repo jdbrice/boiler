@@ -9,6 +9,8 @@ namespace jdb{
 	/*Config Point easily loads (x, y) points from XmlConfigs
 	 *
 	 * This class is a utility class used for quickly loading and aliasing point data in an xml config
+	 *
+	 * **Headers** : ConfigPoint.h
 	 */
 	class ConfigPoint
 	{
@@ -26,7 +28,7 @@ namespace jdb{
 		 *@dX Default = 0 : default x value if not found in node
 		 *@dY Default = 0 : default y value if not found in node
 		 *@attrX Default = ":x" : attribute tag to search for x value
-		 *@attrY Default = ":x" : attribute tag to search for y value
+		 *@attrY Default = ":y" : attribute tag to search for y value
 		 *
 		 * This class reads in data from an XmlConfig instance. The underlying xml should contain a node at *nodePath* like 
 		 * ``` xml
@@ -46,7 +48,7 @@ namespace jdb{
 
 		/* Outputs the point as a human readable string
 		 *
-		 * @return A string representation of the point data in the format ( x, y )
+		 * @return A string representation of the point data in the format "( x, y )"
 		 */
 		string toString(){
 			return ("( " + dts( x ) + ", " + dts( y ) + " )");
