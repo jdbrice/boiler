@@ -4,8 +4,8 @@ ARCH          = $(shell root-config --arch)
 
 
 #------------------------------------------------------------------------------
-Classes = Logger Reporter XmlConfig ChainLoader HistoBook TreeAnalyzer HistoAnalyzer XmlConfig TreeMap
-HeaderOnlyClasses = LoggerConfig StringUtils Utils ConfigPoint ConfigRange 
+Classes = Logger Reporter XmlConfig ChainLoader HistoBook TreeAnalyzer HistoAnalyzer XmlConfig TreeMap CutExplorer
+HeaderOnlyClasses = LoggerConfig StringUtils Utils ConfigPoint ConfigRange CutVariable
 ##-----------------------------------------------------------------------------
 
 srcDir        = src
@@ -30,7 +30,7 @@ ROOTLDFLAGS    	= $(shell root-config --ldflags)
 ROOTLIBS      	= $(shell root-config --libs)
 ROOTLDFLAGS    	= $(shell root-config --ldflags)
 
-includes		= -Iinclude -Iinclude/jdb -I. -I$(ROOTSYS)/include -I$(ROOTDEV)/include 
+includes		= -I./include -I./include/jdb -I. -I$(ROOTSYS)/include -I$(ROOTDEV)/include 
 
 CXX           = g++
 CXXFLAGS      = -std=c++0x -fPIC 

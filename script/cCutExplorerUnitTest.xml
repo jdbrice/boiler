@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- A root node is required -->
+<!--  It can be anything <root></root>, it just has to exist -->
+<CutExplorer>
+	
+	<input>
+		<dst treeName="tree" maxFiles="2" nEvents="10000" url="/Users/danielbrandenburg/bnl/local/data/Run14/BBCMB14_015/"/>
+	</input>
+	<Reporter>
+		<output url="rpCutExplorer.pdf"/>
+	</Reporter>
+	<Logger>
+		<logLevel>all</logLevel>
+	</Logger>
+
+	<CutSequence name="eventCuts">
+		<CutVariable name="vertexR" value="sqrt( [0]*[0] + [1]*[1] )" p0="vertexX" p1="vertexY" />
+		<RangeCut name="vertexZ" var="vertexZ" min="-75" max="75" />
+
+		  
+	</CutSequence>
+
+	
+</CutExplorer>

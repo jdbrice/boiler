@@ -204,7 +204,7 @@ namespace jdb{
 
 	string HistoBook::cd( string sdir  ){
 
-		logger->info(__FUNCTION__) << " In Directory " << sdir << endl;
+		logger->trace(__FUNCTION__) << " In Directory " << sdir << endl;
 		string old = currentDir;
 
 		char* csdir = (char*)sdir.c_str();
@@ -213,7 +213,7 @@ namespace jdb{
 		if ( file->GetDirectory( csdir ) ){
 			file->cd( csdir );
 		} else {
-			logger->info(__FUNCTION__) << " Creating Directory " << sdir << endl;
+			logger->trace(__FUNCTION__) << " Creating Directory " << sdir << endl;
 			file->mkdir( csdir );
 			file->cd( csdir );
 		}
