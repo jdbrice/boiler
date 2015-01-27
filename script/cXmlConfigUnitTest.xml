@@ -17,11 +17,12 @@
 	<withAttr>
 		<!-- Attributes can store any basic type also -->
 		<!-- nodes can be self-closing with the /> -->
-		<vars a1="I am a string" a2="12" a3="25.6" a4="false" />
+		<vars a1="I am a string with a comma, here" a2="12" a3="25.6" a4="false" />
 	</withAttr>
 
 	<!-- This block could easily be used in an automation step to produce all histograms-->
 	<manySame>
+		<Histo name="h0" title="# Events" nBins="100" minX="10" maxX="100" />
 		<Histo name="h1" title="# Events" nBins="100" minX="10" maxX="100" />
 		<Histo name="h2" title="Pt" nBins="100" minX="0" maxX="10" />
 		<Histo name="h3" title="#eta" widthX=".05" minX="-4" maxX="4" />

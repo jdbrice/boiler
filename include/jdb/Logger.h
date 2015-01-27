@@ -13,10 +13,10 @@ using namespace std;
 
 namespace jdb {
 
-	/*jdoc{
-		"class" : "Logger",
-		"desc" : "An all purpose logging utility with log level functionality. Meant to be used in modular projects. Multpile Logger instances can be used with different log levels."
-	}*/
+	/*An all purpose logging utility with log level functionality. 
+
+	Meant to be used in modular projects. Multpile Logger instances can be used with different log levels.
+	*/
 	class Logger{
 
 
@@ -173,14 +173,16 @@ namespace jdb {
 			],
 			"desc" : "Shows all messages below llWarn"
 		}*/
-		ostream & warn( string functionName = "" ){
+		ostream & warn( string functionName = "", bool showPrefix=true ){
 			if ( logLevel < llWarn )
 				return ns;
 
-			preMessage( "Warning", functionName );
+			if ( showPrefix )
+				preMessage( "Warning", functionName );
 			
 			return (*os);
 		}
+		
 
 
 		/*jdoc{
@@ -196,14 +198,16 @@ namespace jdb {
 			],
 			"desc" : "Shows all messages below llError"
 		}*/
-		ostream & error( string functionName = "" ){
+		ostream & error( string functionName = "", bool showPrefix=true ){
 			if ( logLevel < llError )
 				return ns;
 
-			preMessage( "ERROR", functionName );
+			if ( showPrefix )
+				preMessage( "ERROR", functionName );
 			
 			return (*os);
 		}
+		
 
 		/*jdoc{
 			"name" : "ostream & info( string functionName = \"\" )",
@@ -218,14 +222,16 @@ namespace jdb {
 			],
 			"desc" : "Shows all messages below llInfo"
 		}*/
-		ostream & info( string functionName = "" ){
+		ostream & info( string functionName = "", bool showPrefix = true ){
 			if ( logLevel < llInfo )
 				return ns;
 
-			preMessage( "Info", functionName );
+			if ( showPrefix )
+				preMessage( "Info", functionName );
 			
 			return (*os);
 		}
+		
 
 		/*jdoc{
 			"name" : "ostream & trace( string functionName = \"\" )",
@@ -240,14 +246,16 @@ namespace jdb {
 			],
 			"desc" : "Shows all messages below llTrace"
 		}*/
-		ostream & trace( string functionName = "" ){
+		ostream & trace( string functionName = "", bool showPrefix=true ){
 			if ( logLevel < llInfo )
 				return ns;
 
-			preMessage( "Trace", functionName );
+			if ( showPrefix )
+				preMessage( "Trace", functionName );
 			
 			return (*os);
 		}
+		
 
 		/*jdoc{
 			"name" : "ostream & debug( string functionName = \"\" )",
@@ -262,11 +270,12 @@ namespace jdb {
 			],
 			"desc" : "Shows all messages below llTrace"
 		}*/
-		ostream & debug( string functionName = "" ){
+		ostream & debug( string functionName = "", bool showPrefix=true ){
 			if ( logLevel < llInfo )
 				return ns;
 
-			preMessage( "Debug", functionName );
+			if ( showPrefix )
+				preMessage( "Debug", functionName );
 			
 			return (*os);
 		}

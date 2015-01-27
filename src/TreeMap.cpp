@@ -83,10 +83,10 @@ namespace jdb{
 		    
 		    if ( maxLength[ lp ] <= 0 ){
 		    	int max = findMax( lp );
-		    	lg.info(__FUNCTION__) << "Max for " << lp << " === " << max << endl;
-
 		    	if ( 0 >= max )
 		    		max = atoi( lp.c_str() );
+
+		    	lg.info(__FUNCTION__) << "Max for " << lp << " === " << max << endl;
 
 		    	maxLength[ lp ] = max;
 		    }
@@ -125,11 +125,13 @@ namespace jdb{
 			string name = ((TLeafElement*)lfs->At( i ))->GetName();
 			string title = ((TLeafElement*)lfs->At( i ))->GetTitle();
 
+			cout << name << " : " << tName << endl;
+
 			// if it is an array then get the size
 			int aSize = -1;
 			if ( isArray[ name ]  ){
-				lg.trace(__FUNCTION__) << "Size of " << name << " = " << maxLength[ lengthName[ name ] ] << endl; 
 				aSize = maxLength[ lengthName[ name ] ];
+				lg.trace(__FUNCTION__) << name << " is array of size = " << aSize << endl; 
 			}
 
 			if ( 0 >= aSize && isArray[ name ] ){
@@ -138,7 +140,7 @@ namespace jdb{
 
 
 			if ( isArray[ name ] )
-				lg.info(__FUNCTION__) << "Addressing : " << tName << " " << name << "[" << lengthName[ name ] << " === " << maxLength[ lengthName[ name ]] << "]" << endl;
+				lg.info(__FUNCTION__) << "Addressing : " << tName << " " << name << "[" << lengthName[ name ] << " === " << aSize << "]" << endl;
 			else
 				lg.info(__FUNCTION__) << "Addressing : " << tName << " " << title << endl;
 
@@ -260,7 +262,7 @@ namespace jdb{
 			}
 			// Double_t
 			if ( "Double_t" == tName ){
-				
+				lg.info( __FUNCTION__ ) << "DOUBLE_T " << endl;
 				branches[ name ] = 0;
 				
 				if ( 0 < aSize && isArray[ name ] ){
@@ -300,7 +302,7 @@ namespace jdb{
 			else if ( "Float_t" == type[ name ] )
 				return (double)floats[ name ];
 			else if ( "Double_t" == type[ name ] )
-				return 0;
+				return doubles[ name ];
 		} else if ( index >= 0 ) {
 
 			if ( "Int_t" == type[ name ] )
@@ -318,7 +320,7 @@ namespace jdb{
 			else if ( "Float_t" == type[ name ] )
 				return (double)floatArrays[ name ][ index ];
 			else if ( "Double_t" == type[ name ] )
-				return 0;
+				return doubleArrays[ name ][ index ];
 
 		}
 

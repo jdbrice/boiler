@@ -295,18 +295,8 @@ namespace jdb{
 		}*/
 		void save();
 
-		/*jdoc{
-			"name" : "HistoBook* style( string hName )",
-			"params" : [
-				"hName"
-			],
-			"paramDesc" : [
-				"Name of histogram to style"
-			],
-			"returns" : [
-				"Histobook * of this for function chaining"
-			],
-			"desc" : "Example: book->style( \"h1\" )->set( \"title\", \"science\" )->draw(); "
+		/* Styles a histogram 
+			Example: book->style( "h1" )->set( "title", "science" )->draw(); "
 		}*/
 		HistoBook* style( string hName );
 
@@ -320,11 +310,7 @@ namespace jdb{
 
 		HistoBook* exportAs( string filename = "" );
 
-		bool exists( string name, string sdir = "" ){
-			if ( NULL != get( name, sdir ) )
-				return true;
-			return false;
-		}
+		bool exists( string name, string sdir = "" );
 
 		int color( string color ) {
 			if ( "red" == color )

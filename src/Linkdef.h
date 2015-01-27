@@ -2,7 +2,10 @@
 
 #pragma link off all globals;
 #pragma link off all classes;
-//#pragma link off all functions;
+#pragma link off all C++ functions;
+#pragma link C++ nestedclasses;
+
+#pragma link C++ defined_in "include/jdb/StringUtils.h";
 
 #pragma link C++ class jdb::Logger-;
 #pragma link C++ class jdb::Reporter-;
@@ -23,8 +26,5 @@
 #pragma link C++ class jdb::CutExplorer-;
 #pragma link C++ class jdb::CutVariable-;
 
-
-#pragma link C++ defined_in "include/jdb/StringUtils.h";
-#pragma link C++ defined_in "include/jdb/Utils.h";
 
 #endif

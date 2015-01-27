@@ -63,6 +63,7 @@ public:
 			return(contents);
 		}
 		//throw(errno);
+		return "";
 	}
 
 	xml_node<> * getNode( string path ){

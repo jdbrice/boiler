@@ -19,11 +19,7 @@
 
 using namespace std;
 
-/*
-namespace jdb{
-	void functionTest( int );
-}
-*/
+
 namespace jdb{
 
 	

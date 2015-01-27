@@ -1,5 +1,5 @@
 #include "XmlConfig.h"
-
+#include <sys/stat.h>
 
 namespace jdb{
 
@@ -17,11 +17,18 @@ namespace jdb{
 		indexCloseDelim = "]";
 		equalDelim = '=';
 
+		// check that the config file exists
+		struct stat buffer;   
+  		bool exists = (stat (filename.c_str(), &buffer) == 0);
 	
-		typedef map<string, string>::iterator map_it_type;
+		if ( exists ){
+			rxw = new RapidXmlWrapper( filename );
+			rxw->getMaps( &data, &isAttribute, &nodeExists );
+		} else {
+			logger.error(__FUNCTION__) << "Config File \"" << filename << "\" DNE " << endl; 
+		}
 
-		rxw = new RapidXmlWrapper( filename );
-		rxw->getMaps( &data, &isAttribute, &nodeExists );
+		typedef map<string, string>::iterator map_it_type;
 
 		/**
 		* Simple report
@@ -39,6 +46,7 @@ namespace jdb{
 
 
 	string XmlConfig::getString( string nodePath, string def ){
+
 		string snp = sanitize( nodePath );
 		if ( nodeExists[ snp ] ){
 			return data[ snp ];
@@ -201,8 +209,14 @@ namespace jdb{
 		if ( attr.size() >= 2 ){
 			ntf[ ntf.size() - 1 ] = ntf[ ntf.size() - 1 ].substr( 0, ntf[ ntf.size() - 1 ].length() - (attr[ 1].length() + 1) );
 		}
-		if ( ntf.size() >= 1 )
+		if ( ntf.size() >= 1 ){
+			vector<string> byIndex = split( ntf[ ntf.size() - 1 ], indexOpenDelim[0] );
+			if ( byIndex.size() >= 2 ){
+				return byIndex[ 0 ];
+			}
+
 			return ntf[ ntf.size() - 1 ];
+		}
 		return "";
 	}
 	string XmlConfig::attributeName( string nodePath ){
@@ -251,7 +265,7 @@ namespace jdb{
 		// case 1) test.sub should return test.sub[0...N]
 		// case 2) test.sub:name should return all test.sub[0...N] with a name attribute
 		// case 3) test.sub:name=dan should return test.sub[]:name == dan -> true
-		cout << nodePath << endl;
+		
 		vector<string> nodes = split( nodePath, pathDelim );
 		vector<string> attrs = split( nodePath, attrDelim );
 	

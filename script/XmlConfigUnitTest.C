@@ -43,7 +43,7 @@ void XmlConfigUnitTest( ){
 		l.info() << cs[ i ] << endl;
 	}
 
-	l.info() << "Searching for nodes under manySame.Histo where name=h1" << endl;
+	l.info() << "Searching for nodes under manySame.Histo where name=h1 ( Should find 1 )" << endl;
 	cs = cfg.getNodes( "manySame.Histo:name = h1");
 	
 	for ( int i = 0; i <cs.size(); i++ ){

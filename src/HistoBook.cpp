@@ -389,6 +389,19 @@ namespace jdb{
 		return book[ ( sdir  + name  ) ];
 	}	//get
 
+	bool HistoBook::exists( string name, string sdir ){
+		if ( sdir.compare("") == 0)
+			sdir = currentDir;
+
+		if ( NULL == book[ ( sdir + name  ) ] ){
+			logger->info(__FUNCTION__) << sdir + name  << " Does Not Exist " << endl; 
+			return false;
+		}
+
+		logger->info(__FUNCTION__) << sdir + name  << " Does Exist " << endl; 
+		return true;
+	}
+
 	TH1* HistoBook::operator[]( string name ) {
 		return get( name );
 	}
@@ -515,11 +528,11 @@ namespace jdb{
 		//TODO : need to fix the logger + cout 
 		logger->info( __FUNCTION__ ) << "( " << opt << ", ";
 		for ( int i = 0; i < params.size(); i++ ){
-			cout << params[ i ] ;
+			logger->info( "", false ) << params[ i ] ;
 			if ( i != params.size() - 1 )
-				cout << ", ";
+				logger->info( "", false ) << ", ";
 		}
-		cout << " ) " << endl;
+		logger->info( "", false ) << " ) " << endl;
 
 		// force the param name to lowercase
 		transform(opt.begin(), opt.end(), opt.begin(), ::tolower);
@@ -654,7 +667,7 @@ namespace jdb{
 			if ( h ){
 				// use the draw option set in its styling
 				h->Draw( drawOption.c_str() );
-				logger->info(__FUNCTION__) << styling << "->Draw( " << drawOption << " ) " << styling << endl;
+				logger->info(__FUNCTION__) << styling << "->Draw( " << drawOption << " ) " << endl;
 				drawOption = "";
 			} else
 				logger->warn(__FUNCTION__) << styling << " does not exist " << endl;
