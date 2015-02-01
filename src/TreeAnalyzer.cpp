@@ -66,11 +66,17 @@ namespace jdb{
 
 		Int_t nEvents = (Int_t)chain->GetEntries();
 		nEventsToProcess = cfg->getInt( nodePath+"input.dst:nEvents", nEvents );
+		if ( nEventsToProcess > nEvents )
+			nEventsToProcess = nEvents;
+		
 		logger->info(__FUNCTION__) << "Loaded: " << nEventsToProcess << " events " << endl;
 		
 		// loop over all events
 		for(Int_t i=0; i<nEventsToProcess; i++) {
 	    	chain->GetEntry(i);
+
+
+	    	analyzeEventBeforeCuts();
 
 	    	if ( !keepEvent() )
 	    		continue;

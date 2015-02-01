@@ -44,8 +44,21 @@ namespace jdb{
 		nEntries = chain->GetEntries();
 		nTrees = chain->GetNtrees();
 
+		TObjArray * brs = chain->GetListOfBranches();
+		int l = brs->GetEntries();
+
+		for ( int i = 0; i < l; i++ ){
+			string name = ((TBranchElement*)brs->At( i ))->GetName();
+			lg.info() << "Branch : " << name << endl;
+			branchNames.push_back( name );
+		}
+
+
+		/**
+		 * Get the Leaves
+		 */
 		TObjArray * lfs = chain->GetListOfLeaves();
-		int l = lfs->GetEntries();
+		l = lfs->GetEntries();
 
 		for ( int i = 0; i < l; i++ ){
 
@@ -55,6 +68,13 @@ namespace jdb{
 			string title = ((TLeafElement*)lfs->At( i ))->GetTitle();
 
 			type[ name ] = tName;
+
+			
+			if (  isSizeLeaf( name ) ){
+				cout << "@Size " << name  << " = " << sizeLeaf( name ) << endl; 
+			} else {
+				cout << "Leaf : " << name << endl;
+			}
 
 			// look for its size if it is an array
 			string::size_type open = title.find( "[", 0 );
@@ -67,6 +87,9 @@ namespace jdb{
 				isArray[ name ] = false;
 			}
 		}
+
+		
+
 
 		findLengths();
 		setAddresses();
@@ -82,13 +105,20 @@ namespace jdb{
 		    string lp = iterator->second;
 		    
 		    if ( maxLength[ lp ] <= 0 ){
-		    	int max = findMax( lp );
-		    	if ( 0 >= max )
-		    		max = atoi( lp.c_str() );
+		    	
+		    	if ( isSizeLeaf( lp ) ){
+		    		maxLength[lp] = sizeLeaf( lp );
+		    		lg.info(__FUNCTION__) << "Max for " << lp << " === " << maxLength[ lp ] << endl;
+		    	}else {
+		    		int max = findMax( lp );
+			    	if ( 0 >= max )
+			    		max = atoi( lp.c_str() );
 
-		    	lg.info(__FUNCTION__) << "Max for " << lp << " === " << max << endl;
+			    	lg.info(__FUNCTION__) << "Max for " << lp << " === " << max << endl;
 
-		    	maxLength[ lp ] = max;
+			    	maxLength[ lp ] = max;	
+		    	}
+		    	
 		    }
 		}
 
@@ -125,8 +155,6 @@ namespace jdb{
 			string name = ((TLeafElement*)lfs->At( i ))->GetName();
 			string title = ((TLeafElement*)lfs->At( i ))->GetTitle();
 
-			cout << name << " : " << tName << endl;
-
 			// if it is an array then get the size
 			int aSize = -1;
 			if ( isArray[ name ]  ){
@@ -150,16 +178,16 @@ namespace jdb{
 			// Int_t
 			if ( "Int_t" == tName ){
 
-				branches[ name ] = 0;
+				leafBranches[ name ] = 0;
 				
 				if ( 0 < aSize && isArray[ name ] ){
 					intArrays[ name ] = new Int_t[ aSize ];
-					chain->SetBranchAddress( name.c_str(), &(intArrays[ name ][0]), &(branches[ name ] ) );
+					chain->SetBranchAddress( name.c_str(), &(intArrays[ name ][0]), &(leafBranches[ name ] ) );
 					usable[ name ] = true;
 				} else {
 					// not an array, just a single var
 					ints[ name ] = 0;
-					chain->SetBranchAddress( name.c_str(), &(ints[ name ]), &(branches[ name ] ) );
+					chain->SetBranchAddress( name.c_str(), &(ints[ name ]), &(leafBranches[ name ] ) );
 					usable[ name ] = true;
 				}
 			}
@@ -167,112 +195,112 @@ namespace jdb{
 			if ( "UInt_t" == tName ){
 				
 				
-				branches[ name ] = 0;
+				leafBranches[ name ] = 0;
 				
 				if ( 0 < aSize && isArray[ name ] ){
 					uintArrays[ name ] = new UInt_t[ aSize ];
-					chain->SetBranchAddress( name.c_str(), &(uintArrays[ name ][0]), &(branches[ name ] ) );
+					chain->SetBranchAddress( name.c_str(), &(uintArrays[ name ][0]), &(leafBranches[ name ] ) );
 					usable[ name ] = true;
 				} else {
 					// not an array, just a single var
 					uints[ name ] = 0;
-					chain->SetBranchAddress( name.c_str(), &(uints[ name ]), &(branches[ name ] ) );
+					chain->SetBranchAddress( name.c_str(), &(uints[ name ]), &(leafBranches[ name ] ) );
 					usable[ name ] = true;
 				}
 			}
 			// Char_t
 			if ( "Char_t" == tName ){
 				
-				branches[ name ] = 0;
+				leafBranches[ name ] = 0;
 				
 				if ( 0 < aSize && isArray[ name ] ){
 					charArrays[ name ] = new Char_t[ aSize ];
-					chain->SetBranchAddress( name.c_str(), &(charArrays[ name ][0]), &(branches[ name ] ) );
+					chain->SetBranchAddress( name.c_str(), &(charArrays[ name ][0]), &(leafBranches[ name ] ) );
 					usable[ name ] = true;
 				} else {
 					// not an array, just a single var
 					chars[ name ] = 0;
-					chain->SetBranchAddress( name.c_str(), &(chars[ name ]), &(branches[ name ] ) );
+					chain->SetBranchAddress( name.c_str(), &(chars[ name ]), &(leafBranches[ name ] ) );
 					usable[ name ] = true;
 				}
 			}
 			// UChar_t
 			if ( "UChar_t" == tName ){
 				
-				branches[ name ] = 0;
+				leafBranches[ name ] = 0;
 				
 				if ( 0 < aSize && isArray[ name ] ){
 					ucharArrays[ name ] = new UChar_t[ aSize ];
-					chain->SetBranchAddress( name.c_str(), &(ucharArrays[ name ][0]), &(branches[ name ] ) );
+					chain->SetBranchAddress( name.c_str(), &(ucharArrays[ name ][0]), &(leafBranches[ name ] ) );
 					usable[ name ] = true;
 				} else {
 					// not an array, just a single var
 					uchars[ name ] = 0;
-					chain->SetBranchAddress( name.c_str(), &(uchars[ name ]), &(branches[ name ] ) );
+					chain->SetBranchAddress( name.c_str(), &(uchars[ name ]), &(leafBranches[ name ] ) );
 					usable[ name ] = true;
 				}
 			}
 			// Short_t
 			if ( "Short_t" == tName ){
 				
-				branches[ name ] = 0;
+				leafBranches[ name ] = 0;
 				
 				if ( 0 < aSize && isArray[ name ] ){
 					shortArrays[ name ] = new Short_t[ aSize ];
-					chain->SetBranchAddress( name.c_str(), &(shortArrays[ name ][0]), &(branches[ name ] ) );
+					chain->SetBranchAddress( name.c_str(), &(shortArrays[ name ][0]), &(leafBranches[ name ] ) );
 					usable[ name ] = true;
 				} else {
 					// not an array, just a single var
 					shorts[ name ] = 0;
-					chain->SetBranchAddress( name.c_str(), &(shorts[ name ]), &(branches[ name ] ) );
+					chain->SetBranchAddress( name.c_str(), &(shorts[ name ]), &(leafBranches[ name ] ) );
 					usable[ name ] = true;
 				}
 			}
 			// UShort_t
 			if ( "UShort_t" == tName ){
 				
-				branches[ name ] = 0;
+				leafBranches[ name ] = 0;
 				
 				if ( 0 < aSize && isArray[ name ] ){
 					ushortArrays[ name ] = new UShort_t[ aSize ];
-					chain->SetBranchAddress( name.c_str(), &(ushortArrays[ name ][0]), &(branches[ name ] ) );
+					chain->SetBranchAddress( name.c_str(), &(ushortArrays[ name ][0]), &(leafBranches[ name ] ) );
 					usable[ name ] = true;
 				} else {
 					// not an array, just a single var
 					ushorts[ name ] = 0;
-					chain->SetBranchAddress( name.c_str(), &(ushorts[ name ]), &(branches[ name ] ) );
+					chain->SetBranchAddress( name.c_str(), &(ushorts[ name ]), &(leafBranches[ name ] ) );
 					usable[ name ] = true;
 				}
 			}
 			// Float_t
 			if ( "Float_t" == tName ){
 				
-				branches[ name ] = 0;
+				leafBranches[ name ] = 0;
 				
 				if ( 0 < aSize && isArray[ name ] ){
 					floatArrays[ name ] = new Float_t[ aSize ];
-					chain->SetBranchAddress( name.c_str(), &(floatArrays[ name ][0]), &(branches[ name ] ) );
+					chain->SetBranchAddress( name.c_str(), &(floatArrays[ name ][0]), &(leafBranches[ name ] ) );
 					usable[ name ] = true;
 				} else {
 					// not an array, just a single var
 					floats[ name ] = 0;
-					chain->SetBranchAddress( name.c_str(), &(floats[ name ]), &(branches[ name ] ) );
+					chain->SetBranchAddress( name.c_str(), &(floats[ name ]), &(leafBranches[ name ] ) );
 					usable[ name ] = true;
 				}
 			}
 			// Double_t
 			if ( "Double_t" == tName ){
 				lg.info( __FUNCTION__ ) << "DOUBLE_T " << endl;
-				branches[ name ] = 0;
+				leafBranches[ name ] = 0;
 				
 				if ( 0 < aSize && isArray[ name ] ){
 					doubleArrays[ name ] = new Double_t[ aSize ];
-					chain->SetBranchAddress( name.c_str(), &(doubleArrays[ name ][0]), &(branches[ name ] ) );
+					chain->SetBranchAddress( name.c_str(), &(doubleArrays[ name ][0]), &(leafBranches[ name ] ) );
 					usable[ name ] = true;
 				} else {
 					// not an array, just a single var
 					doubles[ name ] = 0;
-					chain->SetBranchAddress( name.c_str(), &(doubles[ name ]), &(branches[ name ] ) );
+					chain->SetBranchAddress( name.c_str(), &(doubles[ name ]), &(leafBranches[ name ] ) );
 					usable[ name ] = true;
 				}
 			}

@@ -41,138 +41,95 @@ namespace jdb {
 
 	public:
 
-		//jdoc{ "name" : "static const int llAll = 40", "desc" : "Show all log messages"}
-		/*jdoc{ "name" : "static const int llInfo = 30", "desc" : "Show info and below"}*/
-		/*jdoc{ "name" : "static const int llWarn = 20", "desc" : "Show warnings and below"}*/
-		/*jdoc{ "name" : "static const int llError = 10", "desc" : "Show errors and below"}*/
-		/*jdoc{ "name" : "static const int llNone = 1", "desc" : "Show nothing"}*/
+		// Log everything ( Debug, Trace, Info, Warnings, Error )
 		static const int llAll 		= 60;
+		// Log Debug messages and below ( Debug, Trace, Info, Warnings, Error )
 		static const int llDebug 	= 50;
+		// Log Trace messages and below ( Trace, Info, Warning, Error )
 		static const int llTrace 	= 40;
+		// Log Info messages and below ( Info, Warning, Error )
 		static const int llInfo		= 30;
+		// Log Warning messages and below ( Warning, Error )
 		static const int llWarn 	= 20;
+		// Log Error messages and below ( Error )
 		static const int llError 	= 10;	
+		// Log nothing
 		static const int llNone 	= 1;
 
-		/*jdoc{ "name" : "static const int llDefault = llWarn", "desc" : "The default log level"}*/
+		// The default log level at compile time
 		static const int llDefault	= llWarn;
-		/*jdoc{ "name" : "static int llGlobal", "desc" : "The global log level used if not set otherwise"}*/
+		// The global log level - used by any newly created log IF not overridden
 		static int llGlobal;
 
-		/*jdoc{
-			"name" : "inline static int getGlobalLogLevel()",
-			"returns" : [
-				"Global log level"
-			]
-		}*/
+		/*
+		 * Gets the global log level for all Logger instances
+		 */
 		static int getGlobalLogLevel();
-		/*jdoc{
-			"name" : "inline static void setGlobalLogLevel( int ll )",
-			"params" : [
-				"ll"
-			],
-			"paramDesc" : [
-				"Log Level"
-			],
-			"returns" : [
-				
-			],
-			"desc" : "Sets the global log level"
-		}*/
+		/*
+		 * Sets the global log level used by Logger instances
+		 * @param ll Log level
+		 */
 		static void setGlobalLogLevel( int ll );
 
-		/*jdoc{
-			"name" : "Logger( int ll, string classSpace, ostream* os )",
-			"params" : [
-				"ll", "classSpace", "os"
-			],
-			"paramDesc" : [
-				"Log Level", "Class name to prepend to messages", "Output stream"
-			],
-			"returns" : [
-				
-			],
-			"desc" : "Creates a logger instance with the given properties"
-		}*/
+		/*
+		 * Creates a Logger with 
+		 * @param ll 	Log Level ( llAll, llDebug, ... )
+		 * @param cs 	ClassSpace for prefixing messages
+		 * @param oss	Pointer to an output stream to use
+		 * 
+		 */
 		Logger( int ll, string cs, ostream* oss ){
-			logLevel = ll;
+
+			setLogLevel( ll );
 			cSpace = cs;
 			this->os = oss;
 		} 
-		/*jdoc{
-			"name" : "Logger( int ll = Logger::getGlobalLogLevel(), string classSpace = \"\" )",
-			"params" : [
-				"ll", "classSpace"
-			],
-			"paramDesc" : [
-				"Optional: log level set to global log level",
-				"Optional: Class name to prepend messages with"
-			],
-			"returns" : [
-				
-			],
-			"desc" : "Default constructor - uses the global log level that can be set with static method"
-		}*/
+		
+		/*
+		 * Default constructor creates a Logger with the global log level and no class space prefix
+		 * @param ll 	LogLevel
+		 * @param cs 	ClassSpace prefix for messages 
+		 */
 		Logger( int ll = Logger::getGlobalLogLevel(), string cs = "" ){
-			logLevel = ll;
+			setLogLevel( ll );
 			cSpace = cs;
 			os = &cout;
 		}
 
-		/*jdoc{
-			"name" : "int getLogLevel()",
-			"returns" : [
-				"Current log level"
-			]
-		}*/
+		/*
+		 * Get the Log Level of this Logger instance
+		 * @return the current int value LogLevel
+		 */
 		int getLogLevel() { return logLevel; }
-		/*jdoc{
-			"name" : "void setLogLevel( int ll )",
-			"params" : [
-				"ll"
-			],
-			"paramDesc" : [
-				"new log level to use"
-			],
-			"returns" : [
-			]
-		}*/
-		void setLogLevel( int ll ) { logLevel = ll; }
+		/*
+		 * Set the LogLevel for this Logger instance
+		 * @param ll 	LogLevel ( llAll, llDebug, ... )
+		 */
+		void setLogLevel( int ll ) { 
+			
+			logLevel = ll; 
+			
+		}
 
-		/*jdoc{
-			"name" : "string getClassSpace()",
-			"returns" : [
-				"Current class prefix for messages"
-			],
-			"desc" : ""
-		}*/
+		/*
+		 * Get Class Space prefix
+		 * @return ClassSpace prefix string
+		 */
 		string getClassSpace() { return cSpace; }
 
-		/*jdoc{
-			"name" : "void setClassSpace(string cs )",
-			"params" : [
-				"cs"
-			],
-			"paramDesc" : [
-				"New class name for prepending to messages"
-			],
-			"desc" : ""
-		}*/
+		/*
+		 * Set the ClassSpace Prefix
+		 * @param cs 	ClassSpace Prefix String - usually the name of the class
+		 */
 		void setClassSpace(string cs ) { cSpace = cs; }
 
-		/*jdoc{
-			"name" : "ostream & warn( string functionName = \"\" )",
-			"params" : [
-				"functionName"
-			],
-			"paramDesc" : [
-				"Calling function name to be prepended to message"
-			],
-			"returns" : [
-				"An output stream for writing messages"
-			],
-			"desc" : "Shows all messages below llWarn"
-		}*/
+		/*
+		 * Warning level ( and below ) log messages
+		 * @param functionName 	The name of the calling function to prepend to output
+		 * @param showPrefix 	Show the LogLevel, classSpace, and Function name
+		 * @return 	The output stream for writing. If the LogLevel does not permit this
+		 *              level of output then a NullStream is returned.
+		 */
 		ostream & warn( string functionName = "", bool showPrefix=true ){
 			if ( logLevel < llWarn )
 				return ns;
@@ -185,19 +142,13 @@ namespace jdb {
 		
 
 
-		/*jdoc{
-			"name" : "ostream & error( string functionName = \"\" )",
-			"params" : [
-				"functionName"
-			],
-			"paramDesc" : [
-				"Calling function name to be prepended to message"
-			],
-			"returns" : [
-				"An output stream for writing messages"
-			],
-			"desc" : "Shows all messages below llError"
-		}*/
+		/*
+		 * Error level ( and below ) log messages
+		 * @param functionName 	The name of the calling function to prepend to output
+		 * @param showPrefix 	Show the LogLevel, classSpace, and Function name
+		 * @return 	The output stream for writing. If the LogLevel does not permit this
+		 *              level of output then a NullStream is returned.
+		 */
 		ostream & error( string functionName = "", bool showPrefix=true ){
 			if ( logLevel < llError )
 				return ns;
@@ -209,19 +160,13 @@ namespace jdb {
 		}
 		
 
-		/*jdoc{
-			"name" : "ostream & info( string functionName = \"\" )",
-			"params" : [
-				"functionName"
-			],
-			"paramDesc" : [
-				"Calling function name to be prepended to message"
-			],
-			"returns" : [
-				"An output stream for writing messages"
-			],
-			"desc" : "Shows all messages below llInfo"
-		}*/
+		/*
+		 * Info level ( and below ) log messages
+		 * @param functionName 	The name of the calling function to prepend to output
+		 * @param showPrefix 	Show the LogLevel, classSpace, and Function name
+		 * @return 	The output stream for writing. If the LogLevel does not permit this
+		 *              level of output then a NullStream is returned.
+		 */
 		ostream & info( string functionName = "", bool showPrefix = true ){
 			if ( logLevel < llInfo )
 				return ns;
@@ -233,21 +178,15 @@ namespace jdb {
 		}
 		
 
-		/*jdoc{
-			"name" : "ostream & trace( string functionName = \"\" )",
-			"params" : [
-				"functionName"
-			],
-			"paramDesc" : [
-				"Calling function name to be prepended to message"
-			],
-			"returns" : [
-				"An output stream for writing messages"
-			],
-			"desc" : "Shows all messages below llTrace"
-		}*/
+		/*
+		 * Trace level ( and below ) log messages
+		 * @param functionName 	The name of the calling function to prepend to output
+		 * @param showPrefix 	Show the LogLevel, classSpace, and Function name
+		 * @return 	The output stream for writing. If the LogLevel does not permit this
+		 *              level of output then a NullStream is returned.
+		 */
 		ostream & trace( string functionName = "", bool showPrefix=true ){
-			if ( logLevel < llInfo )
+			if ( logLevel < llTrace )
 				return ns;
 
 			if ( showPrefix )
@@ -257,21 +196,15 @@ namespace jdb {
 		}
 		
 
-		/*jdoc{
-			"name" : "ostream & debug( string functionName = \"\" )",
-			"params" : [
-				"functionName"
-			],
-			"paramDesc" : [
-				"Calling function name to be prepended to message"
-			],
-			"returns" : [
-				"An output stream for writing messages"
-			],
-			"desc" : "Shows all messages below llTrace"
-		}*/
+		/*
+		 * Debug level ( and below ) log messages
+		 * @param functionName 	The name of the calling function to prepend to output
+		 * @param showPrefix 	Show the LogLevel, classSpace, and Function name
+		 * @return 	The output stream for writing. If the LogLevel does not permit this
+		 *              level of output then a NullStream is returned.
+		 */
 		ostream & debug( string functionName = "", bool showPrefix=true ){
-			if ( logLevel < llInfo )
+			if ( logLevel < llDebug )
 				return ns;
 
 			if ( showPrefix )
@@ -281,35 +214,33 @@ namespace jdb {
 		}
 
 		
-		/*jdoc{
-			"name" : "static int logLevelFromString( string ll )",
-			"params" : [
-				"ll"
-			],
-			"paramDesc" : [
-				"String representation of log level"
-			],
-			"returns" : [
-				"Integer representation of log level"
-			],
-			"desc" : "Can be one of [ info, warning, error, all, none ] default is all"
-		}*/
+		/*
+		 * Converts a Human Readable string to the corresponding LogLevel
+		 * @param ll 	String log level 
+		 */
 		static int logLevelFromString( string ll ){
-			if ( "debug" == ll )
+			// push to lower case for comparison
+			string str2 = ll;
+			for ( int i = 0; i < str2.length(); i++ ){
+				str2[ i ] = std::tolower( str2[ i ] );
+			}
+
+			if ( "debug" == str2 )
 				return llDebug;
-			else if ( "trace" == ll )
+			else if ( "trace" == str2 )
 				return llTrace;
-			else if ( "info" == ll )
+			else if ( "info" == str2 )
 				return llInfo;
-			else if ( "warning" == ll  )
+			else if ( "warning" == str2  )
 				return llWarn;
-			else if ( "error" == ll )
+			else if ( "error" == str2 )
 				return llError;
-			else if ( "all" == ll )
+			else if ( "all" == str2 )
 				return llAll;
-			else if ( "none" == ll )
+			else if ( "none" == str2 )
 				return llNone;
 			return llAll;
+
 		}
 
 		void summary() {
@@ -319,6 +250,7 @@ namespace jdb {
 			info() << std::left << std::setw(w1) << "# of Warnings : " << counts[ "warning" ] << endl;
 			info() << std::left << std::setw(w1) << "# of Info : " << counts[ "info" ] << endl;
 		}
+
 
 	protected:
 		

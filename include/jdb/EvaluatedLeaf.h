@@ -1,9 +1,10 @@
-#ifndef CUT_VARIABLE_H
-#define CUT_VARIABLE_H
+#ifndef EVALUATED_LEAF_H
+#define EVALUATED_LEAF_H
 
-#include "TreeMap.h"
+//#include "TreeMap.h"
 #include "XmlConfig.h"
 #include "Logger.h"
+#include "Utils.h"
 using namespace jdb;
 
 #include "TF1.h"
@@ -12,10 +13,12 @@ using namespace std;
 
 #include "TF1.h"
 
+class TreeMap;
+
 namespace jdb{
 
 
-	class CutVariable{
+	class EvaluatedLeaf{
 
 	protected:
 		TF1 * fun;
@@ -28,11 +31,11 @@ namespace jdb{
 		/* Creates a calculated variable from existing ones
 			@tm TreeMap of data
 			@cfg An XmlConfig containg data
-			@nodePath Path to node containing a "<CutVariable />" node
+			@nodePath Path to node containing a "<EvaluatedLeaf />" node
 		*/
-		CutVariable( TreeMap * _tm, XmlConfig * _cfg, string _nodePath ){
+		EvaluatedLeaf( TreeMap * _tm, XmlConfig * _cfg, string _nodePath ){
 
-			lg.info(__FUNCTION__) << "CutVariable( TreeMap, XmlConfig, " << _nodePath << " )" << endl;
+			lg.info(__FUNCTION__) << "EvaluatedLeaf( TreeMap, XmlConfig, " << _nodePath << " )" << endl;
 			tm = _tm;
 			cfg = _cfg;
 			nodePath = _nodePath;
@@ -49,15 +52,20 @@ namespace jdb{
 				}
 			}
 		}
-		~CutVariable() {
+		~EvaluatedLeaf() {
 			delete fun;
 		};
 
+		/**
+		 * Evaluates the calculated value with the current values 
+		 * in the tree mapp
+		 * @return the evaluated value in double format
+		 */
 		double eval() {
 
 			for ( int i = 0; i < 10; i ++ ){
 				if ( cfg->exists( nodePath + ":p" + ts( i ) ) ){
-					double p = (*tm)[ params[ i ] ];
+					double p = tm->get( params[ i ] );
 					fun->SetParameter( i, p );
 				}
 			}

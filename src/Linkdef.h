@@ -22,9 +22,10 @@
 #pragma link C++ class jdb::TreeAnalyzer-;
 #pragma link C++ class jdb::HistoAnalyzer-;
 
+#pragma link C++ class jdb::DataSource-;
 #pragma link C++ class jdb::TreeMap-;
 #pragma link C++ class jdb::CutExplorer-;
-#pragma link C++ class jdb::CutVariable-;
+
 
 
 #endif

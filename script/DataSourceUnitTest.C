@@ -1,6 +1,6 @@
 
 
-void TreeMapUnitTest( string fname = "cTreeMapUnitTest.xml" ){
+void DataSourceUnitTest( string fname = "cDataSourceUnitTest.xml" ){
 
 	gSystem->Load( "libJDB.so" );
 	using namespace jdb;
@@ -9,16 +9,8 @@ void TreeMapUnitTest( string fname = "cTreeMapUnitTest.xml" ){
 
 	Logger::setGlobalLogLevel( Logger::llAll );
 
-	TChain * chain = new TChain( cfg.getString( "input.dst:treeName" ).c_str() );
-	ChainLoader::load( chain, cfg.getString( "input.dst:url" ), cfg.getInt( "input.dst:maxFiles", -1 ) );
-
-	TreeMap tm( chain );
-
-	int nEvents = tm.getEntries();
-
-	HistoBook book( "dTreeMapUnitTest.root", &cfg );
-	book.make1D( "pt", "pt [GeV]", 150, 0, 7.5 ); 
-
+	DataSource ds( &cfg, "DataSource" );
+/*
 	TaskTimer tt;
 	tt.start();
 	for ( int i = 0; i < nEvents; i++ ){
@@ -41,7 +33,7 @@ void TreeMapUnitTest( string fname = "cTreeMapUnitTest.xml" ){
 	}
 
 	cout << "Finished in " << tt.elapsedTime() << endl;
-
+*/
 
 
 

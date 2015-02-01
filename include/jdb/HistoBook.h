@@ -312,6 +312,35 @@ namespace jdb{
 
 		bool exists( string name, string sdir = "" );
 
+		bool is1D(string name, string sdir = ""){
+			if ( exists( name, sdir) ){
+				TH1* h = get( name, sdir);
+				if ( h->GetNbinsY() <= 1 && h->GetNbinsZ() <= 1 && h->GetNbinsX() >= 1 ){
+					return true;
+				}
+			}
+			return false;
+		} 
+		bool is2D(string name, string sdir = ""){
+			if ( exists( name, sdir) ){
+				TH1* h = get( name, sdir);
+				if ( h->GetNbinsY() >= 2 && h->GetNbinsZ() <= 1 && h->GetNbinsX() >= 1 ){
+					return true;
+				}
+			}
+			return false;
+		} 
+		bool is3D(string name, string sdir = ""){
+			if ( exists( name, sdir) ){
+				TH1* h = get( name, sdir);
+				if ( h->GetNbinsY() >= 2 && h->GetNbinsZ() >= 2 && h->GetNbinsX() >= 1 ){
+					return true;
+				}
+			}
+			return false;
+		} 
+
+
 		int color( string color ) {
 			if ( "red" == color )
 				return kRed;

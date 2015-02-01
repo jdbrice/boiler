@@ -12,6 +12,7 @@ using namespace std;
 #include "TBranch.h"
 
 #include "Logger.h"
+//#include "EvaluatedLeaf.h"
 
 /**
  * TTree Data Types to support
@@ -25,9 +26,9 @@ using namespace std;
 	- i : a 32 bit unsigned integer (UInt_t)
 	- F : a 32 bit floating point (Float_t)
 	- D : a 64 bit floating point (Double_t)
-	- L : a 64 bit signed integer (Long64_t)
-	- l : a 64 bit unsigned integer (ULong64_t)
-	- O : [the letter 'o', not a zero] a boolean (Bool_t)
+	X- L : a 64 bit signed integer (Long64_t)
+	X- l : a 64 bit unsigned integer (ULong64_t)
+	X- O : [the letter 'o', not a zero] a boolean (Bool_t)
  */
 
 
@@ -45,8 +46,9 @@ namespace jdb{
 		int nTrees;
 
 
-		// list of branch names
-		vector<string> names;
+		// list of leaf names
+		vector<string> leafNames;
+		vector<string> branchNames;
 
 		// is the leaf usable
 		map<string, bool> usable;
@@ -64,7 +66,7 @@ namespace jdb{
 
 		/*
 		 *
-		 * **Key** -   
+		 * **Key** -  
 		 * **Value** -
 		 */
 		map<string, Int_t*> intArrays;
@@ -95,7 +97,7 @@ namespace jdb{
 		 * **Key** -   
 		 * **Value** -
 		 */
-		map<string, TBranch*> branches;
+		map<string, TBranch*> leafBranches;
 
 		/*
 		 *
@@ -110,6 +112,9 @@ namespace jdb{
 		 * **Value** -
 		 */
 		map<string, string> type;
+
+
+		//map<string, EvaluatedLeaf*> extras;
 
 	public:
 		TreeMap( TChain * chain );
@@ -126,6 +131,33 @@ namespace jdb{
 		int findMax( string name );
 		void findLengths();
 		void setAddresses();
+
+
+		bool isBranch( string name ){
+			if ( std::find( branchNames.begin(), branchNames.end(), name ) != branchNames.end() )
+				return true;
+			return false;
+		}
+		bool isLeaf( string name ){
+			if ( std::find( leafNames.begin(), leafNames.end(), name ) != leafNames.end() )
+				return true;
+			return false;
+		}
+		bool isSizeLeaf( string name ){
+			string npart = name.substr( 0, name.size()-1 );
+			if ( std::find( branchNames.begin(), branchNames.end(), npart ) != branchNames.end() )
+				return true;
+			return false;
+		}
+		int sizeLeaf( string name ){
+			string npart = name.substr( 0, name.size()-1 );
+			TBranch * b = chain->GetBranch( npart.c_str() );
+			cout << b << endl;
+			if ( b ){
+				return b->GetEntries();
+			} 
+			return 0;
+		}
 
 
 		

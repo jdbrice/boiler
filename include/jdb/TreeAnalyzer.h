@@ -23,54 +23,51 @@
 namespace jdb{
 
 
-	/*jdoc{
-		"class" : "TreeAnalyzer",
-		"desc" : ""
-	}*/
+	/* Boiler for analyzing data distributed accross TTrees in many files
+	 *
+	 * Automatically loads the TTrees from each file into a TChain.
+	 * Formalizes the structure for the config file, automatically loading
+	 * the config, logger, reporter, and histobook objects. These become available to any subclass
+	 */
 	class TreeAnalyzer
 	{
 	// protected properties
 	protected:
 		
-		//jdoc{ "name" : "Logger *logger", "desc" : "The logging object for the job"}
+		//The logging object for the job
 		Logger 		*logger;
-		/*jdoc{"name" : "XmlConfig *cfg", "desc" : "Project config"}*/
+		//Project config
 		XmlConfig 	*cfg;
-		/*jdoc{"name" : "string nodePath", "desc" : "Node path in config file"}*/
+		//Node path in config file to the root for everything related to this job
 		string 		nodePath;
-
-		/*jdoc{"name" : "HistoBook *book", "desc" : "Store project histograms and data"}*/
+		//Store project histograms and data
 		HistoBook 	*book;
-		/*jdoc{"name" : "Reporter *reporter", "desc" : "For generating generic reports"}*/
+		//For generating generic reports
 		Reporter 	*reporter;
-		/*jdoc{"name" : "TChain *chain", "desc" : "The chain object which gets automatically set up"}*/
+		//The chain object which gets automatically set up
 		TChain 		*chain;
-
-		/*jdoc{"name" : "int nEventsToProcess", "desc" : ""}*/
+		// the maximum number of events to process. If not set all events will be processed 
 		int nEventsToProcess;
 
 	// public methods
 	public:
-		/*jdoc{
-			"name" : "TreeAnalyzer( XmlConfig * config, string nodePath, string fileList =\"\", string jobPrefix =\"\")",
-			"params" : [ "config", "nodePath", "fileList", "jobPrefix" ],
-			"paramDesc" : [ "Project's config object", 
-				"The node path containing configuration parameters",
-				"Optional: File list for parallel jobs",
-				"Optional: Job prefix for parallel jobs. Will be prepended to output file names." ],
-			"returns" : [  ],
-			"desc" : ""
-		}*/
+		/*Creates the TreeAnalyzer and sets up members
+		 *
+		 * Creates the Reporter, HistoBook and initializes the TChain
+		 * If not filelist is given then data is loaded from the directory specified in the
+		 * config file. Otherwise the files in the filelist are used.
+		 *
+		 * Optionally a jobPrefix can be used to allow for parallel execution such that 
+		 * each job writes out to different files.
+		 */
 		TreeAnalyzer( XmlConfig * config, string np, string fileList ="", string jobPrefix ="");
 		~TreeAnalyzer();
 
-		/*jdoc{
-		"name" : "virtual void make()",
-		"params" : [ ],
-		"paramDesc" : [ ],
-		"returns" : [  ],
-		"desc" : "The maker function for publicly starting the job"
-		}*/
+		/*The maker function for publicly starting the job
+		 *
+		 * This is the main entry point of any job
+		 */
+		
 		virtual void make();
 
 	protected:
@@ -109,6 +106,9 @@ namespace jdb{
 		"desc" : "Analyzes a single event in the chain"
 		}*/
 		virtual void analyzeEvent(){}
+
+
+		virtual void analyzeEventBeforeCuts(){}
 		
 	};
 
