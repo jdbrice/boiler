@@ -1,8 +1,9 @@
 #include "DataSource.h"
 #include "ChainLoader.h"
-
+#include "Utils.h"
 
 #include "TLeafElement.h"
+
 
 namespace jdb{
 	
@@ -27,23 +28,21 @@ namespace jdb{
 			else 
 				lg.warn(__FUNCTION__) << "Provide a url to folder containing data or a filelist <DataSource url=\"...\" (or) filelist=\"list.lis\" /> " << endl;
 
-			std::auto_ptr<int> aip( new int );
-
-			lg.info(__FUNCTION__) << "Just made an auto pointer" << endl;
-
 			/**
 			 * Now create the data access structure
 			 */
-			 mapTree();
+			mapTree();
+			addressBranches();
+			addressLeaves();
 
-
+			initializeBranchStatus();
+			makeAliases();
+			makeEvaluatedLeaves();
 
 
 		} else {
 			lg.error(__FUNCTION__) << "Could not create DataSource : Invalid Config " << endl;
 		}
-
-
 	}
 
 	DataSource::~DataSource(){
@@ -55,7 +54,17 @@ namespace jdb{
 
 			if ( iterator->second ){
 				lg.debug(__FUNCTION__) << "Releasing " << iterator->first << endl;
-				delete[] (data[ iterator->first ]);
+				free( data[ iterator->first ] );
+			}
+
+		}
+
+		typedef map<string, EvaluatedLeaf*>::iterator sel_it_type;
+		for(sel_it_type it = evalLeaf.begin(); it != evalLeaf.end(); it++) {
+
+			if ( it->second ){
+				lg.debug(__FUNCTION__) << "Releasing " << it->first << endl;
+				delete evalLeaf[ it->first ];
 			}
 
 		}
@@ -88,6 +97,7 @@ namespace jdb{
 		for ( int i = 0; i < l; i++ ){
 			string name = ((TBranchElement*)brs->At( i ))->GetName();
 			lg.debug() << "Branch " << name << endl;
+			branchName.push_back( name );
 		}
 
 
@@ -120,13 +130,68 @@ namespace jdb{
 		for ( int i = 0; i < leafName.size(); i++ ){
 			string name = leafName[ i ];
 			leafLength[ name ] = chainLeafLength( name );
-
-			lg.info("", false ) << endl;
 		}
 
 		lg.info(__FUNCTION__) << "Complete" << endl;
 	}
 
+	void DataSource::initializeBranchStatus(){
+
+		vector<string> children = cfg->childrenOf( nodePath );
+
+		for ( int i = 0; i < children.size(); i++ ){
+
+			// we are only interested in the branch status nodes
+			if ( "BranchStatus" == cfg->tagName( children[ i ] )){
+				string path = children[ i ];
+				int status = cfg->getInt( path + ":status", 0 );
+				string active = "Active";
+				if ( !status )
+						active = "Inactive";
+
+				vector<string> bNames = cfg->getStringVector( path );
+
+				for ( int ib = 0; ib < bNames.size(); ib++ ){
+					lg.info(__FUNCTION__) << "Setting " << bNames[ ib ] << " to " << active << endl;
+					chain->SetBranchStatus( bNames[ ib ].c_str(), status );
+				} // loop on branch names
+			} // require node to be a BranchStatus node
+		} // loop on children of nodepPath
+	}
+	void DataSource::makeAliases(){
+		vector<string> children = cfg->childrenOf( nodePath );
+
+		for ( int i = 0; i < children.size(); i++ ){
+
+			// we are only interested in the branch status nodes
+			if ( "Alias" == cfg->tagName( children[ i ] )){
+				string path = children[ i ];
+				
+				string aName = cfg->getString( path + ":name" );
+				string pointsTo = cfg->getString( path + ":pointsTo" );
+
+				addAlias(aName, pointsTo );
+
+			} // require node to be a Alias node
+		} // loop on children of nodepPath
+	}
+
+	void DataSource::makeEvaluatedLeaves(){
+		vector<string> children = cfg->childrenOf( nodePath );
+
+		for ( int i = 0; i < children.size(); i++ ){
+			string path = children[ i ];
+			// we are only interested in the branch status nodes
+			if ( "EvaluatedLeaf" == cfg->tagName( path ) && cfg->exists( path+":name" ) && cfg->exists( path+":value" ) ){
+				string name = cfg->getString( path+":name" );
+				EvaluatedLeaf * evl = new EvaluatedLeaf( cfg, path );
+				evalLeaf[ name ] = evl;
+
+			} // require node to be a Alias node
+		} // loop on children of nodepPath
+
+
+	}
 
 	int DataSource::singleTreeLeafLength( string name ){
 
@@ -141,8 +206,12 @@ namespace jdb{
 
 		int nElem = 0;
 		TLeaf* cl = l->GetLeafCounter( nElem );
+		Int_t length = l->GetLen();
+		if ( 0 >= length)
+			length = 1;
 
-		lg.debug( __FUNCTION__ ) << "\tLength = " << l->GetLen() << endl;
+		lg.debug( __FUNCTION__ ) << "\t" << l->GetTitle() << endl;
+		lg.debug( __FUNCTION__ ) << "\tLength = " << length << endl;
 		lg.debug( __FUNCTION__ ) << "\tMaximum = " << l->GetMaximum() << endl;
 		lg.debug( __FUNCTION__ ) << "\tnElem = " << nElem << endl;
 		if ( cl )
@@ -152,19 +221,21 @@ namespace jdb{
 			dim = cl->GetMaximum();
 			if ( 0 == dim )
 				dim = 1;
+			lg.debug(__FUNCTION__) << "\t\tCase 1" << endl;
 		} else if ( 1 <= nElem && !cl ){ // Leaf like channelHits[ 19 ] ( ie fixed array size )
 			// could be single or multi-dim array based on the title
 			// eg 	var[10][20] => nElem = 200
 			// 		var[200] => nElem = 200
 			// 		same memory footprint anyways so no worries really
 			dim = nElem;
+			lg.debug(__FUNCTION__) << "\t\tCase 2" << endl;
 		} else {
 			lg.debug( __FUNCTION__ ) << "\tCould not determine dimensions of " << name << endl;
 			return -1;
 		}
 
-		lg.trace( __FUNCTION__ ) << "\t" << name << "@size ==> " << dim << endl;
-		return dim;
+		lg.trace( __FUNCTION__ ) << "\t" << name << "@size ==> " << dim * length << endl;
+		return dim * length;
 	}
 
 
@@ -173,7 +244,7 @@ namespace jdb{
 		//The way root does the reporting it is necessary to 
 		//find the max on each tree individually. The max for 
 		//the entire chain is then the maximum value of each tree max 
-		int max = -1;
+		int max = 0;
 		int nt = chain->GetNtrees();
 		lg.debug(__FUNCTION__) << "Looping over " << nt << " trees" << endl;
 		for ( int i = 0; i < nt; i ++ ){
@@ -187,9 +258,32 @@ namespace jdb{
 		}
 		// reload the first tree to put us back at the beg.
 		chain->LoadTree( 0 );
-		lg.debug( __FUNCTION__) << name << "@size = " << max << endl;
+		lg.trace( __FUNCTION__) << name << "@size = " << max << endl;
 
-		return 0;
+		return max;
+	}
+
+	void DataSource::addressBranches(){
+
+		// Set the Tree into decomposed object mode
+		chain->SetMakeClass(1);
+
+		for ( int i = 0; i < branchName.size(); i ++ ){
+
+			// get the data type from the "leaf" stored as "BranchName_"
+			string bName = branchName[ i ];
+			string lName = bName + "_";
+
+			int ms = memSize( lName );
+			data[bName] = malloc( ms );
+
+
+			chain->SetBranchAddress( bName.c_str(), data[bName] );
+
+			lg.debug( __FUNCTION__ ) << leafType[ lName ] << " " << bName << "(" << lName << ") addressed to " << ms << " bytes" << endl;
+
+		}
+
 	}
 
 	void DataSource::addressLeaves() {
@@ -197,13 +291,94 @@ namespace jdb{
 		for ( int i = 0; i < leafName.size(); i++ ){
 
 			string name = leafName[ i ];
+			
+			//Skip "leaves" for top level branches since these are already taken care of
+			TString addressName(name);
+			if ( addressName.EndsWith( "_" ) )	
+				continue;
+
 			if ( "" == name )
 				continue;
 
-			data[ name ] = malloc( memSize( name ) );
+			int ms = memSize( name );
+			lg.debug(__FUNCTION__) << "Allocating " << ms << " bytes for " << name << endl;
 
+			if ( 0 == ms )
+				continue;
+
+			// Allocate the memory
+			data[ name ] = malloc( ms );
+
+			//Change fixed length arrays from "array" to "array[length]" since that is how they are addressed
+			TLeaf * l = chain->GetLeaf( name.c_str() );
+			if ( l ){
+				Int_t len = l->GetLen();
+				if ( len >= 2 ){
+					string nName = name + "[" + ts(len) + "]";
+					lg.debug(__FUNCTION__) << name << " --> " << nName << endl;
+					name = nName;
+				}	
+			}
+			
+			// Address the leaves
+			branches[ name ] = 0;
+			chain->SetBranchAddress( name.c_str(), data[ name ], &branches[ name ] );
+			lg.debug(__FUNCTION__) << "Addressed " << name << endl;
+		}
+	}
+
+	double DataSource::get( string name, int i ){
+
+		// Aliased leaves
+		// Allows possible recursive alias (good or bad? )
+		if ( alias.find( name ) != alias.end() ){ // name is an alias
+			name = alias[ name ];
+			return get( name, i );
+		}
+		// Evaluated leaves
+		if ( evalLeaf.find( name ) != evalLeaf.end() ){
+			return evalLeaf[ name ]->eval( this );
 		}
 
+		if ( i >= leafLength[ name ] || i < 0 ){
+			lg.debug(__FUNCTION__) << name << "[ " << i << " ] Out Of Bounds" << endl;
+			return numeric_limits<double>::quiet_NaN();
+		}
+		if ( !data[ name ]){
+			lg.debug(__FUNCTION__) << name << "[ " << i << " ] Invalid data" << endl;
+			return numeric_limits<double>::quiet_NaN();	
+		}
+
+		// we need to lookup the data pointer, re-cast it and look it up	
+		if ( "Int_t" == leafType[ name ] ){
+			Int_t * tData = (Int_t*)data[ name ];
+			return tData[ i ];
+		}else if ( "UInt_t" == leafType[ name ] ){
+			UInt_t * tData = (UInt_t*)data[ name ];
+			return tData[ i ];
+		}else if ( "Short_t" == leafType[ name ] ){
+			Short_t * tData = (Short_t*)data[ name ];
+			return tData[ i ];
+		}else if ( "UShort_t" == leafType[ name ] ){
+			UShort_t * tData = (UShort_t*)data[ name ];
+			return tData[ i ];
+		}else if ( "Char_t" == leafType[ name ] ){
+			Char_t * tData = (Char_t*)data[ name ];
+			return tData[ i ];
+		}else if ( "UChar_t" == leafType[ name ] ){
+			UChar_t * tData = (UChar_t*)data[ name ];
+			return tData[ i ];
+		}else if ( "Float_t" == leafType[ name ] ){
+			Float_t * tData = (Float_t*)data[ name ];
+			return tData[ i ];
+		}else if ( "Double_t" == leafType[ name ] ){
+			Double_t * tData = (Double_t*)data[ name ];
+			return tData[ i ];
+		}	
+
+		return numeric_limits<double>::quiet_NaN();
+
 	}
+
 
 }

@@ -7,34 +7,24 @@ void DataSourceUnitTest( string fname = "cDataSourceUnitTest.xml" ){
 	
 	XmlConfig cfg( fname );
 
-	Logger::setGlobalLogLevel( Logger::llAll );
+	Logger::setGlobalLogLevel( Logger::llInfo );
 
 	DataSource ds( &cfg, "DataSource" );
-/*
-	TaskTimer tt;
-	tt.start();
+
+	TChain * chain = ds.getChain();
+	
+
+	HistoBook book( "lbnl.root" );
+	book.make1D( "vertexR", "vertexR", 200, 0, 2 );
+
+	cout << "Getting Entries" << endl;
+	int nEvents = ds.getEntries();
+
 	for ( int i = 0; i < nEvents; i++ ){
-
-		tm.getEntry( i );
-
-		int nTof = tm[ "nTofHits" ];
-		//cout << "nTofHits = " << tm[ "nTofHits" ] << endl;
-		for ( int j = 0; j < nTof; j++ ){
-			int c = tm.get( "charge", j );
-			int match = tm.get( "matchFlag", j );
-			int nHits = tm.get( "nHits", j );
-			int nHitsFit = tm.get( "nHitsFit", j );
-			float pt = tm.get( "pt", j );
-			book.fill( "pt", pt );
-			//cout << " pt " << pt << endl;
-			//cout << "charge = " <<  << endl;
-		}
+		//cout << " Getting Entry " << i << endl; 
+		ds.getEntry( i );
+		book.fill( "vertexR", ds( "vR" ) );
 
 	}
-
-	cout << "Finished in " << tt.elapsedTime() << endl;
-*/
-
-
 
 }

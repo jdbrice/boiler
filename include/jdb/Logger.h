@@ -71,6 +71,7 @@ namespace jdb {
 		 */
 		static void setGlobalLogLevel( int ll );
 
+
 		/*
 		 * Creates a Logger with 
 		 * @param ll 	Log Level ( llAll, llDebug, ... )
