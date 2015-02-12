@@ -18,7 +18,7 @@
         "desc" : ""
 }</doc>
     <argument id="jdb::Reporter::Reporter::filename" name="filename">
-      <type name="std::string" />
+      <type name="string" />
     </argument>
     <argument id="jdb::Reporter::Reporter::w" name="w">
       <type builtin="yes" name="int" />
@@ -45,10 +45,10 @@
       <type name="XmlConfig" qualifier="*" ref="jdb::XmlConfig#jdb::XmlConfig" />
     </argument>
     <argument id="jdb::Reporter::Reporter::np" name="np">
-      <type name="std::string" />
+      <type name="string" />
     </argument>
     <argument id="jdb::Reporter::Reporter::prefix" name="prefix">
-      <type name="std::string" />
+      <type name="string" />
     </argument>
   </constructor>
   <destructor abstract="yes" id="jdb::Reporter::~Reporter" name="~Reporter" />
@@ -147,7 +147,7 @@
       <type builtin="yes" name="void" />
     </return>
     <argument id="jdb::Reporter::saveImage::name" name="name">
-      <type name="std::string" />
+      <type name="string" />
     </argument>
   </method>
   <method abstract="yes" id="jdb::Reporter::savePage" name="savePage">
@@ -165,7 +165,7 @@
       <type builtin="yes" name="void" />
     </return>
     <argument id="jdb::Reporter::savePage::name" name="name">
-      <type name="std::string" />
+      <type name="string" />
     </argument>
   </method>
   <variable access="protected" id="jdb::Reporter::instances" name="instances">
@@ -175,7 +175,7 @@
     <type name="XmlConfig" qualifier="*" ref="jdb::XmlConfig#jdb::XmlConfig" />
   </field>
   <field access="protected" id="jdb::Reporter::nodePath" name="nodePath">
-    <type name="std::string" />
+    <type name="string" />
   </field>
   <field access="protected" id="jdb::Reporter::logger" name="logger">
     <type name="Logger" qualifier="*" ref="jdb::Logger#jdb::Logger" />
@@ -193,6 +193,6 @@
     <type builtin="yes" name="int" />
   </field>
   <field access="protected" id="jdb::Reporter::filename" name="filename">
-    <type name="std::string" />
+    <type name="string" />
   </field>
 </class>

@@ -115,6 +115,12 @@ namespace jdb {
 		}*/
 		void saveImage( string name );
 
+		void update(){
+			canvas->Update();
+		}
+
+		TCanvas * getCanvas() { return canvas; }
+
 	protected:
 
 		XmlConfig * cfg;

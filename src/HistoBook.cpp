@@ -603,6 +603,8 @@ namespace jdb{
 		    	h->SetMarkerColor( c );
 		    } else if ( "markerstyle" == opt ) {
 		    	h->SetMarkerStyle( (int)dParam( params, 0) );
+		    } else if ( "markersize"){
+		    	h->SetMarkerSize( (int) dParam( params, 0) );
 		    } else if ( "legend" == opt ){
 		    	// p1 - alignmentX
 		    	// p2 - alignmentY

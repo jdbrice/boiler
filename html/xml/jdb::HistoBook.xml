@@ -4,90 +4,54 @@
         "desc" : "A book keeper and feature rich environemnt for using Root Hsitograms"
 }</doc>
   <constructor abstract="yes" id="jdb::HistoBook::HistoBook" name="HistoBook">
-    <brief>jdoc{</brief>
-    <doc>"name" : "HistoBook( string name, string input = \"\", string inDir = \"\" )",
-        "params" : [ "name", "input", "inDir" ],
-        "paramDesc" : [ "Name of root file output", "Optional: input file to merge in", "Optional: directory in input to merge - others ignored" ],
-        "returns" : [  ],
-        "desc" : "Constructor: Creates a HistoBook with no config support (legacy )"
-        }
-</doc>
     <argument id="jdb::HistoBook::HistoBook::name" name="name">
-      <type name="std::string" />
+      <type name="string" />
     </argument>
     <argument id="jdb::HistoBook::HistoBook::input" name="input">
-      <type name="std::string" />
+      <type name="string" />
     </argument>
     <argument id="jdb::HistoBook::HistoBook::inDir" name="inDir">
-      <type name="std::string" />
+      <type name="string" />
     </argument>
   </constructor>
   <constructor abstract="yes" id="jdb::HistoBook::HistoBook" name="HistoBook">
-    <brief>jdoc{</brief>
-    <doc>"name" : "HistoBook( string name, XmlConfig* config, string input = \"\", string inDir = \"\" )",
-        "params" : [ "name", "config", "input", "inDir" ],
-        "paramDesc" : [ "Name of root file output", "Project config file", "Optional: input file to merge in", "Optional: directory in input" ],
-        "returns" : [  ],
-        "desc" : "Constructor: Creates a HistoBook with config support"
-        }
-</doc>
     <argument id="jdb::HistoBook::HistoBook::name" name="name">
-      <type name="std::string" />
+      <type name="string" />
     </argument>
     <argument id="jdb::HistoBook::HistoBook::config" name="config">
       <type name="XmlConfig" qualifier="*" ref="jdb::XmlConfig#jdb::XmlConfig" />
     </argument>
     <argument id="jdb::HistoBook::HistoBook::input" name="input">
-      <type name="std::string" />
+      <type name="string" />
     </argument>
     <argument id="jdb::HistoBook::HistoBook::inDir" name="inDir">
-      <type name="std::string" />
+      <type name="string" />
     </argument>
   </constructor>
   <destructor abstract="yes" id="jdb::HistoBook::~HistoBook" name="~HistoBook" />
   <method abstract="yes" id="jdb::HistoBook::add" name="add">
-    <brief>jdoc{</brief>
-    <doc>"name" : "void add( string name, TH1 * h)",
-        "params" : [
-                "name", "h"
-        ],
-        "paramDesc" : [
-                "Key name for histogram in book", "Root Histogam"
-        ],
-        "returns" : [
-
-        ],
-        "desc" : "Adds a root histogram to the book for safe-keeping"
-}</doc>
     <return>
       <type builtin="yes" name="void" />
     </return>
     <argument id="jdb::HistoBook::add::name" name="name">
-      <type name="std::string" />
+      <type name="string" />
     </argument>
     <argument id="jdb::HistoBook::add::" name="">
       <type name="TH1" qualifier="*" />
     </argument>
   </method>
   <method abstract="yes" id="jdb::HistoBook::cd" name="cd">
-    <brief>jdoc{</brief>
-    <doc>"name" : "string cd( string dir = \"/\" )",
-        "params" : [
-                "dir"
-        ],
-        "paramDesc" : [
-                "Directory to move into"
-        ],
-        "returns" : [
-                "Previous directory"
-        ],
-        "desc" : "Changes into the given directory. If the dir DNE it is created, else it is simply set as the current. Subdirectories can be used if the entire path is given, paths are never relative/"
-}</doc>
+    <doc>
+Changes into the given directory.
+If the dir DNE it is created, or it is simply set as the current.
+Subdirectories can be used if the entire path is given, paths are never relative
+
+</doc>
     <return>
-      <type name="std::string" />
+      <type name="string" />
     </return>
     <argument id="jdb::HistoBook::cd::dir" name="dir">
-      <type name="std::string" />
+      <type name="string" />
     </argument>
   </method>
   <method id="jdb::HistoBook::clearLegend" name="clearLegend">
@@ -100,10 +64,10 @@
       <type builtin="yes" name="void" />
     </return>
     <argument id="jdb::HistoBook::clone::existing" name="existing">
-      <type name="std::string" />
+      <type name="string" />
     </argument>
     <argument id="jdb::HistoBook::clone::create" name="create">
-      <type name="std::string" />
+      <type name="string" />
     </argument>
   </method>
   <method id="jdb::HistoBook::color" name="color">
@@ -111,7 +75,7 @@
       <type builtin="yes" name="int" />
     </return>
     <argument id="jdb::HistoBook::color::color" name="color">
-      <type name="std::string" />
+      <type name="string" />
     </argument>
   </method>
   <method abstract="yes" id="jdb::HistoBook::draw" name="draw">
@@ -119,21 +83,21 @@
       <type name="HistoBook" qualifier="*" ref="jdb::HistoBook#jdb::HistoBook" />
     </return>
     <argument id="jdb::HistoBook::draw::name" name="name">
-      <type name="std::string" />
+      <type name="string" />
     </argument>
     <argument id="jdb::HistoBook::draw::opt" name="opt">
       <type name="Option_t" qualifier="*" />
     </argument>
   </method>
-  <method id="jdb::HistoBook::exists" name="exists">
+  <method abstract="yes" id="jdb::HistoBook::exists" name="exists">
     <return>
       <type builtin="yes" name="bool" />
     </return>
     <argument id="jdb::HistoBook::exists::name" name="name">
-      <type name="std::string" />
+      <type name="string" />
     </argument>
     <argument id="jdb::HistoBook::exists::sdir" name="sdir">
-      <type name="std::string" />
+      <type name="string" />
     </argument>
   </method>
   <method abstract="yes" id="jdb::HistoBook::exportAs" name="exportAs">
@@ -141,28 +105,19 @@
       <type name="HistoBook" qualifier="*" ref="jdb::HistoBook#jdb::HistoBook" />
     </return>
     <argument id="jdb::HistoBook::exportAs::filename" name="filename">
-      <type name="std::string" />
+      <type name="string" />
     </argument>
   </method>
   <method abstract="yes" id="jdb::HistoBook::fill" name="fill">
-    <brief>jdoc{</brief>
-    <doc>"name" : "void fill( string name, double bin, double weight = 1)",
-        "params" : [
-                "name", "bin", "weight"
-        ],
-        "paramDesc" : [
-                "Key in book", "Bin index", "Weight for 1D, or y Bin index for TH2D"
-        ],
-        "returns" : [
-
-        ],
-        "desc" : "This method checks for existance unlike using get(...)-&gt;Fill(...). If the histo DNE then an error is reported through the Logger and execution continues."
-}</doc>
+    <doc>
+This method checks for existance unlike using get(...)-&gt;Fill(...).
+If the histo DNE then an error is reported through the Logger and execution continues.
+</doc>
     <return>
       <type builtin="yes" name="void" />
     </return>
     <argument id="jdb::HistoBook::fill::name" name="name">
-      <type name="std::string" />
+      <type name="string" />
     </argument>
     <argument id="jdb::HistoBook::fill::bin" name="bin">
       <type builtin="yes" name="double" />
@@ -176,82 +131,43 @@
       <type builtin="yes" name="int" />
     </return>
     <argument id="jdb::HistoBook::findBin::bins" name="bins">
-      <type name="std::vector&lt;double&gt;" qualifier=" &amp;" />
+      <type name="vector&lt;double&gt;" qualifier=" &amp;" />
     </argument>
     <argument id="jdb::HistoBook::findBin::value" name="value">
       <type builtin="yes" name="double" />
     </argument>
   </method>
   <method abstract="yes" id="jdb::HistoBook::get" name="get">
-    <brief>jdoc{</brief>
-    <doc>"name" : "TH1* get( string name, string sdir = \"\" )",
-        "params" : [
-                "name", "sdir"
-        ],
-        "paramDesc" : [
-                "Name (key) of histogram", "Optional: look for the histogram in the directory sdir"
-        ],
-        "returns" : [
-                "TH1* to histogram - may be NULL if DNE"
-        ],
-        "desc" : "Gets a ROOT histo out of the book by key"
-}</doc>
     <return>
       <type name="TH1" qualifier="*" />
     </return>
     <argument id="jdb::HistoBook::get::name" name="name">
-      <type name="std::string" />
+      <type name="string" />
     </argument>
     <argument id="jdb::HistoBook::get::sdir" name="sdir">
-      <type name="std::string" />
+      <type name="string" />
     </argument>
   </method>
   <method abstract="yes" id="jdb::HistoBook::get2D" name="get2D">
-    <brief>jdoc{</brief>
-    <doc>"name" : "TH2* get2D( string name, string sdir = \"\" )",
-        "params" : [
-                "name", "sdir"
-        ],
-        "paramDesc" : [
-                "Name (key) of histogram", "Optional: look for the histogram in the directory sdir"
-        ],
-        "returns" : [
-                "TH2* to histogram - may be NULL if DNE"
-        ],
-        "desc" : "Same as get but auto casts to a TH2"
-}</doc>
     <return>
       <type name="TH2" qualifier="*" />
     </return>
     <argument id="jdb::HistoBook::get2D::name" name="name">
-      <type name="std::string" />
+      <type name="string" />
     </argument>
     <argument id="jdb::HistoBook::get2D::sdir" name="sdir">
-      <type name="std::string" />
+      <type name="string" />
     </argument>
   </method>
   <method abstract="yes" id="jdb::HistoBook::get3D" name="get3D">
-    <brief>jdoc{</brief>
-    <doc>"name" : "TH3* get3D( string name, string sdir = \"\" )",
-        "params" : [
-                "name", "sdir"
-        ],
-        "paramDesc" : [
-                "Name (key) of histogram", "Optional: look for the histogram in the directory sdir"
-        ],
-        "returns" : [
-                "TH3* to histogram - may be NULL if DNE"
-        ],
-        "desc" : "Same as get but auto casts to a TH3"
-}</doc>
     <return>
       <type name="TH3" qualifier="*" />
     </return>
     <argument id="jdb::HistoBook::get3D::name" name="name">
-      <type name="std::string" />
+      <type name="string" />
     </argument>
     <argument id="jdb::HistoBook::get3D::sdir" name="sdir">
-      <type name="std::string" />
+      <type name="string" />
     </argument>
   </method>
   <method id="jdb::HistoBook::getDirectory" name="getDirectory">
@@ -265,20 +181,44 @@
       <type name="TLegend" qualifier="*" />
     </return>
   </method>
+  <method id="jdb::HistoBook::is1D" name="is1D">
+    <return>
+      <type builtin="yes" name="bool" />
+    </return>
+    <argument id="jdb::HistoBook::is1D::name" name="name">
+      <type name="string" />
+    </argument>
+    <argument id="jdb::HistoBook::is1D::sdir" name="sdir">
+      <type name="string" />
+    </argument>
+  </method>
+  <method id="jdb::HistoBook::is2D" name="is2D">
+    <return>
+      <type builtin="yes" name="bool" />
+    </return>
+    <argument id="jdb::HistoBook::is2D::name" name="name">
+      <type name="string" />
+    </argument>
+    <argument id="jdb::HistoBook::is2D::sdir" name="sdir">
+      <type name="string" />
+    </argument>
+  </method>
+  <method id="jdb::HistoBook::is3D" name="is3D">
+    <return>
+      <type builtin="yes" name="bool" />
+    </return>
+    <argument id="jdb::HistoBook::is3D::name" name="name">
+      <type name="string" />
+    </argument>
+    <argument id="jdb::HistoBook::is3D::sdir" name="sdir">
+      <type name="string" />
+    </argument>
+  </method>
   <method abstract="yes" id="jdb::HistoBook::make" name="make">
-    <brief>jdoc{</brief>
-    <doc>"name" : "void make( XmlConfig * config, string nodeName )",
-        "params" : [
-                "config", "nodeName"
-        ],
-        "paramDesc" : [
-                "Config containing histogram schema", "Path to node containing schema"
-        ],
-        "returns" : [
+    <doc>
+Makes a histogram from a node in a config file
 
-        ],
-        "desc" : "Makes a histogram from a node in a config file &amp;lt;br/&amp;gt;&amp;lt;code&amp;gt;&amp;lthName key=\"\" nBins=\"42\" minX=\"0\" maxX=\"10\" \\&amp;gt&amp;lt;/code&amp;gt;"
-}</doc>
+</doc>
     <return>
       <type builtin="yes" name="void" />
     </return>
@@ -286,28 +226,18 @@
       <type name="XmlConfig" qualifier="*" ref="jdb::XmlConfig#jdb::XmlConfig" />
     </argument>
     <argument id="jdb::HistoBook::make::nodeName" name="nodeName">
-      <type name="std::string" />
+      <type name="string" />
     </argument>
   </method>
   <method abstract="yes" id="jdb::HistoBook::make" name="make">
-    <brief>jdoc{</brief>
-    <doc>"name" : "void make( string nodeName )",
-        "params" : [
-                "nodeName"
-        ],
-        "paramDesc" : [
-                "Path to a histogram schema node"
-        ],
-        "returns" : [
-
-        ],
-        "desc" : "Makes a single histogram from the class config file given during construction"
-}</doc>
+    <doc>
+Makes a single histogram from the class config file given during construction
+</doc>
     <return>
       <type builtin="yes" name="void" />
     </return>
     <argument id="jdb::HistoBook::make::nodeName" name="nodeName">
-      <type name="std::string" />
+      <type name="string" />
     </argument>
   </method>
   <method abstract="yes" id="jdb::HistoBook::make1D" name="make1D">
@@ -315,10 +245,10 @@
       <type builtin="yes" name="void" />
     </return>
     <argument id="jdb::HistoBook::make1D::name" name="name">
-      <type name="std::string" />
+      <type name="string" />
     </argument>
     <argument id="jdb::HistoBook::make1D::title" name="title">
-      <type name="std::string" />
+      <type name="string" />
     </argument>
     <argument id="jdb::HistoBook::make1D::nBins" name="nBins">
       <type builtin="yes" name="int" />
@@ -335,10 +265,10 @@
       <type builtin="yes" name="void" />
     </return>
     <argument id="jdb::HistoBook::make1D::name" name="name">
-      <type name="std::string" />
+      <type name="string" />
     </argument>
     <argument id="jdb::HistoBook::make1D::title" name="title">
-      <type name="std::string" />
+      <type name="string" />
     </argument>
     <argument id="jdb::HistoBook::make1D::nBins" name="nBins">
       <type builtin="yes" name="int" />
@@ -352,10 +282,10 @@
       <type builtin="yes" name="void" />
     </return>
     <argument id="jdb::HistoBook::make1F::name" name="name">
-      <type name="std::string" />
+      <type name="string" />
     </argument>
     <argument id="jdb::HistoBook::make1F::title" name="title">
-      <type name="std::string" />
+      <type name="string" />
     </argument>
     <argument id="jdb::HistoBook::make1F::nBins" name="nBins">
       <type builtin="yes" name="int" />
@@ -372,10 +302,10 @@
       <type builtin="yes" name="void" />
     </return>
     <argument id="jdb::HistoBook::make2D::name" name="name">
-      <type name="std::string" />
+      <type name="string" />
     </argument>
     <argument id="jdb::HistoBook::make2D::title" name="title">
-      <type name="std::string" />
+      <type name="string" />
     </argument>
     <argument id="jdb::HistoBook::make2D::nBinsX" name="nBinsX">
       <type builtin="yes" name="int" />
@@ -401,10 +331,10 @@
       <type builtin="yes" name="void" />
     </return>
     <argument id="jdb::HistoBook::make2D::name" name="name">
-      <type name="std::string" />
+      <type name="string" />
     </argument>
     <argument id="jdb::HistoBook::make2D::title" name="title">
-      <type name="std::string" />
+      <type name="string" />
     </argument>
     <argument id="jdb::HistoBook::make2D::nBinsX" name="nBinsX">
       <type builtin="yes" name="int" />
@@ -427,10 +357,10 @@
       <type builtin="yes" name="void" />
     </return>
     <argument id="jdb::HistoBook::make2D::name" name="name">
-      <type name="std::string" />
+      <type name="string" />
     </argument>
     <argument id="jdb::HistoBook::make2D::title" name="title">
-      <type name="std::string" />
+      <type name="string" />
     </argument>
     <argument id="jdb::HistoBook::make2D::nBinsX" name="nBinsX">
       <type builtin="yes" name="int" />
@@ -453,10 +383,10 @@
       <type builtin="yes" name="void" />
     </return>
     <argument id="jdb::HistoBook::make2D::name" name="name">
-      <type name="std::string" />
+      <type name="string" />
     </argument>
     <argument id="jdb::HistoBook::make2D::title" name="title">
-      <type name="std::string" />
+      <type name="string" />
     </argument>
     <argument id="jdb::HistoBook::make2D::nBinsX" name="nBinsX">
       <type builtin="yes" name="int" />
@@ -472,24 +402,15 @@
     </argument>
   </method>
   <method abstract="yes" id="jdb::HistoBook::makeAll" name="makeAll">
-    <brief>jdoc{</brief>
-    <doc>"name" : "void makeAll( string nodeName )",
-        "params" : [
-                "nodeName"
-        ],
-        "paramDesc" : [
-                "Path to the parent node containing 1 or more histogram schema nodes"
-        ],
-        "returns" : [
-
-        ],
-        "desc" : "Makes all histograms that are children of the given parent node in the class config file given during construction"
-}</doc>
+    <doc>
+Makes all histograms that are children of the given parent
+node in the class config file given during construction"
+</doc>
     <return>
       <type builtin="yes" name="void" />
     </return>
     <argument id="jdb::HistoBook::makeAll::nodeName" name="nodeName">
-      <type name="std::string" />
+      <type name="string" />
     </argument>
   </method>
   <method abstract="yes" id="jdb::HistoBook::makeAll" name="makeAll">
@@ -500,12 +421,12 @@
       <type name="XmlConfig" qualifier="*" ref="jdb::XmlConfig#jdb::XmlConfig" />
     </argument>
     <argument id="jdb::HistoBook::makeAll::nodeName" name="nodeName">
-      <type name="std::string" />
+      <type name="string" />
     </argument>
   </method>
   <method id="jdb::HistoBook::makeFixedWidthBins" name="makeFixedWidthBins" static="yes">
     <return>
-      <type name="std::vector&lt;double&gt;" />
+      <type name="vector&lt;double&gt;" />
     </return>
     <argument id="jdb::HistoBook::makeFixedWidthBins::binWidth" name="binWidth">
       <type builtin="yes" name="double" />
@@ -522,7 +443,7 @@
     <doc>Static Usage
 </doc>
     <return>
-      <type name="std::vector&lt;double&gt;" />
+      <type name="vector&lt;double&gt;" />
     </return>
     <argument id="jdb::HistoBook::makeNBins::nBins" name="nBins">
       <type builtin="yes" name="int" />
@@ -539,14 +460,25 @@
       <type name="TH1" qualifier="*" />
     </return>
     <argument id="jdb::HistoBook::operator[]::name" name="name">
-      <type name="std::string" />
+      <type name="string" />
+    </argument>
+  </method>
+  <method id="jdb::HistoBook::removeFromDir" name="removeFromDir">
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+    <argument id="jdb::HistoBook::removeFromDir::name" name="name">
+      <type name="string" />
+    </argument>
+    <argument id="jdb::HistoBook::removeFromDir::sdir" name="sdir">
+      <type name="string" />
     </argument>
   </method>
   <method abstract="yes" id="jdb::HistoBook::save" name="save">
-    <brief>jdoc{</brief>
-    <doc>"name" : "void save()",
-        "desc" : "Saves all histograms and other Root objects attached to the file to the permanent file given during construction"
-}</doc>
+    <doc>
+Saves all histograms and other Root objects attached to the current file to
+the permanent file given during construction
+</doc>
     <return>
       <type builtin="yes" name="void" />
     </return>
@@ -558,19 +490,19 @@
       <type name="HistoBook" qualifier="*" ref="jdb::HistoBook#jdb::HistoBook" />
     </return>
     <argument id="jdb::HistoBook::set::param" name="param">
-      <type name="std::string" />
+      <type name="string" />
     </argument>
     <argument id="jdb::HistoBook::set::p1" name="p1">
-      <type name="std::string" />
+      <type name="string" />
     </argument>
     <argument id="jdb::HistoBook::set::p2" name="p2">
-      <type name="std::string" />
+      <type name="string" />
     </argument>
     <argument id="jdb::HistoBook::set::p3" name="p3">
-      <type name="std::string" />
+      <type name="string" />
     </argument>
     <argument id="jdb::HistoBook::set::p4" name="p4">
-      <type name="std::string" />
+      <type name="string" />
     </argument>
   </method>
   <method abstract="yes" id="jdb::HistoBook::set" name="set">
@@ -578,7 +510,7 @@
       <type name="HistoBook" qualifier="*" ref="jdb::HistoBook#jdb::HistoBook" />
     </return>
     <argument id="jdb::HistoBook::set::param" name="param">
-      <type name="std::string" />
+      <type name="string" />
     </argument>
     <argument id="jdb::HistoBook::set::p1" name="p1">
       <type builtin="yes" name="double" />
@@ -601,7 +533,7 @@
       <type name="XmlConfig" qualifier="*" ref="jdb::XmlConfig#jdb::XmlConfig" />
     </argument>
     <argument id="jdb::HistoBook::set::nodePath" name="nodePath">
-      <type name="std::string" />
+      <type name="string" />
     </argument>
   </method>
   <method abstract="yes" id="jdb::HistoBook::set" name="set">
@@ -609,7 +541,7 @@
       <type name="HistoBook" qualifier="*" ref="jdb::HistoBook#jdb::HistoBook" />
     </return>
     <argument id="jdb::HistoBook::set::nodePath" name="nodePath">
-      <type name="std::string" />
+      <type name="string" />
     </argument>
   </method>
   <method abstract="yes" id="jdb::HistoBook::set" name="set">
@@ -617,57 +549,47 @@
       <type name="HistoBook" qualifier="*" ref="jdb::HistoBook#jdb::HistoBook" />
     </return>
     <argument id="jdb::HistoBook::set::opt" name="opt">
-      <type name="std::string" />
+      <type name="string" />
     </argument>
     <argument id="jdb::HistoBook::set::nodePath" name="nodePath">
-      <type name="std::vector&lt;std::string&gt;" />
+      <type name="vector&lt;string&gt;" />
     </argument>
   </method>
   <method abstract="yes" id="jdb::HistoBook::style" name="style">
-    <brief>jdoc{</brief>
-    <doc>"name" : "HistoBook* style( string hName )",
-        "params" : [
-                "hName"
-        ],
-        "paramDesc" : [
-                "Name of histogram to style"
-        ],
-        "returns" : [
-                "Histobook * of this for function chaining"
-        ],
-        "desc" : "Example: book-&gt;style( \"h1\" )-&gt;set( \"title\", \"science\" )-&gt;draw(); "
-}</doc>
+    <brief> Styles a histogram </brief>
+    <doc>Example: book-&gt;style( "h1" )-&gt;set( "title", "science" )-&gt;draw(); "
+</doc>
     <return>
       <type name="HistoBook" qualifier="*" ref="jdb::HistoBook#jdb::HistoBook" />
     </return>
     <argument id="jdb::HistoBook::style::hName" name="hName">
-      <type name="std::string" />
+      <type name="string" />
     </argument>
   </method>
   <field access="protected" id="jdb::HistoBook::logger" name="logger">
     <type name="Logger" qualifier="*" ref="jdb::Logger#jdb::Logger" />
   </field>
   <field access="protected" id="jdb::HistoBook::currentDir" name="currentDir">
-    <type name="std::string" />
+    <type name="string" />
   </field>
   <field access="protected" id="jdb::HistoBook::configPath" name="configPath">
-    <type name="std::map&lt;std::string, std::string&gt;" />
+    <type name="map&lt;string, string&gt;" />
   </field>
   <field access="protected" id="jdb::HistoBook::book" name="book">
-    <type name="std::map&lt;std::string, TH1 *&gt;" />
+    <type name="map&lt;string, TH1 *&gt;" />
   </field>
   <field access="protected" id="jdb::HistoBook::filename" name="filename">
-    <type name="std::string" />
+    <type name="string" />
   </field>
   <field access="protected" id="jdb::HistoBook::file" name="file">
     <type name="TFile" qualifier="*" />
   </field>
   <field access="protected" id="jdb::HistoBook::styling" name="styling">
     <brief>Style and display</brief>
-    <type name="std::string" />
+    <type name="string" />
   </field>
   <field access="protected" id="jdb::HistoBook::drawOption" name="drawOption">
-    <type name="std::string" />
+    <type name="string" />
   </field>
   <field access="protected" id="jdb::HistoBook::legend" name="legend">
     <type name="TLegend" qualifier="*" />

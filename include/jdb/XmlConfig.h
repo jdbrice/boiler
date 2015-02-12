@@ -180,6 +180,20 @@ namespace jdb {
 		 */
 		vector<string> childrenOf( string nodePath, int depth = -1, bool attrs = false );
 
+		/* Lists the children of a node selecting only a given tag
+		 * @nodePath Path to node. See getString(...)
+		 * @tagName Filters children of the given tagName
+		 * @depth depth to search - not yet implemented
+		 * 
+		 * Gets a list of paths to all children of a given node of the given tagName type. 
+		 * Very useful for automating tasks, building lots of objects, etc.
+		 *
+		 * 	Just a special case of the more general childrenOf(...)
+		 * 
+		 * @return Vector of strings containg paths to each node or attribute
+		 */
+		vector<string> childrenOf( string nodePath, string tagName, int depth = -1);
+
 		/* Get the attributes of a node
 		 * @nodePath Path to node. See getString(...)
 		 * 

@@ -4,7 +4,7 @@
 Not the most efficient but I like the way it allows the system to behave
 </doc>
   <base access="public">
-    <type name="std::streambuf" />
+    <type name="streambuf" />
   </base>
   <method id="jdb::Logger::NullBuffer::overflow" name="overflow" virtual="yes">
     <return>

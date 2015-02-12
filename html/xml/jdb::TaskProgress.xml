@@ -3,7 +3,7 @@
   <constructor id="jdb::TaskProgress::TaskProgress" name="TaskProgress" />
   <constructor id="jdb::TaskProgress::TaskProgress" name="TaskProgress">
     <argument id="jdb::TaskProgress::TaskProgress::title" name="title">
-      <type name="std::string" />
+      <type name="string" />
     </argument>
     <argument id="jdb::TaskProgress::TaskProgress::max" name="max">
       <type builtin="yes" name="int" />
@@ -39,7 +39,7 @@
     <type builtin="yes" name="bool" />
   </field>
   <field access="protected" id="jdb::TaskProgress::title" name="title">
-    <type name="std::string" />
+    <type name="string" />
   </field>
   <field access="protected" id="jdb::TaskProgress::tt" name="tt">
     <type name="TaskTimer" ref="jdb::TaskTimer#jdb::TaskTimer" />

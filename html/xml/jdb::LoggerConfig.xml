@@ -9,7 +9,7 @@
       <type name="XmlConfig" qualifier="*" ref="jdb::XmlConfig#jdb::XmlConfig" />
     </argument>
     <argument id="jdb::LoggerConfig::makeLogger::nodePath" name="nodePath">
-      <type name="std::string" />
+      <type name="string" />
     </argument>
   </method>
 </class>

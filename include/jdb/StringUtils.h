@@ -1,6 +1,15 @@
 #ifndef STRING_UTILS_H
 #define STRING_UTILS_H
 
+#include <string>
+#include <math.h>
+#include <iostream>
+// for timing functions
+#include <time.h>  
+
+// for ttys detection
+#include <unistd.h> 
+using namespace std;
 
 namespace jdbs{
 

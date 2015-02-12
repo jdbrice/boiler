@@ -25,7 +25,7 @@
     </argument>
     <argument id="jdb::ConfigPoint::ConfigPoint::nodePath" name="nodePath">
       <doc>Path to the XmlNode containg point data</doc>
-      <type name="std::string" />
+      <type name="string" />
     </argument>
     <argument id="jdb::ConfigPoint::ConfigPoint::dX" name="dX">
       <doc>Default = 0 : default x value if not found in node</doc>
@@ -37,11 +37,11 @@
     </argument>
     <argument id="jdb::ConfigPoint::ConfigPoint::attrX" name="attrX">
       <doc>Default = ":x" : attribute tag to search for x value</doc>
-      <type name="std::string" />
+      <type name="string" />
     </argument>
     <argument id="jdb::ConfigPoint::ConfigPoint::attrY" name="attrY">
       <doc>Default = ":y" : attribute tag to search for y value</doc>
-      <type name="std::string" />
+      <type name="string" />
     </argument>
   </constructor>
   <destructor id="jdb::ConfigPoint::~ConfigPoint" name="~ConfigPoint" />
@@ -49,7 +49,7 @@
     <brief> Outputs the point as a human readable string</brief>
     <return>
       <doc>A string representation of the point data in the format "( x, y )"</doc>
-      <type name="std::string" />
+      <type name="string" />
     </return>
   </method>
 </class>

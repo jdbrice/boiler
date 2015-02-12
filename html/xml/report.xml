@@ -11,18 +11,33 @@ return values.
 3. [References](#report/references): Unresolved cross references.
 </doc>
   <coverage>
-    <type documented="3" name="function" undocumented="4">
+    <type documented="5" name="function" undocumented="9">
       <undocumented id="dts" name="dts">
-        <location column="2" file="include/jdb/Utils.h" line="76" />
+        <location column="2" file="include/jdb/StringUtils.h" line="46" />
+      </undocumented>
+      <undocumented id="dts" name="dts">
+        <location column="2" file="include/jdb/Utils.h" line="72" />
       </undocumented>
       <undocumented id="ts" name="ts">
-        <location column="2" file="include/jdb/Utils.h" line="52" />
+        <location column="2" file="include/jdb/StringUtils.h" line="16" />
       </undocumented>
       <undocumented id="ts" name="ts">
-        <location column="2" file="include/jdb/Utils.h" line="58" />
+        <location column="2" file="include/jdb/StringUtils.h" line="22" />
       </undocumented>
       <undocumented id="ts" name="ts">
-        <location column="2" file="include/jdb/Utils.h" line="61" />
+        <location column="2" file="include/jdb/StringUtils.h" line="28" />
+      </undocumented>
+      <undocumented id="ts" name="ts">
+        <location column="2" file="include/jdb/StringUtils.h" line="31" />
+      </undocumented>
+      <undocumented id="ts" name="ts">
+        <location column="2" file="include/jdb/Utils.h" line="48" />
+      </undocumented>
+      <undocumented id="ts" name="ts">
+        <location column="2" file="include/jdb/Utils.h" line="54" />
+      </undocumented>
+      <undocumented id="ts" name="ts">
+        <location column="2" file="include/jdb/Utils.h" line="57" />
       </undocumented>
     </type>
     <type documented="0" name="typedef" undocumented="1">
@@ -30,121 +45,164 @@ return values.
         <location column="3" file="include/jdb/XmlConfig.h" line="41" />
       </undocumented>
     </type>
-    <type documented="1" name="namespace" undocumented="0" />
-    <type documented="59" name="method" undocumented="42">
+    <type documented="1" name="namespace" undocumented="1">
+      <undocumented id="jdbs" name="jdbs">
+        <location column="1" file="include/jdb/StringUtils.h" line="14" />
+      </undocumented>
+    </type>
+    <type documented="59" name="method" undocumented="59">
+      <undocumented id="jdb::DataSource::addAlias" name="addAlias">
+        <location column="3" file="include/jdb/DataSource.h" line="93" />
+      </undocumented>
+      <undocumented id="jdb::DataSource::addressBranches" name="addressBranches">
+        <location column="3" file="include/jdb/DataSource.h" line="112" />
+      </undocumented>
+      <undocumented id="jdb::DataSource::addressLeaves" name="addressLeaves">
+        <location column="3" file="include/jdb/DataSource.h" line="113" />
+      </undocumented>
+      <undocumented id="jdb::DataSource::chainLeafLength" name="chainLeafLength">
+        <location column="3" file="include/jdb/DataSource.h" line="115" />
+      </undocumented>
+      <undocumented id="jdb::DataSource::get" name="get">
+        <location column="3" file="include/jdb/DataSource.h" line="83" />
+      </undocumented>
+      <undocumented id="jdb::DataSource::getChain" name="getChain">
+        <location column="3" file="include/jdb/DataSource.h" line="81" />
+      </undocumented>
+      <undocumented id="jdb::DataSource::getEntries" name="getEntries">
+        <location column="3" file="include/jdb/DataSource.h" line="86" />
+      </undocumented>
+      <undocumented id="jdb::DataSource::getEntry" name="getEntry">
+        <location column="3" file="include/jdb/DataSource.h" line="87" />
+      </undocumented>
+      <undocumented id="jdb::DataSource::mapTree" name="mapTree">
+        <location column="3" file="include/jdb/DataSource.h" line="114" />
+      </undocumented>
+      <undocumented id="jdb::DataSource::memSize" name="memSize">
+        <location column="3" file="include/jdb/DataSource.h" line="117" />
+      </undocumented>
+      <undocumented id="jdb::DataSource::operator()" name="operator()">
+        <location column="3" file="include/jdb/DataSource.h" line="84" />
+      </undocumented>
+      <undocumented id="jdb::DataSource::singleTreeLeafLength" name="singleTreeLeafLength">
+        <location column="3" file="include/jdb/DataSource.h" line="116" />
+      </undocumented>
+      <undocumented id="jdb::HistoBook::add" name="add">
+        <location column="3" file="include/jdb/HistoBook.h" line="122" />
+      </undocumented>
       <undocumented id="jdb::HistoBook::clearLegend" name="clearLegend">
-        <location column="3" file="include/jdb/HistoBook.h" line="285" />
+        <location column="3" file="include/jdb/HistoBook.h" line="173" />
       </undocumented>
       <undocumented id="jdb::HistoBook::clone" name="clone">
-        <location column="3" file="include/jdb/HistoBook.h" line="278" />
+        <location column="3" file="include/jdb/HistoBook.h" line="166" />
       </undocumented>
       <undocumented id="jdb::HistoBook::color" name="color">
-        <location column="3" file="include/jdb/HistoBook.h" line="329" />
+        <location column="3" file="include/jdb/HistoBook.h" line="232" />
       </undocumented>
       <undocumented id="jdb::HistoBook::draw" name="draw">
-        <location column="3" file="include/jdb/HistoBook.h" line="282" />
+        <location column="3" file="include/jdb/HistoBook.h" line="170" />
       </undocumented>
       <undocumented id="jdb::HistoBook::exists" name="exists">
-        <location column="3" file="include/jdb/HistoBook.h" line="323" />
+        <location column="3" file="include/jdb/HistoBook.h" line="201" />
       </undocumented>
       <undocumented id="jdb::HistoBook::exportAs" name="exportAs">
-        <location column="3" file="include/jdb/HistoBook.h" line="321" />
+        <location column="3" file="include/jdb/HistoBook.h" line="199" />
       </undocumented>
       <undocumented id="jdb::HistoBook::findBin" name="findBin">
         <location column="3" file="include/jdb/HistoBook.h" line="105" />
       </undocumented>
+      <undocumented id="jdb::HistoBook::get" name="get">
+        <location column="3" file="include/jdb/HistoBook.h" line="123" />
+      </undocumented>
+      <undocumented id="jdb::HistoBook::get2D" name="get2D">
+        <location column="3" file="include/jdb/HistoBook.h" line="127" />
+      </undocumented>
+      <undocumented id="jdb::HistoBook::get3D" name="get3D">
+        <location column="3" file="include/jdb/HistoBook.h" line="129" />
+      </undocumented>
       <undocumented id="jdb::HistoBook::getLegend" name="getLegend">
-        <location column="3" file="include/jdb/HistoBook.h" line="280" />
+        <location column="3" file="include/jdb/HistoBook.h" line="168" />
       </undocumented>
-      <undocumented id="jdb::HistoBook::make1D" name="make1D">
-        <location column="3" file="include/jdb/HistoBook.h" line="222" />
+      <undocumented id="jdb::HistoBook::is1D" name="is1D">
+        <location column="3" file="include/jdb/HistoBook.h" line="203" />
       </undocumented>
-      <undocumented id="jdb::HistoBook::make1D" name="make1D">
-        <location column="3" file="include/jdb/HistoBook.h" line="223" />
+      <undocumented id="jdb::HistoBook::is2D" name="is2D">
+        <location column="3" file="include/jdb/HistoBook.h" line="212" />
       </undocumented>
-      <undocumented id="jdb::HistoBook::make1F" name="make1F">
+      <undocumented id="jdb::HistoBook::is3D" name="is3D">
         <location column="3" file="include/jdb/HistoBook.h" line="221" />
       </undocumented>
-      <undocumented id="jdb::HistoBook::make2D" name="make2D">
-        <location column="3" file="include/jdb/HistoBook.h" line="224" />
+      <undocumented id="jdb::HistoBook::make1D" name="make1D">
+        <location column="3" file="include/jdb/HistoBook.h" line="138" />
+      </undocumented>
+      <undocumented id="jdb::HistoBook::make1D" name="make1D">
+        <location column="3" file="include/jdb/HistoBook.h" line="139" />
+      </undocumented>
+      <undocumented id="jdb::HistoBook::make1F" name="make1F">
+        <location column="3" file="include/jdb/HistoBook.h" line="137" />
       </undocumented>
       <undocumented id="jdb::HistoBook::make2D" name="make2D">
-        <location column="3" file="include/jdb/HistoBook.h" line="226" />
+        <location column="3" file="include/jdb/HistoBook.h" line="140" />
       </undocumented>
       <undocumented id="jdb::HistoBook::make2D" name="make2D">
-        <location column="3" file="include/jdb/HistoBook.h" line="228" />
+        <location column="3" file="include/jdb/HistoBook.h" line="142" />
       </undocumented>
       <undocumented id="jdb::HistoBook::make2D" name="make2D">
-        <location column="3" file="include/jdb/HistoBook.h" line="230" />
+        <location column="3" file="include/jdb/HistoBook.h" line="144" />
+      </undocumented>
+      <undocumented id="jdb::HistoBook::make2D" name="make2D">
+        <location column="3" file="include/jdb/HistoBook.h" line="146" />
       </undocumented>
       <undocumented id="jdb::HistoBook::makeAll" name="makeAll">
-        <location column="3" file="include/jdb/HistoBook.h" line="277" />
+        <location column="3" file="include/jdb/HistoBook.h" line="165" />
       </undocumented>
       <undocumented id="jdb::HistoBook::makeFixedWidthBins" name="makeFixedWidthBins">
         <location column="3" file="include/jdb/HistoBook.h" line="102" />
       </undocumented>
       <undocumented id="jdb::HistoBook::operator[]" name="operator[]">
-        <location column="3" file="include/jdb/HistoBook.h" line="175" />
+        <location column="3" file="include/jdb/HistoBook.h" line="125" />
+      </undocumented>
+      <undocumented id="jdb::HistoBook::removeFromDir" name="removeFromDir">
+        <location column="3" file="include/jdb/HistoBook.h" line="244" />
       </undocumented>
       <undocumented id="jdb::HistoBook::set" name="set">
-        <location column="3" file="include/jdb/HistoBook.h" line="316" />
+        <location column="3" file="include/jdb/HistoBook.h" line="194" />
       </undocumented>
       <undocumented id="jdb::HistoBook::set" name="set">
-        <location column="3" file="include/jdb/HistoBook.h" line="317" />
+        <location column="3" file="include/jdb/HistoBook.h" line="195" />
       </undocumented>
       <undocumented id="jdb::HistoBook::set" name="set">
-        <location column="3" file="include/jdb/HistoBook.h" line="318" />
+        <location column="3" file="include/jdb/HistoBook.h" line="196" />
       </undocumented>
       <undocumented id="jdb::HistoBook::set" name="set">
-        <location column="3" file="include/jdb/HistoBook.h" line="319" />
+        <location column="3" file="include/jdb/HistoBook.h" line="197" />
       </undocumented>
       <undocumented id="jdb::Logger::NullBuffer::overflow" name="overflow">
         <location column="5" file="include/jdb/Logger.h" line="32" />
       </undocumented>
       <undocumented id="jdb::Logger::preMessage" name="preMessage">
-        <location column="3" file="include/jdb/Logger.h" line="319" />
+        <location column="3" file="include/jdb/Logger.h" line="261" />
       </undocumented>
       <undocumented id="jdb::Logger::summary" name="summary">
-        <location column="3" file="include/jdb/Logger.h" line="306" />
+        <location column="3" file="include/jdb/Logger.h" line="247" />
       </undocumented>
       <undocumented id="jdb::LoggerConfig::makeLogger" name="makeLogger">
         <location column="3" file="include/jdb/LoggerConfig.h" line="20" />
       </undocumented>
       <undocumented id="jdb::TaskProgress::showProgress" name="showProgress">
-        <location column="3" file="include/jdb/Utils.h" line="181" />
+        <location column="3" file="include/jdb/Utils.h" line="177" />
       </undocumented>
       <undocumented id="jdb::TaskTimer::elapsed" name="elapsed">
-        <location column="3" file="include/jdb/Utils.h" line="85" />
+        <location column="3" file="include/jdb/Utils.h" line="81" />
       </undocumented>
       <undocumented id="jdb::TaskTimer::elapsedTime" name="elapsedTime">
-        <location column="3" file="include/jdb/Utils.h" line="86" />
+        <location column="3" file="include/jdb/Utils.h" line="82" />
       </undocumented>
       <undocumented id="jdb::TaskTimer::start" name="start">
-        <location column="3" file="include/jdb/Utils.h" line="84" />
+        <location column="3" file="include/jdb/Utils.h" line="80" />
       </undocumented>
-      <undocumented id="jdb::TreeMap::findLengths" name="findLengths">
-        <location column="3" file="include/jdb/TreeMap.h" line="127" />
-      </undocumented>
-      <undocumented id="jdb::TreeMap::findMax" name="findMax">
-        <location column="3" file="include/jdb/TreeMap.h" line="126" />
-      </undocumented>
-      <undocumented id="jdb::TreeMap::get" name="get">
-        <location column="3" file="include/jdb/TreeMap.h" line="118" />
-      </undocumented>
-      <undocumented id="jdb::TreeMap::getEntries" name="getEntries">
-        <location column="3" file="include/jdb/TreeMap.h" line="121" />
-      </undocumented>
-      <undocumented id="jdb::TreeMap::getEntry" name="getEntry">
-        <location column="3" file="include/jdb/TreeMap.h" line="122" />
-      </undocumented>
-      <undocumented id="jdb::TreeMap::mapTree" name="mapTree">
-        <location column="3" file="include/jdb/TreeMap.h" line="125" />
-      </undocumented>
-      <undocumented id="jdb::TreeMap::operator[]" name="operator[]">
-        <location column="3" file="include/jdb/TreeMap.h" line="119" />
-      </undocumented>
-      <undocumented id="jdb::TreeMap::setAddresses" name="setAddresses">
-        <location column="3" file="include/jdb/TreeMap.h" line="128" />
+      <undocumented id="jdb::TreeAnalyzer::analyzeEventBeforeCuts" name="analyzeEventBeforeCuts">
+        <location column="3" file="include/jdb/TreeAnalyzer.h" line="111" />
       </undocumented>
       <undocumented id="jdb::XmlConfig::manualToLower" name="manualToLower">
         <location column="3" file="include/jdb/XmlConfig.h" line="260" />
@@ -158,8 +216,50 @@ return values.
       <undocumented id="jdb::XmlConfig::vectorFromString" name="vectorFromString">
         <location column="3" file="include/jdb/XmlConfig.h" line="263" />
       </undocumented>
+      <undocumented id="jdbs::TaskProgress::showProgress" name="showProgress">
+        <location column="3" file="include/jdb/StringUtils.h" line="151" />
+      </undocumented>
+      <undocumented id="jdbs::TaskTimer::elapsed" name="elapsed">
+        <location column="3" file="include/jdb/StringUtils.h" line="55" />
+      </undocumented>
+      <undocumented id="jdbs::TaskTimer::elapsedTime" name="elapsedTime">
+        <location column="3" file="include/jdb/StringUtils.h" line="56" />
+      </undocumented>
+      <undocumented id="jdbs::TaskTimer::start" name="start">
+        <location column="3" file="include/jdb/StringUtils.h" line="54" />
+      </undocumented>
     </type>
-    <type documented="34" name="field" undocumented="51">
+    <type documented="35" name="field" undocumented="50">
+      <undocumented id="jdb::DataSource::cfg" name="cfg">
+        <location column="3" file="include/jdb/DataSource.h" line="44" />
+      </undocumented>
+      <undocumented id="jdb::DataSource::chain" name="chain">
+        <location column="3" file="include/jdb/DataSource.h" line="50" />
+      </undocumented>
+      <undocumented id="jdb::DataSource::nEntries" name="nEntries">
+        <location column="3" file="include/jdb/DataSource.h" line="52" />
+      </undocumented>
+      <undocumented id="jdb::DataSource::nTrees" name="nTrees">
+        <location column="3" file="include/jdb/DataSource.h" line="51" />
+      </undocumented>
+      <undocumented id="jdb::DataSource::nodePath" name="nodePath">
+        <location column="3" file="include/jdb/DataSource.h" line="43" />
+      </undocumented>
+      <undocumented id="jdb::EvaluatedLeaf::cfg" name="cfg">
+        <location column="3" file="include/jdb/EvaluatedLeaf.h" line="24" />
+      </undocumented>
+      <undocumented id="jdb::EvaluatedLeaf::fun" name="fun">
+        <location column="3" file="include/jdb/EvaluatedLeaf.h" line="23" />
+      </undocumented>
+      <undocumented id="jdb::EvaluatedLeaf::lg" name="lg">
+        <location column="3" file="include/jdb/EvaluatedLeaf.h" line="26" />
+      </undocumented>
+      <undocumented id="jdb::EvaluatedLeaf::nodePath" name="nodePath">
+        <location column="3" file="include/jdb/EvaluatedLeaf.h" line="25" />
+      </undocumented>
+      <undocumented id="jdb::EvaluatedLeaf::params" name="params">
+        <location column="3" file="include/jdb/EvaluatedLeaf.h" line="27" />
+      </undocumented>
       <undocumented id="jdb::HistoBook::book" name="book">
         <location column="3" file="include/jdb/HistoBook.h" line="78" />
       </undocumented>
@@ -185,19 +285,19 @@ return values.
         <location column="3" file="include/jdb/HistoBook.h" line="73" />
       </undocumented>
       <undocumented id="jdb::Logger::cSpace" name="cSpace">
-        <location column="3" file="include/jdb/Logger.h" line="340" />
+        <location column="3" file="include/jdb/Logger.h" line="282" />
       </undocumented>
       <undocumented id="jdb::Logger::counts" name="counts">
-        <location column="3" file="include/jdb/Logger.h" line="317" />
+        <location column="3" file="include/jdb/Logger.h" line="259" />
       </undocumented>
       <undocumented id="jdb::Logger::logLevel" name="logLevel">
-        <location column="3" file="include/jdb/Logger.h" line="316" />
+        <location column="3" file="include/jdb/Logger.h" line="258" />
       </undocumented>
       <undocumented id="jdb::Logger::ns" name="ns">
-        <location column="3" file="include/jdb/Logger.h" line="338" />
+        <location column="3" file="include/jdb/Logger.h" line="280" />
       </undocumented>
       <undocumented id="jdb::Logger::os" name="os">
-        <location column="3" file="include/jdb/Logger.h" line="337" />
+        <location column="3" file="include/jdb/Logger.h" line="279" />
       </undocumented>
       <undocumented id="jdb::Reporter::canvas" name="canvas">
         <location column="3" file="include/jdb/Reporter.h" line="123" />
@@ -224,79 +324,25 @@ return values.
         <location column="3" file="include/jdb/Reporter.h" line="121" />
       </undocumented>
       <undocumented id="jdb::TaskProgress::barWidth" name="barWidth">
-        <location column="3" file="include/jdb/Utils.h" line="161" />
+        <location column="3" file="include/jdb/Utils.h" line="157" />
       </undocumented>
       <undocumented id="jdb::TaskProgress::max" name="max">
-        <location column="3" file="include/jdb/Utils.h" line="160" />
+        <location column="3" file="include/jdb/Utils.h" line="156" />
       </undocumented>
       <undocumented id="jdb::TaskProgress::showElapsed" name="showElapsed">
-        <location column="3" file="include/jdb/Utils.h" line="163" />
+        <location column="3" file="include/jdb/Utils.h" line="159" />
       </undocumented>
       <undocumented id="jdb::TaskProgress::showTitle" name="showTitle">
-        <location column="3" file="include/jdb/Utils.h" line="162" />
+        <location column="3" file="include/jdb/Utils.h" line="158" />
       </undocumented>
       <undocumented id="jdb::TaskProgress::title" name="title">
-        <location column="3" file="include/jdb/Utils.h" line="164" />
+        <location column="3" file="include/jdb/Utils.h" line="160" />
       </undocumented>
       <undocumented id="jdb::TaskProgress::tt" name="tt">
-        <location column="3" file="include/jdb/Utils.h" line="166" />
+        <location column="3" file="include/jdb/Utils.h" line="162" />
       </undocumented>
       <undocumented id="jdb::TaskTimer::startTime" name="startTime">
-        <location column="3" file="include/jdb/Utils.h" line="83" />
-      </undocumented>
-      <undocumented id="jdb::TreeMap::chain" name="chain">
-        <location column="3" file="include/jdb/TreeMap.h" line="43" />
-      </undocumented>
-      <undocumented id="jdb::TreeMap::charArrays" name="charArrays">
-        <location column="3" file="include/jdb/TreeMap.h" line="72" />
-      </undocumented>
-      <undocumented id="jdb::TreeMap::chars" name="chars">
-        <location column="3" file="include/jdb/TreeMap.h" line="57" />
-      </undocumented>
-      <undocumented id="jdb::TreeMap::doubleArrays" name="doubleArrays">
-        <location column="3" file="include/jdb/TreeMap.h" line="77" />
-      </undocumented>
-      <undocumented id="jdb::TreeMap::doubles" name="doubles">
-        <location column="3" file="include/jdb/TreeMap.h" line="62" />
-      </undocumented>
-      <undocumented id="jdb::TreeMap::floatArrays" name="floatArrays">
-        <location column="3" file="include/jdb/TreeMap.h" line="76" />
-      </undocumented>
-      <undocumented id="jdb::TreeMap::floats" name="floats">
-        <location column="3" file="include/jdb/TreeMap.h" line="61" />
-      </undocumented>
-      <undocumented id="jdb::TreeMap::lg" name="lg">
-        <location column="3" file="include/jdb/TreeMap.h" line="41" />
-      </undocumented>
-      <undocumented id="jdb::TreeMap::nEntries" name="nEntries">
-        <location column="3" file="include/jdb/TreeMap.h" line="44" />
-      </undocumented>
-      <undocumented id="jdb::TreeMap::nTrees" name="nTrees">
-        <location column="3" file="include/jdb/TreeMap.h" line="45" />
-      </undocumented>
-      <undocumented id="jdb::TreeMap::shortArrays" name="shortArrays">
-        <location column="3" file="include/jdb/TreeMap.h" line="74" />
-      </undocumented>
-      <undocumented id="jdb::TreeMap::shorts" name="shorts">
-        <location column="3" file="include/jdb/TreeMap.h" line="59" />
-      </undocumented>
-      <undocumented id="jdb::TreeMap::ucharArrays" name="ucharArrays">
-        <location column="3" file="include/jdb/TreeMap.h" line="73" />
-      </undocumented>
-      <undocumented id="jdb::TreeMap::uchars" name="uchars">
-        <location column="3" file="include/jdb/TreeMap.h" line="58" />
-      </undocumented>
-      <undocumented id="jdb::TreeMap::uintArrays" name="uintArrays">
-        <location column="3" file="include/jdb/TreeMap.h" line="71" />
-      </undocumented>
-      <undocumented id="jdb::TreeMap::uints" name="uints">
-        <location column="3" file="include/jdb/TreeMap.h" line="56" />
-      </undocumented>
-      <undocumented id="jdb::TreeMap::ushortArrays" name="ushortArrays">
-        <location column="3" file="include/jdb/TreeMap.h" line="75" />
-      </undocumented>
-      <undocumented id="jdb::TreeMap::ushorts" name="ushorts">
-        <location column="3" file="include/jdb/TreeMap.h" line="60" />
+        <location column="3" file="include/jdb/Utils.h" line="79" />
       </undocumented>
       <undocumented id="jdb::XmlConfig::data" name="data">
         <location column="3" file="include/jdb/XmlConfig.h" line="37" />
@@ -313,8 +359,38 @@ return values.
       <undocumented id="jdb::XmlConfig::rxw" name="rxw">
         <location column="3" file="include/jdb/XmlConfig.h" line="30" />
       </undocumented>
+      <undocumented id="jdbs::TaskProgress::barWidth" name="barWidth">
+        <location column="3" file="include/jdb/StringUtils.h" line="131" />
+      </undocumented>
+      <undocumented id="jdbs::TaskProgress::max" name="max">
+        <location column="3" file="include/jdb/StringUtils.h" line="130" />
+      </undocumented>
+      <undocumented id="jdbs::TaskProgress::showElapsed" name="showElapsed">
+        <location column="3" file="include/jdb/StringUtils.h" line="133" />
+      </undocumented>
+      <undocumented id="jdbs::TaskProgress::showTitle" name="showTitle">
+        <location column="3" file="include/jdb/StringUtils.h" line="132" />
+      </undocumented>
+      <undocumented id="jdbs::TaskProgress::title" name="title">
+        <location column="3" file="include/jdb/StringUtils.h" line="134" />
+      </undocumented>
+      <undocumented id="jdbs::TaskProgress::tt" name="tt">
+        <location column="3" file="include/jdb/StringUtils.h" line="136" />
+      </undocumented>
+      <undocumented id="jdbs::TaskTimer::startTime" name="startTime">
+        <location column="3" file="include/jdb/StringUtils.h" line="53" />
+      </undocumented>
     </type>
-    <type documented="11" name="constructor" undocumented="5">
+    <type documented="10" name="constructor" undocumented="9">
+      <undocumented id="jdb::DataSource::DataSource" name="DataSource">
+        <location column="3" file="include/jdb/DataSource.h" line="78" />
+      </undocumented>
+      <undocumented id="jdb::HistoBook::HistoBook" name="HistoBook">
+        <location column="3" file="include/jdb/HistoBook.h" line="109" />
+      </undocumented>
+      <undocumented id="jdb::HistoBook::HistoBook" name="HistoBook">
+        <location column="3" file="include/jdb/HistoBook.h" line="110" />
+      </undocumented>
       <undocumented id="jdb::Logger::NullStream::NullStream" name="NullStream">
         <location column="4" file="include/jdb/Logger.h" line="36" />
       </undocumented>
@@ -322,34 +398,19 @@ return values.
         <location column="3" file="include/jdb/LoggerConfig.h" line="17" />
       </undocumented>
       <undocumented id="jdb::TaskProgress::TaskProgress" name="TaskProgress">
-        <location column="3" file="include/jdb/Utils.h" line="169" />
+        <location column="3" file="include/jdb/Utils.h" line="165" />
       </undocumented>
       <undocumented id="jdb::TaskProgress::TaskProgress" name="TaskProgress">
-        <location column="3" file="include/jdb/Utils.h" line="172" />
+        <location column="3" file="include/jdb/Utils.h" line="168" />
       </undocumented>
-      <undocumented id="jdb::TreeMap::TreeMap" name="TreeMap">
-        <location column="3" file="include/jdb/TreeMap.h" line="115" />
+      <undocumented id="jdbs::TaskProgress::TaskProgress" name="TaskProgress">
+        <location column="3" file="include/jdb/StringUtils.h" line="139" />
+      </undocumented>
+      <undocumented id="jdbs::TaskProgress::TaskProgress" name="TaskProgress">
+        <location column="3" file="include/jdb/StringUtils.h" line="142" />
       </undocumented>
     </type>
-    <type documented="5" name="variable" undocumented="17">
-      <undocumented id="jdb::Logger::llDebug" name="llDebug">
-        <location column="3" file="include/jdb/Logger.h" line="50" />
-      </undocumented>
-      <undocumented id="jdb::Logger::llError" name="llError">
-        <location column="3" file="include/jdb/Logger.h" line="54" />
-      </undocumented>
-      <undocumented id="jdb::Logger::llInfo" name="llInfo">
-        <location column="3" file="include/jdb/Logger.h" line="52" />
-      </undocumented>
-      <undocumented id="jdb::Logger::llNone" name="llNone">
-        <location column="3" file="include/jdb/Logger.h" line="55" />
-      </undocumented>
-      <undocumented id="jdb::Logger::llTrace" name="llTrace">
-        <location column="3" file="include/jdb/Logger.h" line="51" />
-      </undocumented>
-      <undocumented id="jdb::Logger::llWarn" name="llWarn">
-        <location column="3" file="include/jdb/Logger.h" line="53" />
-      </undocumented>
+    <type documented="11" name="variable" undocumented="11">
       <undocumented id="jdb::Reporter::instances" name="instances">
         <location column="3" file="include/jdb/Reporter.h" line="128" />
       </undocumented>
@@ -384,18 +445,24 @@ return values.
         <location column="3" file="include/jdb/HistoBook.h" line="42" />
       </undocumented>
     </type>
-    <type documented="0" name="destructor" undocumented="9">
+    <type documented="0" name="destructor" undocumented="10">
       <undocumented id="jdb::ConfigPoint::~ConfigPoint" name="~ConfigPoint">
         <location column="3" file="include/jdb/ConfigPoint.h" line="47" />
       </undocumented>
       <undocumented id="jdb::ConfigRange::~ConfigRange" name="~ConfigRange">
         <location column="3" file="include/jdb/ConfigRange.h" line="46" />
       </undocumented>
+      <undocumented id="jdb::DataSource::~DataSource" name="~DataSource">
+        <location column="3" file="include/jdb/DataSource.h" line="79" />
+      </undocumented>
+      <undocumented id="jdb::EvaluatedLeaf::~EvaluatedLeaf" name="~EvaluatedLeaf">
+        <location column="3" file="include/jdb/EvaluatedLeaf.h" line="35" />
+      </undocumented>
       <undocumented id="jdb::HistoAnalyzer::~HistoAnalyzer" name="~HistoAnalyzer">
         <location column="3" file="include/jdb/HistoAnalyzer.h" line="60" />
       </undocumented>
       <undocumented id="jdb::HistoBook::~HistoBook" name="~HistoBook">
-        <location column="3" file="include/jdb/HistoBook.h" line="128" />
+        <location column="3" file="include/jdb/HistoBook.h" line="111" />
       </undocumented>
       <undocumented id="jdb::LoggerConfig::~LoggerConfig" name="~LoggerConfig">
         <location column="3" file="include/jdb/LoggerConfig.h" line="18" />
@@ -404,16 +471,16 @@ return values.
         <location column="3" file="include/jdb/Reporter.h" line="44" />
       </undocumented>
       <undocumented id="jdb::TreeAnalyzer::~TreeAnalyzer" name="~TreeAnalyzer">
-        <location column="3" file="include/jdb/TreeAnalyzer.h" line="65" />
-      </undocumented>
-      <undocumented id="jdb::TreeMap::~TreeMap" name="~TreeMap">
-        <location column="3" file="include/jdb/TreeMap.h" line="116" />
+        <location column="3" file="include/jdb/TreeAnalyzer.h" line="64" />
       </undocumented>
       <undocumented id="jdb::XmlConfig::~XmlConfig" name="~XmlConfig">
         <location column="3" file="include/jdb/XmlConfig.h" line="68" />
       </undocumented>
     </type>
-    <type documented="12" name="class" undocumented="4">
+    <type documented="14" name="class" undocumented="5">
+      <undocumented id="jdb::EvaluatedLeaf" name="EvaluatedLeaf">
+        <location column="2" file="include/jdb/EvaluatedLeaf.h" line="20" />
+      </undocumented>
       <undocumented id="jdb::Logger::NullStream" name="NullStream">
         <location column="3" file="include/jdb/Logger.h" line="34" />
       </undocumented>
@@ -421,76 +488,68 @@ return values.
         <location column="2" file="include/jdb/LoggerConfig.h" line="14" />
       </undocumented>
       <undocumented id="jdb::TaskTimer" name="TaskTimer">
-        <location column="2" file="include/jdb/Utils.h" line="80" />
+        <location column="2" file="include/jdb/Utils.h" line="76" />
       </undocumented>
-      <undocumented id="jdb::TreeMap" name="TreeMap">
-        <location column="2" file="include/jdb/TreeMap.h" line="36" />
+      <undocumented id="jdbs::TaskTimer" name="TaskTimer">
+        <location column="2" file="include/jdb/StringUtils.h" line="50" />
       </undocumented>
     </type>
   </coverage>
   <arguments>
     <function id="jdb::Logger::getGlobalLogLevel" name="getGlobalLogLevel">
-      <location column="3" file="include/jdb/Logger.h" line="68" />
+      <location column="3" file="include/jdb/Logger.h" line="67" />
       <undocumented-return />
     </function>
     <function id="jdb::Logger::setGlobalLogLevel" name="setGlobalLogLevel">
-      <location column="3" file="include/jdb/Logger.h" line="82" />
+      <location column="3" file="include/jdb/Logger.h" line="72" />
       <undocumented name="ll" />
     </function>
     <function id="jdb::Logger::Logger" name="Logger">
-      <location column="3" file="include/jdb/Logger.h" line="97" />
+      <location column="3" file="include/jdb/Logger.h" line="82" />
       <undocumented name="cs" />
       <undocumented name="ll" />
       <undocumented name="oss" />
     </function>
     <function id="jdb::Logger::Logger" name="Logger">
-      <location column="3" file="include/jdb/Logger.h" line="116" />
+      <location column="3" file="include/jdb/Logger.h" line="94" />
       <undocumented name="cs" />
       <undocumented name="ll" />
     </function>
-    <function id="jdb::Logger::getLogLevel" name="getLogLevel">
-      <location column="3" file="include/jdb/Logger.h" line="128" />
-      <undocumented-return />
-    </function>
     <function id="jdb::Logger::setLogLevel" name="setLogLevel">
-      <location column="3" file="include/jdb/Logger.h" line="140" />
+      <location column="3" file="include/jdb/Logger.h" line="109" />
       <undocumented name="ll" />
     </function>
-    <function id="jdb::Logger::getClassSpace" name="getClassSpace">
-      <location column="3" file="include/jdb/Logger.h" line="149" />
-      <undocumented-return />
-    </function>
     <function id="jdb::Logger::setClassSpace" name="setClassSpace">
-      <location column="3" file="include/jdb/Logger.h" line="161" />
+      <location column="3" file="include/jdb/Logger.h" line="125" />
       <undocumented name="cs" />
     </function>
     <function id="jdb::Logger::warn" name="warn">
-      <location column="3" file="include/jdb/Logger.h" line="176" />
-      <undocumented-return />
+      <location column="3" file="include/jdb/Logger.h" line="134" />
       <undocumented name="functionName" />
+      <undocumented name="showPrefix" />
     </function>
     <function id="jdb::Logger::error" name="error">
-      <location column="3" file="include/jdb/Logger.h" line="199" />
-      <undocumented-return />
+      <location column="3" file="include/jdb/Logger.h" line="153" />
       <undocumented name="functionName" />
+      <undocumented name="showPrefix" />
     </function>
     <function id="jdb::Logger::info" name="info">
-      <location column="3" file="include/jdb/Logger.h" line="221" />
-      <undocumented-return />
+      <location column="3" file="include/jdb/Logger.h" line="171" />
       <undocumented name="functionName" />
+      <undocumented name="showPrefix" />
     </function>
     <function id="jdb::Logger::trace" name="trace">
-      <location column="3" file="include/jdb/Logger.h" line="243" />
-      <undocumented-return />
+      <location column="3" file="include/jdb/Logger.h" line="189" />
       <undocumented name="functionName" />
+      <undocumented name="showPrefix" />
     </function>
     <function id="jdb::Logger::debug" name="debug">
-      <location column="3" file="include/jdb/Logger.h" line="265" />
-      <undocumented-return />
+      <location column="3" file="include/jdb/Logger.h" line="207" />
       <undocumented name="functionName" />
+      <undocumented name="showPrefix" />
     </function>
     <function id="jdb::Logger::logLevelFromString" name="logLevelFromString">
-      <location column="3" file="include/jdb/Logger.h" line="288" />
+      <location column="3" file="include/jdb/Logger.h" line="222" />
       <undocumented-return />
       <undocumented name="ll" />
     </function>
@@ -554,77 +613,41 @@ return values.
       <undocumented name="nBins" />
       <undocumented name="low" />
     </function>
-    <function id="jdb::HistoBook::HistoBook" name="HistoBook">
-      <location column="3" file="include/jdb/HistoBook.h" line="118" />
-      <undocumented name="input" />
-      <undocumented name="name" />
-      <undocumented name="inDir" />
-    </function>
-    <function id="jdb::HistoBook::HistoBook" name="HistoBook">
-      <location column="3" file="include/jdb/HistoBook.h" line="127" />
-      <undocumented name="input" />
-      <undocumented name="config" />
-      <undocumented name="name" />
-      <undocumented name="inDir" />
-    </function>
     <function id="jdb::HistoBook::cd" name="cd">
-      <location column="3" file="include/jdb/HistoBook.h" line="143" />
+      <location column="3" file="include/jdb/HistoBook.h" line="119" />
       <undocumented-return />
       <undocumented name="dir" />
     </function>
-    <function id="jdb::HistoBook::add" name="add">
-      <location column="3" file="include/jdb/HistoBook.h" line="158" />
-      <undocumented name="" />
-      <undocumented name="name" />
-    </function>
-    <function id="jdb::HistoBook::get" name="get">
-      <location column="3" file="include/jdb/HistoBook.h" line="173" />
-      <undocumented-return />
-      <undocumented name="sdir" />
-      <undocumented name="name" />
-    </function>
-    <function id="jdb::HistoBook::get2D" name="get2D">
-      <location column="3" file="include/jdb/HistoBook.h" line="190" />
-      <undocumented-return />
-      <undocumented name="sdir" />
-      <undocumented name="name" />
-    </function>
-    <function id="jdb::HistoBook::get3D" name="get3D">
-      <location column="3" file="include/jdb/HistoBook.h" line="205" />
-      <undocumented-return />
-      <undocumented name="sdir" />
-      <undocumented name="name" />
-    </function>
     <function id="jdb::HistoBook::fill" name="fill">
-      <location column="3" file="include/jdb/HistoBook.h" line="220" />
+      <location column="3" file="include/jdb/HistoBook.h" line="135" />
       <undocumented name="bin" />
       <undocumented name="name" />
       <undocumented name="weight" />
     </function>
     <function id="jdb::HistoBook::make" name="make">
-      <location column="3" file="include/jdb/HistoBook.h" line="246" />
+      <location column="3" file="include/jdb/HistoBook.h" line="153" />
       <undocumented name="config" />
       <undocumented name="nodeName" />
     </function>
     <function id="jdb::HistoBook::make" name="make">
-      <location column="3" file="include/jdb/HistoBook.h" line="261" />
+      <location column="3" file="include/jdb/HistoBook.h" line="158" />
       <undocumented name="nodeName" />
     </function>
     <function id="jdb::HistoBook::makeAll" name="makeAll">
-      <location column="3" file="include/jdb/HistoBook.h" line="276" />
+      <location column="3" file="include/jdb/HistoBook.h" line="164" />
       <undocumented name="nodeName" />
     </function>
     <function id="jdb::HistoBook::getDirectory" name="getDirectory">
-      <location column="3" file="include/jdb/HistoBook.h" line="290" />
+      <location column="3" file="include/jdb/HistoBook.h" line="178" />
       <undocumented-return />
     </function>
     <function id="jdb::HistoBook::style" name="style">
-      <location column="3" file="include/jdb/HistoBook.h" line="311" />
+      <location column="3" file="include/jdb/HistoBook.h" line="189" />
       <undocumented-return />
       <undocumented name="hName" />
     </function>
     <function id="jdb::HistoBook::set" name="set">
-      <location column="3" file="include/jdb/HistoBook.h" line="315" />
+      <location column="3" file="include/jdb/HistoBook.h" line="193" />
       <undocumented-return />
       <undocumented name="p2" />
       <undocumented name="p3" />
@@ -633,14 +656,14 @@ return values.
       <undocumented name="param" />
     </function>
     <function id="jdb::TreeAnalyzer::TreeAnalyzer" name="TreeAnalyzer">
-      <location column="3" file="include/jdb/TreeAnalyzer.h" line="64" />
+      <location column="3" file="include/jdb/TreeAnalyzer.h" line="63" />
       <undocumented name="np" />
       <undocumented name="jobPrefix" />
       <undocumented name="config" />
       <undocumented name="fileList" />
     </function>
     <function id="jdb::TreeAnalyzer::keepEvent" name="keepEvent">
-      <location column="3" file="include/jdb/TreeAnalyzer.h" line="84" />
+      <location column="3" file="include/jdb/TreeAnalyzer.h" line="81" />
       <undocumented-return />
     </function>
     <function id="jdb::HistoAnalyzer::HistoAnalyzer" name="HistoAnalyzer">
@@ -648,19 +671,41 @@ return values.
       <undocumented name="nodePath" />
       <undocumented name="config" />
     </function>
+    <function id="jdb::EvaluatedLeaf::EvaluatedLeaf" name="EvaluatedLeaf">
+      <location column="3" file="include/jdb/EvaluatedLeaf.h" line="34" />
+      <undocumented name="_nodePath" />
+      <undocumented name="_cfg" />
+      <misspelled name="tm" />
+    </function>
+    <function id="jdb::EvaluatedLeaf::eval" name="eval">
+      <location column="3" file="include/jdb/EvaluatedLeaf.h" line="44" />
+      <undocumented name="ds" />
+    </function>
+    <function id="trimTrailingZeros" name="trimTrailingZeros">
+      <location column="2" file="include/jdb/StringUtils.h" line="39" />
+      <undocumented-return />
+      <undocumented name="in" />
+    </function>
+    <function id="progressBar" name="progressBar">
+      <location column="2" file="include/jdb/StringUtils.h" line="72" />
+      <undocumented name="i" />
+      <undocumented name="elapsedTime" />
+      <undocumented name="nevents" />
+      <undocumented name="textWidth" />
+    </function>
     <function id="ts" name="ts">
-      <location column="2" file="include/jdb/Utils.h" line="46" />
+      <location column="2" file="include/jdb/Utils.h" line="42" />
       <undocumented-return />
       <undocumented name="i" />
       <undocumented name="len" />
     </function>
     <function id="trimTrailingZeros" name="trimTrailingZeros">
-      <location column="2" file="include/jdb/Utils.h" line="69" />
+      <location column="2" file="include/jdb/Utils.h" line="65" />
       <undocumented-return />
       <undocumented name="in" />
     </function>
     <function id="progressBar" name="progressBar">
-      <location column="2" file="include/jdb/Utils.h" line="102" />
+      <location column="2" file="include/jdb/Utils.h" line="98" />
       <undocumented name="i" />
       <undocumented name="elapsedTime" />
       <undocumented name="nevents" />
@@ -679,13 +724,11 @@ return values.
         <ref name="cut1 /" />
       </doctype>
     </method>
-    <method id="jdb::HistoBook::make" name="make">
-      <location column="3" file="include/jdb/HistoBook.h" line="246" />
-      <doctype name="doc">
-        <ref name="br/" />
-        <ref name="code" />
-        <ref name="/code" />
+    <constructor id="jdb::EvaluatedLeaf::EvaluatedLeaf" name="EvaluatedLeaf">
+      <location column="3" file="include/jdb/EvaluatedLeaf.h" line="34" />
+      <doctype component="tm" name="params">
+        <ref name="EvaluatedLeaf /" />
       </doctype>
-    </method>
+    </constructor>
   </references>
 </report>

@@ -8,11 +8,11 @@
 namespace jdb{
 	
 
-	DataSource::DataSource( XmlConfig * _cfg, string _nodePath ){
+	DataSource::DataSource( XmlConfig * _cfg, string _nodePath, string _fileList ){
 
 		cfg = _cfg;
 		nodePath = _nodePath;
-
+		fileList = _fileList;
 
 		if ( cfg->exists( nodePath ) && cfg->exists( nodePath+":treeName" ) ){
 			treeName = cfg->getString( nodePath + ":treeName", "" );
@@ -21,12 +21,17 @@ namespace jdb{
 			}
 
 			chain = new TChain( treeName.c_str() );
-			if ( cfg->exists( nodePath + ":url" ) )
-				ChainLoader::load( chain, cfg->getString( nodePath+":url" ), cfg->getInt( nodePath + ":maxFiles", -1 ) );
-			else if ( cfg->exists( nodePath + ":filelist" ) )
-				ChainLoader::load( chain, cfg->getString( nodePath+":url" ), cfg->getInt( nodePath + ":maxFiles", -1 ) );
-			else 
-				lg.warn(__FUNCTION__) << "Provide a url to folder containing data or a filelist <DataSource url=\"...\" (or) filelist=\"list.lis\" /> " << endl;
+
+			if ( "" == fileList ){
+				if ( cfg->exists( nodePath + ":url" ) )
+					ChainLoader::load( chain, cfg->getString( nodePath+":url" ), cfg->getInt( nodePath + ":maxFiles", -1 ) );
+				else if ( cfg->exists( nodePath + ":filelist" ) )
+					ChainLoader::loadList( chain, cfg->getString( nodePath+":filelist" ), cfg->getInt( nodePath + ":maxFiles", -1 ) );
+				else 
+					lg.warn(__FUNCTION__) << "Provide a url to folder containing data or a filelist <DataSource url=\"...\" (or) filelist=\"list.lis\" /> " << endl;
+			} else {
+				ChainLoader::loadList( chain, fileList, cfg->getInt( nodePath + ":maxFiles", -1 ) );
+			}
 
 			/**
 			 * Now create the data access structure

@@ -13,6 +13,8 @@ It can be used from the ROOT interpreter or as a library for compiled projects.<
   <class name="ConfigRange" ref="jdb::ConfigRange#jdb::ConfigRange">
     <brief>ConfigRange easily loads (min -&gt; max) ranges from XmlConfigs</brief>
   </class>
+  <class name="DataSource" ref="jdb::DataSource#jdb::DataSource" />
+  <class name="EvaluatedLeaf" ref="jdb::EvaluatedLeaf#jdb::EvaluatedLeaf" />
   <class name="HistoAnalyzer" ref="jdb::HistoAnalyzer#jdb::HistoAnalyzer">
     <brief>jdoc{</brief>
   </class>
@@ -23,7 +25,7 @@ It can be used from the ROOT interpreter or as a library for compiled projects.<
     <brief>*</brief>
   </class>
   <class name="Logger" ref="jdb::Logger#jdb::Logger">
-    <brief>jdoc{</brief>
+    <brief>An all purpose logging utility with log level functionality. </brief>
   </class>
   <class name="LoggerConfig" ref="jdb::LoggerConfig#jdb::LoggerConfig" />
   <class name="Reporter" ref="jdb::Reporter#jdb::Reporter">
@@ -34,15 +36,14 @@ It can be used from the ROOT interpreter or as a library for compiled projects.<
   </class>
   <class name="TaskTimer" ref="jdb::TaskTimer#jdb::TaskTimer" />
   <class name="TreeAnalyzer" ref="jdb::TreeAnalyzer#jdb::TreeAnalyzer">
-    <brief>jdoc{</brief>
+    <brief>Boiler for analyzing data distributed accross TTrees in many files</brief>
   </class>
-  <class name="TreeMap" ref="jdb::TreeMap#jdb::TreeMap" />
   <class name="XmlConfig" ref="jdb::XmlConfig#jdb::XmlConfig">
     <brief>Use xml formatted config files easily in projects</brief>
   </class>
   <function id="dts" name="dts">
     <return>
-      <type name="std::string" />
+      <type name="string" />
     </return>
     <argument id="dts::d" name="d">
       <type builtin="yes" name="double" />
@@ -72,10 +73,10 @@ simply call inside loop
   <function id="trimTrailingZeros" name="trimTrailingZeros">
     <brief>inefficient but works, TODO : think of better way</brief>
     <return>
-      <type name="std::string" />
+      <type name="string" />
     </return>
     <argument id="trimTrailingZeros::in" name="in">
-      <type name="std::string" />
+      <type name="string" />
     </argument>
   </function>
   <function id="ts" name="ts">
@@ -95,7 +96,7 @@ inline std::string dts( double d ){
 }
 </doc>
     <return>
-      <type name="std::string" />
+      <type name="string" />
     </return>
     <argument id="ts::i" name="i">
       <type builtin="yes" name="int" />
@@ -106,7 +107,7 @@ inline std::string dts( double d ){
   </function>
   <function id="ts" name="ts">
     <return>
-      <type name="std::string" />
+      <type name="string" />
     </return>
     <argument id="ts::d" name="d">
       <type builtin="yes" name="double" />
@@ -117,7 +118,7 @@ inline std::string dts( double d ){
   </function>
   <function id="ts" name="ts">
     <return>
-      <type name="std::string" />
+      <type name="string" />
     </return>
     <argument id="ts::f" name="f">
       <type builtin="yes" name="float" />
@@ -128,7 +129,7 @@ inline std::string dts( double d ){
   </function>
   <function id="ts" name="ts">
     <return>
-      <type name="std::string" />
+      <type name="string" />
     </return>
     <argument id="ts::u" name="u">
       <type builtin="yes" name="unsigned int" />

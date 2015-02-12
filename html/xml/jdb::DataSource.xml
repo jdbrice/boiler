@@ -1,0 +1,193 @@
+<class xmlns="http://jessevdk.github.com/cldoc/1.0" abstract="true" id="jdb::DataSource" name="DataSource">
+  <doc>
+A Data source backed by a TChain of root files.
+
+Automatically maps tree branches and leaves
+
+</doc>
+  <constructor abstract="yes" id="jdb::DataSource::DataSource" name="DataSource">
+    <argument id="jdb::DataSource::DataSource::_cfg" name="_cfg">
+      <type name="XmlConfig" qualifier="*" ref="jdb::XmlConfig#jdb::XmlConfig" />
+    </argument>
+    <argument id="jdb::DataSource::DataSource::_nodePath" name="_nodePath">
+      <type name="string" />
+    </argument>
+  </constructor>
+  <destructor abstract="yes" id="jdb::DataSource::~DataSource" name="~DataSource" />
+  <method id="jdb::DataSource::addAlias" name="addAlias">
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+    <argument id="jdb::DataSource::addAlias::alaisName" name="alaisName">
+      <type name="string" />
+    </argument>
+    <argument id="jdb::DataSource::addAlias::bName" name="bName">
+      <type name="string" />
+    </argument>
+  </method>
+  <method abstract="yes" id="jdb::DataSource::get" name="get">
+    <return>
+      <type builtin="yes" name="double" />
+    </return>
+    <argument id="jdb::DataSource::get::name" name="name">
+      <type name="string" />
+    </argument>
+    <argument id="jdb::DataSource::get::i" name="i">
+      <type builtin="yes" name="int" />
+    </argument>
+  </method>
+  <method id="jdb::DataSource::getChain" name="getChain">
+    <return>
+      <type name="TChain" qualifier="*" />
+    </return>
+  </method>
+  <method id="jdb::DataSource::getEntries" name="getEntries">
+    <return>
+      <type name="Long64_t" />
+    </return>
+  </method>
+  <method id="jdb::DataSource::getEntry" name="getEntry">
+    <return>
+      <type builtin="yes" name="bool" />
+    </return>
+    <argument id="jdb::DataSource::getEntry::i" name="i">
+      <type name="Long64_t" />
+    </argument>
+  </method>
+  <method id="jdb::DataSource::operator()" name="operator()">
+    <return>
+      <type builtin="yes" name="double" />
+    </return>
+    <argument id="jdb::DataSource::operator()::lName" name="lName">
+      <type name="string" />
+    </argument>
+    <argument id="jdb::DataSource::operator()::index" name="index">
+      <type builtin="yes" name="int" />
+    </argument>
+  </method>
+  <field access="protected" id="jdb::DataSource::lg" name="lg">
+    <brief>Logger object</brief>
+    <type name="Logger" ref="jdb::Logger#jdb::Logger" />
+  </field>
+  <field access="protected" id="jdb::DataSource::nodePath" name="nodePath">
+    <type name="string" />
+  </field>
+  <field access="protected" id="jdb::DataSource::cfg" name="cfg">
+    <type name="XmlConfig" qualifier="*" ref="jdb::XmlConfig#jdb::XmlConfig" />
+  </field>
+  <field access="protected" id="jdb::DataSource::treeName" name="treeName">
+    <brief>*</brief>
+    <doc>Tree Info
+</doc>
+    <type name="string" />
+  </field>
+  <field access="protected" id="jdb::DataSource::chain" name="chain">
+    <type name="TChain" qualifier="*" />
+  </field>
+  <field access="protected" id="jdb::DataSource::nTrees" name="nTrees">
+    <type builtin="yes" name="int" />
+  </field>
+  <field access="protected" id="jdb::DataSource::nEntries" name="nEntries">
+    <type name="Long64_t" />
+  </field>
+  <field access="protected" id="jdb::DataSource::leafLength" name="leafLength">
+    <brief>*</brief>
+    <doc>Data type mapping
+
+# of elements stored by leaf ie array length</doc>
+    <type name="map&lt;string, int&gt;" />
+  </field>
+  <field access="protected" id="jdb::DataSource::leafType" name="leafType">
+    <brief>The leaf data type in string form</brief>
+    <type name="map&lt;string, string&gt;" />
+  </field>
+  <field access="protected" id="jdb::DataSource::leafName" name="leafName">
+    <brief>A list of leaf names - fully qaulified Branch.Branch.Leaf</brief>
+    <type name="vector&lt;string&gt;" />
+  </field>
+  <field access="protected" id="jdb::DataSource::branchName" name="branchName">
+    <brief>A list of branches</brief>
+    <type name="vector&lt;string&gt;" />
+  </field>
+  <field access="protected" id="jdb::DataSource::data" name="data">
+    <brief>The data allocated for each leaf</brief>
+    <type name="map&lt;string, void *&gt;" />
+  </field>
+  <field access="protected" id="jdb::DataSource::branches" name="branches">
+    <brief>The pointer to each leaf's branch</brief>
+    <type name="map&lt;string, TBranch *&gt;" />
+  </field>
+  <field access="protected" id="jdb::DataSource::alias" name="alias">
+    <brief>Aliases - allows a branch to be accessed from another name</brief>
+    <doc>key = alias name
+value = name of branch pointe to</doc>
+    <type name="map&lt;string, string&gt;" />
+  </field>
+  <field access="protected" id="jdb::DataSource::evalLeaf" name="evalLeaf">
+    <brief>Evaluated leaves allow new leaves</brief>
+    <type name="map&lt;string, jdb::EvaluatedLeaf *&gt;" />
+  </field>
+  <method abstract="yes" access="protected" id="jdb::DataSource::addressBranches" name="addressBranches">
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+  </method>
+  <method abstract="yes" access="protected" id="jdb::DataSource::addressLeaves" name="addressLeaves">
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+  </method>
+  <method abstract="yes" access="protected" id="jdb::DataSource::chainLeafLength" name="chainLeafLength">
+    <return>
+      <type builtin="yes" name="int" />
+    </return>
+    <argument id="jdb::DataSource::chainLeafLength::name" name="name">
+      <type name="string" />
+    </argument>
+  </method>
+  <method abstract="yes" access="protected" id="jdb::DataSource::initializeBranchStatus" name="initializeBranchStatus">
+    <doc>
+Generates the inital branch status from the config file
+</doc>
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+  </method>
+  <method abstract="yes" access="protected" id="jdb::DataSource::makeAliases" name="makeAliases">
+    <doc>
+Makes the aliases defined in the config file
+</doc>
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+  </method>
+  <method abstract="yes" access="protected" id="jdb::DataSource::makeEvaluatedLeaves" name="makeEvaluatedLeaves">
+    <doc>
+Makes evaluated leafs from existing ones from teh config file
+</doc>
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+  </method>
+  <method abstract="yes" access="protected" id="jdb::DataSource::mapTree" name="mapTree">
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+  </method>
+  <method access="protected" id="jdb::DataSource::memSize" name="memSize">
+    <return>
+      <type builtin="yes" name="int" />
+    </return>
+    <argument id="jdb::DataSource::memSize::name" name="name">
+      <type name="string" />
+    </argument>
+  </method>
+  <method abstract="yes" access="protected" id="jdb::DataSource::singleTreeLeafLength" name="singleTreeLeafLength">
+    <return>
+      <type builtin="yes" name="int" />
+    </return>
+    <argument id="jdb::DataSource::singleTreeLeafLength::name" name="name">
+      <type name="string" />
+    </argument>
+  </method>
+</class>

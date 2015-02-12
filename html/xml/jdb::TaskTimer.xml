@@ -9,7 +9,7 @@
   </method>
   <method id="jdb::TaskTimer::elapsedTime" name="elapsedTime">
     <return>
-      <type name="std::string" />
+      <type name="string" />
     </return>
   </method>
   <method id="jdb::TaskTimer::start" name="start">

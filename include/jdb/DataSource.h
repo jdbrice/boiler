@@ -42,6 +42,7 @@ namespace jdb{
 		Logger lg;
 		string nodePath;
 		XmlConfig * cfg;
+		string fileList;
 		
 		/**
 		 * Tree Info
@@ -75,7 +76,7 @@ namespace jdb{
 
 	public:
 
-		DataSource( XmlConfig * _cfg, string _nodePath );
+		DataSource( XmlConfig * _cfg, string _nodePath, string _fileList = "" );
 		~DataSource();
 
 		TChain * getChain() { return chain; }

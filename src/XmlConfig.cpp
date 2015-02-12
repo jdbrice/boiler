@@ -231,6 +231,7 @@ namespace jdb{
 
 	vector<string> XmlConfig::childrenOf( string nodePath, int depth, bool attrs ){
 
+		nodePath = sanitize( nodePath );
 		if ( 	nodePath[ nodePath.length() - 1] != pathDelim && 
 				nodePath[ nodePath.length() - 1] != attrDelim)
 			nodePath += pathDelim;
@@ -247,6 +248,32 @@ namespace jdb{
 					continue;
 			string parent = (it->first).substr( 0, nodePath.length() );
 			if ( nodePath == parent ){
+				paths.push_back( it->first );
+			}
+		}
+		return paths;
+
+	}
+
+	vector<string> XmlConfig::childrenOf( string nodePath, string tag, int depth){
+
+		nodePath = sanitize( nodePath );
+		if ( 	nodePath[ nodePath.length() - 1] != pathDelim && 
+				nodePath[ nodePath.length() - 1] != attrDelim)
+			nodePath += pathDelim;
+	
+		vector<string> paths;
+		for ( map_it_type it = data.begin(); it != data.end(); it++ ){
+
+			size_t found = it->first.find( attrDelim );
+			if ( found != string::npos )
+				continue;
+			
+			// reject self
+			if ( it->first == nodePath )
+					continue;
+			string parent = (it->first).substr( 0, nodePath.length() );
+			if ( nodePath == parent && (tag == tagName( it->first )) ){
 				paths.push_back( it->first );
 			}
 		}

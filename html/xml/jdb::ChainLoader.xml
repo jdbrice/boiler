@@ -38,7 +38,7 @@ tree name.
     </argument>
     <argument id="jdb::ChainLoader::load::ntdir" name="ntdir">
       <doc>path to directory containing .root files</doc>
-      <type name="std::string" />
+      <type name="string" />
     </argument>
     <argument id="jdb::ChainLoader::load::maxFiles" name="maxFiles">
       <doc>maximum number of files to load</doc>
@@ -63,7 +63,7 @@ created with the correct tree name.
     <argument id="jdb::ChainLoader::loadList::listFile" name="listFile">
       <doc>list of files to add to chain. Should
 use full pathto file</doc>
-      <type name="std::string" />
+      <type name="string" />
     </argument>
     <argument id="jdb::ChainLoader::loadList::maxFiles" name="maxFiles">
       <doc>maximum number of files to load</doc>

@@ -3,6 +3,7 @@
 
 #include "XmlConfig.h"
 #include "Utils.h"
+#include <limits>       // std::numeric_limits
 
 namespace jdb{
 
@@ -50,7 +51,12 @@ namespace jdb{
 		 * @return A string representation of the range data in the format "( min -> max )"
 		 */
 		string toString(){
-			return ("( " + dts( min ) + " -> " + dts( max ) + " )");
+			if ( std::numeric_limits<double>::max()  == max )
+				return ("( " + dts( min ) + " -> inf )");
+			else if ( std::numeric_limits<double>::min()  == min )
+				return ("( -inf -> " + dts( max ) + " )");
+			else		
+				return ("( " + dts( min ) + " -> " + dts( max ) + " )");
 		}
 		
 	};

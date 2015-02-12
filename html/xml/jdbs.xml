@@ -1,0 +1,88 @@
+<namespace xmlns="http://jessevdk.github.com/cldoc/1.0" id="jdbs" name="jdbs">
+  <class name="TaskProgress" ref="jdbs::TaskProgress#jdbs::TaskProgress">
+    <brief>*</brief>
+  </class>
+  <class name="TaskTimer" ref="jdbs::TaskTimer#jdbs::TaskTimer" />
+  <function id="dts" name="dts">
+    <return>
+      <type name="string" />
+    </return>
+    <argument id="dts::d" name="d">
+      <type builtin="yes" name="double" />
+    </argument>
+  </function>
+  <function id="progressBar" name="progressBar">
+    <brief>*</brief>
+    <doc>Plain text progress bar
+simply call inside loop
+</doc>
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+    <argument id="progressBar::i" name="i">
+      <type builtin="yes" name="int" />
+    </argument>
+    <argument id="progressBar::nevents" name="nevents">
+      <type builtin="yes" name="int" />
+    </argument>
+    <argument id="progressBar::textWidth" name="textWidth">
+      <type builtin="yes" name="int" />
+    </argument>
+    <argument id="progressBar::elapsedTime" name="elapsedTime">
+      <type builtin="yes" name="double" />
+    </argument>
+  </function>
+  <function id="trimTrailingZeros" name="trimTrailingZeros">
+    <brief>inefficient but works, TODO : think of better way</brief>
+    <return>
+      <type name="string" />
+    </return>
+    <argument id="trimTrailingZeros::in" name="in">
+      <type name="string" />
+    </argument>
+  </function>
+  <function id="ts" name="ts">
+    <return>
+      <type name="string" />
+    </return>
+    <argument id="ts::i" name="i">
+      <type builtin="yes" name="int" />
+    </argument>
+    <argument id="ts::len" name="len">
+      <type builtin="yes" name="int" />
+    </argument>
+  </function>
+  <function id="ts" name="ts">
+    <return>
+      <type name="string" />
+    </return>
+    <argument id="ts::d" name="d">
+      <type builtin="yes" name="double" />
+    </argument>
+    <argument id="ts::len" name="len">
+      <type builtin="yes" name="int" />
+    </argument>
+  </function>
+  <function id="ts" name="ts">
+    <return>
+      <type name="string" />
+    </return>
+    <argument id="ts::f" name="f">
+      <type builtin="yes" name="float" />
+    </argument>
+    <argument id="ts::len" name="len">
+      <type builtin="yes" name="int" />
+    </argument>
+  </function>
+  <function id="ts" name="ts">
+    <return>
+      <type name="string" />
+    </return>
+    <argument id="ts::u" name="u">
+      <type builtin="yes" name="unsigned int" />
+    </argument>
+    <argument id="ts::len" name="len">
+      <type builtin="yes" name="int" />
+    </argument>
+  </function>
+</namespace>

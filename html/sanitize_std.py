@@ -12,7 +12,7 @@ import glob
 import xml.etree.ElementTree as ET
 ET.register_namespace('', "http://jessevdk.github.com/cldoc/1.0")
 
-stdns = "std::"
+stdns = ""
 
 if  len( sys.argv ) < 2 :
 	

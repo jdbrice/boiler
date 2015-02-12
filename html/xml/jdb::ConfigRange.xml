@@ -24,7 +24,7 @@
       <type name="XmlConfig" qualifier="*" ref="jdb::XmlConfig#jdb::XmlConfig" />
     </argument>
     <argument id="jdb::ConfigRange::ConfigRange::np" name="np">
-      <type name="std::string" />
+      <type name="string" />
     </argument>
     <argument id="jdb::ConfigRange::ConfigRange::dMin" name="dMin">
       <doc>Default = 0 : default x value if not found in node</doc>
@@ -36,11 +36,11 @@
     </argument>
     <argument id="jdb::ConfigRange::ConfigRange::attrMin" name="attrMin">
       <doc>Default = ":min" : attribute tag to search for x value</doc>
-      <type name="std::string" />
+      <type name="string" />
     </argument>
     <argument id="jdb::ConfigRange::ConfigRange::attrMax" name="attrMax">
       <doc>Default = ":max" : attribute tag to search for y value</doc>
-      <type name="std::string" />
+      <type name="string" />
     </argument>
   </constructor>
   <destructor id="jdb::ConfigRange::~ConfigRange" name="~ConfigRange" />
@@ -48,7 +48,7 @@
     <brief> Outputs the range as a human readable string</brief>
     <return>
       <doc>A string representation of the range data in the format "( min -&gt; max )"</doc>
-      <type name="std::string" />
+      <type name="string" />
     </return>
   </method>
 </class>

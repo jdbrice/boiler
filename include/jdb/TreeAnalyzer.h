@@ -13,6 +13,7 @@
 #include "ConfigRange.h"
 #include "ConfigPoint.h"
 #include "Reporter.h"
+#include "DataSource.h"
 
 /**
  * ROOT
@@ -48,11 +49,18 @@ namespace jdb{
 		TChain 		*chain;
 		// the maximum number of events to process. If not set all events will be processed 
 		int nEventsToProcess;
+		// Sets up a DataSource if there is a DataSource node
+		DataSource * ds;
 
 	// public methods
 	public:
 		/*Creates the TreeAnalyzer and sets up members
-		 *
+		 * @config 	XmlConfig with a node for the TreeAnalyzer config
+		 * @np 		Path to TreeAnalyzer node in config 
+		 * @fileList Optional : filelist containg files to load into chain. 
+		 * 			 If not given then a directory should be specified in the config
+		 * @jobPrefix Prefix for output files - useful for running in parallel.
+		 * 
 		 * Creates the Reporter, HistoBook and initializes the TChain
 		 * If not filelist is given then data is loaded from the directory specified in the
 		 * config file. Otherwise the files in the filelist are used.
@@ -71,44 +79,43 @@ namespace jdb{
 		virtual void make();
 
 	protected:
-		/*jdoc{
-		"name" : "virtual bool keepEvent()",
-		"params" : [ ],
-		"paramDesc" : [ ],
-		"returns" : [ "true : Event should be processed", "false : Event should be skipped" ],
-		"desc" : "Central function for event cuts"
-		}*/
+		/* Called for each event
+		 * Function decides whether an event should be kept or not
+		 * Applies cuts to data
+		 * @return 	True 	- Keep Event
+		 *          False 	- Skip event     
+		 */
 		virtual bool keepEvent();
 
-		/*jdoc{
-		"name" : "virtual void preEventLoop()",
-		"params" : [ ],
-		"paramDesc" : [ ],
-		"returns" : [  ],
-		"desc" : "Called before the event loop for intialization"
-		}*/
+		/* Called before event loop
+		 *	Used for setup + initialization before 
+		 *	processing the entire loop
+		 * 
+		 */
 		virtual void preEventLoop();
 
-		/*jdoc{
-		"name" : "virtual void postEventLoop()",
-		"params" : [ ],
-		"paramDesc" : [ ],
-		"returns" : [  ],
-		"desc" : "Called after the event loop for cleanup, report generation, etc."
-		}*/
+		/*
+		 * Called after the event loop for cleanup, 
+		 * report generation, etc."
+		 */
 		virtual void postEventLoop(){}
 
-		/*jdoc{
-		"name" : "virtual void analyzeEvent()",
-		"params" : [ ],
-		"paramDesc" : [ ],
-		"returns" : [  ],
-		"desc" : "Analyzes a single event in the chain"
-		}*/
+		/* Used to analyze events
+		 * Analyzes a single event in the chain
+		 */
 		virtual void analyzeEvent(){}
 
 
+		/* Used to analyze all events
+		 * Events that do not pass the keepEvent are still processed
+		 */
 		virtual void analyzeEventBeforeCuts(){}
+
+		/* Used to analyze all events
+		 * Events that do not pass the keepEvent are still processed
+		 */
+		virtual void analyzeRejectedEvent(){}
+
 		
 	};
 

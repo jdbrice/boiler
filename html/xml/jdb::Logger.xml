@@ -1,238 +1,191 @@
 <class xmlns="http://jessevdk.github.com/cldoc/1.0" abstract="true" id="jdb::Logger" name="Logger">
-  <brief>jdoc{</brief>
-  <doc>"class" : "Logger",
-        "desc" : "An all purpose logging utility with log level functionality. Meant to be used in modular projects. Multpile Logger instances can be used with different log levels."
-}</doc>
+  <brief>An all purpose logging utility with log level functionality. </brief>
+  <doc>Meant to be used in modular projects. Multpile Logger instances can be used with different log levels.
+</doc>
   <variable id="jdb::Logger::llAll" name="llAll">
-    <brief>jdoc{ "name" : "static const int llAll = 40", "desc" : "Show all log messages"}</brief>
-    <doc>jdoc{ "name" : "static const int llInfo = 30", "desc" : "Show info and below"}
-jdoc{ "name" : "static const int llWarn = 20", "desc" : "Show warnings and below"}
-jdoc{ "name" : "static const int llError = 10", "desc" : "Show errors and below"}
-jdoc{ "name" : "static const int llNone = 1", "desc" : "Show nothing"}</doc>
+    <brief>Log everything ( Debug, Trace, Info, Warnings, Error )</brief>
     <type builtin="yes" name="int" qualifier=" const" />
   </variable>
   <variable id="jdb::Logger::llDebug" name="llDebug">
+    <brief>Log Debug messages and below ( Debug, Trace, Info, Warnings, Error )</brief>
     <type builtin="yes" name="int" qualifier=" const" />
   </variable>
   <variable id="jdb::Logger::llDefault" name="llDefault">
-    <brief>jdoc{ "name" : "static const int llDefault = llWarn", "desc" : "The default log level"}</brief>
+    <brief>The default log level at compile time</brief>
     <type builtin="yes" name="int" qualifier=" const" />
   </variable>
   <variable id="jdb::Logger::llError" name="llError">
+    <brief>Log Error messages and below ( Error )</brief>
     <type builtin="yes" name="int" qualifier=" const" />
   </variable>
   <variable id="jdb::Logger::llGlobal" name="llGlobal">
-    <brief>jdoc{ "name" : "static int llGlobal", "desc" : "The global log level used if not set otherwise"}</brief>
+    <brief>The global log level - used by any newly created log IF not overridden</brief>
     <type builtin="yes" name="int" />
   </variable>
   <variable id="jdb::Logger::llInfo" name="llInfo">
+    <brief>Log Info messages and below ( Info, Warning, Error )</brief>
     <type builtin="yes" name="int" qualifier=" const" />
   </variable>
   <variable id="jdb::Logger::llNone" name="llNone">
+    <brief>Log nothing</brief>
     <type builtin="yes" name="int" qualifier=" const" />
   </variable>
   <variable id="jdb::Logger::llTrace" name="llTrace">
+    <brief>Log Trace messages and below ( Trace, Info, Warning, Error )</brief>
     <type builtin="yes" name="int" qualifier=" const" />
   </variable>
   <variable id="jdb::Logger::llWarn" name="llWarn">
+    <brief>Log Warning messages and below ( Warning, Error )</brief>
     <type builtin="yes" name="int" qualifier=" const" />
   </variable>
   <constructor id="jdb::Logger::Logger" name="Logger">
-    <brief>jdoc{</brief>
-    <doc>"name" : "Logger( int ll, string classSpace, ostream* os )",
-        "params" : [
-                "ll", "classSpace", "os"
-        ],
-        "paramDesc" : [
-                "Log Level", "Class name to prepend to messages", "Output stream"
-        ],
-        "returns" : [
+    <doc>
+Creates a Logger with
+@param ll 	Log Level ( llAll, llDebug, ... )
+@param cs 	ClassSpace for prefixing messages
+@param oss	Pointer to an output stream to use
 
-        ],
-        "desc" : "Creates a logger instance with the given properties"
-}</doc>
+</doc>
     <argument id="jdb::Logger::Logger::ll" name="ll">
       <type builtin="yes" name="int" />
     </argument>
     <argument id="jdb::Logger::Logger::cs" name="cs">
-      <type name="std::string" />
+      <type name="string" />
     </argument>
     <argument id="jdb::Logger::Logger::oss" name="oss">
-      <type name="std::ostream" qualifier="*" />
+      <type name="ostream" qualifier="*" />
     </argument>
   </constructor>
   <constructor id="jdb::Logger::Logger" name="Logger">
-    <brief>jdoc{</brief>
-    <doc>"name" : "Logger( int ll = Logger::getGlobalLogLevel(), string classSpace = \"\" )",
-        "params" : [
-                "ll", "classSpace"
-        ],
-        "paramDesc" : [
-                "Optional: log level set to global log level",
-                "Optional: Class name to prepend messages with"
-        ],
-        "returns" : [
-
-        ],
-        "desc" : "Default constructor - uses the global log level that can be set with static method"
-}</doc>
+    <doc>
+Default constructor creates a Logger with the global log level and no class space prefix
+@param ll 	LogLevel
+@param cs 	ClassSpace prefix for messages
+</doc>
     <argument id="jdb::Logger::Logger::ll" name="ll">
       <type builtin="yes" name="int" />
     </argument>
     <argument id="jdb::Logger::Logger::cs" name="cs">
-      <type name="std::string" />
+      <type name="string" />
     </argument>
   </constructor>
   <method id="jdb::Logger::debug" name="debug">
-    <brief>jdoc{</brief>
-    <doc>"name" : "ostream &amp; debug( string functionName = \"\" )",
-        "params" : [
-                "functionName"
-        ],
-        "paramDesc" : [
-                "Calling function name to be prepended to message"
-        ],
-        "returns" : [
-                "An output stream for writing messages"
-        ],
-        "desc" : "Shows all messages below llTrace"
-}</doc>
+    <doc>
+Debug level ( and below ) log messages
+@param functionName 	The name of the calling function to prepend to output
+@param showPrefix 	Show the LogLevel, classSpace, and Function name
+@return 	The output stream for writing. If the LogLevel does not permit this
+             level of output then a NullStream is returned.
+</doc>
     <return>
-      <type name="std::ostream" qualifier=" &amp;" />
+      <doc>The output stream for writing. If the LogLevel does not permit this
+             level of output then a NullStream is returned.</doc>
+      <type name="ostream" qualifier=" &amp;" />
     </return>
     <argument id="jdb::Logger::debug::functionName" name="functionName">
-      <type name="std::string" />
+      <type name="string" />
+    </argument>
+    <argument id="jdb::Logger::debug::showPrefix" name="showPrefix">
+      <type builtin="yes" name="bool" />
     </argument>
   </method>
   <method id="jdb::Logger::error" name="error">
-    <brief>jdoc{</brief>
-    <doc>"name" : "ostream &amp; error( string functionName = \"\" )",
-        "params" : [
-                "functionName"
-        ],
-        "paramDesc" : [
-                "Calling function name to be prepended to message"
-        ],
-        "returns" : [
-                "An output stream for writing messages"
-        ],
-        "desc" : "Shows all messages below llError"
-}</doc>
+    <doc>
+Error level ( and below ) log messages
+@param functionName 	The name of the calling function to prepend to output
+@param showPrefix 	Show the LogLevel, classSpace, and Function name
+@return 	The output stream for writing. If the LogLevel does not permit this
+             level of output then a NullStream is returned.
+</doc>
     <return>
-      <type name="std::ostream" qualifier=" &amp;" />
+      <doc>The output stream for writing. If the LogLevel does not permit this
+             level of output then a NullStream is returned.</doc>
+      <type name="ostream" qualifier=" &amp;" />
     </return>
     <argument id="jdb::Logger::error::functionName" name="functionName">
-      <type name="std::string" />
+      <type name="string" />
+    </argument>
+    <argument id="jdb::Logger::error::showPrefix" name="showPrefix">
+      <type builtin="yes" name="bool" />
     </argument>
   </method>
   <method id="jdb::Logger::getClassSpace" name="getClassSpace">
-    <brief>jdoc{</brief>
-    <doc>"name" : "string getClassSpace()",
-        "returns" : [
-                "Current class prefix for messages"
-        ],
-        "desc" : ""
-}</doc>
+    <doc>
+Get Class Space prefix
+@return ClassSpace prefix string
+</doc>
     <return>
-      <type name="std::string" />
+      <doc>ClassSpace prefix string</doc>
+      <type name="string" />
     </return>
   </method>
   <method abstract="yes" id="jdb::Logger::getGlobalLogLevel" name="getGlobalLogLevel" static="yes">
-    <brief>jdoc{</brief>
-    <doc>"name" : "inline static int getGlobalLogLevel()",
-        "returns" : [
-                "Global log level"
-        ]
-}</doc>
+    <doc>
+Gets the global log level for all Logger instances
+</doc>
     <return>
       <type builtin="yes" name="int" />
     </return>
   </method>
   <method id="jdb::Logger::getLogLevel" name="getLogLevel">
-    <brief>jdoc{</brief>
-    <doc>"name" : "int getLogLevel()",
-        "returns" : [
-                "Current log level"
-        ]
-}</doc>
+    <doc>
+Get the Log Level of this Logger instance
+@return the current int value LogLevel
+</doc>
     <return>
+      <doc>the current int value LogLevel</doc>
       <type builtin="yes" name="int" />
     </return>
   </method>
   <method id="jdb::Logger::info" name="info">
-    <brief>jdoc{</brief>
-    <doc>"name" : "ostream &amp; info( string functionName = \"\" )",
-        "params" : [
-                "functionName"
-        ],
-        "paramDesc" : [
-                "Calling function name to be prepended to message"
-        ],
-        "returns" : [
-                "An output stream for writing messages"
-        ],
-        "desc" : "Shows all messages below llInfo"
-}</doc>
+    <doc>
+Info level ( and below ) log messages
+@param functionName 	The name of the calling function to prepend to output
+@param showPrefix 	Show the LogLevel, classSpace, and Function name
+@return 	The output stream for writing. If the LogLevel does not permit this
+             level of output then a NullStream is returned.
+</doc>
     <return>
-      <type name="std::ostream" qualifier=" &amp;" />
+      <doc>The output stream for writing. If the LogLevel does not permit this
+             level of output then a NullStream is returned.</doc>
+      <type name="ostream" qualifier=" &amp;" />
     </return>
     <argument id="jdb::Logger::info::functionName" name="functionName">
-      <type name="std::string" />
+      <type name="string" />
+    </argument>
+    <argument id="jdb::Logger::info::showPrefix" name="showPrefix">
+      <type builtin="yes" name="bool" />
     </argument>
   </method>
   <method id="jdb::Logger::logLevelFromString" name="logLevelFromString" static="yes">
-    <brief>jdoc{</brief>
-    <doc>"name" : "static int logLevelFromString( string ll )",
-        "params" : [
-                "ll"
-        ],
-        "paramDesc" : [
-                "String representation of log level"
-        ],
-        "returns" : [
-                "Integer representation of log level"
-        ],
-        "desc" : "Can be one of [ info, warning, error, all, none ] default is all"
-}</doc>
+    <doc>
+Converts a Human Readable string to the corresponding LogLevel
+@param ll 	String log level
+</doc>
     <return>
       <type builtin="yes" name="int" />
     </return>
     <argument id="jdb::Logger::logLevelFromString::ll" name="ll">
-      <type name="std::string" />
+      <type name="string" />
     </argument>
   </method>
   <method id="jdb::Logger::setClassSpace" name="setClassSpace">
-    <brief>jdoc{</brief>
-    <doc>"name" : "void setClassSpace(string cs )",
-        "params" : [
-                "cs"
-        ],
-        "paramDesc" : [
-                "New class name for prepending to messages"
-        ],
-        "desc" : ""
-}</doc>
+    <doc>
+Set the ClassSpace Prefix
+@param cs 	ClassSpace Prefix String - usually the name of the class
+</doc>
     <return>
       <type builtin="yes" name="void" />
     </return>
     <argument id="jdb::Logger::setClassSpace::cs" name="cs">
-      <type name="std::string" />
+      <type name="string" />
     </argument>
   </method>
   <method abstract="yes" id="jdb::Logger::setGlobalLogLevel" name="setGlobalLogLevel" static="yes">
-    <brief>jdoc{</brief>
-    <doc>"name" : "inline static void setGlobalLogLevel( int ll )",
-        "params" : [
-                "ll"
-        ],
-        "paramDesc" : [
-                "Log Level"
-        ],
-        "returns" : [
-
-        ],
-        "desc" : "Sets the global log level"
-}</doc>
+    <doc>
+Sets the global log level used by Logger instances
+@param ll Log level
+</doc>
     <return>
       <type builtin="yes" name="void" />
     </return>
@@ -241,17 +194,10 @@ jdoc{ "name" : "static const int llNone = 1", "desc" : "Show nothing"}</doc>
     </argument>
   </method>
   <method id="jdb::Logger::setLogLevel" name="setLogLevel">
-    <brief>jdoc{</brief>
-    <doc>"name" : "void setLogLevel( int ll )",
-        "params" : [
-                "ll"
-        ],
-        "paramDesc" : [
-                "new log level to use"
-        ],
-        "returns" : [
-        ]
-}</doc>
+    <doc>
+Set the LogLevel for this Logger instance
+@param ll 	LogLevel ( llAll, llDebug, ... )
+</doc>
     <return>
       <type builtin="yes" name="void" />
     </return>
@@ -265,45 +211,43 @@ jdoc{ "name" : "static const int llNone = 1", "desc" : "Show nothing"}</doc>
     </return>
   </method>
   <method id="jdb::Logger::trace" name="trace">
-    <brief>jdoc{</brief>
-    <doc>"name" : "ostream &amp; trace( string functionName = \"\" )",
-        "params" : [
-                "functionName"
-        ],
-        "paramDesc" : [
-                "Calling function name to be prepended to message"
-        ],
-        "returns" : [
-                "An output stream for writing messages"
-        ],
-        "desc" : "Shows all messages below llTrace"
-}</doc>
+    <doc>
+Trace level ( and below ) log messages
+@param functionName 	The name of the calling function to prepend to output
+@param showPrefix 	Show the LogLevel, classSpace, and Function name
+@return 	The output stream for writing. If the LogLevel does not permit this
+             level of output then a NullStream is returned.
+</doc>
     <return>
-      <type name="std::ostream" qualifier=" &amp;" />
+      <doc>The output stream for writing. If the LogLevel does not permit this
+             level of output then a NullStream is returned.</doc>
+      <type name="ostream" qualifier=" &amp;" />
     </return>
     <argument id="jdb::Logger::trace::functionName" name="functionName">
-      <type name="std::string" />
+      <type name="string" />
+    </argument>
+    <argument id="jdb::Logger::trace::showPrefix" name="showPrefix">
+      <type builtin="yes" name="bool" />
     </argument>
   </method>
   <method id="jdb::Logger::warn" name="warn">
-    <brief>jdoc{</brief>
-    <doc>"name" : "ostream &amp; warn( string functionName = \"\" )",
-        "params" : [
-                "functionName"
-        ],
-        "paramDesc" : [
-                "Calling function name to be prepended to message"
-        ],
-        "returns" : [
-                "An output stream for writing messages"
-        ],
-        "desc" : "Shows all messages below llWarn"
-}</doc>
+    <doc>
+Warning level ( and below ) log messages
+@param functionName 	The name of the calling function to prepend to output
+@param showPrefix 	Show the LogLevel, classSpace, and Function name
+@return 	The output stream for writing. If the LogLevel does not permit this
+             level of output then a NullStream is returned.
+</doc>
     <return>
-      <type name="std::ostream" qualifier=" &amp;" />
+      <doc>The output stream for writing. If the LogLevel does not permit this
+             level of output then a NullStream is returned.</doc>
+      <type name="ostream" qualifier=" &amp;" />
     </return>
     <argument id="jdb::Logger::warn::functionName" name="functionName">
-      <type name="std::string" />
+      <type name="string" />
+    </argument>
+    <argument id="jdb::Logger::warn::showPrefix" name="showPrefix">
+      <type builtin="yes" name="bool" />
     </argument>
   </method>
   <class name="NullBuffer" ref="jdb::Logger::NullBuffer#jdb::Logger::NullBuffer">
@@ -314,26 +258,26 @@ jdoc{ "name" : "static const int llNone = 1", "desc" : "Show nothing"}</doc>
     <type builtin="yes" name="int" />
   </field>
   <field access="protected" id="jdb::Logger::counts" name="counts">
-    <type name="std::map&lt;std::string, int&gt;" />
+    <type name="map&lt;string, int&gt;" />
   </field>
   <field access="protected" id="jdb::Logger::os" name="os">
-    <type name="std::ostream" qualifier="*" />
+    <type name="ostream" qualifier="*" />
   </field>
   <field access="protected" id="jdb::Logger::ns" name="ns">
     <type name="NullStream" ref="jdb::Logger::NullStream#jdb::Logger::NullStream" />
   </field>
   <field access="protected" id="jdb::Logger::cSpace" name="cSpace">
-    <type name="std::string" />
+    <type name="string" />
   </field>
   <method access="protected" id="jdb::Logger::preMessage" name="preMessage">
     <return>
       <type builtin="yes" name="void" />
     </return>
     <argument id="jdb::Logger::preMessage::level" name="level">
-      <type name="std::string" />
+      <type name="string" />
     </argument>
     <argument id="jdb::Logger::preMessage::functionName" name="functionName">
-      <type name="std::string" />
+      <type name="string" />
     </argument>
   </method>
 </class>

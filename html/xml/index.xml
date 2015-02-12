@@ -10,6 +10,8 @@
     <class name="ConfigRange" ref="jdb::ConfigRange#jdb::ConfigRange">
       <brief>ConfigRange easily loads (min -&gt; max) ranges from XmlConfigs</brief>
     </class>
+    <class name="DataSource" ref="jdb::DataSource#jdb::DataSource" />
+    <class name="EvaluatedLeaf" ref="jdb::EvaluatedLeaf#jdb::EvaluatedLeaf" />
     <class name="HistoAnalyzer" ref="jdb::HistoAnalyzer#jdb::HistoAnalyzer">
       <brief>jdoc{</brief>
     </class>
@@ -20,7 +22,7 @@
       <brief>*</brief>
     </class>
     <class name="Logger" ref="jdb::Logger#jdb::Logger">
-      <brief>jdoc{</brief>
+      <brief>An all purpose logging utility with log level functionality. </brief>
       <class name="NullBuffer" ref="jdb::Logger::NullBuffer#jdb::Logger::NullBuffer">
         <brief>*</brief>
       </class>
@@ -35,12 +37,17 @@
     </class>
     <class name="TaskTimer" ref="jdb::TaskTimer#jdb::TaskTimer" />
     <class name="TreeAnalyzer" ref="jdb::TreeAnalyzer#jdb::TreeAnalyzer">
-      <brief>jdoc{</brief>
+      <brief>Boiler for analyzing data distributed accross TTrees in many files</brief>
     </class>
-    <class name="TreeMap" ref="jdb::TreeMap#jdb::TreeMap" />
     <class name="XmlConfig" ref="jdb::XmlConfig#jdb::XmlConfig">
       <brief>Use xml formatted config files easily in projects</brief>
     </class>
+  </namespace>
+  <namespace name="jdbs" ref="jdbs#jdbs">
+    <class name="TaskProgress" ref="jdbs::TaskProgress#jdbs::TaskProgress">
+      <brief>*</brief>
+    </class>
+    <class name="TaskTimer" ref="jdbs::TaskTimer#jdbs::TaskTimer" />
   </namespace>
   <report name="Documentation generator" ref="report" />
 </index>
