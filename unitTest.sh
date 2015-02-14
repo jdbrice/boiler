@@ -1,4 +1,4 @@
 
 cd script/
-root -l -b -q CutExplorerUnitTest.C > logUnitTest.log
+root -l -b -q DataSourceUnitTest.C
 cd ../

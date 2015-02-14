@@ -17,6 +17,7 @@
 #include <memory>
 #include <limits>
 #include <algorithm>
+#include <fstream>
 using namespace std;
 
 /**
@@ -43,6 +44,8 @@ namespace jdb{
 		string nodePath;
 		XmlConfig * cfg;
 		string fileList;
+
+		XmlConfig * cache;
 		
 		/**
 		 * Tree Info
@@ -81,7 +84,19 @@ namespace jdb{
 
 		TChain * getChain() { return chain; }
 
+
+
 		double get( string name, int i = 0 );
+		Int_t getInt( string name, int i = 0 ){
+			return (Int_t)get( name, i );
+		}
+		UInt_t getUInt( string name, int i = 0 ){
+			return (UInt_t)get( name, i );
+		}
+		Float_t getFloat( string name, int i = 0 ){
+			return (Float_t)get( name, i );
+		}
+
 		double operator() ( string lName, int index = 0) { return get( lName, index ); };
 
 		Long64_t getEntries() { return nEntries; }
@@ -92,6 +107,7 @@ namespace jdb{
 		}
 
 		void addAlias( string alaisName, string bName ){ alias[ alaisName ] = bName; }
+
 
 
 	protected:
@@ -108,6 +124,20 @@ namespace jdb{
 		 * Makes evaluated leafs from existing ones from teh config file
 		 */
 		void makeEvaluatedLeaves();
+
+		bool cacheExists(){
+			ifstream cacheFile( ".DataSource_" + treeName + ".xml" );
+			if ( cacheFile.good() ){
+				cacheFile.close();
+				return true;
+			}
+			cacheFile.close();
+			return false;
+		}
+		void cacheTreeInfo();
+
+		void loadLengthsFromCache();
+
 
 
 		void addressBranches();

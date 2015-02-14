@@ -7,7 +7,7 @@ void DataSourceUnitTest( string fname = "cDataSourceUnitTest.xml" ){
 	
 	XmlConfig cfg( fname );
 
-	Logger::setGlobalLogLevel( Logger::llInfo );
+	Logger::setGlobalLogLevel( Logger::llAll );
 
 	DataSource ds( &cfg, "DataSource" );
 
@@ -18,6 +18,8 @@ void DataSourceUnitTest( string fname = "cDataSourceUnitTest.xml" ){
 	book.make1D( "vertexR", "vertexR", 200, 0, 2 );
 
 	cout << "Getting Entries" << endl;
+	TaskTimer tt;
+	tt.start();
 	int nEvents = ds.getEntries();
 
 	for ( int i = 0; i < nEvents; i++ ){

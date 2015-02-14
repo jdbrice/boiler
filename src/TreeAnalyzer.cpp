@@ -57,6 +57,7 @@ namespace jdb{
 	    if ( cfg->exists( np+"DataSource" ) ){
 	    	ds = new DataSource( cfg, np + "DataSource", fileList );
 	    	chain = ds->getChain();
+	    	logger->debug(__FUNCTION__) << "Chain " << chain << endl;
 	    } else {
 	    	chain = new TChain( cfg->getString( np+"input.dst:treeName" ).c_str() );
 		    if ( "" == fileList ){
@@ -96,6 +97,8 @@ namespace jdb{
 
 		Int_t nEvents = (Int_t)chain->GetEntries();
 		nEventsToProcess = cfg->getInt( nodePath+"input.dst:nEvents", nEvents );
+		if ( ds )
+			nEventsToProcess = cfg->getInt( nodePath+"DataSource:maxEvents", nEvents );
 		if ( nEventsToProcess > nEvents )
 			nEventsToProcess = nEvents;
 		

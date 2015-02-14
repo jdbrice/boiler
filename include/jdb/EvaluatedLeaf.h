@@ -41,7 +41,7 @@ namespace jdb{
 		 * in the tree mapp
 		 * @return the evaluated value in double format
 		 */
-		double eval( DataSource * ds );
+		double eval( DataSource * ds, int i = 0 );
 
 	protected:
 

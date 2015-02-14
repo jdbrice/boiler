@@ -49,7 +49,7 @@ public:
 	string getFileContents(const char *filename){
 		ifstream in(filename, ios::in | ios::binary);
 
-		if (in){
+		if (in.good()){
 			std::string contents;
 
 			in.seekg(0, std::ios::end);
@@ -181,6 +181,21 @@ public:
 		}
 
 	}
+
+
+
+	void saveMapToXml( string filename ){
+
+
+		
+
+
+
+
+
+	}
+
+
 
 	//pjdco{ "name" : "char attrDelim", "desc" : "The delimiter used for attributes - Default is \":\""}
 	char attrDelim;

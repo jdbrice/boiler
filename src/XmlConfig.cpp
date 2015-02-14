@@ -45,6 +45,19 @@ namespace jdb{
 	}
 
 
+	void XmlConfig::saveXml( string filename ){
+
+		vector<string> children = childrenOf( "", 0 );
+
+		for ( int i = 0; i < children.size(); i++ ){
+			cout << children[ i ] << endl;
+		}
+
+
+
+	}
+
+
 	string XmlConfig::getString( string nodePath, string def ){
 
 		string snp = sanitize( nodePath );
@@ -229,13 +242,17 @@ namespace jdb{
 		return "";
 	}
 
-	vector<string> XmlConfig::childrenOf( string nodePath, int depth, bool attrs ){
+	vector<string> XmlConfig::childrenOf( string nodePath, int relDepth, bool attrs ){
 
+		
 		nodePath = sanitize( nodePath );
+
 		if ( 	nodePath[ nodePath.length() - 1] != pathDelim && 
-				nodePath[ nodePath.length() - 1] != attrDelim)
+				nodePath[ nodePath.length() - 1] != attrDelim  && "" != nodePath )
 			nodePath += pathDelim;
 	
+		int npDepth = depthOf( nodePath );
+
 		vector<string> paths;
 		for ( map_it_type it = data.begin(); it != data.end(); it++ ){
 
@@ -245,10 +262,20 @@ namespace jdb{
 			
 			// reject self
 			if ( it->first == nodePath )
-					continue;
+				continue;
+			
 			string parent = (it->first).substr( 0, nodePath.length() );
+			
 			if ( nodePath == parent ){
-				paths.push_back( it->first );
+				
+				if ( -1 == relDepth ) 
+					paths.push_back( it->first );
+				else {
+					int dp = depthOf( it->first );
+					
+					if ( dp - npDepth >= 0 && dp - npDepth <= relDepth ) 
+						paths.push_back( it->first );
+				}
 			}
 		}
 		return paths;

@@ -67,6 +67,8 @@ namespace jdb {
 		XmlConfig( string filename );
 		~XmlConfig();
 
+		void saveXml(string filename);
+
 		/* Same as getString(...) but with the [] operator.
 		 * @nodePath See getString(...)
 		 * @returns The underlying xml data at nodePath as a string
@@ -268,6 +270,21 @@ namespace jdb {
 		 * Empty string otherwise
 		 */
 		string attributeName( string nodePath );
+
+		int depthOf( string nodePath ){
+
+			nodePath = sanitize( nodePath );
+			int depth = 0;
+			for ( int i = 0; i < nodePath.length(); i++ ){
+				if ( pathDelim == nodePath[ i ] )
+					depth++;
+			}
+			return depth;
+		}
+
+		int depthOf( string nodePath, string relativeTo ){
+			return depthOf( nodePath ) - depthOf( relativeTo );
+		}
 
 	protected:
 

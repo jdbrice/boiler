@@ -1,6 +1,8 @@
 #include "DataSource.h"
 #include "ChainLoader.h"
 #include "Utils.h"
+#include <stdio.h>
+
 
 #include "TLeafElement.h"
 
@@ -13,6 +15,7 @@ namespace jdb{
 		cfg = _cfg;
 		nodePath = _nodePath;
 		fileList = _fileList;
+		cache = NULL;
 
 		if ( cfg->exists( nodePath ) && cfg->exists( nodePath+":treeName" ) ){
 			treeName = cfg->getString( nodePath + ":treeName", "" );
@@ -23,19 +26,28 @@ namespace jdb{
 			chain = new TChain( treeName.c_str() );
 
 			if ( "" == fileList ){
-				if ( cfg->exists( nodePath + ":url" ) )
+				if ( cfg->exists( nodePath + ":url" ) ){
+					lg.info(__FUNCTION__) <<"Loading from url " << fileList << endl;
 					ChainLoader::load( chain, cfg->getString( nodePath+":url" ), cfg->getInt( nodePath + ":maxFiles", -1 ) );
-				else if ( cfg->exists( nodePath + ":filelist" ) )
+				} else if ( cfg->exists( nodePath + ":filelist" ) ){
+					lg.info(__FUNCTION__) <<"Loading from filelist " << cfg->getString( nodePath+":filelist" ) << endl;
 					ChainLoader::loadList( chain, cfg->getString( nodePath+":filelist" ), cfg->getInt( nodePath + ":maxFiles", -1 ) );
+				}
 				else 
 					lg.warn(__FUNCTION__) << "Provide a url to folder containing data or a filelist <DataSource url=\"...\" (or) filelist=\"list.lis\" /> " << endl;
 			} else {
+				lg.info(__FUNCTION__) <<"Loading from filelist " << fileList << endl;
 				ChainLoader::loadList( chain, fileList, cfg->getInt( nodePath + ":maxFiles", -1 ) );
 			}
 
 			/**
 			 * Now create the data access structure
 			 */
+			if ( cacheExists() ){
+				lg.info(__FUNCTION__) << "Loading cache from " << (".DataSource_" + treeName + ".xml") << endl;
+				cache = new XmlConfig( ".DataSource_" + treeName + ".xml" );
+			} else
+				lg.info(__FUNCTION__) << "No cache found for " << treeName  << endl;
 			mapTree();
 			addressBranches();
 			addressLeaves();
@@ -43,6 +55,9 @@ namespace jdb{
 			initializeBranchStatus();
 			makeAliases();
 			makeEvaluatedLeaves();
+
+
+			cacheTreeInfo();
 
 
 		} else {
@@ -53,6 +68,9 @@ namespace jdb{
 	DataSource::~DataSource(){
 
 		lg.info(__FUNCTION__) << "Cleaning up" << endl;
+
+		if (cache)
+			delete cache;
 
 		typedef map<string, void*>::iterator svp_it_type;
 		for(svp_it_type iterator = data.begin(); iterator != data.end(); iterator++) {
@@ -132,11 +150,17 @@ namespace jdb{
 		 * This must be done in a sep loop bc the leaf pointers are 
 		 * not consistent accross TTrees
 		 */
-		for ( int i = 0; i < leafName.size(); i++ ){
-			string name = leafName[ i ];
-			leafLength[ name ] = chainLeafLength( name );
+		if ( cache && cache->getInt( "TreeInfo:nTrees" ) >= nTrees ){
+			loadLengthsFromCache();
+		} else {
+			TaskTimer tt;
+			tt.start();
+			for ( int i = 0; i < leafName.size(); i++ ){
+				string name = leafName[ i ];
+				leafLength[ name ] = chainLeafLength( name );
+			}
+			lg.info(__FUNCTION__) << "Finding Lengths : Elapsed " << tt.elapsedTime() << endl;
 		}
-
 		lg.info(__FUNCTION__) << "Complete" << endl;
 	}
 
@@ -334,6 +358,7 @@ namespace jdb{
 
 	double DataSource::get( string name, int i ){
 
+
 		// Aliased leaves
 		// Allows possible recursive alias (good or bad? )
 		if ( alias.find( name ) != alias.end() ){ // name is an alias
@@ -342,7 +367,7 @@ namespace jdb{
 		}
 		// Evaluated leaves
 		if ( evalLeaf.find( name ) != evalLeaf.end() ){
-			return evalLeaf[ name ]->eval( this );
+			return evalLeaf[ name ]->eval( this, i );
 		}
 
 		if ( i >= leafLength[ name ] || i < 0 ){
@@ -383,6 +408,53 @@ namespace jdb{
 
 		return numeric_limits<double>::quiet_NaN();
 
+	}
+
+	void DataSource::cacheTreeInfo(){
+
+
+		if ( cacheExists() && ( (cache) && cache->getInt( "TreeInfo:nTrees" ) >= nTrees) ){
+			lg.info(__FUNCTION__) << "No need to recache" << endl;
+			// no need to recache
+			return;
+		}
+		
+		/*if ( cacheExists() ){
+			
+			delete cache;
+			cache = NULL;
+			remove( (".DataSource_" + treeName + ".xml").c_str() );
+		}*/
+
+		ofstream cacheFile( ".DataSource_" + treeName + ".xml" );
+
+		cacheFile << "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
+		cacheFile << "<root>" << endl;
+		cacheFile << "\t<TreeInfo nTrees=\"" << nTrees << "\">" << endl;
+		typedef map<string, int>::iterator si_it_type;
+		for(si_it_type iterator = leafLength.begin(); iterator != leafLength.end(); iterator++) {
+
+			if ( iterator->second ){
+				cacheFile << "\t\t<LeafInfo name=\"" << iterator->first << "\" size=\"" << iterator->second <<"\" /> " << endl; 
+			}
+		}
+		cacheFile << "\t</TreeInfo>" << endl;
+		cacheFile << "</root>" << endl;
+
+		cacheFile.close();
+
+	}
+
+	void DataSource::loadLengthsFromCache(){
+
+		lg.info(__FUNCTION__)<< endl;
+		vector<string> cli = cache->childrenOf( "TreeInfo" );
+		for ( int i = 0; i < cli.size(); i++ ){
+
+			string ln = cache->getString( cli[ i ] + ":name" );
+			int ls = cache->getInt( cli[ i ] +":size" );
+			leafLength[ ln ] = ls;
+		}
 	}
 
 
