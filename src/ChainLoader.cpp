@@ -18,8 +18,13 @@ namespace jdb{
 
 		logger->info(__FUNCTION__) << "Searching " << ntdir << " for ntuples" << endl;
 
+		if ( ntdir[ ntdir.length()-1] != '/' ){
+			logger->info(__FUNCTION__) << "Appending / to path" << endl;
+			ntdir += "/";
+		}
+
 		if (maxFiles <= 0)
-			maxFiles = 100000;
+			maxFiles = 10000000;
 
 		uint nFiles = 0;
 		DIR *dir;

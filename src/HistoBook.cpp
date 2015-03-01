@@ -537,39 +537,52 @@ namespace jdb{
 		// force the param name to lowercase
 		transform(opt.begin(), opt.end(), opt.begin(), ::tolower);
 
-
+		logger->debug( __FUNCTION__ ) << "lowercase option : " << opt << endl;
 
 	    TH1* h = get( styling );
 	    if ( h ){
-
+	    	logger->debug(__FUNCTION__ ) << "Histogram " << styling << " is good " << endl;
 		    if ( "title" == opt ){
+		    	logger->debug(__FUNCTION__) << "Setting title " << endl;
 		    	h->SetTitle( cParam(params, 0) );
 		    } else if ( "x" == opt ){
+		    	logger->debug(__FUNCTION__) << "Setting x " << endl;
 		    	h->GetXaxis()->SetTitle( cParam(params, 0) );
 		    } else if ( "y" == opt ){
+		    	logger->debug(__FUNCTION__) << "Setting y " << endl;
 		    	h->GetYaxis()->SetTitle( cParam(params, 0) );
-		    } else if ( "legend" == opt ){
+		    } else if ( "xaxisfontsize" == opt ){
+		    	logger->debug(__FUNCTION__) << "Setting x axis font size " << endl;
+		    	h->GetXaxis()->SetLabelSize( dParam(params, 0) );
+		    } else if ( "legend" == opt ){ 
+		    	logger->debug(__FUNCTION__) << "Setting legend 1 " << endl;
 		    	legend->AddEntry( h, cParam(params, 0), cParam(params, 1, "lpf") );
 				legend->Draw();
 		    } else if ( "draw" == opt ){
+		    	logger->debug(__FUNCTION__) << "Setting draw opt " << endl;
 		    	drawOption = cParam(params, 0);
 		    } else if ( "linecolor" == opt ){
+		    	logger->debug(__FUNCTION__) << "Setting linecolor " << endl;
 		    	int c = color( cParam( params, 0) );
 		    	if ( c  < 0 )
 		    		c = (int) dParam( params, 0);
 		    	h->SetLineColor( c );
 		    } else if ( "fillcolor" == opt ){
+		    	logger->debug(__FUNCTION__) << "Setting fillcolor " << endl;
 		    	int c = color( cParam( params, 0) );
 		    	if ( c  < 0 )
 		    		c = (int) dParam( params, 0);
 		    	h->SetFillColor( c );
 		    } else if ( "linewidth" == opt ){
+		    	logger->debug(__FUNCTION__) << "Setting linewidth " << endl;
 		    	h->SetLineWidth( dParam( params, 0) );
 		    } else if ( "domain" == opt ){
+		    	logger->debug(__FUNCTION__) << "Setting domain " << endl;
 		    	double min = dParam( params, 0);
 		    	double max = dParam( params, 1);
 			    h->GetXaxis()->SetRangeUser( min, max );
 		    } else if ( "dynamicdomain" == opt ){
+		    	logger->debug(__FUNCTION__) << "Setting dynamicdomain " << endl;
 		    	double thresh = dParam( params, 0);
 		    	int min = (int)dParam( params, 1);
 		    	int max = (int)dParam( params, 2);
@@ -591,21 +604,25 @@ namespace jdb{
 			  		h->GetYaxis()->SetRange( min, max );
 
 		    }  else if ( "range" == opt ){
-
+		    	logger->debug(__FUNCTION__) << "Setting range " << endl;
 		    	double min = dParam( params, 0);
 		    	double max = dParam( params, 1);
 
 		    	h->GetYaxis()->SetRangeUser( min, max );
 		    } else if ( "markercolor" == opt ) {
+		    	logger->debug(__FUNCTION__) << "Setting markercolor " << endl;
 		    	int c = color( cParam( params, 0) );
 		    	if ( c  < 0 )
 		    		c = (int) dParam( params, 0);
 		    	h->SetMarkerColor( c );
 		    } else if ( "markerstyle" == opt ) {
+		    	logger->debug(__FUNCTION__) << "Setting markerstyle " << endl;
 		    	h->SetMarkerStyle( (int)dParam( params, 0) );
-		    } else if ( "markersize"){
-		    	h->SetMarkerSize( (int) dParam( params, 0) );
-		    } else if ( "legend" == opt ){
+		    } else if ( "markersize" == opt){
+		    	logger->debug(__FUNCTION__) << "Setting markersize " << endl;
+		    	h->SetMarkerSize( dParam( params, 0) );
+		    } else if ( "legendalignment" == opt ){
+		    	logger->debug(__FUNCTION__) << "Setting legend " << endl;
 		    	// p1 - alignmentX
 		    	// p2 - alignmentY
 		    	// p3 - width
@@ -619,7 +636,10 @@ namespace jdb{
 		    	if ( !(legendAlignment::center == p2 || legendAlignment::top == p2 || legendAlignment::bottom == p2) )
 		    		p2 = legendAlignment::best;
 		    	placeLegend( p1, p2, dParam( params, 3), dParam( params, 3) );
-		    } else if ( "numberofticks" == opt ){
+		    } else if ( "legendfontsize" == opt ) {
+		    	legend->SetTextSize( dParam( params, 0 ) ); 
+			}else if ( "numberofticks" == opt ){
+		    	logger->debug(__FUNCTION__) << "Setting numberofticks " << endl;
 		    	// p1 - # of primary divisions
 		    	// p2 - # of secondary divisions
 		    	// p3 - axis : 0 or 1 = x, 2 = y
@@ -635,16 +655,23 @@ namespace jdb{
 			    else
 			    	h->GetXaxis()->SetNdivisions( (int) p1, (int) p2, 0, true );
 		    } else if ( "logy" == opt ){
+		    	logger->debug(__FUNCTION__) << "Setting log y " << endl;
 		    	gPad->SetLogy( (int)dParam( params, 0 ) );
+		    	
 		    } else if ( "logx" == opt ){
 		    	gPad->SetLogx( (int)dParam( params, 0 ) );
 		    } else if ( "logz" == opt ){
 		    	gPad->SetLogz( (int)dParam( params, 0 ) );
+		    } else if ( "xoffset" == opt ){
+		    	h->GetXaxis()->SetTitleOffset( dParam( params, 0 ) );
+		    } else if ( "yoffset" == opt ){
+		    	h->GetYaxis()->SetTitleOffset( dParam( params, 0 ) );
 		    }
 
 
 
-
+		} else {
+			logger->warn(__FUNCTION__ ) << "Histogram " << styling << " is no good. " << endl;
 		}
 
 		return this;

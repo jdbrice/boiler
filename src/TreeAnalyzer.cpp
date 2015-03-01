@@ -6,7 +6,7 @@ namespace jdb{
 	TreeAnalyzer::TreeAnalyzer( XmlConfig * config, string np, string fileList, string jobPrefix ){
 		
 		//Set the Root Output Level
-		gErrorIgnoreLevel = kSysError;
+		//gErrorIgnoreLevel = kSysError;
 
 		// Save config
 		cfg = config;

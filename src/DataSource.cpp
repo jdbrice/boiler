@@ -304,12 +304,16 @@ namespace jdb{
 			string lName = bName + "_";
 
 			int ms = memSize( lName );
-			data[bName] = malloc( ms );
 
+			if ( 0 < ms ){
+				data[bName] = malloc( ms );
+				chain->SetBranchAddress( bName.c_str(), data[bName] );
 
-			chain->SetBranchAddress( bName.c_str(), data[bName] );
-
-			lg.debug( __FUNCTION__ ) << leafType[ lName ] << " " << bName << "(" << lName << ") addressed to " << ms << " bytes" << endl;
+				lg.debug( __FUNCTION__ ) << leafType[ lName ] << " " << bName << "(" << lName << ") addressed to " << ms << " bytes" << endl;
+			} else {
+				lg.debug( __FUNCTION__ ) << "Cannot address branch" << bName << endl;	
+			}
+			
 
 		}
 
@@ -340,11 +344,13 @@ namespace jdb{
 
 			//Change fixed length arrays from "array" to "array[length]" since that is how they are addressed
 			TLeaf * l = chain->GetLeaf( name.c_str() );
+			//lg.debug( __FUNCTION__ ) << name << " : " << leafLength[ name ] << ", " << l->GetLen() << endl;
+			//EXPERIMENTAL
 			if ( l ){
 				Int_t len = l->GetLen();
-				if ( len >= 2 ){
+				if ( len >= 2  && len  == leafLength[ name ] ){
 					string nName = name + "[" + ts(len) + "]";
-					lg.debug(__FUNCTION__) << name << " --> " << nName << endl;
+					lg.debug(__FUNCTION__) << l->GetTitle() << " : " << name << " --> " << nName << endl;
 					name = nName;
 				}	
 			}
