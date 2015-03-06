@@ -4,6 +4,7 @@
 #include "XmlConfig.h"
 #include "Utils.h"
 #include <limits>       // std::numeric_limits
+#include <memory>
 
 namespace jdb{
 
@@ -61,7 +62,10 @@ namespace jdb{
 		
 	};
 
+	typedef unique_ptr<ConfigRange> uptrConfigRange;
+
 }
+
 
 
 #endif

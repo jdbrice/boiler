@@ -181,7 +181,7 @@ namespace jdb{
 
 	void HistoBook::add( string name, TH1* h ){
 
-		logger->info(__FUNCTION__) << " Adding " << name << endl;
+		logger->debug(__FUNCTION__) << " Adding " << name << endl;
 
 		string oName = name;
 		if ( name.length() <= 1 || !h ){
@@ -204,8 +204,10 @@ namespace jdb{
 
 	string HistoBook::cd( string sdir  ){
 
-		logger->trace(__FUNCTION__) << " In Directory " << sdir << endl;
 		string old = currentDir;
+		if ( old != sdir )
+			logger->trace(__FUNCTION__) << " cd to directory " << sdir << endl;
+		
 
 		char* csdir = (char*)sdir.c_str();
 		file->cd();
@@ -264,7 +266,7 @@ namespace jdb{
 				bz = new HistoBins( config, nodeName, "Z" );
 
 			if ( "1D" == type || ( (bx->nBins() > 0) && (by->nBins() <= 0) && (bz->nBins() <= 0) )){
-				logger->info( __FUNCTION__ )<< bx->toString() << endl;
+				logger->trace( __FUNCTION__ )<< bx->toString() << endl;
 				if ( bx->nBins() >= 1 )
 					make1D( hName, hTitle, bx->nBins(), bx->bins.data() );
 				else 
@@ -295,7 +297,7 @@ namespace jdb{
 		logger->info(__FUNCTION__) << " Found " << paths.size() << " histogram paths " << endl;
 		for ( int i=0; i < paths.size(); i++ ){
 
-			make( paths[ i ] );
+			make( con, paths[ i ] );
 		}
 	}	//makeAll
 	void HistoBook::makeAll( string nodeName ){
@@ -314,6 +316,21 @@ namespace jdb{
 			TH1* nHist = (TH1*)get( existing )->Clone( create.c_str() );
 			// add the new one
 			add( create, nHist );
+		} else {
+			logger->warn(__FUNCTION__) << existing << " Does Not Exist " << endl;
+		}
+	}	//clone
+	void HistoBook::clone( string ePath, string existing, string cPath, string create ){
+
+		logger->info(__FUNCTION__) << " Cloning " << existing << " into " << create << endl;
+		if ( get( existing, ePath ) ){
+			TH1* nHist = (TH1*)get( existing, ePath )->Clone( create.c_str() );
+			
+			string oDir = cd( cPath ); 
+			// add the new one
+			add( create, nHist );
+
+			cd( oDir );
 		} else {
 			logger->warn(__FUNCTION__) << existing << " Does Not Exist " << endl;
 		}
@@ -416,6 +433,13 @@ namespace jdb{
 	void HistoBook::fill( string name, double bin, double weight ){
 		if ( get( name ) != 0)
 			get( name )->Fill( bin, weight );
+		else
+			logger->warn(__FUNCTION__) << name << " Does Not Exist, cannot fill " << endl;
+	}	//fill
+
+	void HistoBook::fill( string name, string binLabel, double weight ){
+		if ( get( name ) != 0)
+			get( name )->Fill( binLabel.c_str(), weight );
 		else
 			logger->warn(__FUNCTION__) << name << " Does Not Exist, cannot fill " << endl;
 	}	//fill

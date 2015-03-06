@@ -57,6 +57,51 @@ namespace jdb{
 		  	closedir (dir);
 		}
 
+	}
+
+	void ChainLoader::loadRange( 
+							TChain * chain, 	// the chain object to fill
+							string ntdir, 		// the directory in which to look for ntuples
+							int firstFile,
+							int lastFile
+							) {
+		
+
+		Logger * logger = new Logger( Logger::llGlobal, "ChainLoader" );
+
+		logger->info(__FUNCTION__) << "Searching " << ntdir << " for ntuples" << endl;
+
+		if ( ntdir[ ntdir.length()-1] != '/' ){
+			logger->info(__FUNCTION__) << "Appending / to path" << endl;
+			ntdir += "/";
+		}
+
+		uint nFiles = 0;
+		uint filesFound = 0;
+		DIR *dir;
+		struct dirent *ent;
+		bool go = true;
+		if ( (dir = opendir ( ntdir.c_str() ) ) != NULL) {
+			
+			while ( go && (ent = readdir ( dir) ) != NULL) {
+
+		    	if ( strstr( ent->d_name, "root") ){
+		    		
+		    		if ( nFiles >= firstFile && nFiles < lastFile ) {
+		    			string fullName = ntdir + ent->d_name;	
+		    			chain->Add( fullName.c_str() );
+		    		}
+		    		nFiles++;
+		    	} // is file a .root file
+
+		  	} // while files in directory
+		  	
+		  	logger->info( __FUNCTION__ ) << nFiles << " files loaded into chain" << endl;
+		  	delete logger;
+
+		  	closedir (dir);
+		}
+
 	}	
 
 

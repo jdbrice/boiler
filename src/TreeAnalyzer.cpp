@@ -89,8 +89,9 @@ namespace jdb{
 		/**
 		 * Run the pre event loop
 		 */
-		book->cd( "" );
+		book->cd( );
 		preEventLoop();
+
 
 		TaskTimer t;
 		t.start();
@@ -104,10 +105,12 @@ namespace jdb{
 		
 		logger->info(__FUNCTION__) << "Loaded: " << nEventsToProcess << " events " << endl;
 		
+		TaskProgress tp( "Event Loop", nEventsToProcess );
 		// loop over all events
 		for(Int_t i=0; i<nEventsToProcess; i++) {
 	    	chain->GetEntry(i);
 
+	    	tp.showProgress( i );
 
 	    	analyzeEventBeforeCuts();
 

@@ -133,6 +133,7 @@ namespace jdb{
 		 * If the histo DNE then an error is reported through the Logger and execution continues.
 		*/
 		void fill( string name, double bin, double weight = 1);
+		void fill( string name, string binLabel, double weight = 1 );
 
 		void make1F( string name, string title, int nBins, double low, double hi );
 		void make1D( string name, string title, int nBins, double low, double hi );
@@ -164,6 +165,7 @@ namespace jdb{
 		void makeAll( string nodeName );
 		void makeAll( XmlConfig * config, string nodeName );
 		void clone( string existing, string create );
+		void clone( string ePath, string existing, string cPath, string create );
 
 		TLegend* getLegend() { return legend; }
 

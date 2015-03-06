@@ -3,6 +3,7 @@
 
 #include "XmlConfig.h"
 #include "Utils.h"
+#include <memory>
 
 namespace jdb{
 	
@@ -55,7 +56,10 @@ namespace jdb{
 		}
 	};
 
+	typedef unique_ptr<ConfigPoint> uptrConfigPoint;
 }
+
+
 
 
 #endif

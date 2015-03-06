@@ -364,7 +364,6 @@ namespace jdb{
 
 	double DataSource::get( string name, int i ){
 
-
 		// Aliased leaves
 		// Allows possible recursive alias (good or bad? )
 		if ( alias.find( name ) != alias.end() ){ // name is an alias

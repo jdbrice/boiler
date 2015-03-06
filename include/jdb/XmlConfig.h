@@ -16,6 +16,7 @@
 #include <map>
 #include <algorithm>
 #include <iomanip>
+#include <memory>
 
 /**
  * JDB
@@ -296,6 +297,7 @@ namespace jdb {
 
 		
 	};
+	typedef unique_ptr<XmlConfig> uptrXmlConfig;
 }
 
 

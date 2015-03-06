@@ -4,24 +4,24 @@
 #include "XmlConfig.h"
 #include "Utils.h"
 
+#include <memory>
+
 namespace jdb{
 	/*jdoc{
 		"class" : "HistoBins",
 		"desc" : "Container and utility class for histogram style binning"
 	}*/
+	/* HistoBins provides a container for storing and using bins
+	 *
+	 * Provides a stand-alone binning container. Can be create directly from configs.
+	 */
 	class HistoBins
 	{
 	public:
 		
-		/*jdoc{
-			"name" : "static vector<double> makeNBins( int nBins, double low, double high )",
-			"params" : ["int nBins", "double low", "double high" ],
-			"paramDesc" : [	"Number of Bins", 
-				"Lower edge of first bin", 
-				"Upper edge of last bin" ],
-			"returns" : [ "vector of bin edges" ],
-			"desc" : "Divides the range high - low into a fixed number of bins from low to high"
-		}*/
+		/* Makes a vector of bins with fixed width
+		 * Divides the range high - low into a fixed number of bins from low to high"
+		 */
 		static vector<double> makeNBins( int nBins, double low, double high ){
 
 			vector<double> bins;
@@ -110,48 +110,27 @@ namespace jdb{
 			return findBin( bins, val );
 		} // findBin
 
-		/*jdoc{
-			"name" : "int length()",
-			"returns" : [
-				"Length of underlying vector containing the bin edges"
-			]
-		}*/
+		/*
+		 * Length of underlying vector containing the bin edges
+		 */
 		int length() {
 			return bins.size();
 		}
-		/*jdoc{
-			"name" : "int size()",
-			"returns" : [
-				"Size of underlying vector containing the bin edges"
-			]
-		}*/
+		/*
+		 * Size of underlying vector containing the bin edges
+		 */
 		int size() {
 			return bins.size();
 		}
-		/*jdoc{
-			"name" : "int nBins()",
-			"returns" : [
-				"Number of bins stored in the underlying vector of bin edges. Equal to size() - 1."
-			]
-		}*/
+		/*
+		 * Number of bins stored in the underlying vector of bin edges. Equal to size() - 1.
+  		 */
 		int nBins(){
 			return bins.size() - 1;
 		}
 
-		/*jdoc{
-			"name" : "HistoBins( double min, double max, double width )",
-			"params" : [
-				"min", "max", "width"
-			],
-			"paramDesc" : [
-				"Bin minimum value",
-				"Bin maximum value",
-				"Nominal bin width"
-			],
-			"returns" : [
-				
-			],
-			"desc" : "Creates bins with a nominal bin width. The final bin may be smaller than the nominal size if width does not evenly divide the range"
+		/*
+			Creates bins with a nominal bin width. The final bin may be smaller than the nominal size if width does not evenly divide the range
 		}*/
 		HistoBins( double min, double max, double width ){
 			this->bins = makeFixedWidthBins( width, min, max );
@@ -252,7 +231,7 @@ namespace jdb{
 
 				for ( int i = 0; i < bins.size(); i++  ){
 					if ( i+1  < bins.size() )
-						ba += ("( " + ts( bins[i] ) +" -> " + ts( bins[i+1] ) + " )" );
+						ba += ("( " + dts( bins[i] ) +" -> " + dts( bins[i+1] ) + " )" );
 					if ( i+3  < bins.size() )
 						ba += ", ";
 				}
@@ -266,16 +245,17 @@ namespace jdb{
 
 		~HistoBins(){}
 		
-		//jdoc{ "name" : "vector< double > bins", "desc" : "Vector containing the bin edges"}
+		vector<double> getBins(){ return bins; }
+
 		vector<double> bins;
-		//jdoc{ "name" : "double width", "desc" : "Nominal width of bins if fixed number or fixed width is used - not set for variable bin edges"}
 		double width;
-		//jdoc{ "name" : "double min", "desc" : ""}
-		//jdoc{ "name" : "double max", "desc" : ""}
 		double min, max;
 
 	};
+
+	typedef unique_ptr<HistoBins> uptrHistoBins;
 }
+
 
 
 
