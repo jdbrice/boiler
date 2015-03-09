@@ -62,8 +62,6 @@ namespace jdb{
 		
 	};
 
-	typedef unique_ptr<ConfigRange> uptrConfigRange;
-
 }
 
 

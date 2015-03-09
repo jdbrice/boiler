@@ -56,7 +56,6 @@ namespace jdb{
 		}
 	};
 
-	typedef unique_ptr<ConfigPoint> uptrConfigPoint;
 }
 
 

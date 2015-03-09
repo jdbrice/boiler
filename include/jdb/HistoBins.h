@@ -253,7 +253,6 @@ namespace jdb{
 
 	};
 
-	typedef unique_ptr<HistoBins> uptrHistoBins;
 }
 
 

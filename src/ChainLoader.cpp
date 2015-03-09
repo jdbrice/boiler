@@ -16,46 +16,53 @@ namespace jdb{
 
 		Logger * logger = new Logger( Logger::llGlobal, "ChainLoader" );
 
-		logger->info(__FUNCTION__) << "Searching " << ntdir << " for ntuples" << endl;
+		if ( ntdir.find( ".root" ) != std::string::npos ){
 
-		if ( ntdir[ ntdir.length()-1] != '/' ){
-			logger->info(__FUNCTION__) << "Appending / to path" << endl;
-			ntdir += "/";
-		}
+			chain->AddFile( ntdir.c_str() );
 
-		if (maxFiles <= 0)
-			maxFiles = 10000000;
 
-		uint nFiles = 0;
-		DIR *dir;
-		struct dirent *ent;
-		bool go = true;
-		if ( (dir = opendir ( ntdir.c_str() ) ) != NULL) {
-			
-			while ( go && (ent = readdir ( dir) ) != NULL) {
+		} else {
+			logger->info(__FUNCTION__) << "Searching " << ntdir << " for ntuples" << endl;
 
-		    	if ( strstr( ent->d_name, "root") ){
-		    		
-		    		if ( nFiles >= maxFiles ) {
-		    			go = false;
-		    			break;
-		    		}
+			if ( ntdir[ ntdir.length()-1] != '/' ){
+				logger->info(__FUNCTION__) << "Appending / to path" << endl;
+				ntdir += "/";
+			}
 
-		    		char fn[ 1024 ];
-		    		sprintf( fn, "%s%s", ntdir.c_str(), ent->d_name );
-		    		chain->Add( fn );
+			if (maxFiles <= 0)
+				maxFiles = 10000000;
 
-		    		//cout << "[ChainLoader] Adding file " << fn << " to chain" << endl;
-		    		nFiles++;
+			uint nFiles = 0;
+			DIR *dir;
+			struct dirent *ent;
+			bool go = true;
+			if ( (dir = opendir ( ntdir.c_str() ) ) != NULL) {
+				
+				while ( go && (ent = readdir ( dir) ) != NULL) {
 
-		    	}
-		  	}
-		  	
-		  	logger->info( __FUNCTION__ ) << nFiles << " files loaded into chain" << endl;
-		  	delete logger;
+			    	if ( strstr( ent->d_name, "root") ){
+			    		
+			    		if ( nFiles >= maxFiles ) {
+			    			go = false;
+			    			break;
+			    		}
 
-		  	closedir (dir);
-		}
+			    		char fn[ 1024 ];
+			    		sprintf( fn, "%s%s", ntdir.c_str(), ent->d_name );
+			    		chain->Add( fn );
+
+			    		//cout << "[ChainLoader] Adding file " << fn << " to chain" << endl;
+			    		nFiles++;
+
+			    	}
+			  	}
+			  	
+			  	logger->info( __FUNCTION__ ) << nFiles << " files loaded into chain" << endl;
+			  	delete logger;
+
+			  	closedir (dir);
+			}
+		} // if a directory was given
 
 	}
 

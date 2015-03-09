@@ -297,7 +297,7 @@ namespace jdb {
 
 		
 	};
-	typedef unique_ptr<XmlConfig> uptrXmlConfig;
+
 }
 
 
