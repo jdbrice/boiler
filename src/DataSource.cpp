@@ -35,9 +35,13 @@ namespace jdb{
 				}
 				else 
 					lg.warn(__FUNCTION__) << "Provide a url to folder containing data or a filelist <DataSource url=\"...\" (or) filelist=\"list.lis\" /> " << endl;
-			} else {
+			} else if ( fileList.find( ".root" ) == std::string::npos ) {
+				// normal file list
 				lg.info(__FUNCTION__) <<"Loading from filelist " << fileList << endl;
 				ChainLoader::loadList( chain, fileList, cfg->getInt( nodePath + ":maxFiles", -1 ) );
+			} else {
+				// load just a single .root file 
+				ChainLoader::load( chain, fileList );
 			}
 
 			/**
