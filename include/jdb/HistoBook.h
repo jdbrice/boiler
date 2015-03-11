@@ -89,6 +89,7 @@ namespace jdb{
 		// optional config to use for all config related calls
 		XmlConfig * config;
 
+		bool saveAllOnExit;
 
 
 	public:
@@ -184,6 +185,9 @@ namespace jdb{
 		 * the permanent file given during construction
 		 */
 		void save();
+		void saveOnExit( bool doIt = true ){
+			saveAllOnExit = doIt;
+		}
 
 		/* Styles a histogram 
 		 *Example: book->style( "h1" )->set( "title", "science" )->draw(); "

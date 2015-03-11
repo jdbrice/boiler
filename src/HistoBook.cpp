@@ -58,6 +58,8 @@ namespace jdb{
 			loadRootDir( gDirectory, inDir );
 		}
 
+		saveOnExit( true );
+
 	}	// Constructor
 
 	/**
@@ -120,7 +122,8 @@ namespace jdb{
 		logger->info(__FUNCTION__) << "" << endl;
 		delete legend;
 
-		save();
+		if ( saveAllOnExit  )
+			save();
 		file->Close();
 		logger->info(__FUNCTION__) << " Memory freed, data written, file closed " << endl;
 		delete logger;
