@@ -3,6 +3,10 @@
   <doc>This class is a utility class used for quickly loading and aliasing range data in an xml config
 
 **Headers** : ConfigRange.h
+
+``` xml
+&lt;Range min="100" max="100" /&gt;
+```
 </doc>
   <field id="jdb::ConfigRange::min" name="min">
     <brief>Minimum value in range</brief>

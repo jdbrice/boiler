@@ -12,6 +12,9 @@ Automatically maps tree branches and leaves
     <argument id="jdb::DataSource::DataSource::_nodePath" name="_nodePath">
       <type name="string" />
     </argument>
+    <argument id="jdb::DataSource::DataSource::_fileList" name="_fileList">
+      <type name="string" />
+    </argument>
   </constructor>
   <destructor abstract="yes" id="jdb::DataSource::~DataSource" name="~DataSource" />
   <method id="jdb::DataSource::addAlias" name="addAlias">
@@ -54,6 +57,47 @@ Automatically maps tree branches and leaves
       <type name="Long64_t" />
     </argument>
   </method>
+  <method id="jdb::DataSource::getFloat" name="getFloat">
+    <return>
+      <type name="Float_t" />
+    </return>
+    <argument id="jdb::DataSource::getFloat::name" name="name">
+      <type name="string" />
+    </argument>
+    <argument id="jdb::DataSource::getFloat::i" name="i">
+      <type builtin="yes" name="int" />
+    </argument>
+  </method>
+  <method id="jdb::DataSource::getInt" name="getInt">
+    <return>
+      <type name="Int_t" />
+    </return>
+    <argument id="jdb::DataSource::getInt::name" name="name">
+      <type name="string" />
+    </argument>
+    <argument id="jdb::DataSource::getInt::i" name="i">
+      <type builtin="yes" name="int" />
+    </argument>
+  </method>
+  <method id="jdb::DataSource::getPointer" name="getPointer">
+    <return>
+      <type builtin="yes" name="void" qualifier="*" />
+    </return>
+    <argument id="jdb::DataSource::getPointer::name" name="name">
+      <type name="string" />
+    </argument>
+  </method>
+  <method id="jdb::DataSource::getUInt" name="getUInt">
+    <return>
+      <type name="UInt_t" />
+    </return>
+    <argument id="jdb::DataSource::getUInt::name" name="name">
+      <type name="string" />
+    </argument>
+    <argument id="jdb::DataSource::getUInt::i" name="i">
+      <type builtin="yes" name="int" />
+    </argument>
+  </method>
   <method id="jdb::DataSource::operator()" name="operator()">
     <return>
       <type builtin="yes" name="double" />
@@ -73,6 +117,12 @@ Automatically maps tree branches and leaves
     <type name="string" />
   </field>
   <field access="protected" id="jdb::DataSource::cfg" name="cfg">
+    <type name="XmlConfig" qualifier="*" ref="jdb::XmlConfig#jdb::XmlConfig" />
+  </field>
+  <field access="protected" id="jdb::DataSource::fileList" name="fileList">
+    <type name="string" />
+  </field>
+  <field access="protected" id="jdb::DataSource::cache" name="cache">
     <type name="XmlConfig" qualifier="*" ref="jdb::XmlConfig#jdb::XmlConfig" />
   </field>
   <field access="protected" id="jdb::DataSource::treeName" name="treeName">
@@ -137,6 +187,16 @@ value = name of branch pointe to</doc>
       <type builtin="yes" name="void" />
     </return>
   </method>
+  <method access="protected" id="jdb::DataSource::cacheExists" name="cacheExists">
+    <return>
+      <type builtin="yes" name="bool" />
+    </return>
+  </method>
+  <method abstract="yes" access="protected" id="jdb::DataSource::cacheTreeInfo" name="cacheTreeInfo">
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+  </method>
   <method abstract="yes" access="protected" id="jdb::DataSource::chainLeafLength" name="chainLeafLength">
     <return>
       <type builtin="yes" name="int" />
@@ -149,6 +209,11 @@ value = name of branch pointe to</doc>
     <doc>
 Generates the inital branch status from the config file
 </doc>
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+  </method>
+  <method abstract="yes" access="protected" id="jdb::DataSource::loadLengthsFromCache" name="loadLengthsFromCache">
     <return>
       <type builtin="yes" name="void" />
     </return>

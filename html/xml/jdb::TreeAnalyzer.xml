@@ -14,15 +14,20 @@ Optionally a jobPrefix can be used to allow for parallel execution such that
 each job writes out to different files.
 </doc>
     <argument id="jdb::TreeAnalyzer::TreeAnalyzer::config" name="config">
+      <doc>XmlConfig with a node for the TreeAnalyzer config</doc>
       <type name="XmlConfig" qualifier="*" ref="jdb::XmlConfig#jdb::XmlConfig" />
     </argument>
     <argument id="jdb::TreeAnalyzer::TreeAnalyzer::np" name="np">
+      <doc>Path to TreeAnalyzer node in config</doc>
       <type name="string" />
     </argument>
     <argument id="jdb::TreeAnalyzer::TreeAnalyzer::fileList" name="fileList">
+      <doc>Optional : filelist containg files to load into chain.
+                         If not given then a directory should be specified in the config</doc>
       <type name="string" />
     </argument>
     <argument id="jdb::TreeAnalyzer::TreeAnalyzer::jobPrefix" name="jobPrefix">
+      <doc>Prefix for output files - useful for running in parallel.</doc>
       <type name="string" />
     </argument>
   </constructor>
@@ -63,55 +68,60 @@ each job writes out to different files.
     <brief>the maximum number of events to process. If not set all events will be processed</brief>
     <type builtin="yes" name="int" />
   </field>
+  <field access="protected" id="jdb::TreeAnalyzer::ds" name="ds">
+    <brief>Sets up a DataSource if there is a DataSource node</brief>
+    <type name="DataSource" qualifier="*" ref="jdb::DataSource#jdb::DataSource" />
+  </field>
   <method access="protected" id="jdb::TreeAnalyzer::analyzeEvent" name="analyzeEvent" virtual="yes">
-    <brief>jdoc{</brief>
-    <doc>"name" : "virtual void analyzeEvent()",
-"params" : [ ],
-"paramDesc" : [ ],
-"returns" : [  ],
-"desc" : "Analyzes a single event in the chain"
-}</doc>
+    <brief> Used to analyze events</brief>
+    <doc>Analyzes a single event in the chain
+</doc>
     <return>
       <type builtin="yes" name="void" />
     </return>
   </method>
   <method access="protected" id="jdb::TreeAnalyzer::analyzeEventBeforeCuts" name="analyzeEventBeforeCuts" virtual="yes">
+    <brief> Used to analyze all events</brief>
+    <doc>Events that do not pass the keepEvent are still processed
+</doc>
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+  </method>
+  <method access="protected" id="jdb::TreeAnalyzer::analyzeRejectedEvent" name="analyzeRejectedEvent" virtual="yes">
+    <brief> Used to analyze all events</brief>
+    <doc>Events that do not pass the keepEvent are still processed
+</doc>
     <return>
       <type builtin="yes" name="void" />
     </return>
   </method>
   <method abstract="yes" access="protected" id="jdb::TreeAnalyzer::keepEvent" name="keepEvent" virtual="yes">
-    <brief>jdoc{</brief>
-    <doc>"name" : "virtual bool keepEvent()",
-"params" : [ ],
-"paramDesc" : [ ],
-"returns" : [ "true : Event should be processed", "false : Event should be skipped" ],
-"desc" : "Central function for event cuts"
-}</doc>
+    <brief> Called for each event</brief>
+    <doc>Function decides whether an event should be kept or not
+Applies cuts to data
+</doc>
     <return>
+      <doc>True    - Keep Event
+         False  - Skip event</doc>
       <type builtin="yes" name="bool" />
     </return>
   </method>
   <method access="protected" id="jdb::TreeAnalyzer::postEventLoop" name="postEventLoop" virtual="yes">
-    <brief>jdoc{</brief>
-    <doc>"name" : "virtual void postEventLoop()",
-"params" : [ ],
-"paramDesc" : [ ],
-"returns" : [  ],
-"desc" : "Called after the event loop for cleanup, report generation, etc."
-}</doc>
+    <doc>
+Called after the event loop for cleanup,
+report generation, etc."
+</doc>
     <return>
       <type builtin="yes" name="void" />
     </return>
   </method>
   <method abstract="yes" access="protected" id="jdb::TreeAnalyzer::preEventLoop" name="preEventLoop" virtual="yes">
-    <brief>jdoc{</brief>
-    <doc>"name" : "virtual void preEventLoop()",
-"params" : [ ],
-"paramDesc" : [ ],
-"returns" : [  ],
-"desc" : "Called before the event loop for intialization"
-}</doc>
+    <brief> Called before event loop</brief>
+    <doc>Used for setup + initialization before
+        processing the entire loop
+
+</doc>
     <return>
       <type builtin="yes" name="void" />
     </return>

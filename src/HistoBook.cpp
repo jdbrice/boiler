@@ -111,6 +111,9 @@ namespace jdb{
 			fin->cd( inDir.c_str() );
 			loadRootDir( gDirectory, inDir );
 		}
+
+		// default to auto save on exit
+		saveOnExit( true );
 	}	// Constructor
 
 	/**
@@ -122,8 +125,11 @@ namespace jdb{
 		logger->info(__FUNCTION__) << "" << endl;
 		delete legend;
 
-		if ( saveAllOnExit  )
+		if ( saveAllOnExit  ){
 			save();
+		} else {
+			logger->warn() << "Not Saving Book" << endl;
+		}
 		file->Close();
 		logger->info(__FUNCTION__) << " Memory freed, data written, file closed " << endl;
 		delete logger;

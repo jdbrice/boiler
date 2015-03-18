@@ -55,10 +55,12 @@ namespace jdb{
 		int nTrees;
 		Long64_t nEntries;
 
-		/**
+		/*
 		 * Data type mapping 
 		 */
-		// # of elements stored by leaf ie array length
+		
+		
+		// Number of elements stored by leaf ie array length
 		std::map< string, int > leafLength;
 		// The leaf data type in string form 
 		map<string, string > leafType;
@@ -86,16 +88,47 @@ namespace jdb{
 
 
 
+		void * getPointer( string name ) {
+			return data[ name ];
+		}
 		double get( string name, int i = 0 );
-		Int_t getInt( string name, int i = 0 ){
-			return (Int_t)get( name, i );
+		inline Int_t getInt( string name, int i = 0 ){
+			if ( !data[ name ]){
+				lg.debug(__FUNCTION__) << name << "[ " << i << " ] Invalid data" << endl;
+				return numeric_limits<double>::quiet_NaN();	
+			}
+			if ( i >= leafLength[ name ] || i < 0 ){
+				lg.debug(__FUNCTION__) << name << "[ " << i << " ] Out Of Bounds" << endl;
+				return numeric_limits<double>::quiet_NaN();
+			}
+			Int_t * tData = (Int_t*)data[ name ];
+			return tData[ i ];
 		}
-		UInt_t getUInt( string name, int i = 0 ){
-			return (UInt_t)get( name, i );
+		inline UInt_t getUInt( string name, int i = 0 ){
+			if ( !data[ name ]){
+				lg.debug(__FUNCTION__) << name << "[ " << i << " ] Invalid data" << endl;
+				return numeric_limits<double>::quiet_NaN();	
+			}
+			if ( i >= leafLength[ name ] || i < 0 ){
+				lg.debug(__FUNCTION__) << name << "[ " << i << " ] Out Of Bounds" << endl;
+				return numeric_limits<double>::quiet_NaN();
+			}
+			UInt_t * tData = (UInt_t*)data[ name ];
+			return tData[ i ];
 		}
-		Float_t getFloat( string name, int i = 0 ){
-			return (Float_t)get( name, i );
+		inline Float_t getFloat( string name, int i = 0 ){
+			if ( !data[ name ]){
+				lg.debug(__FUNCTION__) << name << "[ " << i << " ] Invalid data" << endl;
+				return numeric_limits<double>::quiet_NaN();	
+			}
+			if ( i >= leafLength[ name ] || i < 0 ){
+				lg.debug(__FUNCTION__) << name << "[ " << i << " ] Out Of Bounds" << endl;
+				return numeric_limits<double>::quiet_NaN();
+			}
+			Float_t * tData = (Float_t*)data[ name ];
+			return tData[ i ];
 		}
+		
 
 		double operator() ( string lName, int index = 0) { return get( lName, index ); };
 

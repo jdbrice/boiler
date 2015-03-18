@@ -7,10 +7,7 @@
 #include <memory>
 
 namespace jdb{
-	/*jdoc{
-		"class" : "HistoBins",
-		"desc" : "Container and utility class for histogram style binning"
-	}*/
+	
 	/* HistoBins provides a container for storing and using bins
 	 *
 	 * Provides a stand-alone binning container. Can be create directly from configs.
@@ -32,15 +29,12 @@ namespace jdb{
 			return bins;
 		}	// binsFrom
 		
-		/*jdoc{
-			"name" : "static vector<double> makeFixedWidthBins( double binWidth, double low, double high )",
-			"params" : ["double binWidth", "double low", "double high" ],
-			"paramDesc" : [	"Nominal width of each bin", 
-			"Lower edge of first bin", 
-			"Upper edge of last bin" ],
-			"returns" : [ "vector of bin edges" ],
-			"desc" : "Divides the range high - low into a fixed number of bins from low to high"
-		}*/
+		/* Makes a vector of bin edges for bins of a fixed width
+		 * @binWidth the width of each bin. The last bin may be smaller.
+		 * @low the low edge of the bins
+		 * @high the high edge of the bins
+		 * @return vector of bin edges from low to high
+		 */
 		static vector<double> makeFixedWidthBins( double binWidth, double low, double high ){
 
 			vector<double> bins;
@@ -50,24 +44,10 @@ namespace jdb{
 			return bins;
 		}	// binsFrom
 
-		/*jdoc{
-			"name" : "static int findBin( vector<double> &bins, double val )",
-			"params" : [
-				"&bins",
-				"val"
-			],
-			"paramDesc" : [
-				"Bins to search in",
-				"Search value"
-			],
-			"returns" : [
-				"-1 : Underflow",
-				"-2 : Overflow",
-				"-3 : Not Found",
-				"Otherwise the zero-indexed bin is returned"
-			],
-			"desc" : "Finds the bin corresponding to a value in the given bins"
-		}*/
+		/* Finds the bin containing a given value
+		 * @bins The bin edges to search in
+		 * @val The value for which the corresponding bin is desired 
+		 */
 		static int findBin( vector<double> &bins, double val ){
 
 			if ( bins.size() < 2 )
@@ -90,22 +70,9 @@ namespace jdb{
 
 		}	// findBin
 
-		/*jdoc{
-			"name" : "int findBin( double val )",
-			"params" : [
-				"val"
-			],
-			"paramDesc" : [
-				"Search value"
-			],
-			"returns" : [
-				"-1 : Underflow",
-				"-2 : Overflow",
-				"-3 : Not Found",
-				"Otherwise the zero-indexed bin is returned"
-			],
-			"desc" : "Finds the bin corresponding to a value in the object bins"
-		}*/
+		/* Finds the bin containing a given value
+		 * @val The value for which the corresponding bin is desired 
+		 */
 		int findBin( double val ){
 			return findBin( bins, val );
 		} // findBin
@@ -136,24 +103,23 @@ namespace jdb{
 			this->bins = makeFixedWidthBins( width, min, max );
 		}
 
-		
+		/* Creates a HistoBins object from a vector of bin edges
+		 *
+		 */
 		HistoBins( vector<double> bins ){
 			this->bins = bins;
 		}
 
-		/*jdoc{
-			"name" : "HistoBins( XmlConfig * config, string nodePath, string mod = \"\" )",
-			"params" : [
-				"config", "nodePath", "mod"
-			],
-			"paramDesc" : [
-				"Project config", "Path to configuration node", "Optional: Attribute modifier"
-			],
-			"returns" : [
-				
-			],
-			"desc" : "Creates histogram bins from a config node. Used heavily by HistoBook for config based histogram creation. Attribute modifier is used to select, x, y, etc. from the node."
-		}*/
+		/*Creates histogram bins from an xml config node 
+		 * Used heavily by HistoBook for config based histogram creation. 
+		 *
+		 * Example node:
+		 * ``` xml
+		 *  <Bins width="1" min="0" max="800" />
+		 *  <Bins nBins="10" min="0" max="800" />
+		 *  <Bins>10, 12, 14, 16, 18, 20</Bins>
+		 * ```
+		 */
 		HistoBins( XmlConfig * config, string nodePath, string mod = "" ){
 
 			if ( config->exists( nodePath ) && config->getDoubleVector( nodePath ).size() >= 2 ){
@@ -193,36 +159,16 @@ namespace jdb{
 
 		}
 
-		/*jdoc{
-			"name" : "double& operator[] ( const int nIndex )",
-			"params" : [
-				"nIndex"
-			],
-			"paramDesc" : [
-				"Index to retrieve from the underlying vector of bin edges"
-			],
-			"returns" : [
-				"Bin edge indexed by nIndex"
-			],
-			"desc" : "Gets a bin edge from the underlying vector of bin edges"
-		}*/
+		/* Gets a bin edge from the underlying vector of bin edges"
+		 * @nIndex the index of the bin edge to get
+		 */
 		double& operator[] ( const int nIndex ){
 			return bins[ nIndex ];
 		}
 
-		/*jdoc{
-			"name" : "string toString ()",
-			"params" : [
-				
-			],
-			"paramDesc" : [
-				
-			],
-			"returns" : [
-				"String representation of bins"
-			],
-			"desc" : ""
-		}*/
+		/* Converts the bin edges into a human readable string
+		 * @return A string represenation of the bin edges.
+		 */
 		string toString() {
 			if ( width > 0 ) 
 				return "< " + ts( nBins() ) + " bins ( " + ts(min) + " -> " + ts(max) + " )  >";
@@ -242,13 +188,19 @@ namespace jdb{
 			return "";
 		}
 
-
+		/* Destructor
+		 *
+		 */
 		~HistoBins(){}
 		
+		// Returns the vector of bin edges
 		vector<double> getBins(){ return bins; }
 
+		// Vector of bin edges
 		vector<double> bins;
+		// Width of bins if fixed with or fixed number of bins is used
 		double width;
+		// min and max of bin range
 		double min, max;
 
 	};

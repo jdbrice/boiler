@@ -32,9 +32,8 @@ using namespace std;
 
 namespace jdb{
 
-	/**
-	 * For legend Alignment
-	 * may remove!!!
+	/* For legend Alignment
+	 * Needs to be removed when updated
 	 */
 	class legendAlignment {
 	public:
@@ -62,33 +61,37 @@ namespace jdb{
 
 
 
-	/*jdoc{
-		"class" : "HistoBook",
-		"desc" : "A book keeper and feature rich environemnt for using Root Hsitograms"
-	}*/
+	/* A book keeper and helper for storing and using ROOT histograms
+	 *
+	 */
 	class HistoBook {
 
 	protected:
 
+		// Logger
 		Logger * logger;
-
+		// Current directory in output file
 		string currentDir;
-
+		// Map of hitogram names to paths in the Xml Config File for automaticlly created histos
 		std::map<string, string> configPath;
+		// Map of histogram names to objects
 		std::map<string, TH1*> book;
-		
+		// Filename of output file
 		string filename;
-		
+		// Output file
 		TFile *file;
 
 		/* Style and display */
+		// Name of the histogram that is being styled
 		string styling;
+		// the current draw option for displaying a histogram
 		string drawOption;
+		// TLegend used for drawing legends
 		TLegend * legend;
 
-		// optional config to use for all config related calls
+		// Optional config to use for all config related calls
 		XmlConfig * config;
-
+		// Save on Exit or not
 		bool saveAllOnExit;
 
 
@@ -186,11 +189,12 @@ namespace jdb{
 		 */
 		void save();
 		void saveOnExit( bool doIt = true ){
+			logger->info( __FUNCTION__ ) << "Auto Save on exit set to " << doIt << endl;
 			saveAllOnExit = doIt;
 		}
 
 		/* Styles a histogram 
-		 *Example: book->style( "h1" )->set( "title", "science" )->draw(); "
+		 * Example: book->style( "h1" )->set( "title", "science" )->draw(); "
 		 */
 		HistoBook* style( string hName );
 

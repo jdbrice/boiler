@@ -1,9 +1,17 @@
 <namespace xmlns="http://jessevdk.github.com/cldoc/1.0" id="jdbs" name="jdbs">
+  <brief> Namespace used only in interactive ROOT scripts</brief>
+  <doc>Needed to reolve namespace conflicts when running in the ROOT promt
+
+These methods are identical to those in Utils.h
+</doc>
   <class name="TaskProgress" ref="jdbs::TaskProgress#jdbs::TaskProgress">
-    <brief>*</brief>
+    <brief>See jdb::TaskProgress</brief>
   </class>
-  <class name="TaskTimer" ref="jdbs::TaskTimer#jdbs::TaskTimer" />
+  <class name="TaskTimer" ref="jdbs::TaskTimer#jdbs::TaskTimer">
+    <brief>See jdb::TaskTimer</brief>
+  </class>
   <function id="dts" name="dts">
+    <brief>See jdb::dts</brief>
     <return>
       <type name="string" />
     </return>
@@ -12,10 +20,7 @@
     </argument>
   </function>
   <function id="progressBar" name="progressBar">
-    <brief>*</brief>
-    <doc>Plain text progress bar
-simply call inside loop
-</doc>
+    <brief>see jdb::progressBar</brief>
     <return>
       <type builtin="yes" name="void" />
     </return>
@@ -33,7 +38,7 @@ simply call inside loop
     </argument>
   </function>
   <function id="trimTrailingZeros" name="trimTrailingZeros">
-    <brief>inefficient but works, TODO : think of better way</brief>
+    <brief>See jdb::trimTrailingZeros</brief>
     <return>
       <type name="string" />
     </return>
@@ -42,6 +47,7 @@ simply call inside loop
     </argument>
   </function>
   <function id="ts" name="ts">
+    <brief>See jdb::ts</brief>
     <return>
       <type name="string" />
     </return>
@@ -53,6 +59,7 @@ simply call inside loop
     </argument>
   </function>
   <function id="ts" name="ts">
+    <brief>See jdb::ts</brief>
     <return>
       <type name="string" />
     </return>
@@ -64,6 +71,7 @@ simply call inside loop
     </argument>
   </function>
   <function id="ts" name="ts">
+    <brief>See jdb::ts</brief>
     <return>
       <type name="string" />
     </return>
@@ -75,6 +83,7 @@ simply call inside loop
     </argument>
   </function>
   <function id="ts" name="ts">
+    <brief>See jdb::ts</brief>
     <return>
       <type name="string" />
     </return>

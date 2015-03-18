@@ -1,8 +1,5 @@
 <class xmlns="http://jessevdk.github.com/cldoc/1.0" abstract="true" id="jdb::HistoBook" name="HistoBook">
-  <brief>jdoc{</brief>
-  <doc>"class" : "HistoBook",
-        "desc" : "A book keeper and feature rich environemnt for using Root Hsitograms"
-}</doc>
+  <brief>A book keeper and helper for storing and using ROOT histograms</brief>
   <constructor abstract="yes" id="jdb::HistoBook::HistoBook" name="HistoBook">
     <argument id="jdb::HistoBook::HistoBook::name" name="name">
       <type name="string" />
@@ -70,6 +67,23 @@ Subdirectories can be used if the entire path is given, paths are never relative
       <type name="string" />
     </argument>
   </method>
+  <method abstract="yes" id="jdb::HistoBook::clone" name="clone">
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+    <argument id="jdb::HistoBook::clone::ePath" name="ePath">
+      <type name="string" />
+    </argument>
+    <argument id="jdb::HistoBook::clone::existing" name="existing">
+      <type name="string" />
+    </argument>
+    <argument id="jdb::HistoBook::clone::cPath" name="cPath">
+      <type name="string" />
+    </argument>
+    <argument id="jdb::HistoBook::clone::create" name="create">
+      <type name="string" />
+    </argument>
+  </method>
   <method id="jdb::HistoBook::color" name="color">
     <return>
       <type builtin="yes" name="int" />
@@ -121,6 +135,20 @@ If the histo DNE then an error is reported through the Logger and execution cont
     </argument>
     <argument id="jdb::HistoBook::fill::bin" name="bin">
       <type builtin="yes" name="double" />
+    </argument>
+    <argument id="jdb::HistoBook::fill::weight" name="weight">
+      <type builtin="yes" name="double" />
+    </argument>
+  </method>
+  <method abstract="yes" id="jdb::HistoBook::fill" name="fill">
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+    <argument id="jdb::HistoBook::fill::name" name="name">
+      <type name="string" />
+    </argument>
+    <argument id="jdb::HistoBook::fill::binLabel" name="binLabel">
+      <type name="string" />
     </argument>
     <argument id="jdb::HistoBook::fill::weight" name="weight">
       <type builtin="yes" name="double" />
@@ -483,6 +511,14 @@ the permanent file given during construction
       <type builtin="yes" name="void" />
     </return>
   </method>
+  <method id="jdb::HistoBook::saveOnExit" name="saveOnExit">
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+    <argument id="jdb::HistoBook::saveOnExit::doIt" name="doIt">
+      <type builtin="yes" name="bool" />
+    </argument>
+  </method>
   <method abstract="yes" id="jdb::HistoBook::set" name="set">
     <brief>set( string param, ... )</brief>
     <doc>for function chaining and rapid styling</doc>
@@ -567,35 +603,48 @@ the permanent file given during construction
     </argument>
   </method>
   <field access="protected" id="jdb::HistoBook::logger" name="logger">
+    <brief>Logger</brief>
     <type name="Logger" qualifier="*" ref="jdb::Logger#jdb::Logger" />
   </field>
   <field access="protected" id="jdb::HistoBook::currentDir" name="currentDir">
+    <brief>Current directory in output file</brief>
     <type name="string" />
   </field>
   <field access="protected" id="jdb::HistoBook::configPath" name="configPath">
+    <brief>Map of hitogram names to paths in the Xml Config File for automaticlly created histos</brief>
     <type name="map&lt;string, string&gt;" />
   </field>
   <field access="protected" id="jdb::HistoBook::book" name="book">
+    <brief>Map of histogram names to objects</brief>
     <type name="map&lt;string, TH1 *&gt;" />
   </field>
   <field access="protected" id="jdb::HistoBook::filename" name="filename">
+    <brief>Filename of output file</brief>
     <type name="string" />
   </field>
   <field access="protected" id="jdb::HistoBook::file" name="file">
+    <brief>Output file</brief>
     <type name="TFile" qualifier="*" />
   </field>
   <field access="protected" id="jdb::HistoBook::styling" name="styling">
     <brief>Style and display</brief>
+    <doc>Name of the histogram that is being styled</doc>
     <type name="string" />
   </field>
   <field access="protected" id="jdb::HistoBook::drawOption" name="drawOption">
+    <brief>the current draw option for displaying a histogram</brief>
     <type name="string" />
   </field>
   <field access="protected" id="jdb::HistoBook::legend" name="legend">
+    <brief>TLegend used for drawing legends</brief>
     <type name="TLegend" qualifier="*" />
   </field>
   <field access="protected" id="jdb::HistoBook::config" name="config">
-    <brief>optional config to use for all config related calls</brief>
+    <brief>Optional config to use for all config related calls</brief>
     <type name="XmlConfig" qualifier="*" ref="jdb::XmlConfig#jdb::XmlConfig" />
+  </field>
+  <field access="protected" id="jdb::HistoBook::saveAllOnExit" name="saveAllOnExit">
+    <brief>Save on Exit or not</brief>
+    <type builtin="yes" name="bool" />
   </field>
 </class>

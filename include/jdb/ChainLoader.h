@@ -19,13 +19,14 @@ namespace jdb{
 	
 		/* Loads files in a directory to the TChain
 		 * @chain an initialized TChain to recieve the files
-		 * @ntdir path to directory containing .root files
+		 * @ntdir path to directory containing .root files or the path to a single .root file
 		 * @maxFiles maximum number of files to load
 		 *
 		 * Loads .root files containing TTrees into 
 		 * a TChain from the given directory. Make sure
 		 * that the TChain was created with the correct
 		 * tree name.
+		 *
 		 */
 		static void load( TChain * chain, string ntdir, int maxFiles = -1 );
 

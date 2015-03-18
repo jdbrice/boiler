@@ -13,10 +13,10 @@ using namespace std;
 
 namespace jdb {
 
-	/*An all purpose logging utility with log level functionality. 
-
-	Meant to be used in modular projects. Multpile Logger instances can be used with different log levels.
-	*/
+	/* An all purpose logging utility with log level functionality. 
+	 *
+	 * Meant to be used in modular projects. Multpile Logger instances can be used with different log levels.
+	 */
 	class Logger{
 
 
@@ -70,6 +70,10 @@ namespace jdb {
 		 * @param ll Log level
 		 */
 		static void setGlobalLogLevel( int ll );
+
+		static void setGlobalColor( bool state = true );
+		static bool getGlobalColor( );
+		static bool showColors;
 
 
 		/*
@@ -168,7 +172,7 @@ namespace jdb {
 		 * @return 	The output stream for writing. If the LogLevel does not permit this
 		 *              level of output then a NullStream is returned.
 		 */
-		ostream & info( string functionName = "", bool showPrefix = true ){
+		inline ostream & info( string functionName = "", bool showPrefix = true ){
 			if ( logLevel < llInfo )
 				return ns;
 
@@ -260,26 +264,37 @@ namespace jdb {
 
 		void preMessage( string level = "", string functionName = "" ){
 
-			int w1 = 8;
-			if ( cSpace.length() >= 2 && functionName.length() >= 2 )
-				(*os) << std::left << std::setw(w1) << level << " : " << "[" << cSpace << "." << functionName << "] ";
-			else if (cSpace.length() < 2 && functionName.length() >= 2)
-				(*os) << std::left << std::setw(w1) << level << " : " << "[" << functionName << "] ";
-			else if ( level.length() >= 1 )
-				(*os) << "" << std::left << std::setw(w1) << level << " : ";
-
 			string tag = level;
 			// force level to lower case
 			transform(tag.begin(), tag.end(), tag.begin(), ::tolower);
+
+			string coloredLevel = level;
+			if ( showColors && logLevelFromString( tag ) == llError )
+				coloredLevel = "\033[1;31m" + level + "\033[0;m";
+			else if ( showColors && logLevelFromString( tag ) == llWarn )
+				coloredLevel = "\033[1;33m" + level + "\033[0;m";
+
+			int w1 = 8;
+			if ( cSpace.length() >= 2 && functionName.length() >= 2 )
+				(*os) << std::left << std::setw(w1) << coloredLevel << " : " << "[" << cSpace << "." << functionName << "] ";
+			else if (cSpace.length() < 2 && functionName.length() >= 2)
+				(*os) << std::left << std::setw(w1) << coloredLevel << " : " << "[" << functionName << "] ";
+			else if ( coloredLevel.length() >= 1 )
+				(*os) << "" << std::left << std::setw(w1) << coloredLevel << " : ";
+
+			
 			if ( !counts[ tag ] )
 				counts[ tag ] = 0;
 			counts[ tag ]++;
 		}
 
+		// The output stream used for printing messages
 		std::ostream* os;
+		// The Null Stream used to swallow messages
 		NullStream ns;
-
+		// The "class space" ie the context
 		string cSpace;
+		
 
 
 	};

@@ -16,6 +16,7 @@ namespace jdb{
 		indexOpenDelim = "[";
 		indexCloseDelim = "]";
 		equalDelim = '=';
+		mapDelim = "::";
 
 		// check that the config file exists
 		struct stat buffer;   
@@ -37,6 +38,7 @@ namespace jdb{
 			cout << it->first << " : " << it->second << endl;
 		}
 		*/
+
 
 	}
 
@@ -70,6 +72,36 @@ namespace jdb{
 	vector<string> XmlConfig::getStringVector( string nodePath ){
 		string value = getString( nodePath );
 		return vectorFromString( value );
+	}
+
+	map<string, string> XmlConfig::getStringMap( string nodePath ){
+
+		// first get a vector of comma delimeted pairs
+		string value = getString( nodePath );
+		vector<string> pairVec =  vectorFromString( value );
+		
+		map<string, string> rmap;
+		// now we need to split each pair
+		for ( int i = 0; i < pairVec.size(); i++ ){
+			pair<string, string> parts = stringToPair( pairVec[ i ], mapDelim );
+			rmap[ parts.first ] = parts.second;
+		}
+		return rmap;
+	}
+
+	map<int, int> XmlConfig::getIntMap( string nodePath ){
+
+		// first get a vector of comma delimeted pairs
+		string value = getString( nodePath );
+		vector<string> pairVec =  vectorFromString( value );
+		
+		map<int, int> rmap;
+		// now we need to split each pair
+		for ( int i = 0; i < pairVec.size(); i++ ){
+			pair<string, string> parts = stringToPair( pairVec[ i ], mapDelim );
+			rmap[ atoi( parts.first.c_str() ) ] = atoi( parts.second.c_str() );
+		}
+		return rmap;
 	}
 
 	int XmlConfig::getInt( string nodePath, int def  ){
@@ -391,6 +423,21 @@ namespace jdb{
 
 		vector<string> ret;
 		return ret;
+	}
+
+	pair<string, string> XmlConfig::stringToPair( string &s, string delim  ){
+
+		std::size_t delimPos = s.find( delim );
+
+		if ( std::string::npos != delimPos ){
+
+			// get the string before the delim
+			string pA = trim( s.substr( 0, delimPos ) );
+			// get the part after
+			string pB = trim( s.substr( delimPos + delim.length() ) );
+			return make_pair( pA, pB );
+		}
+		return make_pair( "", "");
 	}
 
 	//vector<string> nodesWhere( string nodePath, string attr, string equals )

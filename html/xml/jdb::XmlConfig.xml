@@ -1,4 +1,4 @@
-<class xmlns="http://jessevdk.github.com/cldoc/1.0" id="jdb::XmlConfig" interface="true" name="XmlConfig">
+<class xmlns="http://jessevdk.github.com/cldoc/1.0" abstract="true" id="jdb::XmlConfig" name="XmlConfig">
   <brief>Use xml formatted config files easily in projects</brief>
   <doc>Provides a high-level interface for xml formatted configuration files. </doc>
   <constructor abstract="yes" id="jdb::XmlConfig::XmlConfig" name="XmlConfig">
@@ -66,6 +66,58 @@ Very useful for automating tasks, building lots of objects, etc.
     <argument id="jdb::XmlConfig::childrenOf::attrs" name="attrs">
       <doc>Show Attributes of node and children or not</doc>
       <type builtin="yes" name="bool" />
+    </argument>
+  </method>
+  <method abstract="yes" id="jdb::XmlConfig::childrenOf" name="childrenOf">
+    <brief> Lists the children of a node selecting only a given tag</brief>
+    <doc>Gets a list of paths to all children of a given node of the given tagName type.
+Very useful for automating tasks, building lots of objects, etc.
+
+        Just a special case of the more general childrenOf(...)
+
+</doc>
+    <return>
+      <doc>Vector of strings containg paths to each node or attribute</doc>
+      <type name="vector&lt;string&gt;" />
+    </return>
+    <argument id="jdb::XmlConfig::childrenOf::nodePath" name="nodePath">
+      <doc>Path to node. See getString(...)</doc>
+      <type name="string" />
+    </argument>
+    <argument id="jdb::XmlConfig::childrenOf::tagName" name="tagName">
+      <doc>Filters children of the given tagName</doc>
+      <type name="string" />
+    </argument>
+    <argument id="jdb::XmlConfig::childrenOf::depth" name="depth">
+      <doc>depth to search - not yet implemented</doc>
+      <type builtin="yes" name="int" />
+    </argument>
+  </method>
+  <method id="jdb::XmlConfig::depthOf" name="depthOf">
+    <brief> Determines the depth of a node</brief>
+    <doc>Calulates the depth of the node from the root node
+</doc>
+    <return>
+      <doc>the depth of the given node. Children of the root node have depth 0</doc>
+      <type builtin="yes" name="int" />
+    </return>
+    <argument id="jdb::XmlConfig::depthOf::nodePath" name="nodePath">
+      <doc>Path to Node</doc>
+      <type name="string" />
+    </argument>
+  </method>
+  <method id="jdb::XmlConfig::depthOf" name="depthOf">
+    <brief> Calculates the depth of a node relative to another node</brief>
+    <return>
+      <type builtin="yes" name="int" />
+    </return>
+    <argument id="jdb::XmlConfig::depthOf::nodePath" name="nodePath">
+      <doc>Path to node of interest</doc>
+      <type name="string" />
+    </argument>
+    <argument id="jdb::XmlConfig::depthOf::relativeTo" name="relativeTo">
+      <doc>The node whose depth is considered 0</doc>
+      <type name="string" />
     </argument>
   </method>
   <method abstract="yes" id="jdb::XmlConfig::exists" name="exists">
@@ -258,6 +310,14 @@ For instance, if a node contains "1, 3, 9, 7, 16" then the vector whould contain
       <type name="string" />
     </argument>
   </method>
+  <method abstract="yes" id="jdb::XmlConfig::saveXml" name="saveXml">
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+    <argument id="jdb::XmlConfig::saveXml::filename" name="filename">
+      <type name="string" />
+    </argument>
+  </method>
   <method abstract="yes" id="jdb::XmlConfig::split" name="split">
     <brief>Splits a string into pieces by the delimeter character</brief>
     <return>
@@ -348,6 +408,7 @@ The node path "category.sub.a" yields "a"
     <type name="map&lt;string, string&gt;" />
   </typedef>
   <method abstract="yes" access="protected" id="jdb::XmlConfig::manualToLower" name="manualToLower">
+    <brief>A manual case lowing function</brief>
     <return>
       <type name="string" />
     </return>
@@ -356,6 +417,7 @@ The node path "category.sub.a" yields "a"
     </argument>
   </method>
   <method abstract="yes" access="protected" id="jdb::XmlConfig::sanitize" name="sanitize">
+    <brief>Sanatizes node paths</brief>
     <return>
       <type name="string" />
     </return>
@@ -364,6 +426,7 @@ The node path "category.sub.a" yields "a"
     </argument>
   </method>
   <method abstract="yes" access="protected" id="jdb::XmlConfig::split" name="split">
+    <brief>Splits strings using the given delim character</brief>
     <return>
       <type name="vector&lt;string&gt;" qualifier=" &amp;" />
     </return>
@@ -378,6 +441,7 @@ The node path "category.sub.a" yields "a"
     </argument>
   </method>
   <method abstract="yes" access="protected" id="jdb::XmlConfig::vectorFromString" name="vectorFromString">
+    <brief>Gets a vector from comma delimeted strings</brief>
     <return>
       <type name="vector&lt;string&gt;" />
     </return>

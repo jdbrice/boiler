@@ -1,4 +1,16 @@
 <class xmlns="http://jessevdk.github.com/cldoc/1.0" abstract="true" id="jdb::EvaluatedLeaf" name="EvaluatedLeaf">
+  <brief>DataSource leaf evaluated from a function string</brief>
+  <doc>Allows a DataSource to seamlessly provide access to data computed from other leaves
+For instance, suppose a tree offers vertexX and vertexY values but the vertexR is not provided.
+An evaluated leaf such as:
+``` xml
+        &lt;DataSource ...&gt;
+                &lt;EvaluatedLeaf name="vertexR" value="TMath::Sqrt( [0]*[0] + [1]*[1] )" p0="vertexX" p1="vertexY"/&gt;
+        &lt;/DataSource&gt;
+```
+Provides runtime access for DataSource ds to ds.get( "vertexR" );
+
+</doc>
   <constructor abstract="yes" id="jdb::EvaluatedLeaf::EvaluatedLeaf" name="EvaluatedLeaf">
     <brief> Creates a calculated variable from existing ones</brief>
     <argument id="jdb::EvaluatedLeaf::EvaluatedLeaf::_cfg" name="_cfg">
@@ -11,8 +23,7 @@
   <destructor id="jdb::EvaluatedLeaf::~EvaluatedLeaf" name="~EvaluatedLeaf" />
   <method abstract="yes" id="jdb::EvaluatedLeaf::eval" name="eval">
     <brief>*</brief>
-    <doc>Evaluates the calculated value with the current values
-in the tree mapp
+    <doc>Evaluates the calculated value of the leaf
 </doc>
     <return>
       <doc>the evaluated value in double format</doc>
@@ -21,20 +32,28 @@ in the tree mapp
     <argument id="jdb::EvaluatedLeaf::eval::ds" name="ds">
       <type name="DataSource" qualifier="*" ref="jdb::DataSource#jdb::DataSource" />
     </argument>
+    <argument id="jdb::EvaluatedLeaf::eval::i" name="i">
+      <type builtin="yes" name="int" />
+    </argument>
   </method>
   <field access="protected" id="jdb::EvaluatedLeaf::fun" name="fun">
+    <brief>The Function used to evaluate the given expression</brief>
     <type name="TF1" qualifier="*" />
   </field>
   <field access="protected" id="jdb::EvaluatedLeaf::cfg" name="cfg">
+    <brief>The XML config</brief>
     <type name="XmlConfig" qualifier="*" ref="jdb::XmlConfig#jdb::XmlConfig" />
   </field>
   <field access="protected" id="jdb::EvaluatedLeaf::nodePath" name="nodePath">
+    <brief>Node Path</brief>
     <type name="string" />
   </field>
   <field access="protected" id="jdb::EvaluatedLeaf::lg" name="lg">
+    <brief>Logger instance</brief>
     <type name="Logger" ref="jdb::Logger#jdb::Logger" />
   </field>
   <field access="protected" id="jdb::EvaluatedLeaf::params" name="params">
+    <brief>Name of the leaves used as parameters</brief>
     <type name="vector&lt;string&gt;" />
   </field>
 </class>

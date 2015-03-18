@@ -1,4 +1,5 @@
 <class xmlns="http://jessevdk.github.com/cldoc/1.0" id="jdbs::TaskTimer" name="TaskTimer">
+  <brief>See jdb::TaskTimer</brief>
   <field id="jdbs::TaskTimer::startTime" name="startTime">
     <type name="clock_t" />
   </field>

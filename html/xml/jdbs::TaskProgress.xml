@@ -1,5 +1,5 @@
 <class xmlns="http://jessevdk.github.com/cldoc/1.0" id="jdbs::TaskProgress" name="TaskProgress">
-  <brief>*</brief>
+  <brief>See jdb::TaskProgress</brief>
   <constructor id="jdbs::TaskProgress::TaskProgress" name="TaskProgress" />
   <constructor id="jdbs::TaskProgress::TaskProgress" name="TaskProgress">
     <argument id="jdbs::TaskProgress::TaskProgress::title" name="title">

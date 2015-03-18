@@ -17,6 +17,7 @@
 #include <algorithm>
 #include <iomanip>
 #include <memory>
+#include <utility>      // std::pair, std::make_pair
 
 /**
  * JDB
@@ -52,6 +53,9 @@ namespace jdb {
 
 		// The delimeter used for equality - Default is '='
 		char equalDelim;
+
+		// The delimeter used for maps - Default is "::"
+		string mapDelim;
 
 		//The delimeter for index open - Default is "["
 		string indexOpenDelim;
@@ -126,6 +130,20 @@ namespace jdb {
 		 */
 		vector<int> getIntVector( string nodePath );
 
+		/* Gets a map<string, string> from a config node 
+		 * @nodePath See getString(...)
+		 * Converts a node like :
+		 * ``` xml
+		 * <Map>
+		 * 		from : to,
+		 * 		alpha : beta
+		 * </Map>
+		 * ```
+		 * Into a map where map[ "from" ] = "to" and map[ "alpha" ] = "beta".
+		 * 
+		 */
+		map<string, string> getStringMap( string nodePath );
+		map<int, int> getIntMap( string nodePath );
 		/* Gets a node or attribute as double type
 		 * @nodePath Path to node. See getString(...)
 		 * @def Default value if the endpoint DNE or conversion to double fails
@@ -272,6 +290,12 @@ namespace jdb {
 		 */
 		string attributeName( string nodePath );
 
+		/* Determines the depth of a node
+		 * @nodePath Path to Node
+		 *
+		 * Calulates the depth of the node from the root node
+		 * @return the depth of the given node. Children of the root node have depth 0
+		 */
 		int depthOf( string nodePath ){
 
 			nodePath = sanitize( nodePath );
@@ -283,17 +307,28 @@ namespace jdb {
 			return depth;
 		}
 
+		/* Calculates the depth of a node relative to another node
+		 * @nodePath Path to node of interest
+		 * @relativeTo The node whose depth is considered 0
+		 */
 		int depthOf( string nodePath, string relativeTo ){
 			return depthOf( nodePath ) - depthOf( relativeTo );
 		}
 
 	protected:
 
+		// A manual case lowing function
 		string manualToLower( string str );
+		// Sanatizes node paths
 		string sanitize( string nodePath );
-
+		// Gets a vector from comma delimeted strings
 		vector<string> vectorFromString( string data );
+		// Splits strings using the given delim character
 		vector<string> &split(const string &s, char delim, vector<string> &elems);
+
+		// A special case version of split used for the map decoding
+		// Allows string delimeter
+		pair<string, string> stringToPair( string &s, string delim  );
 
 		
 	};

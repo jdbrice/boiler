@@ -1,0 +1,29 @@
+<class xmlns="http://jessevdk.github.com/cldoc/1.0" id="jdb::CutSequence" name="CutSequence">
+  <class name="RangeCut" ref="jdb::CutSequence::RangeCut#jdb::CutSequence::RangeCut" />
+  <field id="jdb::CutSequence::name" name="name">
+    <type name="string" />
+  </field>
+  <field id="jdb::CutSequence::category" name="category">
+    <brief>The category of cuts - apply them to events or to tracks in an event etc.</brief>
+    <doc>for now only "event" and "track" are used</doc>
+    <type name="string" />
+  </field>
+  <field id="jdb::CutSequence::nodePath" name="nodePath">
+    <type name="string" />
+  </field>
+  <field id="jdb::CutSequence::LeavesOfInterest" name="LeavesOfInterest">
+    <type name="vector&lt;string&gt;" />
+  </field>
+  <field id="jdb::CutSequence::rangeCuts" name="rangeCuts">
+    <brief>LeavesOfInterest</brief>
+    <type name="vector&lt;jdb::CutSequence::RangeCut&gt;" />
+  </field>
+  <constructor id="jdb::CutSequence::CutSequence" name="CutSequence">
+    <argument id="jdb::CutSequence::CutSequence::cfg" name="cfg">
+      <type name="XmlConfig" qualifier="*" ref="jdb::XmlConfig#jdb::XmlConfig" />
+    </argument>
+    <argument id="jdb::CutSequence::CutSequence::_nodePath" name="_nodePath">
+      <type name="string" />
+    </argument>
+  </constructor>
+</class>

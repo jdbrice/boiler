@@ -1,14 +1,29 @@
 <class xmlns="http://jessevdk.github.com/cldoc/1.0" id="jdb::LoggerConfig" name="LoggerConfig">
-  <constructor id="jdb::LoggerConfig::LoggerConfig" name="LoggerConfig" />
-  <destructor id="jdb::LoggerConfig::~LoggerConfig" name="~LoggerConfig" />
+  <brief>A class for creating Loggers from Xml Configs</brief>
+  <doc>An example node:
+``` xml
+ &lt;Logger&gt;
+        &lt;logLevel&gt;info&lt;/logLevel&gt;
+ &lt;/Logger&gt;
+```
+</doc>
+  <constructor id="jdb::LoggerConfig::LoggerConfig" name="LoggerConfig">
+    <brief> The Class is meant to be used statically - dont call constructor directly</brief>
+  </constructor>
+  <destructor id="jdb::LoggerConfig::~LoggerConfig" name="~LoggerConfig">
+    <brief>Destructor</brief>
+  </destructor>
   <method id="jdb::LoggerConfig::makeLogger" name="makeLogger" static="yes">
+    <brief> Creates a Logger from the given Xml Config and node</brief>
     <return>
       <type name="Logger" qualifier="*" ref="jdb::Logger#jdb::Logger" />
     </return>
     <argument id="jdb::LoggerConfig::makeLogger::config" name="config">
+      <doc>Xml Config</doc>
       <type name="XmlConfig" qualifier="*" ref="jdb::XmlConfig#jdb::XmlConfig" />
     </argument>
     <argument id="jdb::LoggerConfig::makeLogger::nodePath" name="nodePath">
+      <doc>path to node</doc>
       <type name="string" />
     </argument>
   </method>

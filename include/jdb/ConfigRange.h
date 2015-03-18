@@ -13,6 +13,10 @@ namespace jdb{
 	 * This class is a utility class used for quickly loading and aliasing range data in an xml config
 	 *
 	 * **Headers** : ConfigRange.h
+	 *
+	 * ``` xml
+	 * <Range min="100" max="100" />
+	 * ```
 	 */
 	class ConfigRange
 	{
@@ -63,7 +67,5 @@ namespace jdb{
 	};
 
 }
-
-
 
 #endif

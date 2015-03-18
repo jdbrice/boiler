@@ -8,6 +8,8 @@ using namespace std;
 
 #include "XmlConfig.h"
 #include "Logger.h"
+#include "ConfigRange.h"
+#include "ConfigPoint.h"
 
 namespace jdb {
 	class CutSequence{

@@ -3,3 +3,5 @@
 *.o
 /src/dictionary.*
 /lib/*
+/script/*.root
+/script/.DataSource*

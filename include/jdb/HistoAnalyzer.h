@@ -23,49 +23,48 @@ using namespace jdb;
 
 namespace jdb{
 
-	/*jdoc{
-		"class" : "HistoAnalyzer",
-		"desc" : "Base class for creating histogram analysis projects"
-	}*/
+	/* Base class for creating histogram analysis projects
+	 *
+	 * Sublcassing HistoAnalyzer provides a good starting point for
+	 * modules that take a root file containing histograms as input.
+	 *
+	 */
 	class HistoAnalyzer
 	{
 	// protected properties
 	protected:
-		/*jdoc{ "name" : "Logger *logger", "desc" : "The logging object for the job"}*/
+		//The logging object for the job
 		Logger 		*logger;
-		/*jdoc{"name" : "XmlConfig *cfg", "desc" : ""}*/
+		// Xml Config
 		XmlConfig 	*cfg;
-		/*jdoc{"name" : "string nodePath", "desc" : ""}*/
+		// Node Path
 		string 		nodePath;
-		/*jdoc{"name" : "HistoBook *book", "desc" : ""}*/
+		// HistoBook used to organize ROOT objects
 		HistoBook 	*book;
-		/*jdoc{"name" : "Reporter *reporter", "desc" : ""}*/
+		// Reporter for generating pdf reports
 		Reporter 	*reporter;
-		/*jdoc{"name" : "TFile *inFile", "desc" : "Input file with histogram data"}*/
+		// File containing input
 		TFile 		*inFile;
 
 	// public methods
 	public:
 
-		/*jdoc{
-			"name" : "HistoAnalyzer( XmlConfig * config, string nodePath )",
-			"params" : [ "config", "nodePath" ],
-			"paramDesc" : [ "Project config object", 
-				"The node path containing configuration parameters"
-			],
-			"returns" : [  ],
-			"desc" : ""
-		}*/
+		/* Creates a HistoAnalyzer from an Xml Config
+		 * @nodePath The path to the node containing the HistoAnalyzer data
+		 * 
+		 */
 		HistoAnalyzer( XmlConfig * config, string nodePath );
+
+		/* Destructor
+		 * Saves output and closes input
+		 */
 		~HistoAnalyzer();
 
-		/*jdoc{
-			"name" : "virtual void make()",
-			"params" : [ ],
-			"paramDesc" : [ ],
-			"returns" : [  ],
-			"desc" : "The maker function for publicly starting the job"
-		}*/
+		/* The Maker function
+		 *
+		 * Use this public function to start the job.
+		 * Subclasses should override.
+		 */
 		virtual void make() {}
 		
 	};

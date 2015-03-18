@@ -11,23 +11,32 @@
 #include <unistd.h> 
 using namespace std;
 
+/* Namespace used only in interactive ROOT scripts
+ * Needed to reolve namespace conflicts when running in the ROOT promt
+ *
+ * These methods are identical to those in Utils.h
+ */
 namespace jdbs{
 
+	// See jdb::ts
 	inline std::string ts( int i, int len = -1){
 		if ( len <= -1 )
 			return (to_string( (long long int) i));
 		else
 			return (to_string( (long long int) i)).substr( 0, len );
 	}
+	// See jdb::ts
 	inline std::string ts( double d, int len = -1){
 		if ( len <= -1 )
 			return to_string( (long double) d);
 		else 
 			return (to_string( (long double) d)).substr( 0, len );
 	}
+	// See jdb::ts
 	inline std::string ts( float f, int len  = -1){
 		return ts( (double) f, len );
 	}
+	// See jdb::ts
 	inline std::string ts( unsigned int u, int len  = -1){
 		if ( len <= -1 )
 			return to_string( (long long unsigned int) u);
@@ -35,7 +44,7 @@ namespace jdbs{
 			return (to_string( (long long unsigned int) u)).substr( 0, len );
 	}
 
-	// inefficient but works, TODO : think of better way
+	// See jdb::trimTrailingZeros
 	inline std::string trimTrailingZeros( string in ) {
 		string r = in;
 		while ( r[ r.size() - 1 ] == '0' && r.size() > 1 && r[ r.size() - 2 ] != '.' ){
@@ -43,10 +52,12 @@ namespace jdbs{
 		}
 		return r;
 	}
+	// See jdb::dts
 	inline std::string dts( double d ){
 		return trimTrailingZeros( ts( d ) );
 	}
 
+	// See jdb::TaskTimer
 	class TaskTimer{
 	public:
 
@@ -64,11 +75,8 @@ namespace jdbs{
 
 	};
 	
-	/**
-	 * Plain text progress bar 
-	 * simply call inside loop
-	 */
 	
+	// see jdb::progressBar
 	inline void progressBar( int i, int nevents, int textWidth = 60, double elapsedTime = -1 ){
 		
 		// for output
@@ -122,9 +130,7 @@ namespace jdbs{
 	}
 
 
-	/**
-	 * 
-	 */
+	// See jdb::TaskProgress
 	class TaskProgress{
 	protected:
 		int max;

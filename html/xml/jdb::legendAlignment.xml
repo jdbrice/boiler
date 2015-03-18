@@ -1,7 +1,6 @@
 <class xmlns="http://jessevdk.github.com/cldoc/1.0" id="jdb::legendAlignment" name="legendAlignment">
-  <brief>*</brief>
-  <doc>For legend Alignment
-may remove!!!
+  <brief>For legend Alignment</brief>
+  <doc>Needs to be removed when updated
 </doc>
   <variable id="jdb::legendAlignment::best" name="best">
     <brief>TODO: make a smart legend that trys to avoid data</brief>

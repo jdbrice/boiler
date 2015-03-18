@@ -1,5 +1,4 @@
 
-
 void XmlConfigUnitTest( ){
 
 	gSystem->Load( "libJDB.so" );
@@ -55,5 +54,18 @@ void XmlConfigUnitTest( ){
 	for ( int i = 0; i <cs.size(); i++ ){
 		l.info() << cs[ i ] << " = " << cfg.getString( cs[ i ] ) << endl;
 	}
+
+	l.info() << "Getting vector : " << endl;
+	l.info();
+	vector<string> vec = cfg.getStringVector( "Vector" );
+	for ( int i = 0; i < vec.size(); i++ ){
+		l.info("", false ) << vec [ i ];
+		if ( i != vec.size() - 1  )
+			l.info("", false ) << ", ";
+	}
+	l.info("", false) << endl;
+
+	map<string, string> mp = cfg.getStringMap( "Map" );
+	
 
 }

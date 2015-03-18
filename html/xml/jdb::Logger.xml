@@ -1,5 +1,5 @@
 <class xmlns="http://jessevdk.github.com/cldoc/1.0" abstract="true" id="jdb::Logger" name="Logger">
-  <brief>An all purpose logging utility with log level functionality. </brief>
+  <brief>An all purpose logging utility with log level functionality.</brief>
   <doc>Meant to be used in modular projects. Multpile Logger instances can be used with different log levels.
 </doc>
   <variable id="jdb::Logger::llAll" name="llAll">

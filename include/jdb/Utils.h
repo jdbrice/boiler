@@ -27,33 +27,41 @@ namespace jdb{
 	/**
 	 * String utilities that need >= c++ 2011
 	 */
-	/*
-	std::string ts( int i, int len = -1);
-	std::string ts( double d, int len = -1);
-	std::string ts( float f, int len  = -1);
-	std::string ts( unsigned int u, int len = -1);
-
-	// inefficient but works, TODO : think of better way
-	std::string trimTrailingZeros( string in );
-	inline std::string dts( double d ){
-		return trimTrailingZeros( ts( d ) );
-	}
-	*/
+	/* Converts an integer to a string
+	 * @i integer to convert
+	 * @len the maximum length of string
+	 * @return the string representation of the value
+	 */
 	inline std::string ts( int i, int len = -1){
 		if ( len <= -1 )
 			return (to_string( (long long int) i));
 		else
 			return (to_string( (long long int) i)).substr( 0, len );
 	}
+	/* Converts a double to a string
+	 * @d double to convert
+	 * @len the maximum length of string
+	 * @return the string representation of the value
+	 */
 	inline std::string ts( double d, int len = -1){
 		if ( len <= -1 )
 			return to_string( (long double) d);
 		else 
 			return (to_string( (long double) d)).substr( 0, len );
 	}
+	/* Converts a float to a string
+	 * @f float to convert
+	 * @len the maximum length of string
+	 * @return the string representation of the value
+	 */
 	inline std::string ts( float f, int len  = -1){
 		return ts( (double) f, len );
 	}
+	/* Converts an unsigned integer to a string
+	 * @u unsigned int to convert
+	 * @len the maximum length of string
+	 * @return the string representation of the value
+	 */
 	inline std::string ts( unsigned int u, int len  = -1){
 		if ( len <= -1 )
 			return to_string( (long long unsigned int) u);
@@ -61,7 +69,10 @@ namespace jdb{
 			return (to_string( (long long unsigned int) u)).substr( 0, len );
 	}
 
-	// inefficient but works, TODO : think of better way
+	/* Removes trailing zeros
+	 * @in string representation of a number
+	 * @return The input string with trailing zeros removed
+	 */
 	inline std::string trimTrailingZeros( string in ) {
 		string r = in;
 		while ( r[ r.size() - 1 ] == '0' && r.size() > 1 && r[ r.size() - 2 ] != '.' ){
@@ -69,16 +80,33 @@ namespace jdb{
 		}
 		return r;
 	}
+	/* Converts a double to a string and trims trailing zeros
+	 * @d double to convert
+	 * @return the string representation of the value
+	 */
 	inline std::string dts( double d ){
 		return trimTrailingZeros( ts( d ) );
 	}
 
+
+	/* Task Timer
+	 * Utility Class for timing tasks and reporting
+	 */
 	class TaskTimer{
 	public:
 
+		// start time of task
 		clock_t startTime;
+		// set the start time to now
 		void start( ) { startTime = clock(); }
+		/* Return the amount of time elapsed since start() was called
+		 * @return Time past in seconds as double
+		 */
 		double elapsed( ) { return ( (clock() - startTime) / (double)CLOCKS_PER_SEC ); }
+		/* Return the elapsed time as a string
+		 * Formats the string to be human readable
+		 * @return The amount of elapsed time
+		 */
 		string elapsedTime() { 
 			int nDig = 3;
 			double et = elapsed();
@@ -91,15 +119,16 @@ namespace jdb{
 	};
 	
 	/**
-	 * Plain text progress bar 
-	 * simply call inside loop
+	 * Plain text progress bar that only updates when it needs to
+	 * @i the current step in a loop
+	 * @nevents the maximum number of steps
+	 * @textWidth The maximum width of the bar in characters
+	 * @elapsedTime shows the elapsed time if positive
+	 * 
 	 */
-	
 	inline void progressBar( int i, int nevents, int textWidth = 60, double elapsedTime = -1 ){
 		
 		// for output
-
-
 		double progress =  ((double)i / (double)nevents);
 		if ( i == nevents - 1)
     		progress = 1.001;
@@ -148,23 +177,40 @@ namespace jdb{
 	}
 
 
-	/**
-	 * 
+	/* Task Progress
+	 * Integrates the task timer and progress bars into a single utility
 	 */
 	class TaskProgress{
 	protected:
+		// Maximum number of steps
 		int max;
+		// width of the progress bar
 		int barWidth;
+		// Show the title of the task
 		bool showTitle;
+		// Show the elapsed time
 		bool showElapsed;
+		// Title of the task
 		string title;
-
+		// Task Timer
 		TaskTimer tt;
 
 	public:
+		/* Default Constructor
+		 * 
+		 */
 		TaskProgress(){
 
 		}
+
+		/* Creates a TaskProgress
+		 * @title Title of the Task
+		 * @max Maximum number of steps
+		 * @width The width of the progress bar
+		 * @sTitle Show th title
+		 * @sElapse Show elapsed time
+		 * 
+		 */
 		TaskProgress( string title, int max = 100, int width = 60, bool sTitle = true, bool sElapse = true ){
 			this->title = title;
 			this->max = max;
@@ -174,6 +220,9 @@ namespace jdb{
 			title = "";
 		}
 
+		/* Called inside a loop to show the progress of the current task
+		 * @i The step in the current loop
+		 */
 		void showProgress( int i ){
 			if ( 0 == i){
 				tt.start();

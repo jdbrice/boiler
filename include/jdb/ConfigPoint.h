@@ -12,6 +12,12 @@ namespace jdb{
 	 * This class is a utility class used for quickly loading and aliasing point data in an xml config
 	 *
 	 * **Headers** : ConfigPoint.h
+	 *
+	 * XML should contain a node like:
+	 * ``` xml
+ 	 * <Point x="100" y="100" />
+	 * ```
+	 * 
 	 */
 	class ConfigPoint
 	{
@@ -33,7 +39,7 @@ namespace jdb{
 		 *
 		 * This class reads in data from an XmlConfig instance. The underlying xml should contain a node at *nodePath* like 
 		 * ``` xml
-		 * <Point name="danny" x="100" y=":100" />
+		 * <Point x="100" y="100" />
 		 * ```
 		 */
 		ConfigPoint( XmlConfig * cfg, std::string nodePath, double dX = 0, double dY = 0, string attrX = ":x", string attrY = ":y"){

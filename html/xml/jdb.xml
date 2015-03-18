@@ -14,27 +14,33 @@ It can be used from the ROOT interpreter or as a library for compiled projects.<
     <brief>ConfigRange easily loads (min -&gt; max) ranges from XmlConfigs</brief>
   </class>
   <class name="DataSource" ref="jdb::DataSource#jdb::DataSource" />
-  <class name="EvaluatedLeaf" ref="jdb::EvaluatedLeaf#jdb::EvaluatedLeaf" />
+  <class name="EvaluatedLeaf" ref="jdb::EvaluatedLeaf#jdb::EvaluatedLeaf">
+    <brief>DataSource leaf evaluated from a function string</brief>
+  </class>
   <class name="HistoAnalyzer" ref="jdb::HistoAnalyzer#jdb::HistoAnalyzer">
-    <brief>jdoc{</brief>
+    <brief>Base class for creating histogram analysis projects</brief>
   </class>
   <class name="HistoBook" ref="jdb::HistoBook#jdb::HistoBook">
-    <brief>jdoc{</brief>
+    <brief>A book keeper and helper for storing and using ROOT histograms</brief>
   </class>
   <class name="legendAlignment" ref="jdb::legendAlignment#jdb::legendAlignment">
-    <brief>*</brief>
+    <brief>For legend Alignment</brief>
   </class>
   <class name="Logger" ref="jdb::Logger#jdb::Logger">
-    <brief>An all purpose logging utility with log level functionality. </brief>
+    <brief>An all purpose logging utility with log level functionality.</brief>
   </class>
-  <class name="LoggerConfig" ref="jdb::LoggerConfig#jdb::LoggerConfig" />
+  <class name="LoggerConfig" ref="jdb::LoggerConfig#jdb::LoggerConfig">
+    <brief>A class for creating Loggers from Xml Configs</brief>
+  </class>
   <class name="Reporter" ref="jdb::Reporter#jdb::Reporter">
-    <brief>jdoc{</brief>
+    <brief>Create PDF Reports in ROOT</brief>
   </class>
   <class name="TaskProgress" ref="jdb::TaskProgress#jdb::TaskProgress">
-    <brief>*</brief>
+    <brief>Task Progress</brief>
   </class>
-  <class name="TaskTimer" ref="jdb::TaskTimer#jdb::TaskTimer" />
+  <class name="TaskTimer" ref="jdb::TaskTimer#jdb::TaskTimer">
+    <brief>Task Timer</brief>
+  </class>
   <class name="TreeAnalyzer" ref="jdb::TreeAnalyzer#jdb::TreeAnalyzer">
     <brief>Boiler for analyzing data distributed accross TTrees in many files</brief>
   </class>
@@ -42,17 +48,18 @@ It can be used from the ROOT interpreter or as a library for compiled projects.<
     <brief>Use xml formatted config files easily in projects</brief>
   </class>
   <function id="dts" name="dts">
+    <brief>Converts a double to a string and trims trailing zeros</brief>
     <return>
       <type name="string" />
     </return>
     <argument id="dts::d" name="d">
+      <doc>double to convert</doc>
       <type builtin="yes" name="double" />
     </argument>
   </function>
   <function id="progressBar" name="progressBar">
     <brief>*</brief>
-    <doc>Plain text progress bar
-simply call inside loop
+    <doc>Plain text progress bar that only updates when it needs to
 </doc>
     <return>
       <type builtin="yes" name="void" />
@@ -71,11 +78,12 @@ simply call inside loop
     </argument>
   </function>
   <function id="trimTrailingZeros" name="trimTrailingZeros">
-    <brief>inefficient but works, TODO : think of better way</brief>
+    <brief>Removes trailing zeros</brief>
     <return>
       <type name="string" />
     </return>
     <argument id="trimTrailingZeros::in" name="in">
+      <doc>string representation of a number</doc>
       <type name="string" />
     </argument>
   </function>
@@ -83,19 +91,10 @@ simply call inside loop
     <brief>*</brief>
     <doc>String utilities that need &gt;= c++ 2011
 
-
-std::string ts( int i, int len = -1);
-std::string ts( double d, int len = -1);
-std::string ts( float f, int len  = -1);
-std::string ts( unsigned int u, int len = -1);
-
-// inefficient but works, TODO : think of better way
-std::string trimTrailingZeros( string in );
-inline std::string dts( double d ){
-        return trimTrailingZeros( ts( d ) );
-}
+Converts an integer to a string
 </doc>
     <return>
+      <doc>the string representation of the value</doc>
       <type name="string" />
     </return>
     <argument id="ts::i" name="i">
@@ -106,35 +105,44 @@ inline std::string dts( double d ){
     </argument>
   </function>
   <function id="ts" name="ts">
+    <brief>Converts a double to a string</brief>
     <return>
       <type name="string" />
     </return>
     <argument id="ts::d" name="d">
+      <doc>double to convert</doc>
       <type builtin="yes" name="double" />
     </argument>
     <argument id="ts::len" name="len">
+      <doc>the maximum length of string</doc>
       <type builtin="yes" name="int" />
     </argument>
   </function>
   <function id="ts" name="ts">
+    <brief>Converts a float to a string</brief>
     <return>
       <type name="string" />
     </return>
     <argument id="ts::f" name="f">
+      <doc>float to convert</doc>
       <type builtin="yes" name="float" />
     </argument>
     <argument id="ts::len" name="len">
+      <doc>the maximum length of string</doc>
       <type builtin="yes" name="int" />
     </argument>
   </function>
   <function id="ts" name="ts">
+    <brief>Converts an unsigned integer to a string</brief>
     <return>
       <type name="string" />
     </return>
     <argument id="ts::u" name="u">
+      <doc>unsigned int to convert</doc>
       <type builtin="yes" name="unsigned int" />
     </argument>
     <argument id="ts::len" name="len">
+      <doc>the maximum length of string</doc>
       <type builtin="yes" name="int" />
     </argument>
   </function>
