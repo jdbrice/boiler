@@ -38,6 +38,9 @@
     <brief>Log Warning messages and below ( Warning, Error )</brief>
     <type builtin="yes" name="int" qualifier=" const" />
   </variable>
+  <variable id="jdb::Logger::showColors" name="showColors">
+    <type builtin="yes" name="bool" />
+  </variable>
   <constructor id="jdb::Logger::Logger" name="Logger">
     <doc>
 Creates a Logger with
@@ -119,6 +122,11 @@ Get Class Space prefix
       <type name="string" />
     </return>
   </method>
+  <method abstract="yes" id="jdb::Logger::getGlobalColor" name="getGlobalColor" static="yes">
+    <return>
+      <type builtin="yes" name="bool" />
+    </return>
+  </method>
   <method abstract="yes" id="jdb::Logger::getGlobalLogLevel" name="getGlobalLogLevel" static="yes">
     <doc>
 Gets the global log level for all Logger instances
@@ -179,6 +187,14 @@ Set the ClassSpace Prefix
     </return>
     <argument id="jdb::Logger::setClassSpace::cs" name="cs">
       <type name="string" />
+    </argument>
+  </method>
+  <method abstract="yes" id="jdb::Logger::setGlobalColor" name="setGlobalColor" static="yes">
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+    <argument id="jdb::Logger::setGlobalColor::state" name="state">
+      <type builtin="yes" name="bool" />
     </argument>
   </method>
   <method abstract="yes" id="jdb::Logger::setGlobalLogLevel" name="setGlobalLogLevel" static="yes">
@@ -261,12 +277,15 @@ Warning level ( and below ) log messages
     <type name="map&lt;string, int&gt;" />
   </field>
   <field access="protected" id="jdb::Logger::os" name="os">
+    <brief>The output stream used for printing messages</brief>
     <type name="ostream" qualifier="*" />
   </field>
   <field access="protected" id="jdb::Logger::ns" name="ns">
+    <brief>The Null Stream used to swallow messages</brief>
     <type name="NullStream" ref="jdb::Logger::NullStream#jdb::Logger::NullStream" />
   </field>
   <field access="protected" id="jdb::Logger::cSpace" name="cSpace">
+    <brief>The "class space" ie the context</brief>
     <type name="string" />
   </field>
   <method access="protected" id="jdb::Logger::preMessage" name="preMessage">

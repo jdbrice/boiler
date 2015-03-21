@@ -45,6 +45,7 @@ void DataSourceSpeedTest( string fname = "cDataSourceSpeedTest.xml" ){
 			ds.getEntry( i );
 			
 			float vX =  *pvX;
+			
 			//cout << "vX" << vX << ", " << ds.get("vertexX") <<endl;
 		}
 	}

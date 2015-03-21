@@ -10,7 +10,9 @@
     <class name="ConfigRange" ref="jdb::ConfigRange#jdb::ConfigRange">
       <brief>ConfigRange easily loads (min -&gt; max) ranges from XmlConfigs</brief>
     </class>
-    <class name="DataSource" ref="jdb::DataSource#jdb::DataSource" />
+    <class name="DataSource" ref="jdb::DataSource#jdb::DataSource">
+      <brief>Automatically maps tree branches and leaves</brief>
+    </class>
     <class name="EvaluatedLeaf" ref="jdb::EvaluatedLeaf#jdb::EvaluatedLeaf">
       <brief>DataSource leaf evaluated from a function string</brief>
     </class>

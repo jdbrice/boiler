@@ -28,38 +28,44 @@ using namespace std;
 namespace jdb{
 
 
-	/*
-	 * A Data source backed by a TChain of root files.
+	/* Automatically maps tree branches and leaves
+	 * DataSource automatically decomposes and addresses 
+	 * TTree structures so you don't need to make a new
+	 * class for every new TTree structure.
 	 *
-	 * Automatically maps tree branches and leaves
-	 * 
 	 */
-
 	class DataSource {
 
 	protected:
 
 		// Logger object
 		Logger lg;
+		// Path to <DataSource ...> ... </DataSource>
 		string nodePath;
+		// Xml Config
 		XmlConfig * cfg;
+		// The file list containg input files if given
 		string fileList;
-
+		// The Xml Config used to load the cache if found
 		XmlConfig * cache;
 		
 		/**
 		 * Tree Info
 		 */
+		
+		// The name of the tree
 		string treeName;
+		// The Chain used to link trees
 		TChain * chain;
+		// The Number of Trees loaded
 		int nTrees;
+		// The number of total entries
 		Long64_t nEntries;
 
 		/*
 		 * Data type mapping 
 		 */
-		
-		
+
 		// Number of elements stored by leaf ie array length
 		std::map< string, int > leafLength;
 		// The leaf data type in string form 
@@ -74,72 +80,82 @@ namespace jdb{
 		map< string, TBranch*> branches;
 		//Aliases - allows a branch to be accessed from another name
 		// key = alias name
-		// value = name of branch pointe to
+		// value = name of branch pointed to
 		map< string, string> alias;
 		//Evaluated leaves allow new leaves
 		map< string, EvaluatedLeaf * > evalLeaf;
 
 	public:
 
+		// Ctor
+		// Creates a DataSource from an XML node
+		// @_cfg 		The XmlConfig 
+		// @_nodePath 	Path to the <DataSource> node
+		// @_fileList 	Optional filelist provided via sys arg - Default = ""
+		// 
+		// Creates a DataSource if the given node is valid
 		DataSource( XmlConfig * _cfg, string _nodePath, string _fileList = "" );
+		
+		// Dtor
 		~DataSource();
 
+		// Get the chain used to store Trees
+		// @return TChain * to chain used
 		TChain * getChain() { return chain; }
 
 
 
+		template <typename T>
+		inline T get(string name, int i = 0 ){
+			if ( !data[ name ]){
+				lg.debug(__FUNCTION__) << name << "[ " << i << " ] Invalid data" << endl;
+				return numeric_limits<T>::quiet_NaN();	
+			}
+			if ( i >= leafLength[ name ] || i < 0 ){
+				lg.debug(__FUNCTION__) << name << "[ " << i << " ] Out Of Bounds" << endl;
+				return numeric_limits<T>::quiet_NaN();
+			}
+			T * pData = (T*)data[ name ];
+			return pData[ i ];
+		}
+
+		// Get a pointer to the given data
+		// @name 	Name of variable to get
+		// @return 	void * of data. You need to reference it with the proper type indirection.
 		void * getPointer( string name ) {
 			return data[ name ];
 		}
-		double get( string name, int i = 0 );
-		inline Int_t getInt( string name, int i = 0 ){
-			if ( !data[ name ]){
-				lg.debug(__FUNCTION__) << name << "[ " << i << " ] Invalid data" << endl;
-				return numeric_limits<double>::quiet_NaN();	
-			}
-			if ( i >= leafLength[ name ] || i < 0 ){
-				lg.debug(__FUNCTION__) << name << "[ " << i << " ] Out Of Bounds" << endl;
-				return numeric_limits<double>::quiet_NaN();
-			}
-			Int_t * tData = (Int_t*)data[ name ];
-			return tData[ i ];
-		}
-		inline UInt_t getUInt( string name, int i = 0 ){
-			if ( !data[ name ]){
-				lg.debug(__FUNCTION__) << name << "[ " << i << " ] Invalid data" << endl;
-				return numeric_limits<double>::quiet_NaN();	
-			}
-			if ( i >= leafLength[ name ] || i < 0 ){
-				lg.debug(__FUNCTION__) << name << "[ " << i << " ] Out Of Bounds" << endl;
-				return numeric_limits<double>::quiet_NaN();
-			}
-			UInt_t * tData = (UInt_t*)data[ name ];
-			return tData[ i ];
-		}
-		inline Float_t getFloat( string name, int i = 0 ){
-			if ( !data[ name ]){
-				lg.debug(__FUNCTION__) << name << "[ " << i << " ] Invalid data" << endl;
-				return numeric_limits<double>::quiet_NaN();	
-			}
-			if ( i >= leafLength[ name ] || i < 0 ){
-				lg.debug(__FUNCTION__) << name << "[ " << i << " ] Out Of Bounds" << endl;
-				return numeric_limits<double>::quiet_NaN();
-			}
-			Float_t * tData = (Float_t*)data[ name ];
-			return tData[ i ];
-		}
-		
 
+		// General purpose data retrival
+		// @name 	Name of variable
+		// @i 		Index - for data arrays
+		// Gets any type of data and casts it to a double. 
+		// This method is required for Alias or Evaluated Leaves
+		// @return 	double value of requested data
+		double get( string name, int i = 0 );
+		
+		// () overload
+		// @lName 	variable name - see get(...)
+		// @index 	Index for data arrays - see get(...)
+		// @return  The data cast to a double - see get(...)
 		double operator() ( string lName, int index = 0) { return get( lName, index ); };
 
+		// Gets the total number of entries in the chain
+		// @return 	The number of entries in Chain
 		Long64_t getEntries() { return nEntries; }
+
+		// Loads an entry into memory
+		// @return  	True - entry was loaded, False otherwise.
 		bool getEntry( Long64_t i ) {
 			if ( chain && chain->GetEntry( i ) > 0 )
 				return true;
 			return false; 
 		}
 
-		void addAlias( string alaisName, string bName ){ alias[ alaisName ] = bName; }
+		// Adds an aliased leaf to the DataSource
+		// @aliasName 	Name of aliased leaf
+		// @bName 		Name of leaf that the leaf points to
+		void addAlias( string aliasName, string bName ){ alias[ aliasName ] = bName; }
 
 
 
@@ -158,6 +174,7 @@ namespace jdb{
 		 */
 		void makeEvaluatedLeaves();
 
+		// Determines if the Cache file for this tree exists
 		bool cacheExists(){
 			ifstream cacheFile( ".DataSource_" + treeName + ".xml" );
 			if ( cacheFile.good() ){
@@ -167,17 +184,32 @@ namespace jdb{
 			cacheFile.close();
 			return false;
 		}
+
+		// Caches the tree metadata if needed
 		void cacheTreeInfo();
 
+		// Loads the tree metadata from the Cache
 		void loadLengthsFromCache();
 
 
-
+		// Addresses all branches in the Tree 
 		void addressBranches();
+		// Addresses all leaves in the Tree
 		void addressLeaves();
+		// Maps out the branch and leaf attributes of the tree
 		void mapTree();
+		// Gets the length of a data leaf accross all trees
+		// @name 	Leaf name
+		// @return 	Number of elements in data leaf
 		int chainLeafLength( string name );
+		// Gets the length of a data leaf in a single Tree
+		// @name 	Leaf name
+		// @return 	Number of elements in data leaf
 		int singleTreeLeafLength( string name );
+		// Gets the memory footprint size for the given 
+		// leaf based on its type and length
+		// @name 	Leaf name
+		// @return 	The memory block size
 		int memSize( string name ){
 
 			if ( "Int_t" == leafType[ name ] )

@@ -4,7 +4,7 @@
 <!--  It can be anything <root></root>, it just has to exist -->
 <config>
 		
-	<DataSource treeName="tof" url="/Users/danielbrandenburg/bnl/local/data/Run14/AuAu200/slew/" maxFiles="100">
+	<DataSource treeName="tof" url="/Users/danielbrandenburg/bnl/local/data/Run14/AuAu200/slew/" maxFiles="10">
 		
 	</DataSource>
 

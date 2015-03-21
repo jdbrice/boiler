@@ -13,6 +13,7 @@ namespace jdb{
 	DataSource::DataSource( XmlConfig * _cfg, string _nodePath, string _fileList ){
 
 		cfg = _cfg;
+		assert( cfg );
 		nodePath = _nodePath;
 		fileList = _fileList;
 		cache = NULL;
@@ -59,8 +60,6 @@ namespace jdb{
 			initializeBranchStatus();
 			makeAliases();
 			makeEvaluatedLeaves();
-
-
 			cacheTreeInfo();
 
 

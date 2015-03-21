@@ -33,7 +33,7 @@ ROOTLDFLAGS    	= $(shell root-config --ldflags)
 includes		= -I./include -I./include/jdb -I. -I$(ROOTSYS)/include -I$(ROOTDEV)/include 
 
 CXX           = g++ -o3
-CXXFLAGS      = -std=c++0x -fPIC 
+CXXFLAGS      = -std=c++11 -fPIC 
 LD            = g++
 LDFLAGS       = -std=c++0x $(includes)
 

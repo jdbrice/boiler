@@ -215,6 +215,14 @@ Uses atof(...) for string to double conversion.</doc>
       <type builtin="yes" name="int" />
     </argument>
   </method>
+  <method abstract="yes" id="jdb::XmlConfig::getIntMap" name="getIntMap">
+    <return>
+      <type name="map&lt;int, int&gt;" />
+    </return>
+    <argument id="jdb::XmlConfig::getIntMap::nodePath" name="nodePath">
+      <type name="string" />
+    </argument>
+  </method>
   <method abstract="yes" id="jdb::XmlConfig::getIntVector" name="getIntVector">
     <brief> Gets a vector of integers from a comma delimeted list</brief>
     <return>
@@ -284,6 +292,24 @@ attribute can be accessed using the nodePath =
     </argument>
     <argument id="jdb::XmlConfig::getString::def" name="def">
       <doc>**Default** = "" The value to return if the node or attribute is not found</doc>
+      <type name="string" />
+    </argument>
+  </method>
+  <method abstract="yes" id="jdb::XmlConfig::getStringMap" name="getStringMap">
+    <brief> Gets a map&amp;lt;string, string&amp;gt; from a config node </brief>
+    <return>
+      <type name="map&lt;string, string&gt;" />
+    </return>
+    <argument id="jdb::XmlConfig::getStringMap::nodePath" name="nodePath">
+      <doc>See getString(...)
+Converts a node like :
+``` xml
+&lt;Map&gt;
+                from : to,
+                alpha : beta
+&lt;/Map&gt;
+```
+Into a map where map[ "from" ] = "to" and map[ "alpha" ] = "beta".</doc>
       <type name="string" />
     </argument>
   </method>
@@ -396,6 +422,10 @@ The node path "category.sub.a" yields "a"
     <brief>The delimeter used for equality - Default is '='</brief>
     <type builtin="yes" name="char" />
   </field>
+  <field access="protected" id="jdb::XmlConfig::mapDelim" name="mapDelim">
+    <brief>The delimeter used for maps - Default is "::"</brief>
+    <type name="string" />
+  </field>
   <field access="protected" id="jdb::XmlConfig::indexOpenDelim" name="indexOpenDelim">
     <brief>The delimeter for index open - Default is "["</brief>
     <type name="string" />
@@ -438,6 +468,19 @@ The node path "category.sub.a" yields "a"
     </argument>
     <argument id="jdb::XmlConfig::split::elems" name="elems">
       <type name="vector&lt;string&gt;" qualifier=" &amp;" />
+    </argument>
+  </method>
+  <method abstract="yes" access="protected" id="jdb::XmlConfig::stringToPair" name="stringToPair">
+    <brief>A special case version of split used for the map decoding</brief>
+    <doc>Allows string delimeter</doc>
+    <return>
+      <type name="pair&lt;string, string &gt;" />
+    </return>
+    <argument id="jdb::XmlConfig::stringToPair::s" name="s">
+      <type name="string" qualifier=" &amp;" />
+    </argument>
+    <argument id="jdb::XmlConfig::stringToPair::delim" name="delim">
+      <type name="string" />
     </argument>
   </method>
   <method abstract="yes" access="protected" id="jdb::XmlConfig::vectorFromString" name="vectorFromString">
