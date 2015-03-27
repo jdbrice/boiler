@@ -62,7 +62,7 @@ namespace jdb{
 
 	string XmlConfig::getString( string nodePath, string def ){
 
-		string snp = sanitize( nodePath );
+		string snp = sanitize( currentNode + nodePath );
 		if ( nodeExists[ snp ] ){
 			return data[ snp ];
 		}
@@ -162,7 +162,7 @@ namespace jdb{
 	}
 
 	bool XmlConfig::exists( string nodePath ){
-		string snp = sanitize( nodePath );
+		string snp = sanitize( currentNode + nodePath );
 		if( nodeExists[ snp ] )
 			return true;
 		return false;

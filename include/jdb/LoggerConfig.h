@@ -39,10 +39,14 @@ namespace jdb{
 			if ( config && config->getBool( nodePath+":color" ) )
 				Logger::setGlobalColor( true );
 
-			if ( 	config && config->exists( nodePath ) &&
-					config->exists( nodePath + ".logLevel" ) ){
+			if ( 	config && config->exists( nodePath ) && (
+					config->exists( nodePath + ".logLevel" ) || config->exists( nodePath + ":logLevel" ) ) ){
 
-				string ll = config->getString( nodePath + ".logLevel" );
+
+				
+				string ll = config->getString( nodePath + ":logLevel", 
+								config->getString( nodePath + ".logLevel", 
+									"info" ) );
 				return (new Logger( Logger::logLevelFromString( ll ) ) );
 				
 			}

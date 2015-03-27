@@ -75,6 +75,9 @@ namespace jdb {
 		static bool getGlobalColor( );
 		static bool showColors;
 
+		//Singelton Instance
+		static Logger log;
+
 
 		/*
 		 * Creates a Logger with 

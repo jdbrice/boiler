@@ -32,14 +32,19 @@ namespace jdb {
 		RapidXmlWrapper *rxw;
 	#endif
 
+		// Logger instance
 		Logger logger;
 		
+		// Node existance
 		map<string, bool> nodeExists;
 		
+		// data - map of node path to string representation
 		map<string, string> data;
 
+		// does the nodepath point to an attribute value
 		map<string, bool> isAttribute;
 		
+		// typedef of commonly used iterator for the class
 		typedef map<string, string>::iterator map_it_type;
 
 		//Filename of the config file
@@ -62,6 +67,9 @@ namespace jdb {
 		
 		//The delimeter for index open - Default is "]"
 		string indexCloseDelim;
+
+		// Current node for relative path finding
+		string currentNode = "";
 	public:
 
 		/* Creates an XmlConfig from the given xml file
@@ -73,6 +81,19 @@ namespace jdb {
 		~XmlConfig();
 
 		void saveXml(string filename);
+
+
+		/**
+		 * Sets the current node so that relative node paths can be used
+		 * @nodePath 	Path to Node - this will be prepended the nodePath passed in to lookups
+		 *
+		 * @return 		Current Node before changing
+		 */
+		string cn( string nodePath = "" ){
+			string tCN = currentNode;
+			currentNode = nodePath;
+			return tCN;
+		}
 
 		/* Same as getString(...) but with the [] operator.
 		 * @nodePath See getString(...)

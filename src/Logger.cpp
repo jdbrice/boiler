@@ -4,6 +4,7 @@
 namespace jdb {
 	int Logger::llGlobal = Logger::llDefault;	
 	bool Logger::showColors = false;
+	Logger Logger::log;
 
 	void Logger::setGlobalLogLevel( int ll ){
 		Logger::llGlobal = ll;
