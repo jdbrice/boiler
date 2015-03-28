@@ -41,6 +41,8 @@ namespace jdb{
 		XmlConfig 	*cfg;
 		//Node path in config file to the root for everything related to this job
 		string 		nodePath;
+		//Basepath for output of data and reports
+		string 		outputPath;
 		//Store project histograms and data
 		HistoBook 	*book;
 		//For generating generic reports
@@ -51,6 +53,8 @@ namespace jdb{
 		int nEventsToProcess;
 		// Sets up a DataSource if there is a DataSource node
 		DataSource * ds;
+		// Prefix for this job ( optional, used for parallel)
+		string jobPrefix;
 
 	// public methods
 	public:

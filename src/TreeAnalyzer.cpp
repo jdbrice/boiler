@@ -3,13 +3,14 @@
 
 namespace jdb{
 
-	TreeAnalyzer::TreeAnalyzer( XmlConfig * config, string np, string fileList, string jobPrefix ){
+	TreeAnalyzer::TreeAnalyzer( XmlConfig * config, string np, string fileList, string _jobPrefix ){
 		
 		//Set the Root Output Level
 		//gErrorIgnoreLevel = kSysError;
 
 		// Save config
 		cfg = config;
+		jobPrefix = _jobPrefix;
 
 		// We want our nodePath in the form of TreeAnalyzer.  
 		// ie with trailing dot
@@ -26,6 +27,8 @@ namespace jdb{
 			nodePath = np + ".";
 		}
 
+		//get the output path
+		outputPath = cfg->getString( np + "output:path", "./" );
 		
 		// make the Logger
 		logger = LoggerConfig::makeLogger( cfg, np + "Logger" );
@@ -43,8 +46,9 @@ namespace jdb{
 
 	    // create the book
 	    logger->info(__FUNCTION__) << " Creating book " << config->getString( np + "output.data", "TreeAnalyzer" ) << endl;
-	    book = new HistoBook( jobPrefix + config->getString( np + "output.data", "TreeAnalyzer" ), config, "", "" );
+	    book = new HistoBook( outputPath + jobPrefix + config->getString( np + "output.data", "TreeAnalyzer" ), config, "", "" );
 	    	    
+	   	// Default reporter
 	    if ( "" == jobPrefix && cfg->exists( np+"Reporter.output:url" ) ) {
 		    reporter = new Reporter( cfg, np+"Reporter.", jobPrefix );
 		    logger->info(__FUNCTION__) << "Creating report " << config->getString( np+"Reporter.output:url" ) << endl;
