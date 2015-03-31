@@ -107,14 +107,17 @@ namespace jdb{
 
 		template <typename T>
 		inline T get(string name, int i = 0 ){
+			lg.debug(__FUNCTION__) << "AGetting " << name << endl;
 			if ( !data[ name ]){
 				lg.debug(__FUNCTION__) << name << "[ " << i << " ] Invalid data" << endl;
 				return numeric_limits<T>::quiet_NaN();	
 			}
+			lg.debug(__FUNCTION__) << "BGetting " << name << endl;
 			if ( i >= leafLength[ name ] || i < 0 ){
 				lg.debug(__FUNCTION__) << name << "[ " << i << " ] Out Of Bounds" << endl;
 				return numeric_limits<T>::quiet_NaN();
 			}
+			lg.debug(__FUNCTION__) << "CGetting " << name << endl; 
 			T * pData = (T*)data[ name ];
 			return pData[ i ];
 		}
@@ -157,6 +160,7 @@ namespace jdb{
 		// @bName 		Name of leaf that the leaf points to
 		void addAlias( string aliasName, string bName ){ alias[ aliasName ] = bName; }
 
+		string getTreeName() const { return treeName; }
 
 
 	protected:
@@ -212,6 +216,8 @@ namespace jdb{
 		// @return 	The memory block size
 		int memSize( string name ){
 
+			lg.debug(__FUNCTION__) << "SizeType " << leafType[ name ] << endl;
+			lg.debug(__FUNCTION__) << "Length of Leaf : " << leafLength[ name ] << endl;
 			if ( "Int_t" == leafType[ name ] )
 				return sizeof(Int_t) * leafLength[ name ];
 			else if ( "UInt_t" == leafType[ name ] )
