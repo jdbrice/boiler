@@ -114,6 +114,8 @@ namespace jdb{
 		HistoBook( string name, XmlConfig* config, string input = "", string inDir = "");
 		~HistoBook();
 
+		void setLogLevel( string ll ) { logger->setLogLevel( ll ); }
+
 		/*
 		 *Changes into the given directory. 
 		 *If the dir DNE it is created, or it is simply set as the current. 

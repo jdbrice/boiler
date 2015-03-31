@@ -118,6 +118,15 @@ namespace jdb {
 			logLevel = ll; 
 			
 		}
+		/*
+		 * Set the LogLevel for this Logger instance
+		 * @param ll 	LogLEvel as string 
+		 */
+		void setLogLevel( string ll ) { 
+			
+			logLevel = logLevelFromString( ll ); 
+			
+		}
 
 		/*
 		 * Get Class Space prefix
