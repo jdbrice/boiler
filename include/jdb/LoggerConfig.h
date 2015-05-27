@@ -36,21 +36,25 @@ namespace jdb{
 		 */
 		static Logger * makeLogger( XmlConfig * config, string nodePath ) {
 
+			cout << "Making logger( " << config << ", " << nodePath << " ) " << endl;
 			if ( config && config->getBool( nodePath+":color" ) )
 				Logger::setGlobalColor( true );
 
-			if ( 	config && config->exists( nodePath ) && (
-					config->exists( nodePath + ".logLevel" ) || config->exists( nodePath + ":logLevel" ) ) ){
-
-
-				
-				string ll = config->getString( nodePath + ":logLevel", 
-								config->getString( nodePath + ".logLevel", 
-									"info" ) );
-				return (new Logger( Logger::logLevelFromString( ll ) ) );
-				
+			if ( config && config->exists( nodePath+":globalLogLevel" ) ){
+				cout << "Setting globalLogLevel = " << config->getString( nodePath+":globalLogLevel" ) << endl;
+				Logger::setGlobalLogLevel( Logger::logLevelFromString( config->getString( nodePath+":globalLogLevel" ) ) );
 			}
-			return (new Logger() );
+			cout << "Looking in " << (nodePath + ":logLevel") << endl;
+			string ll = config->getString( nodePath + ":logLevel", 
+							config->getString( nodePath + ".logLevel", 
+								"info" ) );
+		
+			cout << "LogLevel = " << ll << endl;
+			return (new Logger( Logger::logLevelFromString( ll ) ) );
+			
+		
+			//cout << "Making Default Logger Instance" << endl;
+			//return (new Logger() );
 		}
 
 	};

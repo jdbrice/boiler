@@ -333,9 +333,11 @@ namespace jdb{
 
 		logger->info(__FUNCTION__) << " Cloning " << existing << " into " << create << endl;
 		if ( get( existing, ePath ) ){
+			string oDir = cd( cPath ); 
+			
 			TH1* nHist = (TH1*)get( existing, ePath )->Clone( create.c_str() );
 			
-			string oDir = cd( cPath ); 
+			
 			// add the new one
 			add( create, nHist );
 

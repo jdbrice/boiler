@@ -14,25 +14,30 @@ namespace jdb{
 		
 		// make the Logger
 		logger = LoggerConfig::makeLogger( cfg, np + "Logger" );
-		Logger::setGlobalLogLevel( logger->getLogLevel() );
+		
 		
 		logger->setClassSpace( "HistoAnalyzer" );
 		logger->info(__FUNCTION__) << "Got config with nodePath = " << np << endl;
 		
 	    // create the book
 	    logger->info(__FUNCTION__) << " Creating book " << config->getString( np + "output.data" ) << endl;
-	    book = new HistoBook( config->getString( np + "output.data" ), config, "", "" );
+	    book = new HistoBook( config->getString( np + "output:path", "" ) + config->getString( np + "output.data" ), config, "", "" );
 	    logger->info(__FUNCTION__) << " Creating report " << config->getString( np + "output.report" ) << endl;
-	    reporter = new Reporter( cfg, np+"Reporter." );
+	    if ( cfg->exists( np + "Reporter" ) )
+		    reporter = new Reporter( cfg, np+"Reporter." );
+		else 
+			reporter = nullptr;
 
 	    logger->info(__FUNCTION__) << " Loading data from " << config->getString( np + "input.data:url" ) << endl;
 		inFile = new TFile( cfg->getString( np+"input.data:url" ).c_str(), "READ" );
+		logger->info(__FUNCTION__) << "Complete" << endl;
 
 	}
 
 	HistoAnalyzer::~HistoAnalyzer(){
 		delete book;
-		delete reporter;
+		if ( reporter )
+			delete reporter;
 		delete logger;
 	}
 
