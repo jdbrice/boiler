@@ -75,7 +75,7 @@ namespace jdb{
 		// Map of hitogram names to paths in the Xml Config File for automaticlly created histos
 		std::map<string, string> configPath;
 		// Map of histogram names to objects
-		std::map<string, TH1*> book;
+		std::map<string, TObject*> book;
 		// Filename of output file
 		string filename;
 		// Output file
@@ -126,6 +126,7 @@ namespace jdb{
 
 		
 		void add( string name, TH1 * );
+		void add( string name, TObject* );
 		TH1* get( string name, string sdir = "" );
 
 		TH1 * operator[]( string name );
@@ -189,7 +190,7 @@ namespace jdb{
 		 * Saves all histograms and other Root objects attached to the current file to 
 		 * the permanent file given during construction
 		 */
-		void save();
+		void save( bool saveAllInDirectory = false );
 		void saveOnExit( bool doIt = true ){
 			logger->info( __FUNCTION__ ) << "Auto Save on exit set to " << doIt << endl;
 			saveAllOnExit = doIt;

@@ -135,9 +135,25 @@ namespace jdb{
 		delete logger;
 	}	// Destructor
 
-	void HistoBook::save() {
+	void HistoBook::save(bool saveAllInDirectory ) {
 		logger->info(__FUNCTION__) << " Save to File " << filename << endl;
-		file->Write();
+		
+		if ( saveAllInDirectory )
+			file->Write();
+		else {
+			for ( auto k : book ){
+				if ( k.second ){
+					logger->debug(__FUNCTION__) << "Writing " << k.first << " to file" << endl;
+					k.second->Write();
+				} else {
+					logger->error(__FUNCTION__) << "Cannot Write " << k.first << " to file : null" << endl;
+				}
+			}	
+		}
+
+		
+
+
 	}	// save
 
 	/**
@@ -189,6 +205,12 @@ namespace jdb{
 	} // loadRootDir
 
 	void HistoBook::add( string name, TH1* h ){
+
+		// this is kept for legacy
+		add( name, (TObject*)h );
+	} 	// add
+
+	void HistoBook::add( string name, TObject* h ){
 
 		logger->debug(__FUNCTION__) << " Adding " << name << endl;
 
@@ -414,7 +436,7 @@ namespace jdb{
 		if ( NULL == book[ ( sdir + name  ) ] )
 			logger->warn(__FUNCTION__) << sdir + "/" + name  << " Does Not Exist " << endl; 
 
-		return book[ ( sdir  + name  ) ];
+		return (TH1*)book[ ( sdir  + name  ) ];
 	}	//get
 
 	bool HistoBook::exists( string name, string sdir ){
