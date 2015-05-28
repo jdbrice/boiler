@@ -30,7 +30,7 @@ namespace jdb {
 		 * @dx The number of divisions horizontally
 		 * @dy The number of divisions vertically
 		 */
-		void newPage( int dx = 1, int dy = 1);
+		void newPage( int dx = 1, int dy = 1, float marginX = 0.01, float marginY = 0.01);
 		/* Change the current pad
 		 * @pad The pad number to set active
 		 *

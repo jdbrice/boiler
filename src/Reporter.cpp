@@ -56,14 +56,14 @@ namespace jdb{
 		delete logger;
 	}
 
-	void Reporter::newPage( int dx, int dy){
-		logger->info(__FUNCTION__) << " New Page ( " << dx << ", " << dy << " ) " << endl;
+	void Reporter::newPage( int dx, int dy, float marginX, float marginY ){
+		logger->info(__FUNCTION__) << " New Page ( " << dx << ", " << dy << ", " << marginX << ", " << marginY << " ) " << endl;
 
 		this->dx = dx;
 		this->dy = dy;
 
 		canvas->Clear();
-		canvas->Divide( dx, dy );
+		canvas->Divide( dx, dy, marginX, marginY );
 		cd( 1 );
 	}
 
