@@ -4,9 +4,7 @@
 #include "Logger.h"
 #include "LoggerConfig.h"
 
-/**
- * ROOT
- */
+// ROOT
 #include "TKey.h"
 #include "TObject.h"
 #include <TApplication.h>
@@ -138,7 +136,7 @@ namespace jdb{
 	void HistoBook::save(bool saveAllInDirectory ) {
 		logger->info(__FUNCTION__) << " Save to File " << filename << endl;
 		
-		if ( saveAllInDirectory )
+		if ( true )
 			file->Write();
 		else {
 			for ( auto k : book ){
@@ -205,9 +203,27 @@ namespace jdb{
 	} // loadRootDir
 
 	void HistoBook::add( string name, TH1* h ){
+		logger->debug(__FUNCTION__) << " Adding " << name << endl;
+
+		string oName = name;
+		if ( name.length() <= 1 || !h ){
+			logger->warn(__FUNCTION__) << " Cannot add " << name << " to dir " << currentDir << " : Invalid name" << endl;
+			return;
+		}
+
+		name = currentDir + name;
+
+		// dont allow duplicated name overites
+		if ( book[ name ] ){
+			logger->warn(__FUNCTION__) << " Cannot add " << name << " to dir " << currentDir << " : Duplicate exists" << endl;
+			return;
+		}
+
+		// save the histo to the map
+		book[ name ] = h;
 
 		// this is kept for legacy
-		add( name, (TObject*)h );
+		//add( name, (TObject*)h );
 	} 	// add
 
 	void HistoBook::add( string name, TObject* h ){
@@ -230,6 +246,9 @@ namespace jdb{
 
 		// save the histo to the map
 		book[ name ] = h;
+
+		cd();
+		h->Write();
 
 	} 	// add
 

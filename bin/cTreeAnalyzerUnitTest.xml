@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- A root node is required -->
+<!--  It can be anything <root></root>, it just has to exist -->
+<config>
+	
+	<TreeAnalyzer>
+		
+
+		<!-- Use an input tag for setting up the chain only. It isup to you to use an adapter -->
+		<!--
+		<input>
+			<dst treeName="tree" maxFiles="1" nEvents="1000" url="/Users/danielbrandenburg/bnl/local/data/RM14_015/"/>
+		</input>
+		-->
+
+		<!-- Use a datasource to setup an automap to the tree structure -->
+		<DataSource treeName="PicoDst" url="/Users/danielbrandenburg/bnl/local/data/Run14/LBNL/" maxFiles="1">
+			
+			<!-- Set all branches off -->
+			<BranchStatus status="0">*</BranchStatus>
+			<!-- Turn on only the ones you need -->
+			<BranchStatus status="1">
+				Event*,
+				Track*
+			</BranchStatus>
+
+			<!-- Alias branches -->
+			<Alias name="vX" pointsTo="Event.mPrimaryVertex.mX1" />
+			<Alias name="vZ" pointsTo="Event.mPrimaryVertex.mX3" />
+			<Alias name="vertexX" pointsTo="vX" />
+
+			<!-- Make evaluated leaves to provide variables at runtime -->
+			<EvaluatedLeaf name="vY" value="[0] + 0.9" p0="Event.mPrimaryVertex.mX2" />
+			<EvaluatedLeaf name="vR" value="TMath::Sqrt( [0]*[0] + [1]*[1] )" p0="vX" p1="vY" />
+			<EvaluatedLeaf name="vR2" value="[0]*[0] + [1]*[1]" p0="vX" p1="vY" />
+			
+		</DataSource>
+
+		<Reporter>
+			<output url="rpTreeAnalyzer.pdf"/>
+		</Reporter>
+		<Logger>
+			<logLevel>all</logLevel>
+		</Logger>
+
+		<histograms>
+			<Histo name="pt" title="p_T [GeV]" nBinsX="100" minX="0" maxX="10" />
+			<Histo name="pt1" title="p_T [GeV]" nBinsX="100" minX="0" maxX="10" />
+			<Histo name="pt2" title="p_T [GeV]" nBinsX="100" minX="0" maxX="10" />
+			<Histo name="pt3" title="p_T [GeV]" nBinsX="100" minX="0" maxX="10" />
+		</histograms>
+
+	</TreeAnalyzer>
+
+</config>

@@ -35,7 +35,7 @@ includes		= -I./include -I./include/jdb -I. -I$(ROOTSYS)/include -I$(ROOTDEV)/in
 CXX           = g++ -o3
 CXXFLAGS      = -std=c++11 -fPIC 
 LD            = g++
-LDFLAGS       = -std=c++0x $(includes)
+LDFLAGS       = -std=c++11 $(includes)
 
 
 

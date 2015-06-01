@@ -28,58 +28,62 @@ namespace jdb{
 		}
 
 		//get the output path
-		outputPath = cfg->getString( np + "output:path", "./" );
+		outputPath = cfg->getString( nodePath + "output:path", "./" );
 		
 		// make the Logger
-		logger = LoggerConfig::makeLogger( cfg, np + "Logger" );
-		Logger::setGlobalLogLevel( logger->getLogLevel() );
+		logger =LoggerConfig::makeLogger( cfg, nodePath + "Logger" );
 		logger->setClassSpace( "TreeAnalyzer" );
-		logger->info(__FUNCTION__) << "Got config with nodePath = " << np << endl;
+		logger->info(__FUNCTION__) << "Got config with nodePath = " << nodePath << endl;
 		
 		/**
 		 * Check for valid input
 		 */
-		if ( !cfg->exists( np+"DataSource" ) && !cfg->exists( np+"input.dst" )){
-			logger->error(__FUNCTION__) << "Invalid nodePath. Cannot create TreeAnalyzer. Make sure that there is an input specified and the node path is correct. " << endl;
+		if ( !cfg->exists( nodePath+"DataSource" ) && !cfg->exists( nodePath+"input.dst" )){
+			logger->error(__FUNCTION__) << "Invalid nodePath. Cannot find" << nodePath+"DataSource" << " or " << nodePath+"input.dst" << " Make sure that there is an input specified and the node path is correct. " << endl;
 			return;
 		}
 
 	    // create the book
-	    logger->info(__FUNCTION__) << " Creating book " << config->getString( np + "output.data", "TreeAnalyzer" ) << endl;
-	    book = new HistoBook( outputPath + jobPrefix + config->getString( np + "output.data", "TreeAnalyzer" ), config, "", "" );
+	    logger->info(__FUNCTION__) << " Creating book " << config->getString( nodePath +  "output.data", "TreeAnalyzer" ) << endl;
+	    book = new HistoBook( outputPath + jobPrefix + config->getString( nodePath +  "output.data", "TreeAnalyzer" ), config, "", "" );
 	    	    
 	   	// Default reporter
 	    if ( "" == jobPrefix && cfg->exists( np+"Reporter.output:url" ) ) {
 		    reporter = new Reporter( cfg, np+"Reporter.", jobPrefix );
-		    logger->info(__FUNCTION__) << "Creating report " << config->getString( np+"Reporter.output:url" ) << endl;
-	    }
+		    logger->info(__FUNCTION__) << "Creating report " << config->getString( nodePath+"Reporter.output:url" ) << endl;
+	    } else
+			reporter = nullptr;
 
 	    /**
 	     * Sets up the input, should switch seemlessly between chain only 
 	     * and a DataSource 
 	     */
-	    if ( cfg->exists( np+"DataSource" ) ){
-	    	ds = new DataSource( cfg, np + "DataSource", fileList );
+	    if ( cfg->exists( nodePath+"DataSource" ) ){
+	    	ds = new DataSource( cfg, nodePath +  "DataSource", fileList );
 	    	chain = ds->getChain();
 	    	logger->debug(__FUNCTION__) << "Chain " << chain << endl;
 	    } else {
-	    	chain = new TChain( cfg->getString( np+"input.dst:treeName" ).c_str() );
+	    	chain = new TChain( cfg->getString( nodePath+"input.dst:treeName" ).c_str() );
 		    if ( "" == fileList ){
-		    	logger->info(__FUNCTION__) << " Loading data from " << config->getString( np + "input.dst:url" ) << endl;
-		    	ChainLoader::load( chain, cfg->getString( np+"input.dst:url" ), cfg->getInt( np+"input.dst:maxFiles", -1 ) );
+		    	logger->info(__FUNCTION__) << " Loading data from " << config->getString( nodePath +  "input.dst:url" ) << endl;
+		    	ChainLoader::load( chain, cfg->getString( nodePath+"input.dst:url" ), cfg->getInt( nodePath+"input.dst:maxFiles", -1 ) );
 		    } else {
 		    	logger->info(__FUNCTION__) << " Parallel Job From " << fileList << ", prefix : " << jobPrefix << endl;
-		    	ChainLoader::loadList( chain, fileList, cfg->getInt( np+"input.dst:maxFiles", -1 ) );
+		    	ChainLoader::loadList( chain, fileList, cfg->getInt( nodePath+"input.dst:maxFiles", -1 ) );
 		    }	
 	    }
 	}
 
 	TreeAnalyzer::~TreeAnalyzer(){
+		logger->info(__FUNCTION__) << endl;
 		if ( book )
 			delete book;
+		logger->debug(__FUNCTION__) << "Deleted book" << endl;
 		if ( reporter )
 			delete reporter;
+		logger->debug(__FUNCTION__) << "Deleted Reporter" << endl;
 
+		logger->debug(__FUNCTION__) << "Deleting Logger" << endl;
 		delete logger;
 	}
 

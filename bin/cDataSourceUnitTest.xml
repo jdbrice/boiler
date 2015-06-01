@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- A root node is required -->
+<!--  It can be anything <root></root>, it just has to exist -->
+<config>
+		
+	<DataSource treeName="PicoDst" url="/Users/danielbrandenburg/bnl/local/data/Run14/LBNL/" maxFiles="1">
+		
+		<!-- Set all branches off -->
+		<BranchStatus status="0">*</BranchStatus>
+		<!-- Turn on only the ones you need -->
+		<BranchStatus status="1">
+			Event*,
+			Track*
+		</BranchStatus>
+
+		<!-- Alias branches -->
+		<Alias name="vX" pointsTo="Event.mPrimaryVertex.mX1" />
+		<Alias name="vZ" pointsTo="Event.mPrimaryVertex.mX3" />
+		<Alias name="vertexX" pointsTo="vX" />
+
+		<!-- Make evaluated leaves to provide variables at runtime -->
+		<EvaluatedLeaf name="vY" value="[0] + 0.9" p0="Event.mPrimaryVertex.mX2" />
+		<EvaluatedLeaf name="vR" value="TMath::Sqrt( [0]*[0] + [1]*[1] )" p0="vX" p1="vY" />
+		<EvaluatedLeaf name="vR2" value="[0]*[0] + [1]*[1]" p0="vX" p1="vY" />
+		
+	</DataSource>
+
+</config>

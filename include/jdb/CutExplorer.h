@@ -25,7 +25,7 @@ namespace jdb{
 		// ie name="eventCuts" -> category="event"
 		map<string, string> cutCategory; 
 
-		mapp<string, vector<double> > data;
+		map<string, vector<double> > data;
 
 	public:
 

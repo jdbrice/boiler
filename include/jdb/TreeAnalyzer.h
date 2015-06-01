@@ -1,10 +1,9 @@
 #ifndef TREE_ANALYZER_H
 #define TREE_ANALYZER_H
 
-
-/**
- * JDB 
- */
+//STL
+#include <memory>
+//ROOBARB
 #include "Utils.h"
 #include "XmlConfig.h"
 #include "Logger.h"
@@ -15,9 +14,7 @@
 #include "Reporter.h"
 #include "DataSource.h"
 
-/**
- * ROOT
- */
+//ROOT
 #include "TChain.h"
 #include "TError.h"
 
@@ -36,23 +33,23 @@ namespace jdb{
 	protected:
 		
 		//The logging object for the job
-		Logger 		*logger;
+		Logger  	*logger = nullptr;
 		//Project config
-		XmlConfig 	*cfg;
+		XmlConfig 	*cfg = nullptr;
 		//Node path in config file to the root for everything related to this job
 		string 		nodePath;
 		//Basepath for output of data and reports
 		string 		outputPath;
 		//Store project histograms and data
-		HistoBook 	*book;
+		HistoBook 	*book = nullptr;
 		//For generating generic reports
-		Reporter 	*reporter;
+		Reporter 	*reporter = nullptr;
 		//The chain object which gets automatically set up
-		TChain 		*chain;
+		TChain 		*chain = nullptr;
 		// the maximum number of events to process. If not set all events will be processed 
 		int nEventsToProcess;
 		// Sets up a DataSource if there is a DataSource node
-		DataSource * ds;
+		DataSource * ds = nullptr;
 		// Prefix for this job ( optional, used for parallel)
 		string jobPrefix;
 
