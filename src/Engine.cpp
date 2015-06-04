@@ -1,18 +1,32 @@
 #include <string>
 
-
-#include "HistoBook.h"
-#include "Reporter.h"
-using namespace jdb;
-
-#include "TGraph.h"
-
 #include "UnitTest/TreeAnalyzerUnitTest.h"
+#include "UnitTest/HistoBinsUnitTest.h"
+
+#include "XmlConfig.h"
+using namespace jdb;
 
 int main( int argc, char* argv[] ){
 
-	TreeAnalyzerUnitTest taut;
-	taut.test("", argc, argv);
+
+    // try loading a config in from the first argument
+	if ( argc >= 2 ){
+        XmlConfig cfg( argv[ 1 ] );
+
+
+        string job = cfg.getString( "job", "default" );
+        if ( "TreeAnalyzerUnitTest" == job ){
+            TreeAnalyzerUnitTest taut;
+            taut.test("", argc, argv);
+        } else if ("HistoBinsUnitTest" == job){
+            HistoBinsUnitTest hbut;
+            hbut.test( "General", argc, argv );
+        }
+
+
+    }
+
+
 
 	/*
 	Logger::setGlobalLogLevel( Logger::llAll );

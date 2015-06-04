@@ -3,7 +3,7 @@
 <!-- A root node is required -->
 <!--  It can be anything <root></root>, it just has to exist -->
 <config>
-	
+	<job>TreeAnalyzerUnitTest</job>
 	<TreeAnalyzer>
 		
 

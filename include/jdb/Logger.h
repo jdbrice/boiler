@@ -1,7 +1,12 @@
 #ifndef LOGGER_H
 #define LOGGER_H 
 
-
+#define DEBUG(x) Logger::log.debug( __func__ ) << x << endl;
+#define TRACE(x) Logger::log.trace( __func__ ) << x << endl;
+#define INFO(x)  Logger::log.info( __func__ ) << x << endl;
+#define WARN(x)  Logger::log.warn( __func__ ) << x << endl;
+#define ERROR(x) Logger::log.error( __func__ ) << x << endl;
+#define LINFO Logger::log.info(__func__)
 
 #include <iostream>
 #include <string>

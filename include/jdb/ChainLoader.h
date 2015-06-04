@@ -41,7 +41,7 @@ namespace jdb{
 		 * that the TChain was created with the correct
 		 * tree name.
 		 */
-		static void loadRange( TChain * chain, string ntdir, int firstFile, int lastFile = -1 );
+		static void loadRange( TChain * chain, string ntdir, int firstFile, int nFiles = 100000 );
 		
 		
 		/* Loads files in a directory to the TChain

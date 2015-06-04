@@ -7,6 +7,11 @@
 #include <memory>
 
 namespace jdb{
+
+	enum class BinEdge: unsigned char {
+		lower,
+		upper
+	};
 	
 	/* HistoBins provides a container for storing and using bins
 	 *
@@ -36,7 +41,7 @@ namespace jdb{
 		 * @return vector of bin edges from low to high
 		 */
 		static vector<double> makeFixedWidthBins( double binWidth, double low, double high ){
-
+            Logger::log.debug(__FUNCTION__) << "( binWidth=" << binWidth << ", low="<<low << ", high=" << high << " )" << endl;
 			vector<double> bins;
 			for (double i = low; i <= high; i += binWidth ){
 				bins.push_back( i );
@@ -45,24 +50,51 @@ namespace jdb{
 		}	// binsFrom
 
 		/* Finds the bin containing a given value
-		 * @bins The bin edges to search in
-		 * @val The value for which the corresponding bin is desired 
+		 * @bins 		The bin edges to search in
+		 * @val 		The value for which the corresponding bin is desired
+		 * @includeEdge	The edge to include in the bin, either lower edge or higher edge
+		 *
+		 * @return 		Underflow 	: -1
+		 * 				Overflow 	: -2
+		 * 				Undefined 	: -3
+		 * 				Otherwise 	: Bin Index starting at 0
 		 */
-		static int findBin( vector<double> &bins, double val ){
+		static int findBin( vector<double> &bins, double val, BinEdge includeEdge = BinEdge::lower ){
+            string sbe = "invalid";
+            if ( BinEdge::lower == includeEdge )
+                sbe = "lower";
+            else
+                sbe = "upper";
+            Logger::log.debug(__FUNCTION__) << "( vector<double> , value=" << val << ", binEdge=" << sbe << " ) " << endl;
 
-			if ( bins.size() < 2 )
-				return -1;
 
 			int n = bins.size();
 
-			// overflow and underflow
-			if ( val < bins[ 0 ] )
-				return -1;
-			else if ( val > bins[ n - 1 ] )
-				return -2;
+			if ( n < 2 )
+				return -3;
 
+			// overflow and underflow
+			if ( includeEdge == BinEdge::lower ){
+				if ( val < bins[ 0 ] )
+					return -1;
+				else if ( val >= bins[ n - 1 ] )
+					return -2;
+			} else if ( includeEdge == BinEdge::upper ){
+				if ( val <= bins[ 0 ] )
+					return -1;
+				else if ( val > bins[ n - 1 ] )
+					return -2;
+			} else {
+				return -3;
+			}
+
+
+			// if not overflow / underflow
+			// then find the corresponding bin
 			for ( int i = n-2; i >= 0; i-- ){
-				if ( val >= bins[ i ] )
+				if ( val >= bins[ i ] && includeEdge == BinEdge::lower )
+					return i;
+				else if ( val > bins[ i ] && includeEdge == BinEdge::upper )
 					return i;
 			}
 
@@ -73,8 +105,8 @@ namespace jdb{
 		/* Finds the bin containing a given value
 		 * @val The value for which the corresponding bin is desired 
 		 */
-		int findBin( double val ){
-			return findBin( bins, val );
+		int findBin( double val, BinEdge includeEdge = BinEdge::lower ){
+			return findBin( bins, val, includeEdge );
 		} // findBin
 
 		/*
@@ -108,6 +140,7 @@ namespace jdb{
 		 */
 		HistoBins( vector<double> bins ){
 			this->bins = bins;
+            width = -1;
 		}
 
 		/*Creates histogram bins from an xml config node 
@@ -170,15 +203,15 @@ namespace jdb{
 		 * @return A string represenation of the bin edges.
 		 */
 		string toString() {
-			if ( width > 0 ) 
-				return "< " + ts( nBins() ) + " bins ( " + ts(min) + " -> " + ts(max) + " )  >";
+			if ( width > 0 )
+				return "< " + ts( nBins() ) + " bins ( " + ts(min) + "->" + ts(max) + " )  >";
 			else {
 				string ba = "< " + ts( nBins() ) + " bins { ";
 
 				for ( int i = 0; i < bins.size(); i++  ){
 					if ( i+1  < bins.size() )
-						ba += ("( " + dts( bins[i] ) +" -> " + dts( bins[i+1] ) + " )" );
-					if ( i+3  < bins.size() )
+						ba += ("(" + dts( bins[i] ) +"->" + dts( bins[i+1] ) + ")" );
+					if ( i+2  < bins.size() )
 						ba += ", ";
 				}
 				ba += " } >";

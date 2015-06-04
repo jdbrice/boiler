@@ -8,6 +8,7 @@ namespace jdb {
 
 	void Logger::setGlobalLogLevel( int ll ){
 		Logger::llGlobal = ll;
+        Logger::log.setLogLevel( ll );
 	}
 
 	int Logger::getGlobalLogLevel() { return llGlobal; }

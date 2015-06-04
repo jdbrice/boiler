@@ -29,6 +29,7 @@ set(SOURCE_FILES
     include/jdb/XmlConfig.h
     include/rapidXML.h
 
+
     # Source Files
     src/ChainLoader.cpp
     src/DataSource.cpp
@@ -42,14 +43,18 @@ set(SOURCE_FILES
     src/TreeAnalyzer.cpp
     src/TreeMap.cpp
     src/XmlConfig.cpp
+
     #UnitTesting
+    include/UnitTest/UnitTest.h
+    src/UnitTest/UnitTest.cpp
     include/UnitTest/TreeAnalyzerUnitTest.h
-    src/UnitTest/TreeAnalyzerUnitTest.cpp)
+    src/UnitTest/TreeAnalyzerUnitTest.cpp
+    src/UnitTest/HistoBinsUnitTest.cpp)
 
 
 include_directories($ENV{ROOTSYS}/include)
 include_directories(include)
 include_directories(include/jdb)
 
-add_executable(roobarb_unit_test ${SOURCE_FILES} include/UnitTest/UnitTest.h src/UnitTest/TreeAnalyzerUnitTest.cpp include/UnitTest/TreeAnalyzerUnitTest.h)
+add_executable(roobarb_unit_test ${SOURCE_FILES} )
 target_link_libraries(roobarb_unit_test ${ROOT_LIBS})

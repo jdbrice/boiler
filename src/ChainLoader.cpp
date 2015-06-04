@@ -70,7 +70,7 @@ namespace jdb{
 							TChain * chain, 	// the chain object to fill
 							string ntdir, 		// the directory in which to look for ntuples
 							int firstFile,
-							int lastFile
+							int nFiles
 							) {
 		
 
@@ -82,9 +82,7 @@ namespace jdb{
 			logger->info(__FUNCTION__) << "Appending / to path" << endl;
 			ntdir += "/";
 		}
-
-		uint nFiles = 0;
-		uint filesFound = 0;
+        int iFile = 0;
 		DIR *dir;
 		struct dirent *ent;
 		bool go = true;
@@ -94,16 +92,16 @@ namespace jdb{
 
 		    	if ( strstr( ent->d_name, "root") ){
 		    		
-		    		if ( nFiles >= firstFile && nFiles < lastFile ) {
+		    		if ( iFile >= firstFile && iFile - firstFile < nFiles ) {
 		    			string fullName = ntdir + ent->d_name;	
 		    			chain->Add( fullName.c_str() );
 		    		}
-		    		nFiles++;
+		    		iFile++;
 		    	} // is file a .root file
 
 		  	} // while files in directory
 		  	
-		  	logger->info( __FUNCTION__ ) << nFiles << " files loaded into chain" << endl;
+		  	logger->info( __FUNCTION__ ) << iFile << " files loaded into chain" << endl;
 		  	delete logger;
 
 		  	closedir (dir);

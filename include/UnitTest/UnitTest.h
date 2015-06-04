@@ -5,4 +5,34 @@
 #ifndef ROOBARB_UNITTEST_H
 #define ROOBARB_UNITTEST_H
 
+#include "Utils.h"
+using namespace jdb;
+
+#include <string>
+using namespace std;
+
+#define UT_EQ( x, y ) UnitTest::eq( x, y )
+
+class UnitTest{
+
+public:
+    // state of the last run op
+    bool pass;
+
+    static string eq( int life, int hope ){
+        // 033[1;32m
+        // 033[0;m
+
+        if ( life == hope )
+            return ts( life ) + " PASS";
+        else {
+            return  ts(life) + " != " + ts(hope) + " FAIL";
+        }
+
+    }
+
+
+};
+
+
 #endif //ROOBARB_UNITTEST_H
