@@ -45,7 +45,7 @@ bool HistoBinsUnitTest::test(string testName, int argc, char * argv[]) {
     l.info() << "findBin( " << val <<" ) ==> " << test << endl;
 
 
-    LINFO << "Testing Overflow : " << endl;
+    INFOL << "Testing Overflow : " << endl;
     val = 1000;
     test = UT_EQ( hb.findBin( val ), -2);
     l.info() << "findBin( " << val <<" ) ==> " << test << endl;

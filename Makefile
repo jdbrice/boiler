@@ -74,7 +74,7 @@ sources := $(shell find src -mindepth 1 -maxdepth 4 -name "*.cpp")
 # inputs : All headers for classes eg XmlConfig.h, Logger.h, etc. and the LinkDef.h needed by rootcint
 # Output: dictionary.cxx and dictionary.h
 $(srcDir)/$(Dictionary).$(srcSuf): $(ClassHeaders) $(srcDir)/Linkdef.h
-	rootcint -v -f $@ -c -p $^
+	rootcling -v -f $@ $(includes) -p $^
 
 $(srcDir)/%$(objSuf): $(srcDir)/%$(srcSuf)
 	$(CXX) $(includes) $(CXXFLAGS) -c $< -o $@

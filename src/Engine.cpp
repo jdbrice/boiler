@@ -4,7 +4,11 @@
 #include "UnitTest/HistoBinsUnitTest.h"
 
 #include "XmlConfig.h"
+#include "XmlCanvas.h"
+#include "XmlPad.h"
 using namespace jdb;
+
+#include "TH1D.h"
 
 int main( int argc, char* argv[] ){
 
@@ -21,7 +25,33 @@ int main( int argc, char* argv[] ){
         } else if ("HistoBinsUnitTest" == job){
             HistoBinsUnitTest hbut;
             hbut.test( "General", argc, argv );
+        } else if ( "XmlCanvasUnitTest" == job ){
+            Logger::setGlobalLogLevel( Logger::llAll );
+            XmlCanvas can( &cfg, "Canvas" );
+
+            can.saveImage("prePad.pdf");
+
+            can.activatePad("pad1");
+            TH1D * h2 = new TH1D( "h2", "h2", 100, -10, 10 );
+            h2->FillRandom("gaus", 10000);
+            h2->Draw();
+
+            can.saveImage("pad1.pdf");
+
+            can.activatePad("pad2");
+            TH1D * h = new TH1D( "h", "h", 100, -10, 10 );
+            h->FillRandom("gaus", 10000);
+            h->Draw();
+
+            can.activatePad("pad3");
+            h->Draw();
+
+            can.saveImage("afterPad.pdf");
+
         }
+
+
+
 
 
     }

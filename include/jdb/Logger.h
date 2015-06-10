@@ -6,7 +6,9 @@
 #define INFO(x)  Logger::log.info( __func__ ) << x << endl;
 #define WARN(x)  Logger::log.warn( __func__ ) << x << endl;
 #define ERROR(x) Logger::log.error( __func__ ) << x << endl;
-#define LINFO Logger::log.info(__func__)
+#define INFOL Logger::log.info(__func__)
+#define TRACEL Logger::log.trace(__func__)
+
 
 #include <iostream>
 #include <string>

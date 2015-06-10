@@ -170,6 +170,9 @@ namespace jdb{
 
 	string XmlConfig::sanitize( string nodePath ){
 
+        // TODO
+        // make the cn option applied here so everything uses it.
+        // currently childrenOf does not work with it
 		/**
 		 * Remove internal whitespaces
 		 */

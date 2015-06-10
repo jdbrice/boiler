@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+
+    <job>XmlCanvasUnitTest</job>
+
+    <StatBox  />
+
+
+    <Canvas n="FitResults" title="Fit Results" w="600" h="500" divX="3" divY="2">
+        <Pad n="pad1" gx1="0" gx2="2" gy1="0" gy2="3" rm="0.1"/>
+
+        <Pad n="pad2" gx1="2" gx2="6" gy1="0" gy2="3" lm="0.1"/>
+        <Pad n="pad3" gx1="0" gx2="6" gy1="3" gy2="6" bm="0.1" tm="0.1"/>
+        <!--<Pad n="pad2" x1="0.5" x2="1.0" y1="0.1" y2="0.5" lm="0.0" rm="0.02" tm="0.0" bm="0.05"/>
+        <Pad n="pad3" x1="0.0" x2="1.0" y1="0.5" y2="0.9" lm="0.05" rm="0.01" tm="0.0" bm="0.0"/>-->
+
+    </Canvas>
+
+    <Plot name="h" on="FitResults.pad1" style="style.s1" />
+
+
+
+</config>
