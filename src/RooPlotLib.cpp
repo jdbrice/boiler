@@ -46,7 +46,7 @@ RooPlotLib & jdb::RooPlotLib::style( TObject * obj) {
 
 
 RooPlotLib &jdb::RooPlotLib::set( string option, initializer_list<string> l ){
-    DEBUG( "( " << option <<", " << l << " )" );
+    DEBUG( "( " << option <<", initializer_list " << " )" );
 	vector<string> params( l.begin(), l.end() );
 	return set( option, params );
 }
