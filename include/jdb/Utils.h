@@ -22,8 +22,6 @@ using namespace std;
 
 namespace jdb{
 
-	
-
 	/**
 	 * String utilities that need >= c++ 2011
 	 */
@@ -240,7 +238,7 @@ namespace jdb{
 	};
 
 }
-
+using namespace jdb;
 
 
 #endif

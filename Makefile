@@ -4,8 +4,8 @@ ARCH          = $(shell root-config --arch)
 
 
 #------------------------------------------------------------------------------
-Classes = Logger Reporter XmlConfig ChainLoader HistoBook TreeAnalyzer HistoAnalyzer XmlConfig DataSource EvaluatedLeaf
-HeaderOnlyClasses = LoggerConfig StringUtils Utils ConfigPoint ConfigRange
+Classes = Logger Reporter XmlConfig ChainLoader HistoBook TreeAnalyzer HistoAnalyzer XmlConfig DataSource EvaluatedLeaf RooPlotLib
+HeaderOnlyClasses = LoggerConfig Utils ConfigPoint ConfigRange
 ##-----------------------------------------------------------------------------
 
 srcDir        = src
@@ -30,7 +30,7 @@ ROOTLDFLAGS    	= $(shell root-config --ldflags)
 ROOTLIBS      	= $(shell root-config --libs)
 ROOTLDFLAGS    	= $(shell root-config --ldflags)
 
-includes		= -I./include -I./include/jdb -I. -I$(ROOTSYS)/include -I$(ROOTDEV)/include 
+includes		= -I$(JDB_LIB)/include -I$(JDB_LIB)/include/jdb -I. -I$(ROOTSYS)/include -I$(ROOTDEV)/include 
 
 CXX           = g++ -o3
 CXXFLAGS      = -std=c++11 -fPIC 
@@ -39,7 +39,7 @@ LDFLAGS       = -std=c++11 $(includes)
 
 
 
-ifeq ($(ARCH),macosx)
+ifeq ($(ARCH),macosx64)
 	SOFLAGS       = -dynamiclib -single_module -undefined dynamic_lookup
 else
 	SOFLAGS       = -shared
@@ -74,7 +74,8 @@ sources := $(shell find src -mindepth 1 -maxdepth 4 -name "*.cpp")
 # inputs : All headers for classes eg XmlConfig.h, Logger.h, etc. and the LinkDef.h needed by rootcint
 # Output: dictionary.cxx and dictionary.h
 $(srcDir)/$(Dictionary).$(srcSuf): $(ClassHeaders) $(srcDir)/Linkdef.h
-	rootcling -v -f $@ $(includes) -p $^
+	rootcling -v -f $@ $(includes) $^ 
+	@cp src/dictionary_rdict.pcm lib/
 
 $(srcDir)/%$(objSuf): $(srcDir)/%$(srcSuf)
 	$(CXX) $(includes) $(CXXFLAGS) -c $< -o $@
@@ -106,7 +107,6 @@ static: $(jdbLibStatic)
 
 $(jdbLibStatic): $(ClassObjs)
 	ar rcs $@ $^
-
 
 doc:
 	@echo "Generating Documentations";			\

@@ -8,7 +8,7 @@
 
 namespace jdb{
 
-	enum BinEdge: unsigned char {
+	enum class BinEdge: unsigned char {
 		lower,
 		upper
 	};

@@ -37,6 +37,17 @@
       <type name="TH1" qualifier="*" />
     </argument>
   </method>
+  <method abstract="yes" id="jdb::HistoBook::add" name="add">
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+    <argument id="jdb::HistoBook::add::name" name="name">
+      <type name="string" />
+    </argument>
+    <argument id="jdb::HistoBook::add::" name="">
+      <type name="TObject" qualifier="*" />
+    </argument>
+  </method>
   <method abstract="yes" id="jdb::HistoBook::cd" name="cd">
     <doc>
 Changes into the given directory.
@@ -510,6 +521,9 @@ the permanent file given during construction
     <return>
       <type builtin="yes" name="void" />
     </return>
+    <argument id="jdb::HistoBook::save::saveAllInDirectory" name="saveAllInDirectory">
+      <type builtin="yes" name="bool" />
+    </argument>
   </method>
   <method id="jdb::HistoBook::saveOnExit" name="saveOnExit">
     <return>
@@ -591,6 +605,14 @@ the permanent file given during construction
       <type name="vector&lt;string&gt;" />
     </argument>
   </method>
+  <method id="jdb::HistoBook::setLogLevel" name="setLogLevel">
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+    <argument id="jdb::HistoBook::setLogLevel::ll" name="ll">
+      <type name="string" />
+    </argument>
+  </method>
   <method abstract="yes" id="jdb::HistoBook::style" name="style">
     <brief> Styles a histogram </brief>
     <doc>Example: book-&gt;style( "h1" )-&gt;set( "title", "science" )-&gt;draw(); "
@@ -616,7 +638,7 @@ the permanent file given during construction
   </field>
   <field access="protected" id="jdb::HistoBook::book" name="book">
     <brief>Map of histogram names to objects</brief>
-    <type name="map&lt;string, TH1 *&gt;" />
+    <type name="map&lt;string, TObject *&gt;" />
   </field>
   <field access="protected" id="jdb::HistoBook::filename" name="filename">
     <brief>Filename of output file</brief>

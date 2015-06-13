@@ -6,11 +6,17 @@
 #include "XmlConfig.h"
 #include "XmlCanvas.h"
 #include "XmlPad.h"
+#include "RooPlotLib.h"
 using namespace jdb;
 
 #include "TH1D.h"
 
 int main( int argc, char* argv[] ){
+
+    Logger::setGlobalLogLevel( "all" );
+
+    DEBUG("")
+
 
 
     // try loading a config in from the first argument
@@ -29,6 +35,8 @@ int main( int argc, char* argv[] ){
             Logger::setGlobalLogLevel( Logger::llAll );
             XmlCanvas can( &cfg, "Canvas" );
 
+            RooPlotLib rpl;
+
             can.saveImage("prePad.pdf");
 
             can.activatePad("pad1");
@@ -41,7 +49,8 @@ int main( int argc, char* argv[] ){
             can.activatePad("pad2");
             TH1D * h = new TH1D( "h", "h", 100, -10, 10 );
             h->FillRandom("gaus", 10000);
-            h->Draw();
+            //rpl.style( h ).set( "title", "Gaussian" ).set( "lc", kRed ).set( "xr", -4, 4 ).draw();
+            rpl.style( h ).set( &cfg, "Style" ).draw();
 
             can.activatePad("pad3");
             h->Draw();

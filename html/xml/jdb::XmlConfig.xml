@@ -93,6 +93,17 @@ Very useful for automating tasks, building lots of objects, etc.
       <type builtin="yes" name="int" />
     </argument>
   </method>
+  <method id="jdb::XmlConfig::cn" name="cn">
+    <brief>*</brief>
+    <doc>Sets the current node so that relative node paths can be used
+</doc>
+    <return>
+      <type name="string" />
+    </return>
+    <argument id="jdb::XmlConfig::cn::nodePath" name="nodePath">
+      <type name="string" />
+    </argument>
+  </method>
   <method id="jdb::XmlConfig::depthOf" name="depthOf">
     <brief> Determines the depth of a node</brief>
     <doc>Calulates the depth of the node from the root node
@@ -395,15 +406,19 @@ The node path "category.sub.a" yields "a"
     <type name="RapidXmlWrapper" qualifier="*" />
   </field>
   <field access="protected" id="jdb::XmlConfig::logger" name="logger">
+    <brief>Logger instance</brief>
     <type name="Logger" ref="jdb::Logger#jdb::Logger" />
   </field>
   <field access="protected" id="jdb::XmlConfig::nodeExists" name="nodeExists">
+    <brief>Node existance</brief>
     <type name="map&lt;string, bool&gt;" />
   </field>
   <field access="protected" id="jdb::XmlConfig::data" name="data">
+    <brief>data - map of node path to string representation</brief>
     <type name="map&lt;string, string&gt;" />
   </field>
   <field access="protected" id="jdb::XmlConfig::isAttribute" name="isAttribute">
+    <brief>does the nodepath point to an attribute value</brief>
     <type name="map&lt;string, bool&gt;" />
   </field>
   <field access="protected" id="jdb::XmlConfig::filename" name="filename">
@@ -434,7 +449,12 @@ The node path "category.sub.a" yields "a"
     <brief>The delimeter for index open - Default is "]"</brief>
     <type name="string" />
   </field>
+  <field access="protected" id="jdb::XmlConfig::currentNode" name="currentNode">
+    <brief>Current node for relative path finding</brief>
+    <type name="string" />
+  </field>
   <typedef access="protected" id="jdb::XmlConfig::map_it_type" name="map_it_type">
+    <brief>typedef of commonly used iterator for the class</brief>
     <type name="map&lt;string, string&gt;" />
   </typedef>
   <method abstract="yes" access="protected" id="jdb::XmlConfig::manualToLower" name="manualToLower">

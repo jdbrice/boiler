@@ -1,13 +1,16 @@
-#ifdef __CINT__
+#ifdef __ROOTCLING__
+// turns off dictionary generation for all
+#pragma link off all class;
+#pragma link off all function;
+#pragma link off all global;
+#pragma link off all typedef;
+// link to nested scope
+#pragma link C++ nestedclass;
 
-#pragma link off all globals;
-#pragma link off all classes;
-#pragma link off all C++ functions;
-#pragma link C++ nestedclasses;
+#pragma link C++ namespace jdb;
+#pragma link C++ defined_in jdb;
 
-#pragma link C++ defined_in "include/jdb/StringUtils.h";
-
-#pragma link C++ class jdb::Logger-;
+#pragma link C++ class jdb::Logger+;
 #pragma link C++ class jdb::Reporter-;
 #pragma link C++ class jdb::XmlConfig-;
 
@@ -23,9 +26,6 @@
 #pragma link C++ class jdb::HistoAnalyzer-;
 
 #pragma link C++ class jdb::DataSource-;
-//#pragma link C++ class jdb::CutExplorer-;
-//#pragma link C++ class jdb::CutSequence-;
-
-
+#pragma link C++ class jdb::RooPlotLib-;
 
 #endif

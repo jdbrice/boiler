@@ -48,6 +48,9 @@ public:
             createPads( cfg, _nodePath );
 
             cfg->cn(preNode);
+        } else {
+            TRACE("No XmlConfig Given : Creating Default Canvas" );
+            rootCanvas = new TCanvas( "XmlCanvas", "XmlCanvas", 800, 1200 );
         }
 
     }

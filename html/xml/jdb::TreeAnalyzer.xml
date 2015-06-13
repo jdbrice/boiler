@@ -52,6 +52,10 @@ each job writes out to different files.
     <brief>Node path in config file to the root for everything related to this job</brief>
     <type name="string" />
   </field>
+  <field access="protected" id="jdb::TreeAnalyzer::outputPath" name="outputPath">
+    <brief>Basepath for output of data and reports</brief>
+    <type name="string" />
+  </field>
   <field access="protected" id="jdb::TreeAnalyzer::book" name="book">
     <brief>Store project histograms and data</brief>
     <type name="HistoBook" qualifier="*" ref="jdb::HistoBook#jdb::HistoBook" />
@@ -71,6 +75,10 @@ each job writes out to different files.
   <field access="protected" id="jdb::TreeAnalyzer::ds" name="ds">
     <brief>Sets up a DataSource if there is a DataSource node</brief>
     <type name="DataSource" qualifier="*" ref="jdb::DataSource#jdb::DataSource" />
+  </field>
+  <field access="protected" id="jdb::TreeAnalyzer::jobPrefix" name="jobPrefix">
+    <brief>Prefix for this job ( optional, used for parallel)</brief>
+    <type name="string" />
   </field>
   <method access="protected" id="jdb::TreeAnalyzer::analyzeEvent" name="analyzeEvent" virtual="yes">
     <brief> Used to analyze events</brief>

@@ -37,6 +37,7 @@ It can be used from the ROOT interpreter or as a library for compiled projects.<
   <class name="Reporter" ref="jdb::Reporter#jdb::Reporter">
     <brief>Create PDF Reports in ROOT</brief>
   </class>
+  <class name="RooPlotLib" ref="jdb::RooPlotLib#jdb::RooPlotLib" />
   <class name="TaskProgress" ref="jdb::TaskProgress#jdb::TaskProgress">
     <brief>Task Progress</brief>
   </class>

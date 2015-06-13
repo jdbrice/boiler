@@ -11,6 +11,11 @@ namespace jdb {
         Logger::log.setLogLevel( ll );
 	}
 
+    void Logger::setGlobalLogLevel( string ll ){
+        Logger::llGlobal = Logger::logLevelFromString( ll );
+        Logger::log.setLogLevel( ll );
+    }
+
 	int Logger::getGlobalLogLevel() { return llGlobal; }
 
 	void Logger::setGlobalColor( bool state  ){

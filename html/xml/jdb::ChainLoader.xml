@@ -106,8 +106,7 @@ tree name.
       <doc>the index of the first file to include</doc>
       <type builtin="yes" name="int" />
     </argument>
-    <argument id="jdb::ChainLoader::loadRange::lastFile" name="lastFile">
-      <doc>the index of the last file to include</doc>
+    <argument id="jdb::ChainLoader::loadRange::nFiles" name="nFiles">
       <type builtin="yes" name="int" />
     </argument>
   </method>

@@ -38,6 +38,10 @@
     <brief>Log Warning messages and below ( Warning, Error )</brief>
     <type builtin="yes" name="int" qualifier=" const" />
   </variable>
+  <variable id="jdb::Logger::log" name="log">
+    <brief>Singelton Instance</brief>
+    <type name="Logger" ref="jdb::Logger#jdb::Logger" />
+  </variable>
   <variable id="jdb::Logger::showColors" name="showColors">
     <type builtin="yes" name="bool" />
   </variable>
@@ -209,6 +213,14 @@ Sets the global log level used by Logger instances
       <type builtin="yes" name="int" />
     </argument>
   </method>
+  <method abstract="yes" id="jdb::Logger::setGlobalLogLevel" name="setGlobalLogLevel" static="yes">
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+    <argument id="jdb::Logger::setGlobalLogLevel::ll" name="ll">
+      <type name="string" />
+    </argument>
+  </method>
   <method id="jdb::Logger::setLogLevel" name="setLogLevel">
     <doc>
 Set the LogLevel for this Logger instance
@@ -219,6 +231,18 @@ Set the LogLevel for this Logger instance
     </return>
     <argument id="jdb::Logger::setLogLevel::ll" name="ll">
       <type builtin="yes" name="int" />
+    </argument>
+  </method>
+  <method id="jdb::Logger::setLogLevel" name="setLogLevel">
+    <doc>
+Set the LogLevel for this Logger instance
+@param ll 	LogLEvel as string
+</doc>
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+    <argument id="jdb::Logger::setLogLevel::ll" name="ll">
+      <type name="string" />
     </argument>
   </method>
   <method id="jdb::Logger::summary" name="summary">

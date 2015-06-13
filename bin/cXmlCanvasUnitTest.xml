@@ -18,6 +18,7 @@
 
     <Plot name="h" on="FitResults.pad1" style="style.s1" />
 
+    <Style name="events" title="Normal Dist" stats="0" draw="pe" xr="-5, 8" lw="5" lineColor="1" />
 
 
 </config>

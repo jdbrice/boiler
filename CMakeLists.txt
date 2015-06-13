@@ -28,7 +28,7 @@ set(SOURCE_FILES
     include/jdb/Utils.h
     include/jdb/XmlConfig.h
     include/rapidXML.h
-
+	include/jdb/RooPlotLib.h
 
     # Source Files
     src/ChainLoader.cpp
@@ -43,6 +43,7 @@ set(SOURCE_FILES
     src/TreeAnalyzer.cpp
     src/TreeMap.cpp
     src/XmlConfig.cpp
+    src/RooPlotLib.cpp
 
     #UnitTesting
     include/UnitTest/UnitTest.h

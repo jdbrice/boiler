@@ -80,6 +80,12 @@
       <doc>The number of divisions vertically</doc>
       <type builtin="yes" name="int" />
     </argument>
+    <argument id="jdb::Reporter::newPage::marginX" name="marginX">
+      <type builtin="yes" name="float" />
+    </argument>
+    <argument id="jdb::Reporter::newPage::marginY" name="marginY">
+      <type builtin="yes" name="float" />
+    </argument>
   </method>
   <method abstract="yes" id="jdb::Reporter::next" name="next">
     <brief> Pushes the active pad</brief>

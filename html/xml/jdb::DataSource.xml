@@ -95,6 +95,11 @@ This method is required for Alias or Evaluated Leaves</doc>
       <type name="string" />
     </argument>
   </method>
+  <method id="jdb::DataSource::getTreeName" name="getTreeName">
+    <return>
+      <type name="string" />
+    </return>
+  </method>
   <method id="jdb::DataSource::operator()" name="operator()">
     <brief>() overload</brief>
     <return>
