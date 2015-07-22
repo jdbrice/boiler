@@ -20,10 +20,10 @@
 #include <fstream>
 using namespace std;
 
-/**
- * ROOT
- */
+
+// ROOT
 #include "TChain.h"
+#include "TBranchElement.h"
 
 namespace jdb{
 
@@ -107,17 +107,17 @@ namespace jdb{
 
 		template <typename T>
 		inline T get(string name, int i = 0 ){
-			lg.debug(__FUNCTION__) << "AGetting " << name << endl;
+			DEBUG( "Checking for valid pointer at " << name );
 			if ( !data[ name ]){
 				lg.debug(__FUNCTION__) << name << "[ " << i << " ] Invalid data" << endl;
 				return numeric_limits<T>::quiet_NaN();	
 			}
-			lg.debug(__FUNCTION__) << "BGetting " << name << endl;
+			DEBUG( "Checking for valid length" )
 			if ( i >= leafLength[ name ] || i < 0 ){
 				lg.debug(__FUNCTION__) << name << "[ " << i << " ] Out Of Bounds" << endl;
 				return numeric_limits<T>::quiet_NaN();
 			}
-			lg.debug(__FUNCTION__) << "CGetting " << name << endl; 
+			DEBUG( "Casting to datatype and returning" )
 			T * pData = (T*)data[ name ];
 			return pData[ i ];
 		}
@@ -195,6 +195,8 @@ namespace jdb{
 		// Loads the tree metadata from the Cache
 		void loadLengthsFromCache();
 
+		// maps the sub branches and leaves of a branch
+		void mapBranch( TBranchElement * br, string name );
 
 		// Addresses all branches in the Tree 
 		void addressBranches();

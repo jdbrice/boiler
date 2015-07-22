@@ -30,6 +30,7 @@ protected:
     map<string, unique_ptr<XmlPad> > pads;
 
 public:
+    string getName() { return name; }
 
     XmlCanvas( XmlConfig * cfg, string _nodePath ) {
         TRACE( "" );
@@ -72,6 +73,9 @@ public:
 
         if ( pads.find( padName ) != pads.end() ){
             pads[ padName ]->cd();
+        } else {
+            ERROR( "Requested pad : " << padName << " unavailable" )
+            rootCanvas->cd();
         }
     }
 

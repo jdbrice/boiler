@@ -145,6 +145,7 @@ namespace jdb{
 		void make1F( string name, string title, int nBins, double low, double hi );
 		void make1D( string name, string title, int nBins, double low, double hi );
 		void make1D( string name, string title, int nBins, const Double_t* bins );
+		
 		void make2D( 	string name, string title, 
 						int nBinsX, double lowX, double hiX, int nBinsY, double lowY, double hiY );
 		void make2D( 	string name, string title, 
@@ -153,6 +154,22 @@ namespace jdb{
 						int nBinsX, double x1, double x2, int nBinsY, const Double_t* yBins );
 		void make2D( 	string name, string title, 
 						int nBinsX, const Double_t* xBins, int nBinsY, const Double_t*yBins );
+
+		void make3D( 	string name, string title, 
+						int nBinsX, double lowX, double hiX, int nBinsY, double lowY, double hiY, int nBinsZ, double lowZ, double hiZ );
+		/*void make3D( 	string name, string title, 
+						int nBinsX, const Double_t* xBins, int nBinsY, double lowY, double hiY, int nBinsZ, double lowZ, double hiZ );
+		void make3D( 	string name, string title, 
+						int nBinsX, double lowX, double hiX, int nBinsY, const Double_t* yBins, int nBinsZ, double lowZ, double hiZ );
+		void make3D( 	string name, string title, 
+						int nBinsX, double lowX, double hiX, int nBinsY, double lowY, double hiY, int nBinsZ, const Double_t* zBins );*/
+		
+		// TODO: implement these and add remaining definitions
+		// TODO: test the 3D histograms
+		// TODO: add a fill method for 3d histograms
+	
+		void make3D( 	string name, string title, 
+		 				int nBinsX, const Double_t* xBins, int nBinsY, const Double_t*yBins, int nBinsZ, const Double_t*zBins );
 		
 		/*
 		 * Makes a histogram from a node in a config file 

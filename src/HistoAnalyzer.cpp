@@ -28,9 +28,10 @@ namespace jdb{
 		else 
 			reporter = nullptr;
 
-	    logger->info(__FUNCTION__) << " Loading data from " << config->getString( np + "input.data:url" ) << endl;
+        INFO( "Looking for input @ input.data:url" )
+	    INFO( " Loading data from " << config->getString( np + "input.data:url" ) )
 		inFile = new TFile( cfg->getString( np+"input.data:url" ).c_str(), "READ" );
-		logger->info(__FUNCTION__) << "Complete" << endl;
+		INFO( "Input file : " << inFile )
 
 	}
 

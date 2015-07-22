@@ -1,9 +1,15 @@
-#object types
+#images
 *.pdf
+*.eps
+*.png
+*.jpg
+*.jpeg
+#data files
+*.root
+#object types
 *.o
 /src/dictionary.*
 /lib/*
-/script/*.root
 /script/.DataSource*
 /script/sandbox/
 

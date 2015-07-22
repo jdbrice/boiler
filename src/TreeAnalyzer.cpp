@@ -45,7 +45,11 @@ namespace jdb{
 
 	    // create the book
 	    logger->info(__FUNCTION__) << " Creating book " << config->getString( nodePath +  "output.data", "TreeAnalyzer" ) << endl;
-	    book = new HistoBook( outputPath + jobPrefix + config->getString( nodePath +  "output.data", "TreeAnalyzer" ), config, "", "" );
+	    skipMake = cfg->getBool( nodePath + "SkipMake", false );
+	    if ( !skipMake )
+		    book = new HistoBook( outputPath + jobPrefix + config->getString( nodePath +  "output.data", "TreeAnalyzer" ), config, "", "" );
+		else
+			book = new HistoBook( outputPath + jobPrefix + "_copy_" + config->getString( nodePath +  "output.data", "TreeAnalyzer" ) , config, outputPath + jobPrefix + config->getString( nodePath +  "output.data", "TreeAnalyzer" ), "" );
 	    	    
 	   	// Default reporter
 	    if ( "" == jobPrefix && cfg->exists( np+"Reporter.output:url" ) ) {
@@ -97,42 +101,43 @@ namespace jdb{
 		/**
 		 * Run the pre event loop
 		 */
-		book->cd( );
-		preEventLoop();
+		if ( !skipMake ){
+			book->cd( );
+			preEventLoop();
 
 
-		TaskTimer t;
-		t.start();
+			TaskTimer t;
+			t.start();
 
-		Int_t nEvents = (Int_t)chain->GetEntries();
-		nEventsToProcess = cfg->getInt( nodePath+"input.dst:nEvents", nEvents );
-		if ( ds )
-			nEventsToProcess = cfg->getInt( nodePath+"DataSource:maxEvents", nEvents );
-		if ( nEventsToProcess > nEvents )
-			nEventsToProcess = nEvents;
-		
-		logger->info(__FUNCTION__) << "Loaded: " << nEventsToProcess << " events " << endl;
-		
-		TaskProgress tp( "Event Loop", nEventsToProcess );
-		// loop over all events
-		for(Int_t i=0; i<nEventsToProcess; i++) {
-	    	chain->GetEntry(i);
+			Int_t nEvents = (Int_t)chain->GetEntries();
+			nEventsToProcess = cfg->getInt( nodePath+"input.dst:nEvents", nEvents );
+			if ( ds )
+				nEventsToProcess = cfg->getInt( nodePath+"DataSource:maxEvents", nEvents );
+			if ( nEventsToProcess > nEvents )
+				nEventsToProcess = nEvents;
+			
+			logger->info(__FUNCTION__) << "Loaded: " << nEventsToProcess << " events " << endl;
+			
+			TaskProgress tp( "Event Loop", nEventsToProcess );
+			// loop over all events
+			for(Int_t i=0; i<nEventsToProcess; i++) {
+		    	chain->GetEntry(i);
 
-	    	tp.showProgress( i );
+		    	tp.showProgress( i );
 
-	    	analyzeEventBeforeCuts();
+		    	analyzeEventBeforeCuts();
 
-	    	if ( !keepEvent() ){
-	    		analyzeRejectedEvent();
-	    		continue;
-	    	}
+		    	if ( !keepEvent() ){
+		    		analyzeRejectedEvent();
+		    		continue;
+		    	}
 
-	    	analyzeEvent();
-	    	
-	    	
-		} // end loop on events
-		logger->info(__FUNCTION__) << "Completed in " << t.elapsed() << endl;
-
+		    	analyzeEvent();
+		    	
+		    	
+			} // end loop on events
+			logger->info(__FUNCTION__) << "Completed in " << t.elapsed() << endl;
+		}
 		/**
 		 * Run the post event loop
 		 */

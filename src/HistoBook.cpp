@@ -57,7 +57,6 @@ namespace jdb{
 		}
 
 		saveOnExit( true );
-
 	}	// Constructor
 
 	/**
@@ -148,10 +147,6 @@ namespace jdb{
 				}
 			}	
 		}
-
-		
-
-
 	}	// save
 
 	/**
@@ -330,6 +325,14 @@ namespace jdb{
 				else 
 					logger->warn(__FUNCTION__) << "Invalid Bins given for " << hName << endl;
 
+			} else if ( "3D" == type || ( (bx->nBins() > 0) && (by->nBins() > 0) && (bz->nBins() > 0) )){
+
+				if ( bx->nBins() >= 1 && by->nBins() >= 1 && bz->nBins() >= 1 )
+					make3D( hName, hTitle,
+						bx->nBins(), bx->bins.data(), by->nBins(), by->bins.data(), bz->nBins(), bz->bins.data() );
+				else 
+					logger->warn(__FUNCTION__) << "Invalid Bins given for " << hName << endl;
+
 			} else {
 				logger->warn(__FUNCTION__) << "Histogram " << hName << " was not made "<< endl;
 			}
@@ -446,6 +449,35 @@ namespace jdb{
 
 		this->add( name, h );
 	}	//make2D
+
+	void HistoBook::make3D( 	string name, string title, 
+						int nBinsX, double lowX, double hiX, int nBinsY, double lowY, double hiY, int nBinsZ, double lowZ, double hiZ ){
+		logger->info(__FUNCTION__) << "TH3D( " << name << ", " << title << ", " << nBinsX << ", " << lowX << ", " << hiX << ", " << nBinsY << ", " << lowY << ", " << hiY << ", " << nBinsZ << ", " << lowZ << ", " << hiZ << " )" << endl;
+		TH3D* h;
+
+		h = new TH3D( name.c_str(), title.c_str(), nBinsX, lowX, hiX, nBinsY, lowY, hiY, nBinsZ, lowZ, hiZ );
+
+		this->add( name, h );
+	}
+	/*void make3D( 	string name, string title, 
+					int nBinsX, const Double_t* xBins, int nBinsY, double lowY, double hiY, int nBinsZ, double lowZ, double hiZ );
+	void make3D( 	string name, string title, 
+					int nBinsX, double lowX, double hiX, int nBinsY, const Double_t* yBins, int nBinsZ, double lowZ, double hiZ );
+	void make3D( 	string name, string title, 
+					int nBinsX, double lowX, double hiX, int nBinsY, double lowY, double hiY, int nBinsZ, const Double_t* zBins );
+	*/
+	// TODO: implement these and add remaining definitions
+	// TODO: test the 3D histograms
+	// TODO: add a fill method for 3d histograms
+
+	void HistoBook::make3D( 	string name, string title, 
+	 				int nBinsX, const Double_t* xBins, int nBinsY, const Double_t*yBins, int nBinsZ, const Double_t*zBins ){
+		logger->info(__FUNCTION__) << "TH3D( " << name << ", " << title << ", " << nBinsX << ", " << "[]" << ", " << nBinsY << ", []" << ", " << nBinsZ << ", []" <<  " )" << endl;
+		TH3D* h;
+		h = new TH3D( name.c_str(), title.c_str(), nBinsX, xBins, nBinsY, yBins, nBinsZ, zBins );
+
+		this->add( name, h );
+	}
 
 
 	TH1* HistoBook::get( string name, string sdir  ){
@@ -752,16 +784,12 @@ namespace jdb{
 
 		return this;
 
-
-
 	}
 	HistoBook * HistoBook::set( string nodeName ){
 		if ( config )
 			set( config, nodeName );
 		return this;
 	}
-
-
 
 	HistoBook* HistoBook::draw(string name, Option_t* opt ){
 

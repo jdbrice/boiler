@@ -22,13 +22,13 @@ set(SOURCE_FILES
     include/jdb/LoggerConfig.h
     include/jdb/RapidXmlWrapper.h
     include/jdb/Reporter.h
-    include/jdb/StringUtils.h
     include/jdb/TreeAnalyzer.h
     include/jdb/TreeMap.h
     include/jdb/Utils.h
     include/jdb/XmlConfig.h
     include/rapidXML.h
 	include/jdb/RooPlotLib.h
+	include/jdb/RooPlotter.h
 
     # Source Files
     src/ChainLoader.cpp
@@ -50,7 +50,10 @@ set(SOURCE_FILES
     src/UnitTest/UnitTest.cpp
     include/UnitTest/TreeAnalyzerUnitTest.h
     src/UnitTest/TreeAnalyzerUnitTest.cpp
-    src/UnitTest/HistoBinsUnitTest.cpp)
+    include/UnitTest/HistoBinsUnitTest.h
+    src/UnitTest/HistoBinsUnitTest.cpp
+    include/UnitTest/RooPlotterUnitTest.h
+    src/UnitTest/RooPlotterUnitTest.cpp)
 
 
 include_directories($ENV{ROOTSYS}/include)

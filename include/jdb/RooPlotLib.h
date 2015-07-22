@@ -18,7 +18,10 @@ using namespace std;
 // ROOT
 #include "TH1.h"
 #include "TGraph.h"
+#include "TF1.h"
 
+// TODO: Add @UnitTest for RooPlotLib (1)
+// TODO: Add @documentation for RooPlotLib (0)
 
 namespace jdb{
 	class RooPlotLib {

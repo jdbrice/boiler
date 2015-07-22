@@ -9,7 +9,7 @@
  * 
  */
 jdb::RooPlotLib::RooPlotLib()  {
-    DEBUG("");
+    DEBUG("")
 	// create a default canvas for generic plotting
 	//canvas[ "default" ] = shared_ptr<XmlCanvas>( new XmlCanvas( nullptr, "" ) );
 
@@ -20,11 +20,11 @@ jdb::RooPlotLib::RooPlotLib()  {
  * Dtor
  */
 jdb::RooPlotLib::~RooPlotLib(){
-    DEBUG("");
+    DEBUG("")
 }
 
 bool jdb::RooPlotLib::validObject( TObject * obj ){
-    DEBUG("( " << obj << " )");
+    DEBUG("( " << obj << " )")
 	if ( nullptr == obj  )
 		return false;
 
@@ -35,12 +35,8 @@ bool jdb::RooPlotLib::validObject( TObject * obj ){
 
 
 RooPlotLib & jdb::RooPlotLib::style( TObject * obj) {
-    DEBUG("( " << obj << " )");
-	//if ( validObject( obj ) )
-		styling = obj;
-	//else 
-	//	styling = nullptr;
-
+    DEBUG("( " << obj << " )")
+    styling = obj;
 	return *this;
 }
 
@@ -73,53 +69,93 @@ RooPlotLib &jdb::RooPlotLib::set( string option, vector<string> params ){
 
 	TH1 * h 	= dynamic_cast<TH1*>(styling);
 	TGraph * g 	= dynamic_cast<TGraph*>(styling);
+	TF1 * fn 	= dynamic_cast<TF1*>(styling);
 
 
 	// get the X axis
 	TAxis * ax = nullptr;
 	if ( nullptr != h ) ax = h->GetXaxis();
 	if ( nullptr != g ) ax = g->GetXaxis();
+	if ( nullptr != fn ) ax = fn->GetXaxis();
 	// get the y axis
 	TAxis * ay = nullptr;
 	if ( nullptr != h ) ay = h->GetYaxis();
 	if ( nullptr != g ) ay = g->GetYaxis();
+	if ( nullptr != fn ) ax = fn->GetYaxis();
 
 	// set some general properties
 	if ( "title" == option || "t" == option ){
 		if ( nullptr != h ) h->SetTitle( params[0].c_str() );
 		if ( nullptr != g ) g->SetTitle( params[0].c_str() );
+		if ( nullptr != fn ) fn->SetTitle( params[0].c_str() );
+	}
+	// TODO: not really working
+	if ( "titlesize" == option || "ts" == option ){
+		if ( nullptr != h ) h->SetTitleSize( atof(params[0].c_str()) );
+		//if ( nullptr != g ) g->SetTitleSize( params[0].c_str() ); These don't exist?
+		//if ( nullptr != fn ) fn->SetTitleSize( params[0].c_str() );
 	}
 	if ( "draw" == option ){
 		drawOption = params[ 0 ];
 	}
 
 	// Axis Stuff
-	if ( ("x" == option || "xtitle" == option) && nullptr != ax ){
-		ax->SetTitle( params[ 0 ].c_str() );
-	}
-	if ( ("y" == option || "ytitle" == option ) && nullptr != ay ){
-		ay->SetTitle( params[ 0 ].c_str() );
-	}
-	if ( ("xo" == option || "xoffset" == option ) && nullptr != ax ){
-		ax->SetTitleOffset( atof(params[ 0 ].c_str()) );
-	}
-	if ( ("yo" == option || "yoffset" == option ) && nullptr != ay ){
-		ay->SetTitleOffset( atof(params[ 0 ].c_str()) );
-	}
+	// X-Axis
+	if ( nullptr != ax ){
+		if ( ("x" == option || "xtitle" == option) ){
+			ax->SetTitle( params[ 0 ].c_str() );
+		}
+		else if ( ("xto" == option || "xtitleoffset" == option ) ){
+			ax->SetTitleOffset( atof(params[ 0 ].c_str()) );
+		}
+		else if ( ("xts" == option || "xtitlesize" == option ) ){
+			ax->SetTitleSize( atof(params[ 0 ].c_str()) );
+		}
+		// Label
+		else if ( ("xlo" == option || "xlabeloffset" == option )  ){
+			ax->SetLabelOffset( atof(params[ 0 ].c_str()) );
+		}
+		else if ( ("xls" == option || "xlabelsize" == option ) ){
+			ax->SetLabelSize( atof(params[ 0 ].c_str()) );
+		}
 
-	// Axis Stuff (number)
-	if ( ("xrange" == option || "xr" == option ) && nullptr != ax ){
-		ax->SetRangeUser( atof(params[ 0 ].c_str()), atof(params[ 1 ].c_str()) );
+		// Range
+		if ( ("xrange" == option || "xr" == option )  ){
+			ax->SetRangeUser( atof(params[ 0 ].c_str()), atof(params[ 1 ].c_str()) );
+		}
+		if ( ("xbinrange" == option || "xbr" == option )  ){
+			ax->SetRange( atof(params[ 0 ].c_str()), atof(params[ 1 ].c_str()) );
+		}
 	}
-	if ( ("xbinrange" == option || "xbr" == option ) && nullptr != ax ){
-		ax->SetRange( atof(params[ 0 ].c_str()), atof(params[ 1 ].c_str()) );
+	// Y-Axis
+	if ( nullptr != ay ){
+		// Titl1
+		if ( ("y" == option || "ytitle" == option )  ){
+			ay->SetTitle( params[ 0 ].c_str() );
+		} else if ( ("yto" == option || "ytitleoffset" == option )  ){
+			ay->SetTitleOffset( atof(params[ 0 ].c_str()) );
+		}
+		else if ( ("yts" == option || "ytitlesize" == option ) ){
+			ay->SetTitleSize( atof(params[ 0 ].c_str()) );
+		}
+		// Label
+		else if ( ("ylo" == option || "ylabeloffset" == option )  ){
+			ay->SetLabelOffset( atof(params[ 0 ].c_str()) );
+		}
+		else if ( ("yls" == option || "ylabelsize" == option ) ){
+			ay->SetLabelSize( atof(params[ 0 ].c_str()) );
+		}
+
+		// Range
+		else if ( ("yrange" == option || "yr" == option )  ){
+			ay->SetRangeUser( atof(params[ 0 ].c_str()), atof(params[ 1 ].c_str()) );
+		}
+		else if ( ("ybinrange" == option || "ybr" == option )  ){
+			ay->SetRange( atof(params[ 0 ].c_str()), atof(params[ 1 ].c_str()) );
+		}
 	}
-	if ( ("yrange" == option || "yr" == option ) && nullptr != ay ){
-		ay->SetRangeUser( atof(params[ 0 ].c_str()), atof(params[ 1 ].c_str()) );
-	}
-	if ( ("ybinrange" == option || "ybr" == option ) && nullptr != ay ){
-		ay->SetRange( atof(params[ 0 ].c_str()), atof(params[ 1 ].c_str()) );
-	}
+	
+	
 
 	// gPad Options
 	if ( "logx" == option && nullptr != gPad )
@@ -129,6 +165,7 @@ RooPlotLib &jdb::RooPlotLib::set( string option, vector<string> params ){
 	if ( "logz" == option && nullptr != gPad )
 		gPad->SetLogz( atoi( params[ 0 ].c_str() ) );
 
+	// gStyle Options
 	if ( "stats" == option || "stat" == option || "optstat" == option){
 		gStyle->SetOptStat( atoi( params[ 0 ].c_str() ) );
 	}
@@ -225,6 +262,7 @@ RooPlotLib &jdb::RooPlotLib::draw(){
 
 
 
+// TODO: Add more colors
 int jdb::RooPlotLib::color( string color ) {
     DEBUG("( " + color + " )");
 	transform(color.begin(), color.end(), color.begin(), ::tolower);

@@ -21,4 +21,26 @@
     <Style name="events" title="Normal Dist" stats="0" draw="pe" xr="-5, 8" lw="5" lineColor="1" />
 
 
+    <Report name="spectra" suffix=".pdf" >
+        <!-- create canvases -->
+        <Canvas n="FitResults" title="Fit Results" w="600" h="500" divX="3" divY="2">
+            <Pad n="pad1" gx1="0" gx2="2" gy1="0" gy2="3" rm="0.1"/>
+            <Pad n="pad2" gx1="2" gx2="6" gy1="0" gy2="3" lm="0.1"/>
+            <Pad n="pad3" gx1="0" gx2="6" gy1="3" gy2="6" bm="0.1" tm="0.1"/>
+        </Canvas>
+
+
+        <Page canvas="FitResults" export="rcp.eps">
+            <Plot name="rcp_Pi_p" on="pad1" style="name_or_inline" />
+            <Plot name="rcp_Pi_n" on="pad2" style="name_or_inline" />
+            <Plot name="rcp_K_p" on="pad3" style="name_or_inline" />
+        </Page>
+
+
+
+
+    </Report>
+
+
+
 </config>

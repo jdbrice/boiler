@@ -124,6 +124,18 @@ namespace jdb{
 			string name = ((TBranchElement*)brs->At( i ))->GetName();
 			lg.debug() << "Branch " << name << endl;
 			branchName.push_back( name );
+
+			/*TObjArray * lfs = ((TBranchElement*)brs->At( i ))->GetListOfBranches();
+			int ll = lfs->GetEntries();
+
+			for ( int j = 0; j < ll; j++ ){
+				string tName = ((TLeafElement*)lfs->At( j ))->GetTypeName();
+				string lname = ((TLeafElement*)lfs->At( j ))->GetName();
+				lg.debug() << tName << " " << name << "." << lname << endl;
+			}*/
+
+			mapBranch( ((TBranchElement*) brs->At( i ) ), name );
+
 		}
 
 
@@ -140,11 +152,12 @@ namespace jdb{
 			string tName = ((TLeafElement*)lfs->At( i ))->GetTypeName();
 			string name = ((TLeafElement*)lfs->At( i ))->GetName();
 			string title = ((TLeafElement*)lfs->At( i ))->GetTitle();
+			string bName = ((TLeafElement*)lfs->At( i ))->GetBranch()->GetName();
 
-			lg.debug() << tName << " " << name << endl;
-			leafName.push_back( name );
+			//lg.debug() << tName << " " << name << " : " << bName << endl;
+			//leafName.push_back( name );
 
-			leafType[ name ] = tName; 
+			//leafType[ name ] = tName; 
 			
 		}
 
@@ -233,7 +246,27 @@ namespace jdb{
 		TLeaf * l = chain->GetLeaf( name.c_str() );
 		if ( !l ){
 			lg.debug( __FUNCTION__ ) << name << " is not a leaf" << endl;
-			return dim;
+			DEBUG( "Trying to get Branch->Leaf" )
+			TBranch * b = chain->GetBranch( name.c_str() );
+			if ( b ){
+
+				size_t dotp = name.find( '.' );
+				if ( dotp != std::string::npos ){
+					string lname = name.substr( dotp + 1);
+					DEBUG( "Now looking for '" << lname << "' in the branch " << name  )
+
+					if ( b->GetLeaf( lname.c_str() ) ){
+						l = b->GetLeaf( lname.c_str() );
+						DEBUG( "Got usable branch" ); 
+					} else 
+						return dim;
+				} else 
+					return dim;
+
+			} else {
+				DEBUG( "Unable to find length for " << name )
+				return dim;
+			}
 		}
 
 		int nElem = 0;
@@ -327,7 +360,7 @@ namespace jdb{
 		for ( int i = 0; i < leafName.size(); i++ ){
 
 			string name = leafName[ i ];
-			
+			DEBUG( "Leaf Name = " << name )
 			//Skip "leaves" for top level branches since these are already taken care of
 			TString addressName(name);
 			if ( addressName.EndsWith( "_" ) )	
@@ -356,8 +389,14 @@ namespace jdb{
 					lg.debug(__FUNCTION__) << l->GetTitle() << " : " << name << " --> " << nName << endl;
 					name = nName;
 				}	
+
+				TBranch * b = l->GetBranch();
+				if ( b )
+					DEBUG( "Leaf's Branch Address : " << b  )
 			}
 			
+
+
 			// Address the leaves
 			branches[ name ] = 0;
 			chain->SetBranchAddress( name.c_str(), data[ name ], &branches[ name ] );
@@ -463,6 +502,43 @@ namespace jdb{
 			int ls = cache->getInt( cli[ i ] +":size" );
 			leafLength[ ln ] = ls;
 		}
+	}
+
+
+	void DataSource::mapBranch( TBranchElement* br, string pname ){
+		//DEBUG( "branch=" << br << " name=" << pname )
+		TObjArray * brs = br->GetListOfBranches();
+		int l = brs->GetEntries();
+
+		for ( int i = 0; i < l; i++ ){
+			string name = ((TBranchElement*)brs->At( i ))->GetName();
+			//lg.debug() <<  name << endl;
+
+			mapBranch( ((TBranchElement*)brs->At( i )), name );
+		}
+
+		TObjArray * lfs = br->GetListOfLeaves();
+		l = lfs->GetEntries();
+
+		for ( int i = 0; i < l; i++ ){
+			string tName = ((TLeafElement*)lfs->At( i ))->GetTypeName();
+			string name = ((TLeafElement*)lfs->At( i ))->GetName();
+			
+
+			if ( !((TLeafElement*)lfs->At( i ))->IsOnTerminalBranch() ){
+				lg.debug() << tName << " " <<  pname << "." << name << endl;
+
+				leafName.push_back( pname + "." + name );
+				leafType[ pname + "." + name ] = tName; 
+			}
+			else {
+				DEBUG( tName << " " <<  pname );
+				leafName.push_back( pname );
+				leafType[ pname ] = tName;	
+			}
+		}
+
+
 	}
 
 

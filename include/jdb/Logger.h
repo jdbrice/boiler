@@ -7,10 +7,15 @@
 #define WARN(x)  Logger::log.warn( __func__ ) << x << endl;
 #define ERROR(x) Logger::log.error( __func__ ) << x << endl;
 
-// TODO: add line versions for each log macro - also make them not issue prefix
+// Continued line versions
+// for example:
+// DEBUGL <<  "message"
+// DEBUGL << "continue on same line" << endl;
 #define DEBUGL Logger::log.debug( "", false )
-#define INFOL Logger::log.info(__func__)
-#define TRACEL Logger::log.trace(__func__)
+#define TRACEL Logger::log.trace("", false)
+#define INFOL Logger::log.info("", false)
+#define WARNL Logger::log.warn("", false)
+#define ERRORL Logger::log.error("", false)
 
 
 #include <iostream>

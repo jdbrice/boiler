@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+
+    <job>RooPlotterUnitTest</job>
+
+    <Style name="colz" draw="colz" logz="1" />
+    <Report name="spectra" suffix=".pdf" data="imass_june_06_15.root" >
+        <!-- create canvases -->
+        <Canvas n="FitResults" title="Fit Results" w="600" h="500" divX="3" divY="2">
+            <Pad n="pad1" gx1="0" gx2="2" gy1="0" gy2="3" rm="0.1"/>
+            <Pad n="pad2" gx1="2" gx2="6" gy1="0" gy2="3" lm="0.1"/>
+            <Pad n="pad3" gx1="0" gx2="6" gy1="3" gy2="6" bm="0.1" tm="0.1" rm="0.15"/>
+        </Canvas>
+
+        <Canvas n="Yield" title="Fit Results" w="600" h="500" divX="3" divY="2">
+            <Pad n="pad1" gx1="0" gx2="6" gy1="1" gy2="5" rm="0.1"/>
+        </Canvas>
+
+        <!-- Styles -->
+        <Style name="colz" draw="colz" logz="1" optstat="0"/>
+        <Style name="1dlogy" draw="" logy="1" logz="0" optstat="0"/>
+
+        <Page canvas="FitResults" export="rcp.eps">
+            <Plot name="betaRaw" on="pad1" style="colz" data="override data file here"/>
+            <Plot name="dedxRaw" on="pad2" style="colz" />
+            <Plot name="nlBeta" on="pad3" style="colz" />
+        </Page>
+
+
+        <Page canvas="Yield" export="yield.eps">
+            <Plot name="eta" on="pad1" style="1dlogy" />
+        </Page>
+
+        <Page canvas="Yield" export="yieldTof.eps">
+            <Plot name="tof/tof_n_K_0_0_0" on="pad1" style="1dlogy" />
+        </Page>
+
+
+    </Report>
+
+
+
+</config>
