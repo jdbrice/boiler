@@ -23,8 +23,12 @@ namespace jdb{
   		bool exists = (stat (filename.c_str(), &buffer) == 0);
 	
 		if ( exists ){
-			rxw = new RapidXmlWrapper( filename );
-			rxw->getMaps( &data, &isAttribute, &nodeExists );
+#ifndef __CINT__
+            RapidXmlWrapper rxw( filename );
+#endif
+			rxw.getMaps( &data, &isAttribute, &nodeExists );
+
+            parseIncludes();
 		} else {
 			logger.error(__FUNCTION__) << "Config File \"" << filename << "\" DNE " << endl; 
 		}
@@ -251,7 +255,25 @@ namespace jdb{
 		}
 		return str2;
 	}
-	string XmlConfig::tagName( string nodePath ){
+    string XmlConfig::pathToParent( string nodePath ){
+        vector<string> ntf = split( nodePath, pathDelim );
+        vector<string> attr = split( nodePath, attrDelim );
+        if ( attr.size() >= 2 ){
+            ntf[ ntf.size() - 1 ] = ntf[ ntf.size() - 1 ].substr( 0, ntf[ ntf.size() - 1 ].length() - (attr[ 1].length() + 1) );
+        }
+        if ( ntf.size() >= 2 ){
+            string fullPath ="";
+            for ( int i = 0; i < ntf.size() - 1; i++ ){
+                fullPath += (ntf[ i ] + pathDelim );
+            }
+
+            // remove the final pathDelim
+            fullPath = fullPath.substr( 0, fullPath.length() - 1 );
+            return fullPath;
+        }
+        return "";
+    }
+    string XmlConfig::tagName( string nodePath ){
 		vector<string> ntf = split( nodePath, pathDelim );
 		vector<string> attr = split( nodePath, attrDelim );
 		if ( attr.size() >= 2 ){
@@ -300,7 +322,7 @@ namespace jdb{
 				continue;
 			
 			string parent = (it->first).substr( 0, nodePath.length() );
-			
+			DEBUG( "parent=" << parent <<", shouldBe=" << nodePath )
 			if ( nodePath == parent ){
 				
 				if ( -1 == relDepth ) 
@@ -321,7 +343,7 @@ namespace jdb{
 
 		nodePath = sanitize( nodePath );
 		if ( 	nodePath[ nodePath.length() - 1] != pathDelim && 
-				nodePath[ nodePath.length() - 1] != attrDelim)
+				nodePath[ nodePath.length() - 1] != attrDelim && "" != nodePath)
 			nodePath += pathDelim;
 	
 		vector<string> paths;
@@ -335,9 +357,16 @@ namespace jdb{
 			if ( it->first == nodePath )
 					continue;
 			string parent = (it->first).substr( 0, nodePath.length() );
+            DEBUG( "parent=" << parent << ", tagName=" << tagName( it->first ) )
 			if ( nodePath == parent && (tag == tagName( it->first )) ){
 				paths.push_back( it->first );
-			}
+			} else if ( nodePath != parent ){
+                DEBUG( "Rejected because parent does not match" )
+                DEBUG( "parent=" << parent << ", shouldBe=" << nodePath )
+            } else if ( tag != tagName( it->first ) ){
+                DEBUG( "Rejected because tag does not match" )
+                DEBUG( "tag=" << tagName( it->first ) << ", shouldBe=" << tag )
+            }
 		}
 		return paths;
 
@@ -444,5 +473,49 @@ namespace jdb{
 	}
 
 	//vector<string> nodesWhere( string nodePath, string attr, string equals )
+
+
+	void XmlConfig::parseIncludes() {
+        DEBUG( "" );
+		vector<string> allPaths = childrenOf( "", "Include" );
+
+		INFO( "Found " << allPaths.size() << "Include Tags" );
+
+        for ( string path : allPaths ){
+            INFOL << path << endl;
+            INFOL << "parent path: " << pathToParent( path ) << endl;
+
+            string ifn = getString( path + ":url" );
+            struct stat buffer;
+            bool exists = (stat (ifn.c_str(), &buffer) == 0);
+
+            DEBUG( "file " << ifn << " exists " << exists )
+            if ( exists ){
+#ifndef __CINT__
+                RapidXmlWrapper rxw(  ifn  );
+#endif
+                rxw.includeMaps( pathToParent( path ), &data,  &isAttribute, &nodeExists );
+            }
+
+        }
+
+        report();
+
+	}
+
+    void XmlConfig::report( string nodePath ){
+
+        vector<string> allPaths = childrenOf( nodePath, -1, true );
+
+        for ( string path : allPaths ){
+            string val = getString( path, "" );
+            if ( "" != val )
+                INFO( path << " === " << val )
+        }
+
+    }
+
+
+
 
 }

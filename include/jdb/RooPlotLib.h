@@ -36,11 +36,20 @@ namespace jdb{
 
 	    bool validObject( TObject * obj );
 
+	    XmlConfig * cfgForDefaultStyle = nullptr;
+	    string defaultStylePath ="";
+
 
 	public:
 
 	    RooPlotLib ();
 	    ~RooPlotLib();
+
+	    RooPlotLib &defaultStyle( XmlConfig * _cfg, string stylePath ){
+	    	cfgForDefaultStyle = _cfg;
+	    	defaultStylePath = stylePath;
+	    	return *this;
+	    }
 
 
 	    RooPlotLib &style( TObject * );

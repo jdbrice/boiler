@@ -13,6 +13,8 @@
 using namespace std;
 using namespace rapidxml;
 
+#include "Logger.h"
+using namespace jdb;
 
 class RapidXmlWrapper
 {
@@ -24,6 +26,8 @@ protected:
 	xml_document<> doc;
 public:
 	RapidXmlWrapper( string filename = "config.xml" ){
+
+        DEBUG( "( filename=" << filename << " )" )
 		fname = filename;
 		configFile = getFileContents( filename.c_str() );
 
@@ -126,6 +130,13 @@ public:
 
 		xml_node<> *node = doc.first_node();
 		makeMap( node, "", data, isAttribute, exists );
+
+	}
+
+	void includeMaps( string context, map<string, string> *data, map<string, bool> * isAttribute, map<string, bool> *exists ){
+
+		xml_node<> *node = doc.first_node();
+		makeMap( node, context, data, isAttribute, exists );
 
 	}
 

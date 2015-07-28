@@ -53,7 +53,9 @@ set(SOURCE_FILES
     include/UnitTest/HistoBinsUnitTest.h
     src/UnitTest/HistoBinsUnitTest.cpp
     include/UnitTest/RooPlotterUnitTest.h
-    src/UnitTest/RooPlotterUnitTest.cpp)
+    src/UnitTest/RooPlotterUnitTest.cpp
+    include/UnitTest/XmlConfigUnitTest.h
+    src/UnitTest/XmlConfigUnitTest.cpp)
 
 
 include_directories($ENV{ROOTSYS}/include)

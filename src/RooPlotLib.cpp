@@ -37,6 +37,13 @@ bool jdb::RooPlotLib::validObject( TObject * obj ){
 RooPlotLib & jdb::RooPlotLib::style( TObject * obj) {
     DEBUG("( " << obj << " )")
     styling = obj;
+
+    if ( cfgForDefaultStyle != nullptr ){ 
+    	DEBUG( "Setting Default Style at : " << defaultStylePath )
+    	set( cfgForDefaultStyle, defaultStylePath );
+    }
+    
+
 	return *this;
 }
 

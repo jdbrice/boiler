@@ -3,6 +3,11 @@
 <!-- A root node is required -->
 <!--  It can be anything <root></root>, it just has to exist -->
 <config>
+
+    <job>XmlConfigUnitTest</job>
+
+    <Include url="/Users/danielbrandenburg/bnl/local/work/roobarb/bin/cXmlConfigUnitTestInclude.xml.xsl" />
+
 	<basic>
 		<!-- a basic string variable -->
 		<var1>Hello World</var1>
@@ -37,5 +42,9 @@
 		3 :: 5,
 		4 :: 8
 	</Map>
+
+    <sub>
+        <Include url="/Users/danielbrandenburg/bnl/local/work/roobarb/bin/cXmlConfigUnitTestInclude.xml.xsl" />
+    </sub>
 
 </config>

@@ -3,6 +3,7 @@
 #include "UnitTest/TreeAnalyzerUnitTest.h"
 #include "UnitTest/HistoBinsUnitTest.h"
 #include "UnitTest/RooPlotterUnitTest.h"
+#include "UnitTest/XmlConfigUnitTest.h"
 
 #include "XmlConfig.h"
 #include "XmlCanvas.h"
@@ -32,6 +33,9 @@ int main( int argc, char* argv[] ){
         } else if ( "RooPlotterUnitTest" == job ){
             RooPlotterUnitTest rput;
             rput.test( "General", argc, argv );
+        } else if ( "XmlConfigUnitTest" == job ){
+            XmlConfigUnitTest xcut;
+            xcut.test( "General", argc, argv );
         }
     }
 

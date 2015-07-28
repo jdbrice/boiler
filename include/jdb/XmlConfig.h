@@ -28,9 +28,7 @@ namespace jdb {
 	class XmlConfig
 	{
 	protected:
-	#ifndef __CINT__
-		RapidXmlWrapper *rxw;
-	#endif
+
 
 		// Logger instance
 		Logger logger;
@@ -298,6 +296,17 @@ namespace jdb {
 		 * @return the tag name of the node pointed to by nodePath
 		 */
 		string tagName( string nodePath );
+
+        /* Get the path to the parent of this node
+		 * @nodePath Path to node. See getString(...)
+		 *
+		 * Extracts the path to the parent of this node
+		 * For instnce:
+		 * The node path "category.sub.a" yields "category.sub"
+		 *
+		 * @return the path to the parent of given node
+		 */
+        string pathToParent( string nodePath );
 		
 		/* Get the attribute name from a full path
 		 *@nodePath Path to node. See getString(...)
@@ -336,6 +345,8 @@ namespace jdb {
 			return depthOf( nodePath ) - depthOf( relativeTo );
 		}
 
+        void report( string nodePath = "" );
+
 	protected:
 
 		// A manual case lowing function
@@ -350,6 +361,12 @@ namespace jdb {
 		// A special case version of split used for the map decoding
 		// Allows string delimeter
 		pair<string, string> stringToPair( string &s, string delim  );
+
+
+		// 
+		void parseIncludes(  );
+
+
 
 		
 	};
