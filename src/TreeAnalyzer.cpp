@@ -28,7 +28,7 @@ namespace jdb{
 		}
 
 		//get the output path
-		outputPath = cfg->getString( nodePath + "output:path", "./" );
+		outputPath = cfg->getString( nodePath + "output:path", "" );
 		
 		// make the Logger
 		logger =LoggerConfig::makeLogger( cfg, nodePath + "Logger" );

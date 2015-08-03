@@ -141,6 +141,9 @@ namespace jdb{
 		*/
 		void fill( string name, double bin, double weight = 1);
 		void fill( string name, string binLabel, double weight = 1 );
+		bool setBinContent( string name, int bin, double content );
+		bool setBin( string name, int bin, double content, double error );
+		bool setBinError( string name, int bin, double error );
 
 		void make1F( string name, string title, int nBins, double low, double hi );
 		void make1D( string name, string title, int nBins, double low, double hi );

@@ -528,6 +528,27 @@ namespace jdb{
 			logger->warn(__FUNCTION__) << name << " Does Not Exist, cannot fill " << endl;
 	}	//fill
 
+	bool HistoBook::setBinContent( string name, int bin, double content ){
+		if ( !exists( name ) )
+			return false;
+		get( name )->SetBinContent( bin, content );
+		return true;
+	}
+	bool HistoBook::setBinError( string name, int bin, double error ){
+		if ( !exists( name ) )
+			return false;
+		get( name )->SetBinError( bin, error );
+		return true;
+	}
+	bool HistoBook::setBin( string name, int bin, double content, double error ){
+		if ( !exists( name ) )
+			return false;
+		get( name )->SetBinContent( bin, content );
+		get( name )->SetBinError( bin, error );
+		return true;
+	}
+
+
 	HistoBook* HistoBook::exportAs( string filename ) {
 
 		string outName = styling + ".png";

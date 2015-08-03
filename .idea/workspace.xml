@@ -16,20 +16,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4736f911-4bea-4dfe-bb12-5bd1d0ada3b8" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/UnitTest/XmlConfigUnitTest.cpp" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/include/UnitTest/XmlConfigUnitTest.h" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bin/cXmlConfigUnitTestInclude.xml.xsl" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/dictionary_rdict.pcm" afterPath="$PROJECT_DIR$/src/dictionary_rdict.pcm" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/Debug/roobarb_unit_test" afterPath="$PROJECT_DIR$/bin/Debug/roobarb_unit_test" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CMakeLists.txt" afterPath="$PROJECT_DIR$/CMakeLists.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Engine.cpp" afterPath="$PROJECT_DIR$/src/Engine.cpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/include/jdb/RapidXmlWrapper.h" afterPath="$PROJECT_DIR$/include/jdb/RapidXmlWrapper.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/RooPlotLib.cpp" afterPath="$PROJECT_DIR$/src/RooPlotLib.cpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/include/jdb/RooPlotLib.h" afterPath="$PROJECT_DIR$/include/jdb/RooPlotLib.h" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/XmlConfig.cpp" afterPath="$PROJECT_DIR$/src/XmlConfig.cpp" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/include/jdb/XmlConfig.h" afterPath="$PROJECT_DIR$/include/jdb/XmlConfig.h" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/cXmlConfigUnitTest.xml" afterPath="$PROJECT_DIR$/bin/cXmlConfigUnitTest.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="clionBoiler.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -86,7 +77,7 @@
         <entry file="file://$PROJECT_DIR$/bin/cXmlConfigUnitTest.xml">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="46" column="111" selection-start-line="46" selection-start-column="111" selection-end-line="46" selection-end-column="111" />
+              <caret line="50" column="60" selection-start-line="50" selection-start-column="60" selection-end-line="50" selection-end-column="60" />
               <folding />
             </state>
           </provider>
@@ -105,8 +96,8 @@
       <file leaf-file-name="XmlConfig.cpp" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/XmlConfig.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.9028078">
-              <caret line="518" column="0" selection-start-line="518" selection-start-column="0" selection-end-line="518" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.46652266">
+              <caret line="275" column="49" selection-start-line="275" selection-start-column="49" selection-end-line="275" selection-end-column="49" />
               <folding>
                 <element signature="e#871#1074#0" expanded="false" />
                 <element signature="e#1082#1110#0" expanded="false" />
@@ -129,12 +120,10 @@
                 <element signature="e#5143#5379#0" expanded="false" />
                 <element signature="e#5382#5578#0" expanded="false" />
                 <element signature="e#5581#5963#0" expanded="false" />
-                <element signature="e#5966#6106#0" expanded="false" />
-                <element signature="e#6109#6283#0" expanded="false" />
-                <element signature="e#7522#7765#0" expanded="false" />
+                <element signature="e#6288#6992#0" expanded="false" />
+                <element signature="e#7768#8761#0" expanded="false" />
+                <element signature="e#8764#9939#0" expanded="false" />
                 <element signature="e#9942#10060#0" expanded="false" />
-                <element signature="e#10063#12102#0" expanded="false" />
-                <element signature="e#12105#12503#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -156,7 +145,7 @@
         <entry file="file://$PROJECT_DIR$/include/jdb/XmlConfig.h">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="347" column="41" selection-start-line="347" selection-start-column="41" selection-end-line="347" selection-end-column="41" />
+              <caret line="347" column="14" selection-start-line="347" selection-start-column="14" selection-end-line="347" selection-end-column="14" />
               <folding />
             </state>
           </provider>
@@ -225,10 +214,10 @@
         <option value="$PROJECT_DIR$/CMakeLists.txt" />
         <option value="$PROJECT_DIR$/include/UnitTest/XmlConfigUnitTest.h" />
         <option value="$PROJECT_DIR$/bin/cXmlConfigUnitTestInclude.xml.xsl" />
-        <option value="$PROJECT_DIR$/bin/cXmlConfigUnitTest.xml" />
         <option value="$PROJECT_DIR$/src/UnitTest/XmlConfigUnitTest.cpp" />
-        <option value="$PROJECT_DIR$/include/jdb/XmlConfig.h" />
         <option value="$PROJECT_DIR$/include/jdb/RapidXmlWrapper.h" />
+        <option value="$PROJECT_DIR$/bin/cXmlConfigUnitTest.xml" />
+        <option value="$PROJECT_DIR$/include/jdb/XmlConfig.h" />
         <option value="$PROJECT_DIR$/src/XmlConfig.cpp" />
       </list>
     </option>
@@ -502,7 +491,7 @@
       <window_info id="CMake" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.40846995" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3270751" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32739726" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32739726" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32876712" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -900,14 +889,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/bin/cXmlConfigUnitTest.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="46" column="111" selection-start-line="46" selection-start-column="111" selection-end-line="46" selection-end-column="111" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/UnitTest/XmlConfigUnitTest.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -928,18 +909,26 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/bin/cXmlConfigUnitTest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="50" column="60" selection-start-line="50" selection-start-column="60" selection-end-line="50" selection-end-column="60" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/include/jdb/XmlConfig.h">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="347" column="41" selection-start-line="347" selection-start-column="41" selection-end-line="347" selection-end-column="41" />
+          <caret line="347" column="14" selection-start-line="347" selection-start-column="14" selection-end-line="347" selection-end-column="14" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/XmlConfig.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.9028078">
-          <caret line="518" column="0" selection-start-line="518" selection-start-column="0" selection-end-line="518" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.46652266">
+          <caret line="275" column="49" selection-start-line="275" selection-start-column="49" selection-end-line="275" selection-end-column="49" />
           <folding>
             <element signature="e#871#1074#0" expanded="false" />
             <element signature="e#1082#1110#0" expanded="false" />
@@ -962,12 +951,10 @@
             <element signature="e#5143#5379#0" expanded="false" />
             <element signature="e#5382#5578#0" expanded="false" />
             <element signature="e#5581#5963#0" expanded="false" />
-            <element signature="e#5966#6106#0" expanded="false" />
-            <element signature="e#6109#6283#0" expanded="false" />
-            <element signature="e#7522#7765#0" expanded="false" />
+            <element signature="e#6288#6992#0" expanded="false" />
+            <element signature="e#7768#8761#0" expanded="false" />
+            <element signature="e#8764#9939#0" expanded="false" />
             <element signature="e#9942#10060#0" expanded="false" />
-            <element signature="e#10063#12102#0" expanded="false" />
-            <element signature="e#12105#12503#0" expanded="false" />
           </folding>
         </state>
       </provider>

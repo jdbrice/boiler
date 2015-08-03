@@ -322,7 +322,6 @@ namespace jdb{
 				continue;
 			
 			string parent = (it->first).substr( 0, nodePath.length() );
-			DEBUG( "parent=" << parent <<", shouldBe=" << nodePath )
 			if ( nodePath == parent ){
 				
 				if ( -1 == relDepth ) 
@@ -357,7 +356,7 @@ namespace jdb{
 			if ( it->first == nodePath )
 					continue;
 			string parent = (it->first).substr( 0, nodePath.length() );
-            DEBUG( "parent=" << parent << ", tagName=" << tagName( it->first ) )
+			
 			if ( nodePath == parent && (tag == tagName( it->first )) ){
 				paths.push_back( it->first );
 			} else if ( nodePath != parent ){
@@ -479,17 +478,26 @@ namespace jdb{
         DEBUG( "" );
 		vector<string> allPaths = childrenOf( "", "Include" );
 
-		INFO( "Found " << allPaths.size() << "Include Tags" );
+		DEBUG( "Found " << allPaths.size() << "Include Tags" );
 
         for ( string path : allPaths ){
-            INFOL << path << endl;
-            INFOL << "parent path: " << pathToParent( path ) << endl;
+            DEBUG( path )
+            DEBUG( "parent path: " << pathToParent( path ) )
 
             string ifn = getString( path + ":url" );
             struct stat buffer;
             bool exists = (stat (ifn.c_str(), &buffer) == 0);
-
             DEBUG( "file " << ifn << " exists " << exists )
+
+            // if we can't find it from the path directly then try relative to base config path
+            if ( !exists ) { // try relative to this config file
+                string basePath = pathFromFilename( filename );
+                ifn = basePath + ifn;
+
+                exists = (stat (ifn.c_str(), &buffer) == 0);
+                DEBUG( "file " << ifn << " exists " << exists )
+            }
+
             if ( exists ){
 #ifndef __CINT__
                 RapidXmlWrapper rxw(  ifn  );
@@ -499,19 +507,21 @@ namespace jdb{
 
         }
 
-        report();
+       DEBUG( report() );
 
 	}
 
-    void XmlConfig::report( string nodePath ){
+    string XmlConfig::report( string nodePath ){
 
         vector<string> allPaths = childrenOf( nodePath, -1, true );
 
+        stringstream sstr;
         for ( string path : allPaths ){
             string val = getString( path, "" );
             if ( "" != val )
-                INFO( path << " === " << val )
+                sstr << path << " === " << val << endl;
         }
+        return sstr.str();
 
     }
 

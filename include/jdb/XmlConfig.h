@@ -345,7 +345,7 @@ namespace jdb {
 			return depthOf( nodePath ) - depthOf( relativeTo );
 		}
 
-        void report( string nodePath = "" );
+        string report( string nodePath = "" );
 
 	protected:
 
@@ -362,6 +362,15 @@ namespace jdb {
 		// Allows string delimeter
 		pair<string, string> stringToPair( string &s, string delim  );
 
+
+
+        string pathFromFilename (const string& str) {
+            size_t found;
+            found=str.find_last_of("/\\");
+            //cout << " folder: " << str.substr(0,found+1) << endl;
+            //cout << " file: " << str.substr(found+1) << endl;
+            return str.substr(0,found+1);
+        }
 
 		// 
 		void parseIncludes(  );

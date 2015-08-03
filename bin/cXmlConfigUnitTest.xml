@@ -44,7 +44,11 @@
 	</Map>
 
     <sub>
-        <Include url="/Users/danielbrandenburg/bnl/local/work/roobarb/bin/cXmlConfigUnitTestInclude.xml.xsl" />
+        <Include url="cXmlConfigUnitTestInclude.xml.xsl" />
+    </sub>
+
+    <sub>
+        <Include url="./common/cXmlConfigUnitTestInclude.xml" />
     </sub>
 
 </config>
