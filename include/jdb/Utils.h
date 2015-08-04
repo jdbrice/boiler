@@ -89,7 +89,7 @@ namespace jdb{
 	 * @elapsedTime shows the elapsed time if positive
 	 * 
 	 */
-	void progressBar( int i, int nevents, int textWidth = 60, double elapsedTime = -1 );
+	void progressBar( int i, int nevents, int textWidth = 60, double elapsedTime = -1, bool skipNonTTY = true );
 
 
 	/* Task Progress

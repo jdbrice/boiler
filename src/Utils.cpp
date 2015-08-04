@@ -73,7 +73,7 @@ namespace jdb{
 	 * @elapsedTime shows the elapsed time if positive
 	 * 
 	 */
-	void progressBar( int i, int nevents, int textWidth, double elapsedTime ){
+	void progressBar( int i, int nevents, int textWidth, double elapsedTime, bool skipNonTTY ){
 		
 		// for output
 		double progress =  ((double)i / (double)nevents);
@@ -88,7 +88,7 @@ namespace jdb{
     	// decide when to update
     	if ( i == 0 || (i % res ) == 0 || i == nevents - 1  ){
 			// skip for non interactive output
-			if (!isatty(fileno(stdout)) && progress <= 1 )
+			if (!isatty(fileno(stdout)) && progress <= 1 && skipNonTTY )
 				return;
 
 			double per = progress  * 100;
