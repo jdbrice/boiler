@@ -8,7 +8,7 @@ namespace jdb{
 	int Reporter::instances = 0;
 
 	Reporter::Reporter( string filename, int w, int h ){
-
+		DEBUG( "(" <<  filename <<  ", width=" <<  w <<  ", height=" <<  h << ")" )
 		
 		logger = new Logger( Logger::getGlobalLogLevel(), "Reporter" );
 		
@@ -23,6 +23,7 @@ namespace jdb{
 		logger->info(__FUNCTION__) << " Instance #" << instances << endl;
 	}
 	Reporter::Reporter( XmlConfig*config, string np, string prefix ){
+		DEBUG( "(" << config << ", np=" << np << ", prefix=" << prefix << ")" )
 
 		cfg = config;
 		nodePath = np;
@@ -37,12 +38,11 @@ namespace jdb{
 		canvas = new TCanvas( ("Reporter"+ts(instances)).c_str() , "canvas", w, h);
 		canvas->Print( ( filename + "[" ).c_str() );
 		
-		logger->info(__FUNCTION__) << " Opening " << filename << endl;
+		DEBUG( " Opening " << filename ) 
 		
 		instances++;
 
-		logger->info(__FUNCTION__) << " Instance #" << instances << endl;
-
+		DEBUG( " Instance #" << instances )
 	}
 
 	Reporter::~Reporter() {
