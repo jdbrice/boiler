@@ -42,8 +42,6 @@ namespace jdb{
 			cout << it->first << " : " << it->second << endl;
 		}
 		*/
-
-
 	}
 
 	XmlConfig::~XmlConfig(){
@@ -507,7 +505,7 @@ namespace jdb{
 
         }
 
-       DEBUG( report() );
+       //DEBUG( report() );
 
 	}
 
