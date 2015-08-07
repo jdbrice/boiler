@@ -198,7 +198,7 @@ namespace jdb{
 	} // loadRootDir
 
 	void HistoBook::add( string name, TH1* h ){
-		logger->debug(__FUNCTION__) << " Adding " << name << endl;
+		
 
 		string oName = name;
 		if ( name.length() <= 1 || !h ){
@@ -216,6 +216,7 @@ namespace jdb{
 
 		// save the histo to the map
 		book[ name ] = h;
+		DEBUG( " Adding " << name );
 
 		// this is kept for legacy
 		//add( name, (TObject*)h );
@@ -495,11 +496,11 @@ namespace jdb{
 			sdir = currentDir;
 
 		if ( NULL == book[ ( sdir + name  ) ] ){
-			logger->info(__FUNCTION__) << sdir + name  << " Does Not Exist " << endl; 
+			DEBUG( sdir + name  << " Does Not Exist " ) 
 			return false;
 		}
 
-		logger->info(__FUNCTION__) << sdir + name  << " Does Exist " << endl; 
+		DEBUG( sdir + name  << " Does Exist " ) 
 		return true;
 	}
 
