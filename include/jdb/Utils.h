@@ -60,6 +60,13 @@ namespace jdb{
 	 */
 	std::string dts( double d );
 
+	/* Used to properly pluralize words
+	 * @count 		the countable value
+	 * @fSingle 	the singular form
+	 * @fPlural 	the plural form
+	 * @return  	the proper pluralization based on count
+	 */
+	 std::string  plural( double count, std::string fSingle, std::string fPlural );
 
 	/* Task Timer
 	 * Utility Class for timing tasks and reporting

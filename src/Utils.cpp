@@ -65,6 +65,15 @@ namespace jdb{
 	}
 
 
+	std::string plural( double count, std::string fSingle, std::string fPlural ){
+		if ( count == 1.0 )
+			return fSingle;
+		else 
+			return fPlural;
+		return fPlural;
+	}
+
+
 	/**
 	 * Plain text progress bar that only updates when it needs to
 	 * @i 			the current step in a loop

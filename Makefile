@@ -6,7 +6,7 @@ ARCH          = $(shell root-config --arch)
 #------------------------------------------------------------------------------
 Classes = Logger Reporter XmlConfig ChainLoader HistoBook TreeAnalyzer HistoAnalyzer \
 			XmlConfig DataSource EvaluatedLeaf RooPlotLib Utils ConfigFunction
-HeaderOnlyClasses = LoggerConfig ConfigPoint ConfigRange
+HeaderOnlyClasses = LoggerConfig ConfigPoint ConfigRange ConfigGraph
 ##-----------------------------------------------------------------------------
 
 srcDir        = src
