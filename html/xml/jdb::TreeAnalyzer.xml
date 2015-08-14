@@ -80,6 +80,12 @@ each job writes out to different files.
     <brief>Prefix for this job ( optional, used for parallel)</brief>
     <type name="string" />
   </field>
+  <field access="protected" id="jdb::TreeAnalyzer::skipMake" name="skipMake">
+    <brief>Skips the making phase</brief>
+    <doc>loads the output file of the same name as the input ( must exist )
+and skips to the postEventLoop() method</doc>
+    <type builtin="yes" name="bool" />
+  </field>
   <method access="protected" id="jdb::TreeAnalyzer::analyzeEvent" name="analyzeEvent" virtual="yes">
     <brief> Used to analyze events</brief>
     <doc>Analyzes a single event in the chain

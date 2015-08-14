@@ -9,6 +9,17 @@
       <type name="string" />
     </argument>
   </method>
+  <method id="jdb::RooPlotLib::defaultStyle" name="defaultStyle">
+    <return>
+      <type name="RooPlotLib" qualifier=" &amp;" ref="jdb::RooPlotLib#jdb::RooPlotLib" />
+    </return>
+    <argument id="jdb::RooPlotLib::defaultStyle::_cfg" name="_cfg">
+      <type name="XmlConfig" qualifier="*" ref="jdb::XmlConfig#jdb::XmlConfig" />
+    </argument>
+    <argument id="jdb::RooPlotLib::defaultStyle::stylePath" name="stylePath">
+      <type name="string" />
+    </argument>
+  </method>
   <method abstract="yes" id="jdb::RooPlotLib::draw" name="draw">
     <brief>*</brief>
     <doc>Draws the object being styled
@@ -107,6 +118,12 @@
     <type name="TObject" qualifier="*" />
   </field>
   <field access="protected" id="jdb::RooPlotLib::drawOption" name="drawOption">
+    <type name="string" />
+  </field>
+  <field access="protected" id="jdb::RooPlotLib::cfgForDefaultStyle" name="cfgForDefaultStyle">
+    <type name="XmlConfig" qualifier="*" ref="jdb::XmlConfig#jdb::XmlConfig" />
+  </field>
+  <field access="protected" id="jdb::RooPlotLib::defaultStylePath" name="defaultStylePath">
     <type name="string" />
   </field>
   <method abstract="yes" access="protected" id="jdb::RooPlotLib::validObject" name="validObject">

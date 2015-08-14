@@ -248,6 +248,18 @@ Makes evaluated leafs from existing ones from teh config file
       <type builtin="yes" name="void" />
     </return>
   </method>
+  <method abstract="yes" access="protected" id="jdb::DataSource::mapBranch" name="mapBranch">
+    <brief>maps the sub branches and leaves of a branch</brief>
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+    <argument id="jdb::DataSource::mapBranch::br" name="br">
+      <type name="TBranchElement" qualifier="*" />
+    </argument>
+    <argument id="jdb::DataSource::mapBranch::name" name="name">
+      <type name="string" />
+    </argument>
+  </method>
   <method abstract="yes" access="protected" id="jdb::DataSource::mapTree" name="mapTree">
     <brief>Maps out the branch and leaf attributes of the tree</brief>
     <return>

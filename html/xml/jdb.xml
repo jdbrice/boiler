@@ -7,6 +7,9 @@ It can be used from the ROOT interpreter or as a library for compiled projects.<
   <class name="ChainLoader" ref="jdb::ChainLoader#jdb::ChainLoader">
     <brief>Static use class for loading .root files into a TChain</brief>
   </class>
+  <class name="ConfigFunction" ref="jdb::ConfigFunction#jdb::ConfigFunction">
+    <brief>Loads a TF1 or subclass function from an Xml Config</brief>
+  </class>
   <class name="ConfigPoint" ref="jdb::ConfigPoint#jdb::ConfigPoint">
     <brief>Config Point easily loads (x, y) points from XmlConfigs</brief>
   </class>
@@ -60,6 +63,24 @@ It can be used from the ROOT interpreter or as a library for compiled projects.<
       <type builtin="yes" name="double" />
     </argument>
   </function>
+  <function id="plural" name="plural">
+    <brief>Used to properly pluralize words</brief>
+    <return>
+      <type name="string" />
+    </return>
+    <argument id="plural::count" name="count">
+      <doc>the countable value</doc>
+      <type builtin="yes" name="double" />
+    </argument>
+    <argument id="plural::fSingle" name="fSingle">
+      <doc>the singular form</doc>
+      <type name="string" />
+    </argument>
+    <argument id="plural::fPlural" name="fPlural">
+      <doc>the plural form</doc>
+      <type name="string" />
+    </argument>
+  </function>
   <function id="progressBar" name="progressBar">
     <brief>*</brief>
     <doc>Plain text progress bar that only updates when it needs to
@@ -78,6 +99,9 @@ It can be used from the ROOT interpreter or as a library for compiled projects.<
     </argument>
     <argument id="progressBar::elapsedTime" name="elapsedTime">
       <type builtin="yes" name="double" />
+    </argument>
+    <argument id="progressBar::skipNonTTY" name="skipNonTTY">
+      <type builtin="yes" name="bool" />
     </argument>
   </function>
   <function id="trimTrailingZeros" name="trimTrailingZeros">

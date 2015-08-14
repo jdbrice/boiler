@@ -1,11 +1,11 @@
-<class xmlns="http://jessevdk.github.com/cldoc/1.0" id="jdb::TaskProgress" name="TaskProgress">
+<class xmlns="http://jessevdk.github.com/cldoc/1.0" abstract="true" id="jdb::TaskProgress" name="TaskProgress">
   <brief>Task Progress</brief>
   <doc>Integrates the task timer and progress bars into a single utility
 </doc>
-  <constructor id="jdb::TaskProgress::TaskProgress" name="TaskProgress">
+  <constructor abstract="yes" id="jdb::TaskProgress::TaskProgress" name="TaskProgress">
     <brief> Default Constructor</brief>
   </constructor>
-  <constructor id="jdb::TaskProgress::TaskProgress" name="TaskProgress">
+  <constructor abstract="yes" id="jdb::TaskProgress::TaskProgress" name="TaskProgress">
     <brief> Creates a TaskProgress</brief>
     <argument id="jdb::TaskProgress::TaskProgress::title" name="title">
       <doc>Title of the Task</doc>
@@ -28,7 +28,8 @@
       <type builtin="yes" name="bool" />
     </argument>
   </constructor>
-  <method id="jdb::TaskProgress::showProgress" name="showProgress">
+  <destructor id="jdb::TaskProgress::~TaskProgress" name="~TaskProgress" />
+  <method abstract="yes" id="jdb::TaskProgress::showProgress" name="showProgress">
     <brief> Called inside a loop to show the progress of the current task</brief>
     <return>
       <type builtin="yes" name="void" />

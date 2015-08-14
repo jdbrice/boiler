@@ -4,6 +4,9 @@
     <class name="ChainLoader" ref="jdb::ChainLoader#jdb::ChainLoader">
       <brief>Static use class for loading .root files into a TChain</brief>
     </class>
+    <class name="ConfigFunction" ref="jdb::ConfigFunction#jdb::ConfigFunction">
+      <brief>Loads a TF1 or subclass function from an Xml Config</brief>
+    </class>
     <class name="ConfigPoint" ref="jdb::ConfigPoint#jdb::ConfigPoint">
       <brief>Config Point easily loads (x, y) points from XmlConfigs</brief>
     </class>
@@ -52,5 +55,6 @@
       <brief>Use xml formatted config files easily in projects</brief>
     </class>
   </namespace>
+  <class name="ConfigGraph" ref="ConfigGraph#ConfigGraph" />
   <report name="Documentation generator" ref="report" />
 </index>

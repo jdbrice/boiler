@@ -347,6 +347,31 @@ For instance, if a node contains "1, 3, 9, 7, 16" then the vector whould contain
       <type name="string" />
     </argument>
   </method>
+  <method abstract="yes" id="jdb::XmlConfig::pathToParent" name="pathToParent">
+    <brief> Get the path to the parent of this node</brief>
+    <doc>* @nodePath Path to node. See getString(...)
+                 *
+                 * Extracts the path to the parent of this node
+                 * For instnce:
+                 * The node path "category.sub.a" yields "category.sub"
+                 *
+                 * @return the path to the parent of given node
+</doc>
+    <return>
+      <type name="string" />
+    </return>
+    <argument id="jdb::XmlConfig::pathToParent::nodePath" name="nodePath">
+      <type name="string" />
+    </argument>
+  </method>
+  <method abstract="yes" id="jdb::XmlConfig::report" name="report">
+    <return>
+      <type name="string" />
+    </return>
+    <argument id="jdb::XmlConfig::report::nodePath" name="nodePath">
+      <type name="string" />
+    </argument>
+  </method>
   <method abstract="yes" id="jdb::XmlConfig::saveXml" name="saveXml">
     <return>
       <type builtin="yes" name="void" />
@@ -402,9 +427,6 @@ The node path "category.sub.a" yields "a"
       <type name="string" qualifier=" const &amp;" />
     </argument>
   </method>
-  <field access="protected" id="jdb::XmlConfig::rxw" name="rxw">
-    <type name="RapidXmlWrapper" qualifier="*" />
-  </field>
   <field access="protected" id="jdb::XmlConfig::logger" name="logger">
     <brief>Logger instance</brief>
     <type name="Logger" ref="jdb::Logger#jdb::Logger" />
@@ -464,6 +486,19 @@ The node path "category.sub.a" yields "a"
     </return>
     <argument id="jdb::XmlConfig::manualToLower::str" name="str">
       <type name="string" />
+    </argument>
+  </method>
+  <method abstract="yes" access="protected" id="jdb::XmlConfig::parseIncludes" name="parseIncludes">
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+  </method>
+  <method access="protected" id="jdb::XmlConfig::pathFromFilename" name="pathFromFilename">
+    <return>
+      <type name="string" />
+    </return>
+    <argument id="jdb::XmlConfig::pathFromFilename::str" name="str">
+      <type name="string" qualifier=" const &amp;" />
     </argument>
   </method>
   <method abstract="yes" access="protected" id="jdb::XmlConfig::sanitize" name="sanitize">
