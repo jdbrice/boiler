@@ -44,6 +44,7 @@ set(SOURCE_FILES
     src/TreeMap.cpp
     src/XmlConfig.cpp
     src/RooPlotLib.cpp
+    src/Utils.cpp
 
     #UnitTesting
     include/UnitTest/UnitTest.h

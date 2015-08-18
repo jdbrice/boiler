@@ -11,6 +11,8 @@
 
 
 namespace jdb{
+
+	const string HistoBook::className = "HistoBook";
 	/**
 	 * Creates a histobook and allows the root filename to be set. optionally read from an existing root
 	 * file and include everything into the working space

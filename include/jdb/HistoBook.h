@@ -97,6 +97,7 @@ namespace jdb{
 
 	public:
 
+		static const string className;
 		/**
 		 * Static Usage
 		 */

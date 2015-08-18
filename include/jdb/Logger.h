@@ -1,11 +1,29 @@
 #ifndef LOGGER_H
 #define LOGGER_H 
 
-#define DEBUG(x) Logger::log.debug( __func__ ) << x << endl;
-#define TRACE(x) Logger::log.trace( __func__ ) << x << endl;
-#define INFO(x)  Logger::log.info( __func__ ) << x << endl;
-#define WARN(x)  Logger::log.warn( __func__ ) << x << endl;
-#define ERROR(x) Logger::log.error( __func__ ) << x << endl;
+
+// Allows the macros to use variable number of args
+// so ERROR( "message" ) just outputs a message
+// but ERROR( "tag", "message" ) outputs [tag.__func__] message
+#define GET_MACRO(_1,_2,NAME,...) NAME
+#define ERROR(...) GET_MACRO(__VA_ARGS__, LOG_E_TAG, LOG_E )(__VA_ARGS__)
+#define WARN(...) GET_MACRO(__VA_ARGS__, LOG_W_TAG, LOG_W )(__VA_ARGS__)
+#define INFO(...) GET_MACRO(__VA_ARGS__, LOG_I_TAG, LOG_I )(__VA_ARGS__)
+#define TRACE(...) GET_MACRO(__VA_ARGS__, LOG_T_TAG, LOG_T )(__VA_ARGS__)
+#define DEBUG(...) GET_MACRO(__VA_ARGS__, LOG_D_TAG, LOG_D )(__VA_ARGS__)
+
+#define LOG_D(x) Logger::log.debug( __func__ ) << x << endl;
+#define LOG_T(x) Logger::log.trace( __func__ ) << x << endl;
+#define LOG_I(x)  Logger::log.info( __func__ ) << x << endl;
+#define LOG_W(x)  Logger::log.warn( __func__ ) << x << endl;
+#define LOG_E(x) Logger::log.error( __func__ ) << x << endl;
+
+#define LOG_D_TAG( tag, x ) Logger::log.setClassSpace( tag ); Logger::log.debug( __func__ ) << x << endl; 
+#define LOG_T_TAG( tag, x ) Logger::log.setClassSpace( tag ); Logger::log.trace( __func__ ) << x << endl; 
+#define LOG_I_TAG( tag, x ) Logger::log.setClassSpace( tag ); Logger::log.info( __func__ ) << x << endl; 
+#define LOG_W_TAG( tag, x ) Logger::log.setClassSpace( tag ); Logger::log.warn( __func__ ) << x << endl; 
+#define LOG_E_TAG( tag, x ) Logger::log.setClassSpace( tag ); Logger::log.error( __func__ ) << x << endl; 
+
 
 // Continued line versions
 // for example:
