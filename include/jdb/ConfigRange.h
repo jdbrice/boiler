@@ -115,6 +115,36 @@ namespace jdb{
 
 			return true;
 		}
+
+		/* Is value above max
+		 * Test to see if value is above upper range
+		 *
+		 * @val 	Value to test
+		 * @includeUpperEdge Default: true - include or exclude upper edge
+		 * @return 	true if past the upper edge
+		 */
+		bool above( double val, bool includeUpperEdge = true ){
+			if ( val > max )
+				return true;
+			if ( includeUpperEdge && val == max )
+				return true;
+			return false;
+		} 
+
+		/* Is value below min
+		 * Test to see if value is below lower range
+		 *
+		 * @val 	Value to test
+		 * @includeLowerEdge Default: true - include or exclude lower edge
+		 * @return 	true if below the lower edge
+		 */
+		bool below( double val, bool includeLowerEdge = true ){
+			if ( val < min )
+				return true;
+			if ( includeLowerEdge && val == min )
+				return true;
+			return false;
+		} 
 		
 	};
 
