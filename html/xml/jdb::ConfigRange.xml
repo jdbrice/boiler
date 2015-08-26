@@ -48,6 +48,54 @@
     </argument>
   </constructor>
   <destructor id="jdb::ConfigRange::~ConfigRange" name="~ConfigRange" />
+  <method id="jdb::ConfigRange::inExclusiveLowerInclusiveUpperRange" name="inExclusiveLowerInclusiveUpperRange">
+    <brief> Test if the given value is in the exclusive lower inclusive upper range</brief>
+    <doc>Test if value is in ( min, max ] exclusive lower and inclusive upper bound
+</doc>
+    <return>
+      <doc>true if in range, false otherwise</doc>
+      <type builtin="yes" name="bool" />
+    </return>
+    <argument id="jdb::ConfigRange::inExclusiveLowerInclusiveUpperRange::val" name="val">
+      <type builtin="yes" name="double" />
+    </argument>
+  </method>
+  <method id="jdb::ConfigRange::inExclusiveRange" name="inExclusiveRange">
+    <brief> Test if the given value is in the exclusive range</brief>
+    <doc>Test if value is in ( min, max ) exclusive lower and upper bound
+</doc>
+    <return>
+      <doc>true if in range, false otherwise</doc>
+      <type builtin="yes" name="bool" />
+    </return>
+    <argument id="jdb::ConfigRange::inExclusiveRange::val" name="val">
+      <type builtin="yes" name="double" />
+    </argument>
+  </method>
+  <method id="jdb::ConfigRange::inInclusiveLowerExclusiveUpperRange" name="inInclusiveLowerExclusiveUpperRange">
+    <brief> Test if the given value is in the inclusive lower exclusive upper range</brief>
+    <doc>Test if value is in [ min, max ) inclusive lower and exclusive upper bound
+</doc>
+    <return>
+      <doc>true if in range, false otherwise</doc>
+      <type builtin="yes" name="bool" />
+    </return>
+    <argument id="jdb::ConfigRange::inInclusiveLowerExclusiveUpperRange::val" name="val">
+      <type builtin="yes" name="double" />
+    </argument>
+  </method>
+  <method id="jdb::ConfigRange::inInclusiveRange" name="inInclusiveRange">
+    <brief> Test if the given value is in the inclusve range</brief>
+    <doc>Test if value is in [ min, max] inclusive lower and upper bound
+</doc>
+    <return>
+      <doc>true if in range, false otherwise</doc>
+      <type builtin="yes" name="bool" />
+    </return>
+    <argument id="jdb::ConfigRange::inInclusiveRange::val" name="val">
+      <type builtin="yes" name="double" />
+    </argument>
+  </method>
   <method id="jdb::ConfigRange::toString" name="toString">
     <brief> Outputs the range as a human readable string</brief>
     <return>

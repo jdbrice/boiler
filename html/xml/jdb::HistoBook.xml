@@ -1,5 +1,8 @@
 <class xmlns="http://jessevdk.github.com/cldoc/1.0" abstract="true" id="jdb::HistoBook" name="HistoBook">
   <brief>A book keeper and helper for storing and using ROOT histograms</brief>
+  <variable id="jdb::HistoBook::className" name="className">
+    <type name="string" qualifier=" const" />
+  </variable>
   <constructor abstract="yes" id="jdb::HistoBook::HistoBook" name="HistoBook">
     <argument id="jdb::HistoBook::HistoBook::name" name="name">
       <type name="string" />
