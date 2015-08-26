@@ -63,6 +63,58 @@ namespace jdb{
 			else		
 				return ("( " + dts( min ) + " -> " + dts( max ) + " )");
 		}
+
+		/* Test if the given value is in the inclusve range
+		 * Test if value is in [ min, max] inclusive lower and upper bound
+		 * @val 	Value to test
+		 * @return 	true if in range, false otherwise
+		 */
+		bool inInclusiveRange( double val ){
+
+			if ( val > max || val < min )
+				return false;
+
+			return true;
+		}
+
+		/* Test if the given value is in the exclusive range
+		 * Test if value is in ( min, max ) exclusive lower and upper bound
+		 * @val 	Value to test
+		 * @return 	true if in range, false otherwise
+		 */
+		bool inExclusiveRange( double val ){
+
+			if ( val >= max || val <= min )
+				return false;
+
+			return true;
+		}
+
+		/* Test if the given value is in the exclusive lower inclusive upper range
+		 * Test if value is in ( min, max ] exclusive lower and inclusive upper bound
+		 * @val 	Value to test
+		 * @return 	true if in range, false otherwise
+		 */
+		bool inExclusiveLowerInclusiveUpperRange( double val ){
+
+			if ( val > max || val <= min )
+				return false;
+
+			return true;
+		}
+
+		/* Test if the given value is in the inclusive lower exclusive upper range
+		 * Test if value is in [ min, max ) inclusive lower and exclusive upper bound
+		 * @val 	Value to test
+		 * @return 	true if in range, false otherwise
+		 */
+		bool inExclusiveLowerInclusiveUpperRange( double val ){
+
+			if ( val > max || val <= min )
+				return false;
+
+			return true;
+		}
 		
 	};
 

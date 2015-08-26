@@ -579,11 +579,11 @@ namespace jdb{
 	  	gStyle->SetLabelSize(0.05,"xy");
 	  	gStyle->SetTitleSize(0.05,"xy");
 	  	gStyle->SetTitleOffset(1.0,"x");
-	  	gStyle->SetTitleOffset(1.5,"y");
+	  	gStyle->SetTitleOffset(1.0,"y");
 	  	gStyle->SetPadTopMargin(0.1);
 	  	gStyle->SetPadRightMargin(0.1);
 	  	gStyle->SetPadBottomMargin(0.16);
-	  	gStyle->SetPadLeftMargin(0.2);
+	  	gStyle->SetPadLeftMargin(0.21);
 
 	  	gStyle->SetFillColor(-1);
 		gStyle->SetFillStyle(4000);
