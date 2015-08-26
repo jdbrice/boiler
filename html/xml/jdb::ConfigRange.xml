@@ -48,6 +48,38 @@
     </argument>
   </constructor>
   <destructor id="jdb::ConfigRange::~ConfigRange" name="~ConfigRange" />
+  <method id="jdb::ConfigRange::above" name="above">
+    <brief> Is value above max</brief>
+    <doc>Test to see if value is above upper range
+
+</doc>
+    <return>
+      <doc>true if past the upper edge</doc>
+      <type builtin="yes" name="bool" />
+    </return>
+    <argument id="jdb::ConfigRange::above::val" name="val">
+      <type builtin="yes" name="double" />
+    </argument>
+    <argument id="jdb::ConfigRange::above::includeUpperEdge" name="includeUpperEdge">
+      <type builtin="yes" name="bool" />
+    </argument>
+  </method>
+  <method id="jdb::ConfigRange::below" name="below">
+    <brief> Is value below min</brief>
+    <doc>Test to see if value is below lower range
+
+</doc>
+    <return>
+      <doc>true if below the lower edge</doc>
+      <type builtin="yes" name="bool" />
+    </return>
+    <argument id="jdb::ConfigRange::below::val" name="val">
+      <type builtin="yes" name="double" />
+    </argument>
+    <argument id="jdb::ConfigRange::below::includeLowerEdge" name="includeLowerEdge">
+      <type builtin="yes" name="bool" />
+    </argument>
+  </method>
   <method id="jdb::ConfigRange::inExclusiveLowerInclusiveUpperRange" name="inExclusiveLowerInclusiveUpperRange">
     <brief> Test if the given value is in the exclusive lower inclusive upper range</brief>
     <doc>Test if value is in ( min, max ] exclusive lower and inclusive upper bound

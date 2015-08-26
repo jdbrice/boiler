@@ -49,6 +49,14 @@ namespace jdb{
 				max = dMax;
 			}
 		}
+
+		/* Default empty constructor
+		 * initializes min and max to 0
+		 */
+		ConfigRange( ) {
+			min = 0;
+			max = 0;
+		}
 		~ConfigRange(){}
 
 		/* Outputs the range as a human readable string

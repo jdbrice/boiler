@@ -24,7 +24,7 @@ return values.
       </undocumented>
     </type>
     <type documented="1" name="namespace" undocumented="0" />
-    <type documented="105" name="method" undocumented="63">
+    <type documented="107" name="method" undocumented="63">
       <undocumented id="ConfigGraph::eval" name="eval">
         <location column="2" file="include/jdb/ConfigGraph.h" line="33" />
       </undocumented>
@@ -638,6 +638,16 @@ return values.
     </function>
     <function id="jdb::ConfigRange::inInclusiveLowerExclusiveUpperRange" name="inInclusiveLowerExclusiveUpperRange">
       <location column="3" file="include/jdb/ConfigRange.h" line="111" />
+      <undocumented name="val" />
+    </function>
+    <function id="jdb::ConfigRange::above" name="above">
+      <location column="3" file="include/jdb/ConfigRange.h" line="126" />
+      <undocumented name="val" />
+      <undocumented name="includeUpperEdge" />
+    </function>
+    <function id="jdb::ConfigRange::below" name="below">
+      <location column="3" file="include/jdb/ConfigRange.h" line="141" />
+      <undocumented name="includeLowerEdge" />
       <undocumented name="val" />
     </function>
     <function id="jdb::EvaluatedLeaf::EvaluatedLeaf" name="EvaluatedLeaf">
