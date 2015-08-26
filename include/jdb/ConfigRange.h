@@ -108,7 +108,7 @@ namespace jdb{
 		 * @val 	Value to test
 		 * @return 	true if in range, false otherwise
 		 */
-		bool inExclusiveLowerInclusiveUpperRange( double val ){
+		bool inInclusiveLowerExclusiveUpperRange( double val ){
 
 			if ( val > max || val <= min )
 				return false;
