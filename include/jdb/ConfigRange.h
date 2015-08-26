@@ -110,7 +110,7 @@ namespace jdb{
 		 */
 		bool inInclusiveLowerExclusiveUpperRange( double val ){
 
-			if ( val > max || val <= min )
+			if ( val >= max || val < min )
 				return false;
 
 			return true;
