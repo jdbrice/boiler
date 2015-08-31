@@ -1,9 +1,12 @@
 #ifndef HISTOGRAM_BINS
 #define HISTOGRAM_BINS
 
+// ROOBARB
 #include "XmlConfig.h"
 #include "Utils.h"
+#include "Logger.h"
 
+// STL
 #include <memory>
 
 namespace jdb{
@@ -21,6 +24,8 @@ namespace jdb{
 	{
 	public:
 		
+		static constexpr auto tag = "HistoBins";
+
 		/* Makes a vector of bins with fixed width
 		 * Divides the range high - low into a fixed number of bins from low to high"
 		 */
@@ -41,7 +46,7 @@ namespace jdb{
 		 * @return vector of bin edges from low to high
 		 */
 		static vector<double> makeFixedWidthBins( double binWidth, double low, double high ){
-            Logger::log.debug(__FUNCTION__) << "( binWidth=" << binWidth << ", low="<<low << ", high=" << high << " )" << endl;
+            DEBUG( tag, "( binWidth=" << binWidth << ", low="<<low << ", high=" << high << " )" );
 			vector<double> bins;
 			for (double i = low; i <= high; i += binWidth ){
 				bins.push_back( i );
@@ -102,12 +107,36 @@ namespace jdb{
 
 		}	// findBin
 
+		/* Bin Width from vector of bin edges and bin index
+		 * @bins 		vector of bin edges
+		 * @binIndex 	bin Index
+		 * @return 		bin width or 0.0 for error (also issues an ERROR(...) log)
+		 */
+		static double binWidth( vector<double> &bins, int binIndex = 0 ){
+
+			if ( binIndex < 0 || binIndex >= bins.size() ){
+				ERROR( tag, "Bin Index " << binIndex << " out of range ( 0, " << bins.size() << " )" );
+				return 0.0;
+			}
+			return (bins[ binIndex + 1 ] - bins[ binIndex ]);
+		}
+
 		/* Finds the bin containing a given value
 		 * @val The value for which the corresponding bin is desired 
+		 * @includeEdge 	which edge of the bin to include, upper or lower
+		 * @return 			the index of the bin see static implementation for more detail
 		 */
 		int findBin( double val, BinEdge includeEdge = BinEdge::lower ){
 			return findBin( bins, val, includeEdge );
 		} // findBin
+
+		/* Bin Width
+		 * @binIndex 		The index of the bin whose width you want to know
+		 * @return 			The bin width or 0.0 for error ( also issues an ERROR(...) log)
+		 */
+		double binWidth( int binIndex = 0 ){
+			return binWidth( bins, binIndex );
+		}
 
 		/*
 		 * Length of underlying vector containing the bin edges
@@ -226,7 +255,7 @@ namespace jdb{
 		 */
 		~HistoBins(){}
 		
-		// Returns the vector of bin edges
+		// Returns a copy of the vector of bin edges
 		vector<double> getBins(){ return bins; }
 
 		// Vector of bin edges

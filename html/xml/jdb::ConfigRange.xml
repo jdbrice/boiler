@@ -47,6 +47,11 @@
       <type name="string" />
     </argument>
   </constructor>
+  <constructor id="jdb::ConfigRange::ConfigRange" name="ConfigRange">
+    <brief> Default empty constructor</brief>
+    <doc>initializes min and max to 0
+</doc>
+  </constructor>
   <destructor id="jdb::ConfigRange::~ConfigRange" name="~ConfigRange" />
   <method id="jdb::ConfigRange::above" name="above">
     <brief> Is value above max</brief>

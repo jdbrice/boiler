@@ -253,7 +253,7 @@ return values.
         <location column="6" file="include/jdb/RooPlotLib.h" line="35" />
       </undocumented>
     </type>
-    <type documented="15" name="constructor" undocumented="5">
+    <type documented="16" name="constructor" undocumented="5">
       <undocumented id="ConfigGraph::ConfigGraph" name="ConfigGraph">
         <location column="2" file="include/jdb/ConfigGraph.h" line="23" />
       </undocumented>
@@ -316,7 +316,7 @@ return values.
         <location column="3" file="include/jdb/ConfigPoint.h" line="54" />
       </undocumented>
       <undocumented id="jdb::ConfigRange::~ConfigRange" name="~ConfigRange">
-        <location column="3" file="include/jdb/ConfigRange.h" line="52" />
+        <location column="3" file="include/jdb/ConfigRange.h" line="60" />
       </undocumented>
       <undocumented id="jdb::EvaluatedLeaf::~EvaluatedLeaf" name="~EvaluatedLeaf">
         <location column="3" file="include/jdb/EvaluatedLeaf.h" line="55" />
@@ -625,28 +625,28 @@ return values.
       <misspelled name="nodePath" />
     </function>
     <function id="jdb::ConfigRange::inInclusiveRange" name="inInclusiveRange">
-      <location column="3" file="include/jdb/ConfigRange.h" line="72" />
+      <location column="3" file="include/jdb/ConfigRange.h" line="80" />
       <undocumented name="val" />
     </function>
     <function id="jdb::ConfigRange::inExclusiveRange" name="inExclusiveRange">
-      <location column="3" file="include/jdb/ConfigRange.h" line="85" />
+      <location column="3" file="include/jdb/ConfigRange.h" line="93" />
       <undocumented name="val" />
     </function>
     <function id="jdb::ConfigRange::inExclusiveLowerInclusiveUpperRange" name="inExclusiveLowerInclusiveUpperRange">
-      <location column="3" file="include/jdb/ConfigRange.h" line="98" />
+      <location column="3" file="include/jdb/ConfigRange.h" line="106" />
       <undocumented name="val" />
     </function>
     <function id="jdb::ConfigRange::inInclusiveLowerExclusiveUpperRange" name="inInclusiveLowerExclusiveUpperRange">
-      <location column="3" file="include/jdb/ConfigRange.h" line="111" />
+      <location column="3" file="include/jdb/ConfigRange.h" line="119" />
       <undocumented name="val" />
     </function>
     <function id="jdb::ConfigRange::above" name="above">
-      <location column="3" file="include/jdb/ConfigRange.h" line="126" />
+      <location column="3" file="include/jdb/ConfigRange.h" line="134" />
       <undocumented name="val" />
       <undocumented name="includeUpperEdge" />
     </function>
     <function id="jdb::ConfigRange::below" name="below">
-      <location column="3" file="include/jdb/ConfigRange.h" line="141" />
+      <location column="3" file="include/jdb/ConfigRange.h" line="149" />
       <undocumented name="includeLowerEdge" />
       <undocumented name="val" />
     </function>

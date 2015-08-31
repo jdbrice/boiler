@@ -28,7 +28,17 @@ public:
         else {
             return  ts(life) + " != " + ts(hope) + " FAIL";
         }
+    }
+    static string nn( void ** val ){
+        // 033[1;32m
+        // 033[0;m
 
+        if ( NULL == val || nullptr == val )
+            return  "NULL/nullptr FAIL";
+        else {
+            return "Valid Pointer PASS";
+            
+        }
     }
 
 
