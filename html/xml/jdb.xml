@@ -55,7 +55,11 @@ It can be used from the ROOT interpreter or as a library for compiled projects.<
   </class>
   <function id="dts" name="dts">
     <brief>Converts a double to a string and trims trailing zeros</brief>
+    <doc>Converts a float (or double) to string and trims trailing zeros
+
+</doc>
     <return>
+      <doc>the string representation of the value</doc>
       <type name="string" />
     </return>
     <argument id="dts::d" name="d">
@@ -65,7 +69,18 @@ It can be used from the ROOT interpreter or as a library for compiled projects.<
   </function>
   <function id="plural" name="plural">
     <brief>Used to properly pluralize words</brief>
+    <doc>Example :
+``` c++
+cout &lt;&lt; "Hello " &lt;&lt; plural( numOfPeople, "person", "people" ) &lt;&lt; endl;
+```
+Will return
+'Hello person' if numOfPeople == 1
+and
+'Hello people' otherwise
+
+</doc>
     <return>
+      <doc>the proper pluralization based on count</doc>
       <type name="string" />
     </return>
     <argument id="plural::count" name="count">
@@ -82,22 +97,24 @@ It can be used from the ROOT interpreter or as a library for compiled projects.<
     </argument>
   </function>
   <function id="progressBar" name="progressBar">
-    <brief>*</brief>
-    <doc>Plain text progress bar that only updates when it needs to
-</doc>
+    <brief>Plain text progress bar that only updates when it needs to</brief>
     <return>
       <type builtin="yes" name="void" />
     </return>
     <argument id="progressBar::i" name="i">
+      <doc>the current step in a loop</doc>
       <type builtin="yes" name="int" />
     </argument>
     <argument id="progressBar::nevents" name="nevents">
+      <doc>the maximum number of steps</doc>
       <type builtin="yes" name="int" />
     </argument>
     <argument id="progressBar::textWidth" name="textWidth">
+      <doc>The maximum width of the bar in characters</doc>
       <type builtin="yes" name="int" />
     </argument>
     <argument id="progressBar::elapsedTime" name="elapsedTime">
+      <doc>shows the elapsed time if positive</doc>
       <type builtin="yes" name="double" />
     </argument>
     <argument id="progressBar::skipNonTTY" name="skipNonTTY">
@@ -107,6 +124,7 @@ It can be used from the ROOT interpreter or as a library for compiled projects.<
   <function id="trimTrailingZeros" name="trimTrailingZeros">
     <brief>Removes trailing zeros</brief>
     <return>
+      <doc>The input string with trailing zeros removed</doc>
       <type name="string" />
     </return>
     <argument id="trimTrailingZeros::in" name="in">
@@ -115,25 +133,27 @@ It can be used from the ROOT interpreter or as a library for compiled projects.<
     </argument>
   </function>
   <function id="ts" name="ts">
-    <brief>*</brief>
-    <doc>String utilities that need &gt;= c++ 2011
+    <brief>Converts an integer to a string</brief>
+    <doc>Requires c++11 or newer
 
-Converts an integer to a string
 </doc>
     <return>
       <doc>the string representation of the value</doc>
       <type name="string" />
     </return>
     <argument id="ts::i" name="i">
+      <doc>integer to convert</doc>
       <type builtin="yes" name="int" />
     </argument>
     <argument id="ts::len" name="len">
+      <doc>the maximum length of string</doc>
       <type builtin="yes" name="int" />
     </argument>
   </function>
   <function id="ts" name="ts">
     <brief>Converts a double to a string</brief>
     <return>
+      <doc>the string representation of the value</doc>
       <type name="string" />
     </return>
     <argument id="ts::d" name="d">
@@ -148,6 +168,7 @@ Converts an integer to a string
   <function id="ts" name="ts">
     <brief>Converts a float to a string</brief>
     <return>
+      <doc>the string representation of the value</doc>
       <type name="string" />
     </return>
     <argument id="ts::f" name="f">
@@ -162,6 +183,7 @@ Converts an integer to a string
   <function id="ts" name="ts">
     <brief>Converts an unsigned integer to a string</brief>
     <return>
+      <doc>the string representation of the value</doc>
       <type name="string" />
     </return>
     <argument id="ts::u" name="u">

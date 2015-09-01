@@ -157,9 +157,9 @@ namespace jdb{
 			return bins.size() - 1;
 		}
 
-		/*
-			Creates bins with a nominal bin width. The final bin may be smaller than the nominal size if width does not evenly divide the range
-		}*/
+		/* Constructor : fixed width bins
+		 *	Creates bins with a nominal bin width. The final bin may be smaller than the nominal size if width does not evenly divide the range
+		 */
 		HistoBins( double min, double max, double width ){
 			this->bins = makeFixedWidthBins( width, min, max );
 		}

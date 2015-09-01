@@ -331,7 +331,7 @@ return values.
         <location column="6" file="include/jdb/RooPlotLib.h" line="46" />
       </undocumented>
       <undocumented id="jdb::TaskProgress::~TaskProgress" name="~TaskProgress">
-        <location column="3" file="include/jdb/Utils.h" line="125" />
+        <location column="3" file="include/jdb/Utils.h" line="141" />
       </undocumented>
       <undocumented id="jdb::TreeAnalyzer::~TreeAnalyzer" name="~TreeAnalyzer">
         <location column="3" file="include/jdb/TreeAnalyzer.h" line="77" />
@@ -502,52 +502,13 @@ return values.
       <undocumented name="nFiles" />
       <misspelled name="lastFile" />
     </function>
-    <function id="ts" name="ts">
-      <location column="2" file="include/jdb/Utils.h" line="32" />
-      <undocumented name="i" />
-      <undocumented name="len" />
-    </function>
-    <function id="ts" name="ts">
-      <location column="2" file="include/jdb/Utils.h" line="38" />
-      <undocumented-return />
-      <misspelled name="return" />
-    </function>
-    <function id="ts" name="ts">
-      <location column="2" file="include/jdb/Utils.h" line="44" />
-      <undocumented-return />
-      <misspelled name="return" />
-    </function>
-    <function id="ts" name="ts">
-      <location column="2" file="include/jdb/Utils.h" line="50" />
-      <undocumented-return />
-      <misspelled name="return" />
-    </function>
-    <function id="trimTrailingZeros" name="trimTrailingZeros">
-      <location column="2" file="include/jdb/Utils.h" line="56" />
-      <undocumented-return />
-      <misspelled name="return" />
-    </function>
-    <function id="dts" name="dts">
-      <location column="2" file="include/jdb/Utils.h" line="61" />
-      <undocumented-return />
-      <misspelled name="return" />
-    </function>
-    <function id="plural" name="plural">
-      <location column="3" file="include/jdb/Utils.h" line="69" />
-      <undocumented-return />
-      <misspelled name="return" />
-    </function>
     <function id="jdb::TaskTimer::elapsed" name="elapsed">
-      <location column="3" file="include/jdb/Utils.h" line="83" />
+      <location column="3" file="include/jdb/Utils.h" line="100" />
       <undocumented-return />
       <misspelled name="return" />
     </function>
     <function id="progressBar" name="progressBar">
-      <location column="2" file="include/jdb/Utils.h" line="99" />
-      <undocumented name="i" />
-      <undocumented name="elapsedTime" />
-      <undocumented name="nevents" />
-      <undocumented name="textWidth" />
+      <location column="2" file="include/jdb/Utils.h" line="115" />
       <undocumented name="skipNonTTY" />
     </function>
     <function id="jdb::HistoBook::makeNBins" name="makeNBins">

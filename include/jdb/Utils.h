@@ -21,41 +21,48 @@ using namespace std;
 
 namespace jdb{
 
-	/**
-	 * String utilities that need >= c++ 2011
-	 */
 	/* Converts an integer to a string
 	 * @i integer to convert
 	 * @len the maximum length of string
+	 *
+	 * Requires c++11 or newer
+	 * 
 	 * @return the string representation of the value
 	 */
 	std::string ts( int i, int len = -1);
 	/* Converts a double to a string
 	 * @d double to convert
 	 * @len the maximum length of string
+	 * 
 	 * @return the string representation of the value
 	 */
 	std::string ts( double d, int len = -1);
 	/* Converts a float to a string
 	 * @f float to convert
 	 * @len the maximum length of string
+	 * 
 	 * @return the string representation of the value
 	 */
 	std::string ts( float f, int len  = -1);
 	/* Converts an unsigned integer to a string
 	 * @u unsigned int to convert
 	 * @len the maximum length of string
+	 * 
 	 * @return the string representation of the value
 	 */
 	std::string ts( unsigned int u, int len  = -1);
 
 	/* Removes trailing zeros
 	 * @in string representation of a number
+	 * 
 	 * @return The input string with trailing zeros removed
 	 */
 	std::string trimTrailingZeros( string in );
 	/* Converts a double to a string and trims trailing zeros
 	 * @d double to convert
+	 *
+	 * Converts a float (or double) to string and trims trailing zeros
+	 * 
 	 * @return the string representation of the value
 	 */
 	std::string dts( double d );
@@ -64,7 +71,17 @@ namespace jdb{
 	 * @count 		the countable value
 	 * @fSingle 	the singular form
 	 * @fPlural 	the plural form
-	 * @return  	the proper pluralization based on count
+	 * 
+	 * Example :
+	 * ``` c++
+	 * cout << "Hello " << plural( numOfPeople, "person", "people" ) << endl;
+	 * ```
+	 * Will return 
+	 * 'Hello person' if numOfPeople == 1
+	 * and
+	 * 'Hello people' otherwise
+	 * 
+	 * @return 		the proper pluralization based on count
 	 */
 	 std::string  plural( double count, std::string fSingle, std::string fPlural );
 
@@ -78,18 +95,19 @@ namespace jdb{
 		// set the start time to now
 		void start( );
 		/* Return the amount of time elapsed since start() was called
+		 *
 		 * @return Time past in seconds as double
 		 */
 		double elapsed( );
 		/* Return the elapsed time as a string
 		 * Formats the string to be human readable
+		 * 
 		 * @return The amount of elapsed time
 		 */
 		string elapsedTime();
 	};
 	
-	/**
-	 * Plain text progress bar that only updates when it needs to
+	/* Plain text progress bar that only updates when it needs to
 	 * @i the current step in a loop
 	 * @nevents the maximum number of steps
 	 * @textWidth The maximum width of the bar in characters

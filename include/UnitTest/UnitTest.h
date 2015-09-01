@@ -5,13 +5,18 @@
 #ifndef ROOBARB_UNITTEST_H
 #define ROOBARB_UNITTEST_H
 
+// ROOBARB
 #include "Utils.h"
 using namespace jdb;
 
+// STL
 #include <string>
 using namespace std;
 
+// ROOT
+
 #define UT_EQ( x, y ) UnitTest::eq( x, y )
+#define UT_R_NAMED( x, y ) UnitTest::root_named( x, y )
 
 class UnitTest{
 
@@ -29,7 +34,7 @@ public:
             return  ts(life) + " != " + ts(hope) + " FAIL";
         }
     }
-    static string nn( void ** val ){
+    static string nn( void * val ){
         // 033[1;32m
         // 033[0;m
 
@@ -39,6 +44,16 @@ public:
             return "Valid Pointer PASS";
             
         }
+    }
+
+    static string root_named( TNamed * obj, string name ){
+        if ( NULL == obj || nullptr == obj )
+            return nn( obj );
+
+        if ( obj->GetName() == name )
+            return "Object " + name + " PASS";
+        else
+            return "Object " + string(obj->GetName()) + " != " + name + " FAIL";
     }
 
 
