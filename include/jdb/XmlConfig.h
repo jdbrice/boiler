@@ -347,6 +347,8 @@ namespace jdb {
 
         string report( string nodePath = "" );
 
+        void applyOverrides( map< string, string > over );
+
 	protected:
 
 		// A manual case lowing function

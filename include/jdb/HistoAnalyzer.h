@@ -2,9 +2,7 @@
 #define HISTO_ANALYZER_H
 
 
-/**
- * JDB 
- */
+// ROOBARB
 #include "Utils.h"
 #include "XmlConfig.h"
 #include "Logger.h"
@@ -15,11 +13,13 @@
 #include "Reporter.h"
 using namespace jdb;
 
-/**
- * ROOT
- */
+// ROOT
 #include "TFile.h"
 #include "TError.h"
+
+// STL
+#include <memory>
+using namespace std;
 
 namespace jdb{
 
@@ -33,32 +33,38 @@ namespace jdb{
 	{
 	// protected properties
 	protected:
-		//The logging object for the job
-		Logger 		*logger;
+		
 		// Xml Config
 		XmlConfig 	*cfg;
 		// Node Path
 		string 		nodePath;
 		// HistoBook used to organize ROOT objects
-		HistoBook 	*book;
+		shared_ptr<HistoBook> 	book;
 		// Reporter for generating pdf reports
-		Reporter 	*reporter;
+		shared_ptr<Reporter> 	reporter;
 		// File containing input
 		TFile 		*inFile;
 
 	// public methods
 	public:
 
+		static constexpr auto tag = "HistoAnalyzer";
+
 		/* Creates a HistoAnalyzer from an Xml Config
 		 * @nodePath The path to the node containing the HistoAnalyzer data
 		 * 
 		 */
-		HistoAnalyzer( XmlConfig * config, string nodePath );
+		HistoAnalyzer( XmlConfig * config, string nodePath, bool setup = true );
 
 		/* Destructor
 		 * Saves output and closes input
 		 */
 		~HistoAnalyzer();
+
+		/* Sets up the analyzer
+		 *
+		 */
+		void setup();
 
 		/* The Maker function
 		 *

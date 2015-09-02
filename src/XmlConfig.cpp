@@ -45,7 +45,6 @@ namespace jdb{
 	}
 
 	XmlConfig::~XmlConfig(){
-
 	}
 
 
@@ -56,9 +55,6 @@ namespace jdb{
 		for ( int i = 0; i < children.size(); i++ ){
 			cout << children[ i ] << endl;
 		}
-
-
-
 	}
 
 
@@ -506,7 +502,16 @@ namespace jdb{
         }
 
        //DEBUG( report() );
+	}
 
+	void XmlConfig::applyOverrides( map< string, string > over ) {
+
+		for ( auto k : over ){
+			// require that the node/attribute already exist
+			if ( data.count( k.first ) ){
+				data[ k.first ] = k.second;
+			}
+		}
 	}
 
     string XmlConfig::report( string nodePath ){

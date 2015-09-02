@@ -57,6 +57,16 @@ namespace jdb{
 			//return (new Logger() );
 		}
 
+		static void setup( XmlConfig * config, string nodePath ) {
+			if ( config && config->exists( nodePath+":globalLogLevel" ) ){
+				cout << "Setting globalLogLevel = " << config->getString( nodePath+":globalLogLevel" ) << endl;
+				Logger::setGlobalLogLevel( Logger::logLevelFromString( config->getString( nodePath+":globalLogLevel" ) ) );
+			}
+
+			if ( config && config->getBool( nodePath+":color" ) )
+				Logger::setGlobalColor( true );
+		}
+
 	};
 
 }
