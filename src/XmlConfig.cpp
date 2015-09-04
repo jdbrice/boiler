@@ -354,11 +354,11 @@ namespace jdb{
 			if ( nodePath == parent && (tag == tagName( it->first )) ){
 				paths.push_back( it->first );
 			} else if ( nodePath != parent ){
-                DEBUG( "Rejected because parent does not match" )
-                DEBUG( "parent=" << parent << ", shouldBe=" << nodePath )
+                // DEBUG( "Rejected because parent does not match" )
+                // DEBUG( "parent=" << parent << ", shouldBe=" << nodePath )
             } else if ( tag != tagName( it->first ) ){
-                DEBUG( "Rejected because tag does not match" )
-                DEBUG( "tag=" << tagName( it->first ) << ", shouldBe=" << tag )
+                // DEBUG( "Rejected because tag does not match" )
+                // DEBUG( "tag=" << tagName( it->first ) << ", shouldBe=" << tag )
             }
 		}
 		return paths;
