@@ -46,11 +46,13 @@ namespace jdb{
 	    // create the book
 	    logger->info(__FUNCTION__) << " Creating book " << config->getString( nodePath +  "output.data", "TreeAnalyzer" ) << endl;
 	    skipMake = cfg->getBool( nodePath + "SkipMake", false );
+	    INFO( "TreeAnalyzer", "Skip Make == " << skipMake );
 	    if ( !skipMake )
 		    book = new HistoBook( outputPath + jobPrefix + config->getString( nodePath +  "output.data", "TreeAnalyzer" ), config, "", "" );
 		else
 			book = new HistoBook( outputPath + jobPrefix + "_copy_" + config->getString( nodePath +  "output.data", "TreeAnalyzer" ) , config, outputPath + jobPrefix + config->getString( nodePath +  "output.data", "TreeAnalyzer" ), "" );
 	    	    
+	   	INFO( "TreeAnalyzer", "Creating Reporter" );
 	   	// Default reporter
 	    if ( "" == jobPrefix && cfg->exists( np+"Reporter.output:url" ) ) {
 		    reporter = new Reporter( cfg, np+"Reporter.", jobPrefix );
@@ -62,6 +64,7 @@ namespace jdb{
 	     * Sets up the input, should switch seemlessly between chain only 
 	     * and a DataSource 
 	     */
+	    INFO( "TreeAnalyzer", "Creating DataSource" );
 	    if ( cfg->exists( nodePath+"DataSource" ) ){
 	    	ds = new DataSource( cfg, nodePath +  "DataSource", fileList );
 	    	chain = ds->getChain();
