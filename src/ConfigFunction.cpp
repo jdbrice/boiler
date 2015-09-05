@@ -5,7 +5,7 @@ namespace jdb {
 
 	int ConfigFunction::instances = 0; 
 
-	ConfigFunction::ConfigFunction( XmlConfig * cfg, string nodePath, string pMod, string eMod, string formMod ){
+	ConfigFunction::ConfigFunction( XmlConfig * cfg, string nodePath, string pMod, string eMod, string formMod, string covMod ){
 
 		string formula = cfg->getString( nodePath + formMod );
 		func = unique_ptr<TF1> (new TF1( ("xmlfunction_" + ts(instances)).c_str(), formula.c_str() ) );
@@ -21,12 +21,17 @@ namespace jdb {
 				double error = cfg->getDouble( nodePath + eMod + ts(p) );
 				func->SetParError( p, error );
 
-				DEBUG( "p" << p << " = " << val << " +/- " << error )
+				DEBUG( tag, "p" << p << " = " << val << " +/- " << error )
 			} else {
-				DEBUG( "p" << p << " = " << val )
+				DEBUG( tag, "p" << p << " = " << val )
 			}
 
 			p++;
+		}
+
+		if ( cfg->exists( nodePath + covMod ) ){
+			cov = cfg->getDoubleVector( nodePath + covMod );
+			DEBUG( tag, "cov array length : " << cov.size() );
 		}
 	}
 }

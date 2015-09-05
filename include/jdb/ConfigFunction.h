@@ -21,11 +21,14 @@ namespace jdb{
 	class ConfigFunction {
 	protected:
 		// The ROOT TF1 object backing the function
-		unique_ptr<TF1> func = nullptr;
+		shared_ptr<TF1> func = nullptr;
+		vector<double> cov;
 
 		// instance count to make sure wee keep a unique ROOT name on our function
 		static int instances;
 	public:
+
+		static constexpr auto tag = "ConfigFunction";
 
 		/* Creates a function from xml config
 		 *
@@ -35,7 +38,7 @@ namespace jdb{
 		 * @eMod 		Default : ':e' - the modifier to get the parameter error from node path
 		 * @formMod 	Default : ':formula' - the modifier to get the formula from node path
 		 */
-		ConfigFunction( XmlConfig * cfg, string nodePath, string pMod = ":p", string eMod = ":e", string formMod = ":formula");
+		ConfigFunction( XmlConfig * cfg, string nodePath, string pMod = ":p", string eMod = ":e", string formMod = ":formula", string covMod = ":cov");
 		/* Destructor
 		 *
 		 */
@@ -53,6 +56,10 @@ namespace jdb{
 			}
 			return 0.0;
 		}
+
+		shared_ptr<TF1> getTF1() { return func; }
+
+		vector<double> getCov() const { return cov; }
 
 		string toString(){
 
