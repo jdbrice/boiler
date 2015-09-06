@@ -49,6 +49,13 @@ public:
 			return 0.0;
 		}
 
+		if ( "closest" == interpolate ){
+			if ( abs( x_val - x[index] ) <= abs( x_val - x[index + 1] ) )
+				return y[index];
+			else
+				return y[index+1];
+		}
+
 		if ( "linear" == interpolate ){
 			return linterp( x_val, x[index], y[index], x[index+1], y[index+1] );
 		}
