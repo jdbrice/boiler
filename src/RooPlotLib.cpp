@@ -184,7 +184,8 @@ RooPlotLib &jdb::RooPlotLib::set( string option, vector<string> params ){
 	// Line attributes
 	TAttLine * line = dynamic_cast<TAttLine*>( styling );
 	if ( line ){
-		if ( "linecolor" == option || "lc" == option ){
+		if ( "linecolor" == option || "lc" == option 
+			|| "color" == option || "c" == option  ){
 			int c = atoi( params[ 0 ].c_str() );
 			if ( colorFromString >= 0 )
 				c = colorFromString;
@@ -199,17 +200,23 @@ RooPlotLib &jdb::RooPlotLib::set( string option, vector<string> params ){
 	// Fill attributes
 	TAttFill * fill = dynamic_cast<TAttFill*>( styling );
 	if ( fill ){
-		if ( "fillcolor" == option || "fc" == option ){
+		if ( "fillcolor" == option || "fc" == option 
+			|| "color" == option || "c" == option ){
 			int c = atoi( params[ 0 ].c_str() );
 			if ( colorFromString >= 0 )
 				c = colorFromString;
 			fill->SetFillColor( c );
 		}
-		if ( "fillcoloralpha" == option || "fca" == option ){
+		if ( "fillcoloralpha" == option || "fca" == option 
+			 || "color" == option || "c" == option ){
 			int c = atoi( params[ 0 ].c_str() );
 			if ( colorFromString >= 0 )
 				c = colorFromString;
-			fill->SetFillColorAlpha( c, atoi( params[ 1 ].c_str() ) );
+
+			if ( "" != params[ 1 ] )
+				fill->SetFillColorAlpha( c, atof( params[ 1 ].c_str() ) );
+			else 
+				fill->SetFillColorAlpha( c, 1.0 );
 		}
 		if ( "fillstyle" == option || "fst" == option){
 			fill->SetFillStyle( atoi( params[ 0 ].c_str() ) );
@@ -219,7 +226,8 @@ RooPlotLib &jdb::RooPlotLib::set( string option, vector<string> params ){
 	// Marker attributes
 	TAttMarker * marker = dynamic_cast<TAttMarker*>( styling );
 	if ( marker ){
-		if ( "markercolor" == option || "mc" == option ){
+		if ( "markercolor" == option || "mc" == option 
+			|| "color" == option || "c" == option ){
 			int c = atoi( params[ 0 ].c_str() );
 			if ( colorFromString >= 0 )
 				c = colorFromString;
