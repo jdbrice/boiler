@@ -125,6 +125,7 @@ RooPlotLib &jdb::RooPlotLib::set( string option, vector<string> params ){
 		else if ( ("xls" == option || "xlabelsize" == option ) ){
 			ax->SetLabelSize( atof(params[ 0 ].c_str()) );
 		}
+	
 
 		// Range
 		if ( ("xrange" == option || "xr" == option )  ){
@@ -151,7 +152,7 @@ RooPlotLib &jdb::RooPlotLib::set( string option, vector<string> params ){
 		}
 		else if ( ("yls" == option || "ylabelsize" == option ) ){
 			ay->SetLabelSize( atof(params[ 0 ].c_str()) );
-		}
+		}	
 
 		// Range
 		else if ( ("yrange" == option || "yr" == option )  ){
@@ -163,7 +164,7 @@ RooPlotLib &jdb::RooPlotLib::set( string option, vector<string> params ){
 	}
 	
 	
-
+	// SEMI - GLOBAL
 	// gPad Options
 	if ( "logx" == option && nullptr != gPad )
 		gPad->SetLogx( atoi( params[ 0 ].c_str() ) );
@@ -172,6 +173,7 @@ RooPlotLib &jdb::RooPlotLib::set( string option, vector<string> params ){
 	if ( "logz" == option && nullptr != gPad )
 		gPad->SetLogz( atoi( params[ 0 ].c_str() ) );
 
+	// GLOBAL
 	// gStyle Options
 	if ( "stats" == option || "stat" == option || "optstat" == option){
 		gStyle->SetOptStat( atoi( params[ 0 ].c_str() ) );
