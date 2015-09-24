@@ -9,6 +9,7 @@
 *.root
 #object types
 *.o
+src/dictionary_rdict.pcm
 /src/dictionary.*
 /lib/*
 /script/.DataSource*

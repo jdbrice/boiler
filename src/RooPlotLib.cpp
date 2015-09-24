@@ -197,6 +197,9 @@ RooPlotLib &jdb::RooPlotLib::set( string option, vector<string> params ){
 		if ( "linewidth" == option || "lw" == option){
 			line->SetLineWidth( atof( params[ 0 ].c_str() ) );
 		}
+		if ("linestyle" == option || "lst" == option ){
+			line->SetLineStyle( atoi( params[ 0 ].c_str() ) );
+		}
 	}
 
 	// Fill attributes
