@@ -191,7 +191,7 @@ RooPlotLib &jdb::RooPlotLib::set( string option, vector<string> params ){
 			if ( params.size() >= 3 )
 				opt = (bool) atoi(params[ 3 ].c_str());
 			
-			ax->SetNdivisions( n1, n2, n3, opt );
+			ay->SetNdivisions( n1, n2, n3, opt );
 		}
 	}
 	
