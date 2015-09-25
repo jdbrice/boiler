@@ -134,6 +134,22 @@ RooPlotLib &jdb::RooPlotLib::set( string option, vector<string> params ){
 		if ( ("xbinrange" == option || "xbr" == option )  ){
 			ax->SetRange( atof(params[ 0 ].c_str()), atof(params[ 1 ].c_str()) );
 		}
+
+		// n ticks
+		else if (  "xticks" == option || "xtick" == option ){
+			int n1 = atoi(params[ 0 ].c_str());
+			int n2 = 12;
+			int n3 = 0;
+			bool opt = true;
+			if ( params.size() >= 2 )
+				n2 = atoi(params[ 1 ].c_str());
+			if ( params.size() >= 3 )
+				n3 = atoi(params[ 2 ].c_str());
+			if ( params.size() >= 3 )
+				opt = (bool) atoi(params[ 3 ].c_str());
+			
+			ax->SetNdivisions( n1, n2, n3, opt );
+		}
 	}
 	// Y-Axis
 	if ( nullptr != ay ){
@@ -160,6 +176,22 @@ RooPlotLib &jdb::RooPlotLib::set( string option, vector<string> params ){
 		}
 		else if ( ("ybinrange" == option || "ybr" == option )  ){
 			ay->SetRange( atof(params[ 0 ].c_str()), atof(params[ 1 ].c_str()) );
+		}
+
+		// n ticks
+		else if (  "yticks" == option || "ytick" == option ){
+			int n1 = atoi(params[ 0 ].c_str());
+			int n2 = 12;
+			int n3 = 0;
+			bool opt = true;
+			if ( params.size() >= 2 )
+				n2 = atoi(params[ 1 ].c_str());
+			if ( params.size() >= 3 )
+				n3 = atoi(params[ 2 ].c_str());
+			if ( params.size() >= 3 )
+				opt = (bool) atoi(params[ 3 ].c_str());
+			
+			ax->SetNdivisions( n1, n2, n3, opt );
 		}
 	}
 	
