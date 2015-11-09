@@ -6,8 +6,9 @@
 #define ROOBARB_ROOPLOTLIB_H
 
 // ROOBARB
-#include "XmlCanvas.h"
 #include "Utils.h"
+#include "XmlConfig.h"
+using namespace jdb;
 
 // STL
 #include <string>
@@ -16,9 +17,13 @@ using namespace std;
 
 
 // ROOT
+#include "TObject.h"
 #include "TH1.h"
 #include "TGraph.h"
 #include "TF1.h"
+#include "TPad.h"
+#include "TCanvas.h"
+#include "TAttFill.h"
 
 // TODO: Add @UnitTest for RooPlotLib (1)
 // TODO: Add @documentation for RooPlotLib (0)
@@ -27,8 +32,6 @@ namespace jdb{
 	class RooPlotLib {
 
 	protected:
-
-	    map<string, shared_ptr<XmlCanvas> > canvas;
 
 	    //string type = "";
 	    TObject * styling = nullptr;
@@ -74,7 +77,7 @@ namespace jdb{
 
 	    int color( string color );
 	    
-
+	    ClassDef( jdb::RooPlotLib, 1 )
 	};
 }
 

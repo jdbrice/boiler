@@ -5,9 +5,9 @@
 #include "RapidXmlWrapper.h"
 #endif
 
-/*
-	STD
- */
+#include "TObject.h"
+
+// STD
 #include <string>
 #include <iostream>
 #include <vector>
@@ -19,9 +19,7 @@
 #include <memory>
 #include <utility>      // std::pair, std::make_pair
 
-/**
- * JDB
- */
+// JDB
 #include "Logger.h"
 
 namespace jdb {
@@ -379,7 +377,7 @@ namespace jdb {
 
 
 
-		
+		ClassDef( jdb::XmlConfig, 1 )
 	};
 
 }

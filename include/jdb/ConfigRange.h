@@ -5,6 +5,7 @@
 #include "Utils.h"
 #include <limits>       // std::numeric_limits
 #include <memory>
+using namespace jdb;
 
 namespace jdb{
 
@@ -154,6 +155,7 @@ namespace jdb{
 			return false;
 		} 
 		
+		ClassDef( jdb::ConfigRange, 1)
 	};
 
 }

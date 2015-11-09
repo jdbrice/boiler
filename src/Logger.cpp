@@ -1,6 +1,8 @@
 #include "Logger.h"
 
 
+ClassImp( jdb::Logger );
+
 namespace jdb {
 	int Logger::llGlobal = Logger::llDefault;	
 	bool Logger::showColors = false;

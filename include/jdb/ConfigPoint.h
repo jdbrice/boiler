@@ -4,6 +4,7 @@
 #include "XmlConfig.h"
 #include "Utils.h"
 #include <memory>
+using namespace jdb;
 
 namespace jdb{
 	
@@ -60,6 +61,8 @@ namespace jdb{
 		string toString(){
 			return ("( " + dts( x ) + ", " + dts( y ) + " )");
 		}
+
+		ClassDef( jdb::ConfigPoint, 1 )
 	};
 
 }

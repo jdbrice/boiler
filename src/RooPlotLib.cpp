@@ -4,6 +4,8 @@
 //#include "TROOT.h" 
 #include "TStyle.h"
 
+ClassImp( jdb::RooPlotLib );
+
 /*
  * Default Ctor
  * 
@@ -250,10 +252,18 @@ RooPlotLib &jdb::RooPlotLib::set( string option, vector<string> params ){
 			if ( colorFromString >= 0 )
 				c = colorFromString;
 
-			if ( "" != params[ 1 ] )
-				fill->SetFillColorAlpha( c, atof( params[ 1 ].c_str() ) );
-			else 
-				fill->SetFillColorAlpha( c, 1.0 );
+			if ( "" != params[ 1 ] ){
+				if ( nullptr != h )
+					h->SetFillColorAlpha( c, atof( params[ 1 ].c_str() ) );
+				if ( nullptr != g )
+					g->SetFillColorAlpha( c, atof( params[ 1 ].c_str() ) );
+			}
+			else { 
+				if ( nullptr != h )
+					h->SetFillColorAlpha( c, 1.0 );
+				if ( nullptr != g )
+					g->SetFillColorAlpha( c, 1.0 );
+			}
 		}
 		if ( "fillstyle" == option || "fst" == option){
 			fill->SetFillStyle( atoi( params[ 0 ].c_str() ) );

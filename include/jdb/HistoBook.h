@@ -7,16 +7,12 @@
 #include <sstream>
 #include <stdarg.h>
 
-/**
- * JDB
- */
+// JDB
 #include "XmlConfig.h"
 #include "Logger.h"
 #include "HistoBins.h"
 
-/**
- * ROOT
- */
+// ROOT 
 #include "TROOT.h"
 #include "TH1.h"
 #include "TH2.h"
@@ -26,39 +22,12 @@
 #include "TStyle.h"
 #include "TPad.h"
 #include "TClass.h"
+#include "TObject.h"
 
 
 using namespace std;
 
 namespace jdb{
-
-	/* For legend Alignment
-	 * Needs to be removed when updated
-	 */
-	class legendAlignment {
-	public:
-		static const int topLeft = 1;
-		static const int topRight = 2;
-		static const int topCenter = 3;
-		static const int bottomLeft = 4;
-		static const int bottomRight = 5;
-		static const int bottomCenter = 6;
-
-		static const int bottom = 0;
-		static const int center = 1; // for x and y dirs
-		static const int right = 2;
-		static const int left = 3;
-		static const int top = 4;
-
-		// TODO: make a smart legend that trys to avoid data
-		static const int best = 5;
-
-		
-
-	};
-
-
-
 
 
 	/* A book keeper and helper for storing and using ROOT histograms
@@ -68,8 +37,6 @@ namespace jdb{
 
 	protected:
 
-		// Logger
-		Logger * logger;
 		// Current directory in output file
 		string currentDir;
 		// Map of hitogram names to paths in the Xml Config File for automaticlly created histos
@@ -81,14 +48,6 @@ namespace jdb{
 		// Output file
 		TFile *file;
 
-		/* Style and display */
-		// Name of the histogram that is being styled
-		string styling;
-		// the current draw option for displaying a histogram
-		string drawOption;
-		// TLegend used for drawing legends
-		TLegend * legend;
-
 		// Optional config to use for all config related calls
 		XmlConfig * config;
 		// Save on Exit or not
@@ -97,7 +56,7 @@ namespace jdb{
 
 	public:
 
-		static const string className;
+		static const string tag;
 		/**
 		 * Static Usage
 		 */
@@ -114,8 +73,6 @@ namespace jdb{
 		HistoBook( string name, string input = "", string inDir = "" );		
 		HistoBook( string name, XmlConfig* config, string input = "", string inDir = "");
 		~HistoBook();
-
-		void setLogLevel( string ll ) { logger->setLogLevel( ll ); }
 
 		/*
 		 *Changes into the given directory. 
@@ -194,15 +151,6 @@ namespace jdb{
 		void makeAll( XmlConfig * config, string nodeName );
 		void clone( string existing, string create );
 		void clone( string ePath, string existing, string cPath, string create );
-
-		TLegend* getLegend() { return legend; }
-
-		HistoBook* draw(string name = "", Option_t* opt= "" );
-		
-
-		HistoBook* clearLegend() { legend->Clear(); return this; };
-		
-		// add a legend by setting the legendName
 		
 
 		TDirectory* getDirectory( ) { return gDirectory; }
@@ -213,24 +161,9 @@ namespace jdb{
 		 */
 		void save( bool saveAllInDirectory = false );
 		void saveOnExit( bool doIt = true ){
-			logger->info( __FUNCTION__ ) << "Auto Save on exit set to " << doIt << endl;
+			INFO( tag, "Auto Save on exit set to " << doIt );
 			saveAllOnExit = doIt;
 		}
-
-		/* Styles a histogram 
-		 * Example: book->style( "h1" )->set( "title", "science" )->draw(); "
-		 */
-		HistoBook* style( string hName );
-
-		//set( string param, ... )
-		// for function chaining and rapid styling
-		HistoBook* set( string param, string p1, string p2 = "", string p3 = "", string p4 = "" );
-		HistoBook* set( string param, double p1, double p2 = -1, double p3 = -1, double p4 = -1 );
-		HistoBook* set( XmlConfig* config, string nodePath );
-		HistoBook* set( string nodePath );
-		HistoBook* set( string opt, vector<string> nodePath );
-
-		HistoBook* exportAs( string filename = "" );
 
 		bool exists( string name, string sdir = "" );
 
@@ -286,29 +219,8 @@ namespace jdb{
 		HistoBook* placeLegend( int alignmentX, int alignmentY, double width = -1, double height = -1 );
 		void loadRootDir( TDirectory*, string path = "" );
 
-		string sParam( vector<string> params, int p, string def="" ) {
-			if ( p < params.size() )
-				return params[ p ];
-			else 
-				return def;
-		}
-		char* cParam( vector<string> params, int p, string def="" ) {
-			if ( p < params.size() )
-				return (char*)(params[ p ].c_str());
-			else 
-				return (char*)(def.c_str());
-		}
-		double dParam( vector<string> params, int p, double def=0 ) {
-			if ( p < params.size() )
-				return atof( params[ p ].c_str() );
-			else 
-				return def;
-		}
 
-		
-
-
-
+		ClassDef( jdb::HistoBook, 1 )
 	};	
 }
 

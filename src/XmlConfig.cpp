@@ -1,6 +1,8 @@
 #include "XmlConfig.h"
 #include <sys/stat.h>
 
+ClassImp( jdb::XmlConfig );
+
 namespace jdb{
 
 	XmlConfig::XmlConfig( string filename){

@@ -18,53 +18,7 @@
 #define INFO(...) GET_MACRO(__VA_ARGS__, LOG_I_TAG, LOG_I )(__VA_ARGS__)
 #define TRACE(...) GET_MACRO(__VA_ARGS__, LOG_T_TAG, LOG_T )(__VA_ARGS__)
 #define DEBUG(...) GET_MACRO(__VA_ARGS__, LOG_D_TAG, LOG_D )(__VA_ARGS__)
-
-#if JDB_LOG_LEVEL<JDB_LOG_LEVEL_DEBUG
-	#define LOG_D(x)
-#else
-	#define LOG_D(x) Logger::log.debug( __func__ ) << x << endl;
-#endif
-
-#if JDB_LOG_LEVEL<JDB_LOG_LEVEL_DEBUG
-	#define LOG_T(x)
-#else
-	#define LOG_T(x) Logger::log.trace( __func__ ) << x << endl;
-#endif
-
-#if JDB_LOG_LEVEL<JDB_LOG_LEVEL_DEBUG
-	#define LOG_I(x)
-#else
-	#define LOG_I(x)  Logger::log.info( __func__ ) << x << endl;
-#endif
-
-#if JDB_LOG_LEVEL<JDB_LOG_LEVEL_DEBUG
-	#define LOG_W(x)
-#else
-	#define LOG_W(x)  Logger::log.warn( __func__ ) << x << endl;
-#endif
-
-#if JDB_LOG_LEVEL<JDB_LOG_LEVEL_DEBUG
-	#define LOG_E(x)
-#else
-	#define LOG_E(x) Logger::log.error( __func__ ) << x << endl;
-#endif
-// TODO: same here
-#define LOG_D_TAG( tag, x ) Logger::log.setClassSpace( tag ); Logger::log.debug( __func__ ) << x << endl; 
-#define LOG_T_TAG( tag, x ) Logger::log.setClassSpace( tag ); Logger::log.trace( __func__ ) << x << endl; 
-#define LOG_I_TAG( tag, x ) Logger::log.setClassSpace( tag ); Logger::log.info( __func__ ) << x << endl; 
-#define LOG_W_TAG( tag, x ) Logger::log.setClassSpace( tag ); Logger::log.warn( __func__ ) << x << endl; 
-#define LOG_E_TAG( tag, x ) Logger::log.setClassSpace( tag ); Logger::log.error( __func__ ) << x << endl; 
-
-
-// Continued line versions
-// for example:
-// DEBUGL <<  "message"
-// DEBUGL << "continue on same line" << endl;
-#define DEBUGL Logger::log.debug( "", false )
-#define TRACEL Logger::log.trace("", false)
-#define INFOL Logger::log.info("", false)
-#define WARNL Logger::log.warn("", false)
-#define ERRORL Logger::log.error("", false)
+ 
 
 
 #include <iostream>
@@ -72,9 +26,10 @@
 #include <iomanip>
 #include <map>
 #include <algorithm>
-#include <chrono>
 using namespace std;
-using namespace std::chrono;
+
+#include "TObject.h"
+
 
 
 namespace jdb {
@@ -374,12 +329,50 @@ namespace jdb {
 		// The "class space" ie the context
 		string cSpace;
 		
-
+		ClassDef( jdb::Logger, 1 )
 
 	};
 
 
 }
+
+
+
+#if JDB_LOG_LEVEL<JDB_LOG_LEVEL_DEBUG
+	#define LOG_D(x)
+#else
+	#define LOG_D(x) Logger::log.debug( __func__ ) << x << endl;
+#endif
+
+#if JDB_LOG_LEVEL<JDB_LOG_LEVEL_DEBUG
+	#define LOG_T(x)
+#else
+	#define LOG_T(x) Logger::log.trace( __func__ ) << x << endl;
+#endif
+
+#if JDB_LOG_LEVEL<JDB_LOG_LEVEL_DEBUG
+	#define LOG_I(x)
+#else
+	#define LOG_I(x)  Logger::log.info( __func__ ) << x << endl;
+#endif
+
+#if JDB_LOG_LEVEL<JDB_LOG_LEVEL_DEBUG
+	#define LOG_W(x)
+#else
+	#define LOG_W(x)  Logger::log.warn( __func__ ) << x << endl;
+#endif
+
+#if JDB_LOG_LEVEL<JDB_LOG_LEVEL_DEBUG
+	#define LOG_E(x)
+#else
+	#define LOG_E(x) Logger::log.error( __func__ ) << x << endl;
+#endif
+// TODO: same here
+#define LOG_D_TAG( tag, x ) Logger::log.setClassSpace( tag ); Logger::log.debug( __func__ ) << x << endl; 
+#define LOG_T_TAG( tag, x ) Logger::log.setClassSpace( tag ); Logger::log.trace( __func__ ) << x << endl; 
+#define LOG_I_TAG( tag, x ) Logger::log.setClassSpace( tag ); Logger::log.info( __func__ ) << x << endl; 
+#define LOG_W_TAG( tag, x ) Logger::log.setClassSpace( tag ); Logger::log.warn( __func__ ) << x << endl; 
+#define LOG_E_TAG( tag, x ) Logger::log.setClassSpace( tag ); Logger::log.error( __func__ ) << x << endl;
 
 
 
