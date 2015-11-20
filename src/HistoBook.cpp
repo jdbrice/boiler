@@ -15,6 +15,7 @@ ClassImp( jdb::HistoBook );
 namespace jdb{
 
 	const string HistoBook::tag = "HistoBook";
+
 	/**
 	 * Creates a histobook and allows the root filename to be set. optionally read from an existing root
 	 * file and include everything into the working space
@@ -23,33 +24,12 @@ namespace jdb{
 	 * @param inDir input starting directory
 	 */
 	HistoBook::HistoBook( string name, string input, string inDir ){
+		this->filename = name;
+		this->config = nullptr;
+		this->inputFilename = input;
+		this->inputDir = inDir;
 
-		
-		if (name.find(  ".root") != std::string::npos){
-			filename = name;
-		} else
-			filename = name + ".root";
-
-		currentDir = "/";
-
-		file = new TFile( filename.c_str(), "recreate" );
-		file->cd();
-
-		INFO( tag, "Output File : " << filename << " opened" );
-
-		globalStyle();
-
-
-		// if an input was given merge it into the live record
-		if ( input.length() >= 5 ){
-			INFO( tag, "Loading : " << inDir << " from " << input );
-			TFile * fin = new TFile( input.c_str() );
-			cd ( inDir );
-			fin->cd( inDir.c_str() );
-			loadRootDir( gDirectory, inDir );
-		}
-
-		saveOnExit( true );
+		initialize();
 	}	// Constructor
 
 	/**
@@ -58,42 +38,69 @@ namespace jdb{
 	 * @param con  The config file to use for all config relates calls
 	 */
 	HistoBook::HistoBook( string name, XmlConfig * con, string input, string inDir){
+		this->filename = name;
+		this->config = con;
+		this->inputFilename = input;
+		this->inputDir = inDir;
 
-		// set the configuration 
-		config = con;
+		initialize();
+	}	// Constructor
 
+	void HistoBook::initialize(){
 		INFO( tag, "" );
 
-		if (name.find(  ".root") != std::string::npos){
-			filename = name;
-		} else
-			filename = name + ".root";
-
-		currentDir = "/";
-
-		file = new TFile( filename.c_str(), "recreate" );
-		file->cd();
-
-		INFO( tag, "Output File : " << filename << " opened" );
-
-
-		globalStyle();
-
-
-		INFO( tag, " Set Configuration " );
-
-		// if an input was given merge it into the live record
-		if ( input.length() >= 5 ){
-			INFO( tag, "Loading : " << inDir << " from " << input );
-			TFile * fin = new TFile( input.c_str() );
-			cd ( inDir );
-			fin->cd( inDir.c_str() );
-			loadRootDir( gDirectory, inDir );
+		// append .root to end if needed
+		if (this->filename.find(  ".root") == std::string::npos){
+			this->filename = this->filename + ".root";
 		}
+
+		// open the output file
+		this->file = new TFile( this->filename.c_str(), "recreate" );
+		this->file->cd();
+
+		if ( this->file->IsOpen() ){
+			INFO( tag, "Output File : " << this->filename << " opened" );
+		} else {
+			ERROR( tag, "Output File : " << this->filename << " not opened" );
+		}
+
+		// set our default global style
+		globalStyle();
+		
+		// if an input was given merge it into the live record
+		mergeIn( this->inputFilename, this->inputDir );
+
+		this->currentDir = "";
 
 		// default to auto save on exit
 		saveOnExit( true );
-	}	// Constructor
+	}
+
+
+	/**
+	 * Merges in a root file
+	 * 
+	 * @param _filename Filename of root file to load
+	 * @param _dir      Optional: sub directory to load
+	 */
+	void HistoBook::mergeIn( string _filename, string _dir ){
+		INFO( tag, "(" << _filename << ", " << _dir << " )"  );
+
+		if (_filename.find(  ".root") == std::string::npos){
+			_filename = _filename + ".root";
+		}
+
+		if ( _filename.length() >= 6 ){
+			INFO( tag, "Loading : " << _dir << " from " << _filename );
+			
+			TFile * fin = new TFile( _filename.c_str() );
+			
+			this->cd ( _dir );
+			
+			fin->cd( _dir.c_str() );
+			loadRootDir( gDirectory, _dir );
+		}
+	}
 
 	/**
 	 * Destructor
@@ -109,8 +116,7 @@ namespace jdb{
 			WARN( tag, "Not Saving Book" );
 		}
 		file->Close();
-		INFO( tag, " Memory freed, data written, file closed " );
-		
+		INFO( tag, "Shutting Down" );
 	}	// Destructor
 
 	void HistoBook::save(bool saveAllInDirectory ) {
@@ -175,7 +181,6 @@ namespace jdb{
 
 			}
 		}
-
 	} // loadRootDir
 
 	void HistoBook::add( string name, TH1* h ){
@@ -226,7 +231,6 @@ namespace jdb{
 
 		cd();
 		h->Write();
-
 	} 	// add
 
 	string HistoBook::cd( string sdir  ){
@@ -253,6 +257,58 @@ namespace jdb{
 	}	// cd
 
 
+	TH1 * HistoBook::make( string _type, string _name, string _title, HistoBins &_bx, HistoBins &_by, HistoBins &_bz ){
+		DEBUG( tag, "type=" << _type << " name=" << _name << " title=" << _title << "bx, by, bz" );
+
+		int nD = 0;
+		if ( (_bx.nBins() > 0) && (_by.nBins() <= 0) && (_bz.nBins() <= 0) )
+			nD = 1;
+		if ( (_bx.nBins() > 0) && (_by.nBins() > 0) && (_bz.nBins() <= 0) )
+			nD = 2;
+		if ( (_bx.nBins() > 0) && (_by.nBins() > 0) && (_bz.nBins() > 0) )
+			nD = 3;
+
+
+		if ( 1 == nD ){
+			if ( "C" == _type )
+				return new TH1C( _name.c_str(), _title.c_str(), _bx.nBins(), _bx.bins.data() );
+			if ( "S" == _type )
+				return new TH1S( _name.c_str(), _title.c_str(), _bx.nBins(), _bx.bins.data() );
+			if ( "I" == _type )
+				return new TH1I( _name.c_str(), _title.c_str(), _bx.nBins(), _bx.bins.data() );
+			if ( "F" == _type )
+				return new TH1F( _name.c_str(), _title.c_str(), _bx.nBins(), _bx.bins.data() );
+			if ( "D" == _type )
+				return new TH1D( _name.c_str(), _title.c_str(), _bx.nBins(), _bx.bins.data() );
+		} // make 1Ds
+		else if ( 2 == nD ){
+			if ( "C" == _type )
+				return new TH2C( _name.c_str(), _title.c_str(), _bx.nBins(), _bx.bins.data(), _by.nBins(), _by.bins.data() );
+			if ( "S" == _type )
+				return new TH2S( _name.c_str(), _title.c_str(), _bx.nBins(), _bx.bins.data(), _by.nBins(), _by.bins.data() );
+			if ( "I" == _type )
+				return new TH2I( _name.c_str(), _title.c_str(), _bx.nBins(), _bx.bins.data(), _by.nBins(), _by.bins.data() );
+			if ( "F" == _type )
+				return new TH2F( _name.c_str(), _title.c_str(), _bx.nBins(), _bx.bins.data(), _by.nBins(), _by.bins.data() );
+			if ( "D" == _type )
+				return new TH2D( _name.c_str(), _title.c_str(), _bx.nBins(), _bx.bins.data(), _by.nBins(), _by.bins.data() );
+		} // make 2Ds
+		else if ( 3 == nD ){
+			if ( "C" == _type )
+				return new TH3C( _name.c_str(), _title.c_str(), _bx.nBins(), _bx.bins.data(), _by.nBins(), _by.bins.data(), _bz.nBins(), _bz.bins.data() );
+			if ( "S" == _type )
+				return new TH3S( _name.c_str(), _title.c_str(), _bx.nBins(), _bx.bins.data(), _by.nBins(), _by.bins.data(), _bz.nBins(), _bz.bins.data() );
+			if ( "I" == _type )
+				return new TH3I( _name.c_str(), _title.c_str(), _bx.nBins(), _bx.bins.data(), _by.nBins(), _by.bins.data(), _bz.nBins(), _bz.bins.data() );
+			if ( "F" == _type )
+				return new TH3F( _name.c_str(), _title.c_str(), _bx.nBins(), _bx.bins.data(), _by.nBins(), _by.bins.data(), _bz.nBins(), _bz.bins.data() );
+			if ( "D" == _type )
+				return new TH3D( _name.c_str(), _title.c_str(), _bx.nBins(), _bx.bins.data(), _by.nBins(), _by.bins.data(), _bz.nBins(), _bz.bins.data() );
+		} // make 2Ds
+
+		return nullptr;
+	}
+
 	void HistoBook::make( string nodeName ){
 		if ( config )
 			make( config, nodeName );
@@ -260,7 +316,6 @@ namespace jdb{
 	void HistoBook::make( XmlConfig * config, string nodeName ){
 
 		if ( config && config->exists( nodeName ) ){
-
 
 			string hName = config->tagName( nodeName );
 			// backward compatible
@@ -272,57 +327,39 @@ namespace jdb{
 			// store the path in the config file
 			configPath[ hName ] = nodeName;
 
-			string type = config->getString( nodeName + ":type" );
-			string hTitle = config->getString( nodeName + ":title", hName );
+			string type 	= config->getString( nodeName + ":type", "D" );
+			string hTitle 	= config->getString( nodeName + ":title", hName );
 
 
 			HistoBins* bx;
 			HistoBins* by;
 			HistoBins* bz;
+
+
+			// make the HistBins object from the config path
 			if ( config->exists( nodeName + ":xBins" ) )
 				bx = new HistoBins( config, config->getString( nodeName + ":xBins" ) );
 			else 
-				bx = new HistoBins( config, nodeName, "X" );
+				bx = new HistoBins( config, nodeName, "x" );
 			if ( config->exists( nodeName + ":yBins" ) )
 				by = new HistoBins( config, config->getString( nodeName + ":yBins" ) );
 			else 
-				by = new HistoBins( config, nodeName, "Y" );
+				by = new HistoBins( config, nodeName, "y" );
 			if ( config->exists( nodeName + ":zBins" ) )
 				bz = new HistoBins( config, config->getString( nodeName + ":zBins" ) );
 			else 
-				bz = new HistoBins( config, nodeName, "Z" );
+				bz = new HistoBins( config, nodeName, "z" );
 
-			if ( "1D" == type || ( (bx->nBins() > 0) && (by->nBins() <= 0) && (bz->nBins() <= 0) )){
-				TRACE( tag, bx->toString() );
-				if ( bx->nBins() >= 1 )
-					make1D( hName, hTitle, bx->nBins(), bx->bins.data() );
-				else {
-					WARN( tag, "Invalid Bins given for " << hName );
-				}
-
-			} else if ( "2D" == type || ( (bx->nBins() > 0) && (by->nBins() > 0) && (bz->nBins() <= 0) )){
-
-				if ( bx->nBins() >= 1 && by->nBins() >= 1 )
-					make2D( hName, hTitle,
-						bx->nBins(), bx->bins.data(), by->nBins(), by->bins.data() );
-				else {
-					WARN( tag, "Invalid Bins given for " << hName );
-				}
-
-			} else if ( "3D" == type || ( (bx->nBins() > 0) && (by->nBins() > 0) && (bz->nBins() > 0) )){
-
-				if ( bx->nBins() >= 1 && by->nBins() >= 1 && bz->nBins() >= 1 )
-					make3D( hName, hTitle,
-						bx->nBins(), bx->bins.data(), by->nBins(), by->bins.data(), bz->nBins(), bz->bins.data() );
-				else {
-					WARN( tag, "Invalid Bins given for " << hName );
-				}
-
-			} else {
-				WARN( tag, "Histogram " << hName << " was not made ");
+			TH1 * tmp = make( type, hName, hTitle, (*bx), (*by), (*bz) );
+			if ( nullptr != tmp ){
+				add( hName, tmp );
+			} else  {
+				ERROR( tag, "could not make histogram : " << hName );
+				ERROR( tag, "x bins : " << bx->toString() );
+				ERROR( tag, "y bins : " << by->toString() );
+				ERROR( tag, "z bins : " << bz->toString() );
+				ERROR( tag, "histo : " << tmp );
 			}
-
-
 
 		}
 
@@ -376,105 +413,6 @@ namespace jdb{
 		}
 	}	//clone
 
-	void HistoBook::make1F( string name, string title, int nBins, double low, double hi  ){
-		INFO( tag, "TH1F( " << name << ", " << title << ", " << nBins << ", " << low << ", " << hi << " )" );
-		TH1F* h;
-		h = new TH1F( name.c_str(), title.c_str(), nBins, low, hi );
-
-		this->add( name, h );
-	}	//make1F
-
-	void HistoBook::make1D( string name, string title, int nBins, double low, double hi  ){
-
-		INFO( tag, "TH1D( " << name << ", " << title << ", " << nBins << ", " << low << ", " << hi << " )" );
-		TH1D* h;
-		h = new TH1D( name.c_str(), title.c_str(), nBins, low, hi );
-
-		this->add( name, h );
-	}	//make1D
-
-	void HistoBook::make1D( string name, string title, int nBins, const Double_t* bins  ){
-		INFO( tag, "TH1D( " << name << ", " << title << ", " << nBins << ", " << "[]" <<  " )" );
-		TH1D* h;
-		h = new TH1D( name.c_str(), title.c_str(), nBins, bins );
-
-		this->add( name, h );
-	}	//make1D
-
-	void HistoBook::make2D( string name, string title, int nBinsX, double lowX, double hiX, int nBinsY, double lowY, double hiY ){
-
-		INFO( tag, "TH2D( " << name << ", " << title << ", " << nBinsX << ", " << lowX << ", " << hiX << ", " << nBinsY << ", " << lowY << ", " << hiY << " )" );
-		TH2D* h;
-
-		h = new TH2D( name.c_str(), title.c_str(), nBinsX, lowX, hiX, nBinsY, lowY, hiY );
-
-		this->add( name, h );
-	}	//make2D
-
-	void HistoBook::make2D( string name, string title, int nBinsX, const Double_t* xBins, int nBinsY, double lowY, double hiY ){
-		INFO( tag, "TH2D( " << name << ", " << title << ", " << nBinsX << ", " << "[]" << ", " << nBinsY << ", " << lowY << ", " << hiY << " )" );
-		TH2D* h;
-		h = new TH2D( name.c_str(), title.c_str(), nBinsX, xBins, nBinsY, lowY, hiY );
-
-		this->add( name, h );
-	}	//make2D
-
-	void HistoBook::make2D( string name, string title, int nBinsX, double lowX, double hiX, int nBinsY, const Double_t* yBins  ){
-		INFO( tag, "TH2D( " << name << ", " << title << ", " << nBinsX << ", " << lowX << ", " << hiX << ", " << nBinsY <<  "[] )" );
-		TH2D* h;
-		h = new TH2D( name.c_str(), title.c_str(), nBinsX, lowX, hiX, nBinsY, yBins );
-
-		this->add( name, h );
-	}	//make2D
-
-	void HistoBook::make2D( string name, string title, int nBinsX, const Double_t* xBins, int nBinsY, const Double_t * yBins ){
-		INFO( tag, "TH2D( " << name << ", " << title << ", " << nBinsX << ", " << "[]" << ", " << nBinsY << ", []" << " )" );
-		TH2D* h;
-		h = new TH2D( name.c_str(), title.c_str(), nBinsX, xBins, nBinsY, yBins );
-
-		this->add( name, h );
-	}	//make2D
-
-	void HistoBook::make3D( 	string name, string title, 
-						int nBinsX, double lowX, double hiX, int nBinsY, double lowY, double hiY, int nBinsZ, double lowZ, double hiZ ){
-		INFO( tag, "TH3D( " << name << ", " << title << ", " << nBinsX << ", " << lowX << ", " << hiX << ", " << nBinsY << ", " << lowY << ", " << hiY << ", " << nBinsZ << ", " << lowZ << ", " << hiZ << " )" );
-		TH3D* h;
-
-		h = new TH3D( name.c_str(), title.c_str(), nBinsX, lowX, hiX, nBinsY, lowY, hiY, nBinsZ, lowZ, hiZ );
-
-		this->add( name, h );
-	}
-	/*void make3D( 	string name, string title, 
-					int nBinsX, const Double_t* xBins, int nBinsY, double lowY, double hiY, int nBinsZ, double lowZ, double hiZ );
-	void make3D( 	string name, string title, 
-					int nBinsX, double lowX, double hiX, int nBinsY, const Double_t* yBins, int nBinsZ, double lowZ, double hiZ );
-	void make3D( 	string name, string title, 
-					int nBinsX, double lowX, double hiX, int nBinsY, double lowY, double hiY, int nBinsZ, const Double_t* zBins );
-	*/
-	// TODO: implement these and add remaining definitions
-	// TODO: test the 3D histograms
-	// TODO: add a fill method for 3d histograms
-
-	void HistoBook::make3D( 	string name, string title, 
-	 				int nBinsX, const Double_t* xBins, int nBinsY, const Double_t*yBins, int nBinsZ, const Double_t*zBins ){
-		INFO( tag, "TH3D( " << name << ", " << title << ", " << nBinsX << ", " << "[]" << ", " << nBinsY << ", []" << ", " << nBinsZ << ", []" <<  " )" );
-		TH3D* h;
-		h = new TH3D( name.c_str(), title.c_str(), nBinsX, xBins, nBinsY, yBins, nBinsZ, zBins );
-
-		this->add( name, h );
-	}
-
-
-	TH1* HistoBook::get( string name, string sdir  ){
-		if ( sdir.compare("") == 0)
-			sdir = currentDir;
-
-		if ( NULL == book[ ( sdir + name  ) ] )
-			WARN( tag, sdir + name  << " Does Not Exist " );
-
-		return (TH1*)book[ ( sdir  + name  ) ];
-	}	//get
-
 	bool HistoBook::exists( string name, string sdir ){
 		if ( sdir.compare("") == 0)
 			sdir = currentDir;
@@ -491,6 +429,16 @@ namespace jdb{
 	TH1* HistoBook::operator[]( string name ) {
 		return get( name );
 	}
+
+	TH1* HistoBook::get( string name, string sdir  ){
+		if ( sdir.compare("") == 0)
+			sdir = currentDir;
+
+		if ( NULL == book[ ( sdir + name  ) ] )
+			WARN( tag, sdir + name  << " Does Not Exist " );
+
+		return (TH1*)book[ ( sdir  + name  ) ];
+	}	//get
 
 	TH2* HistoBook::get2D( string name, string sdir  ){
 		return ((TH2*)get( name, sdir ));

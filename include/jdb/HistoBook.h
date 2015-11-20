@@ -45,6 +45,10 @@ namespace jdb{
 		std::map<string, TObject*> book;
 		// Filename of output file
 		string filename;
+		// filename for input 
+		string inputFilename;
+		// directory to read in input file
+		string inputDir;
 		// Output file
 		TFile *file;
 
@@ -57,41 +61,32 @@ namespace jdb{
 	public:
 
 		static const string tag;
-		/**
-		 * Static Usage
-		 */
-		static vector<double> makeNBins( int nBins, double low, double high ){
-			return HistoBins::makeNBins( nBins, low, high );
-		}
-		static vector<double> makeFixedWidthBins( double binWidth, double low, double high ){
-			return HistoBins::makeFixedWidthBins( binWidth, low, high );
-		}
-		static int findBin( vector<double> &bins, double value ){
-			return HistoBins::findBin( bins, value );
-		}
 		
 		HistoBook( string name, string input = "", string inDir = "" );		
 		HistoBook( string name, XmlConfig* config, string input = "", string inDir = "");
 		~HistoBook();
+
+		void initialize();
+		void mergeIn( string _filename, string _dir );
+
 
 		/*
 		 *Changes into the given directory. 
 		 *If the dir DNE it is created, or it is simply set as the current. 
 		 *Subdirectories can be used if the entire path is given, paths are never relative
 		 *
-		*/
-		string cd( string dir = "/" );
+		 */
+		string cd( string dir = "" );
 
 		
 		void add( string name, TH1 * );
 		void add( string name, TObject* );
 		TH1* get( string name, string sdir = "" );
-
 		TH1 * operator[]( string name );
-
 		TH2* get2D( string name, string sdir = "" );
-
 		TH3* get3D( string name, string sdir = "" );
+
+
 
 		/*
 		 * This method checks for existance unlike using get(...)->Fill(...). 
@@ -102,36 +97,10 @@ namespace jdb{
 		bool setBinContent( string name, int bin, double content );
 		bool setBin( string name, int bin, double content, double error );
 		bool setBinError( string name, int bin, double error );
+		
 
-		void make1F( string name, string title, int nBins, double low, double hi );
-		void make1D( string name, string title, int nBins, double low, double hi );
-		void make1D( string name, string title, int nBins, const Double_t* bins );
-		
-		void make2D( 	string name, string title, 
-						int nBinsX, double lowX, double hiX, int nBinsY, double lowY, double hiY );
-		void make2D( 	string name, string title, 
-						int nBinsX, const Double_t* xBins, int nBinsY, double lowY, double hiY );
-		void make2D( 	string name, string title, 
-						int nBinsX, double x1, double x2, int nBinsY, const Double_t* yBins );
-		void make2D( 	string name, string title, 
-						int nBinsX, const Double_t* xBins, int nBinsY, const Double_t*yBins );
+		TH1 * make( string type, string name, string title, HistoBins &bx, HistoBins &by, HistoBins &bz );
 
-		void make3D( 	string name, string title, 
-						int nBinsX, double lowX, double hiX, int nBinsY, double lowY, double hiY, int nBinsZ, double lowZ, double hiZ );
-		/*void make3D( 	string name, string title, 
-						int nBinsX, const Double_t* xBins, int nBinsY, double lowY, double hiY, int nBinsZ, double lowZ, double hiZ );
-		void make3D( 	string name, string title, 
-						int nBinsX, double lowX, double hiX, int nBinsY, const Double_t* yBins, int nBinsZ, double lowZ, double hiZ );
-		void make3D( 	string name, string title, 
-						int nBinsX, double lowX, double hiX, int nBinsY, double lowY, double hiY, int nBinsZ, const Double_t* zBins );*/
-		
-		// TODO: implement these and add remaining definitions
-		// TODO: test the 3D histograms
-		// TODO: add a fill method for 3d histograms
-	
-		void make3D( 	string name, string title, 
-		 				int nBinsX, const Double_t* xBins, int nBinsY, const Double_t*yBins, int nBinsZ, const Double_t*zBins );
-		
 		/*
 		 * Makes a histogram from a node in a config file 
 		 * 
@@ -140,6 +109,8 @@ namespace jdb{
 		
 		/*
 		 *Makes a single histogram from the class config file given during construction
+		 *
+		 * 
 		 */
 		void make( string nodeName );
 
@@ -149,6 +120,7 @@ namespace jdb{
 		 */
 		void makeAll( string nodeName );
 		void makeAll( XmlConfig * config, string nodeName );
+
 		void clone( string existing, string create );
 		void clone( string ePath, string existing, string cPath, string create );
 		
@@ -160,6 +132,7 @@ namespace jdb{
 		 * the permanent file given during construction
 		 */
 		void save( bool saveAllInDirectory = false );
+
 		void saveOnExit( bool doIt = true ){
 			INFO( tag, "Auto Save on exit set to " << doIt );
 			saveAllOnExit = doIt;
@@ -195,19 +168,6 @@ namespace jdb{
 			return false;
 		} 
 
-
-		int color( string color ) {
-			if ( "red" == color )
-				return kRed;
-			if ( "green" == color )
-				return kGreen;
-			if ( "blue" == color )
-				return kBlue;
-			if ( "black" == color )
-				return kBlack;
-			return -1;
-		}
-
 		void removeFromDir( string name, string sdir = "" ){
 			TH1 * h = get( name, sdir );
 			if ( h )
@@ -216,7 +176,6 @@ namespace jdb{
 
 	private:
 		void globalStyle();
-		HistoBook* placeLegend( int alignmentX, int alignmentY, double width = -1, double height = -1 );
 		void loadRootDir( TDirectory*, string path = "" );
 
 #ifdef __CINT__

@@ -8,6 +8,9 @@
 
 // STL
 #include <memory>
+#include <string> 
+#include <algorithm>
+using namespace std;
 
 namespace jdb{
 
@@ -182,8 +185,9 @@ namespace jdb{
 		 *  <Bins>10, 12, 14, 16, 18, 20</Bins>
 		 * ```
 		 */
-		HistoBins( XmlConfig * config, string nodePath, string mod = "" ){
+		HistoBins( XmlConfig * config, string nodePath, string ml = "" ){
 
+			// get the bins as an array of edges
 			if ( config->exists( nodePath ) && config->getDoubleVector( nodePath ).size() >= 2 ){
 				bins = config->getDoubleVector( nodePath );
 				min = bins[ 0 ];
@@ -192,34 +196,64 @@ namespace jdb{
 				return;
 			}  
 
-			string wTag 	= ":width" + mod;
-			string minTag 	= ":min" + mod;
-			string maxTag 	= ":max" + mod;
-			
+			DEBUG( tag, "Lowercase mod is " << ml );
 
-			if ( config->exists( nodePath + wTag ) && config->exists( nodePath + minTag ) && config->exists( nodePath + maxTag ) ) {
-
-				min = config->getDouble( nodePath + minTag );
-				max = config->getDouble( nodePath + maxTag );
-				width = config->getDouble( nodePath + wTag );
-
+			// if not lets try getting them from attribute tags
+			getValuesFromConfig( config, nodePath, ":width", ":nBins", ":min", ":max" );
+			if ( goodValues() ){
+				DEBUG( tag, "Found HistoBins @ " << nodePath << " with " << ":width"<< ":nBins"<< ":min"<< ":max" );
 				bins = makeFixedWidthBins( width, min, max );
 				return;
 			}
-		
-			string nTag 	= ":nBins" + mod;
-			if ( config->exists( nodePath + nTag ) && config->exists( nodePath + minTag ) && config->exists( nodePath + maxTag ) ) {
 
-				min = config->getDouble( nodePath + minTag );
-				max = config->getDouble( nodePath + maxTag );
-				double n = config->getInt( nodePath + nTag );
-				width = (max - min ) / (double)n;
-
-				bins = makeNBins( n, min, max );
+			// something like "xWidth, xMax, xMin"
+			getValuesFromConfig( config, nodePath, ":" + ml + "Width", ":na" , ":" + ml + "Min", ":" + ml + "Max" );
+			if ( goodValues() ){
+				DEBUG( tag, "Found HistoBins @ " << nodePath << " with " << ":" + ml + "Width"<< ":na" << ":" + ml + "Min"<< ":" + ml + "Max" );
+				bins = makeFixedWidthBins( width, min, max );
 				return;
 			}
+			//  for xNBins, xMin, xMax
+			getValuesFromConfig( config, nodePath, ":" + ml + "Width", ":" + ml + "NBins", ":" + ml + "Min", ":" + ml + "Max" );
+			if ( goodValues() ){
+				DEBUG( tag, "Found HistoBins @ " << nodePath << " with " << ":" + ml + "Width"<< ":" + ml + "NBins"<< ":" + ml + "Min"<< ":" + ml + "Max" );
+				bins = makeFixedWidthBins( width, min, max );
+				return;
+			}
+			
+			ERROR( tag, "Could not make HistoBins @ " << nodePath );
 
+		} // Constructor
+
+
+		void getValuesFromConfig( XmlConfig * config, string nodePath, 
+			string widthTag =":width", string nBinsTag=":nBins", string minTag = ":min", string maxTag=":max" ){
+
+			DEBUG( tag, nodePath );
+			DEBUG( tag, widthTag << " " << nBinsTag << " " << minTag << " " << maxTag );
+			min = 1;
+			max = 0;
+			width = 0.0;
+
+			min = config->getDouble( nodePath + minTag, min );
+			max = config->getDouble( nodePath + maxTag, max );
+			width = config->getDouble( nodePath + widthTag, width );
+
+
+
+			if ( config->exists( nodePath + nBinsTag ) ){
+				int  n = config->getInt( nodePath + nBinsTag );
+				width = ( max - min ) / (double)n;
+			}
+			DEBUG( tag, "min=" << min << ", max=" << max << ", width=" << width );
 		}
+
+		bool goodValues(){
+			if ( max > min && width > 0 )
+				return true;
+			return false;
+		}
+
 
 		/* Gets a bin edge from the underlying vector of bin edges"
 		 * @nIndex the index of the bin edge to get
