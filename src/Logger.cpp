@@ -1,7 +1,8 @@
 #include "Logger.h"
 
-
+#ifdef __CINT__
 ClassImp( jdb::Logger );
+#endif
 
 namespace jdb {
 	int Logger::llGlobal = Logger::llDefault;	

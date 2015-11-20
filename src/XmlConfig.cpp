@@ -1,7 +1,9 @@
 #include "XmlConfig.h"
 #include <sys/stat.h>
 
+#ifdef __CINT__
 ClassImp( jdb::XmlConfig );
+#endif
 
 namespace jdb{
 

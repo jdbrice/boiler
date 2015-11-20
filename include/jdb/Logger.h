@@ -329,7 +329,9 @@ namespace jdb {
 		// The "class space" ie the context
 		string cSpace;
 		
+#ifdef __CINT__
 		ClassDef( jdb::Logger, 1 )
+#endif
 
 	};
 

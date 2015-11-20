@@ -219,8 +219,9 @@ namespace jdb{
 		HistoBook* placeLegend( int alignmentX, int alignmentY, double width = -1, double height = -1 );
 		void loadRootDir( TDirectory*, string path = "" );
 
-
+#ifdef __CINT__
 		ClassDef( jdb::HistoBook, 1 )
+#endif
 	};	
 }
 

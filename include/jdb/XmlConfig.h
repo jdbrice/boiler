@@ -376,8 +376,9 @@ namespace jdb {
 		void parseIncludes(  );
 
 
-
+#ifdef __CINT__
 		ClassDef( jdb::XmlConfig, 1 )
+#endif
 	};
 
 }

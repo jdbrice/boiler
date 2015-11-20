@@ -8,7 +8,9 @@
 #include "TObject.h"
 #include <TApplication.h>
 
+#ifdef __CINT__
 ClassImp( jdb::HistoBook );
+#endif
 
 namespace jdb{
 
@@ -294,24 +296,27 @@ namespace jdb{
 				TRACE( tag, bx->toString() );
 				if ( bx->nBins() >= 1 )
 					make1D( hName, hTitle, bx->nBins(), bx->bins.data() );
-				else 
+				else {
 					WARN( tag, "Invalid Bins given for " << hName );
+				}
 
 			} else if ( "2D" == type || ( (bx->nBins() > 0) && (by->nBins() > 0) && (bz->nBins() <= 0) )){
 
 				if ( bx->nBins() >= 1 && by->nBins() >= 1 )
 					make2D( hName, hTitle,
 						bx->nBins(), bx->bins.data(), by->nBins(), by->bins.data() );
-				else 
+				else {
 					WARN( tag, "Invalid Bins given for " << hName );
+				}
 
 			} else if ( "3D" == type || ( (bx->nBins() > 0) && (by->nBins() > 0) && (bz->nBins() > 0) )){
 
 				if ( bx->nBins() >= 1 && by->nBins() >= 1 && bz->nBins() >= 1 )
 					make3D( hName, hTitle,
 						bx->nBins(), bx->bins.data(), by->nBins(), by->bins.data(), bz->nBins(), bz->bins.data() );
-				else 
+				else {
 					WARN( tag, "Invalid Bins given for " << hName );
+				}
 
 			} else {
 				WARN( tag, "Histogram " << hName << " was not made ");
