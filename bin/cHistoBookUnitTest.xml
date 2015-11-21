@@ -1,18 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
 	
+    <job>HistoBookUnitTest</job>
+
 
 	<bins hide="true" >
-		<ei width="1" min="0" max="800" />
+
 	</bins>
 
 	
 	<histograms>
-		<Histo name="events" title="#Event" nBinsX="100" minX="-50" maxX="50" />
+		<Histo name="events1" title="# Event" nBins="100" min="-50" max="50" />
+        <Histo name="events2" title="# Event" nBins_x="100" min_x="-50" max_x="50" />
+        <Histo name="events2D" title="# Event 2D" nBins_x="100" min_x="-50" max_x="50" width_y="1" min_y="-50" max_y="50" />
+        <Histo name="events3D" title="# Event 3D" nBins_x="100" min_x="-50" max_x="50" width_y="1" min_y="-50" max_y="50" width_z="2" min_z="-50" max_z="50" />
+        <Histo name="events3D" title="# Event 3D Duplicate" nBins_x="100" min_x="-50" max_x="50" width_y="1" min_y="-50" max_y="50" width_z="2" min_z="-50" max_z="50" />
+
 	</histograms>
 
-	<styles>
-		<Style name="events" draw="pe" domain="-15, 15" lineWidth="3" lineColor="red"/>
-	</styles>
+
 	
 </config>

@@ -76,8 +76,9 @@ namespace jdb{
 
 
 	    int color( string color );
-	    
+#ifdef __CINT__
 	    ClassDef( jdb::RooPlotLib, 1 )
+#endif
 	};
 }
 

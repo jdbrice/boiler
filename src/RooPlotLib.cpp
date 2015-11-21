@@ -4,8 +4,9 @@
 //#include "TROOT.h" 
 #include "TStyle.h"
 
+#ifdef __CINT__
 ClassImp( jdb::RooPlotLib );
-
+#endif
 /*
  * Default Ctor
  * 

@@ -196,32 +196,37 @@ namespace jdb{
 				return;
 			}  
 
-			DEBUG( tag, "Lowercase mod is " << ml );
+			string wt = ":width";
+			string mint = ":min";
+			string maxt = ":max";
+			string nt = ":nBins";
 
-			// if not lets try getting them from attribute tags
-			getValuesFromConfig( config, nodePath, ":width", ":nBins", ":min", ":max" );
-			if ( goodValues() ){
-				DEBUG( tag, "Found HistoBins @ " << nodePath << " with " << ":width"<< ":nBins"<< ":min"<< ":max" );
-				bins = makeFixedWidthBins( width, min, max );
-				return;
+			DEBUG( tag, "Lowercase! mod is " << ml );
+
+			// Specail case : for modifier "x" also allow no modifier - this makes th histobook able to make 1D histos without a modifier in the xml
+			// skip for others so that we dont make the same bins for other modifiers
+			if ( "" == ml || "x" == ml ){
+				getValuesFromConfig( config, nodePath, wt, nt, mint, maxt );
+				if ( goodValues() ){
+					
+					DEBUG( tag, "Found HistoBins @ " << nodePath << " with " << wt << nt << mint << maxt );
+					
+					bins = makeFixedWidthBins( width, min, max );
+					return;
+				}
 			}
 
-			// something like "xWidth, xMax, xMin"
-			getValuesFromConfig( config, nodePath, ":" + ml + "Width", ":na" , ":" + ml + "Min", ":" + ml + "Max" );
+			// something like "width_y, max_y, min_y, nBins_y"
+			string mml = "_" + ml;
+			getValuesFromConfig( config, nodePath, wt + mml, nt + mml, mint + mml, maxt + mml );
 			if ( goodValues() ){
-				DEBUG( tag, "Found HistoBins @ " << nodePath << " with " << ":" + ml + "Width"<< ":na" << ":" + ml + "Min"<< ":" + ml + "Max" );
-				bins = makeFixedWidthBins( width, min, max );
-				return;
-			}
-			//  for xNBins, xMin, xMax
-			getValuesFromConfig( config, nodePath, ":" + ml + "Width", ":" + ml + "NBins", ":" + ml + "Min", ":" + ml + "Max" );
-			if ( goodValues() ){
-				DEBUG( tag, "Found HistoBins @ " << nodePath << " with " << ":" + ml + "Width"<< ":" + ml + "NBins"<< ":" + ml + "Min"<< ":" + ml + "Max" );
+				DEBUG( tag, "Found HistoBins @ " << nodePath << " with " << wt + mml << nt + mml << mint + mml << maxt + mml );
 				bins = makeFixedWidthBins( width, min, max );
 				return;
 			}
 			
-			ERROR( tag, "Could not make HistoBins @ " << nodePath );
+			
+			TRACE( tag, "Could not make HistoBins @ " << nodePath );
 
 		} // Constructor
 

@@ -1,4 +1,5 @@
 #include <string>
+#include <UnitTest/HistoBookUnitTest.h>
 
 #include "UnitTest/TreeAnalyzerUnitTest.h"
 #include "UnitTest/HistoBinsUnitTest.h"
@@ -36,6 +37,9 @@ int main( int argc, char* argv[] ){
         } else if ( "XmlConfigUnitTest" == job ){
             XmlConfigUnitTest xcut;
             xcut.test( "General", argc, argv );
+        } else if ("HistoBookUnitTest" == job){
+            HistoBookUnitTest hbut;
+            hbut.test( "General", argc, argv );
         }
     }
 

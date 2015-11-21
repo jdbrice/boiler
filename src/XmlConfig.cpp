@@ -476,7 +476,7 @@ namespace jdb{
         DEBUG( "" );
 		vector<string> allPaths = childrenOf( "", "Include" );
 
-		DEBUG( "Found " << allPaths.size() << "Include Tags" );
+		DEBUG( "Found " << allPaths.size() << " Include Tag(s)" );
 
         for ( string path : allPaths ){
             DEBUG( path )

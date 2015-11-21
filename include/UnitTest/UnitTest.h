@@ -14,6 +14,7 @@ using namespace jdb;
 using namespace std;
 
 // ROOT
+#include "TNamed.h"
 
 #define UT_EQ( x, y ) UnitTest::eq( x, y )
 #define UT_R_NAMED( x, y ) UnitTest::root_named( x, y )

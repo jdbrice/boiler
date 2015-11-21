@@ -78,6 +78,7 @@ namespace jdb{
 		 */
 		string cd( string dir = "" );
 
+		void ls( bool print = true );
 		
 		void add( string name, TH1 * );
 		void add( string name, TObject* );
@@ -92,8 +93,16 @@ namespace jdb{
 		 * This method checks for existance unlike using get(...)->Fill(...). 
 		 * If the histo DNE then an error is reported through the Logger and execution continues.
 		*/
-		void fill( string name, double bin, double weight = 1);
+		void fill( string name, double bin, double weight = 1.0 );
+		void fill( string name, double binx, double biny, double weight);
+		void fill( string name, double binx, double biny, double binz, double weight);
+
+
+		/* Fill a histogram by name
+		 * Checks for existance
+		 */
 		void fill( string name, string binLabel, double weight = 1 );
+
 		bool setBinContent( string name, int bin, double content );
 		bool setBin( string name, int bin, double content, double error );
 		bool setBinError( string name, int bin, double error );
@@ -140,39 +149,11 @@ namespace jdb{
 
 		bool exists( string name, string sdir = "" );
 
-		bool is1D(string name, string sdir = ""){
-			if ( exists( name, sdir) ){
-				TH1* h = get( name, sdir);
-				if ( h->GetNbinsY() <= 1 && h->GetNbinsZ() <= 1 && h->GetNbinsX() >= 1 ){
-					return true;
-				}
-			}
-			return false;
-		} 
-		bool is2D(string name, string sdir = ""){
-			if ( exists( name, sdir) ){
-				TH1* h = get( name, sdir);
-				if ( h->GetNbinsY() >= 2 && h->GetNbinsZ() <= 1 && h->GetNbinsX() >= 1 ){
-					return true;
-				}
-			}
-			return false;
-		} 
-		bool is3D(string name, string sdir = ""){
-			if ( exists( name, sdir) ){
-				TH1* h = get( name, sdir);
-				if ( h->GetNbinsY() >= 2 && h->GetNbinsZ() >= 2 && h->GetNbinsX() >= 1 ){
-					return true;
-				}
-			}
-			return false;
-		} 
+		bool is1D(string name, string sdir = "");
+		bool is2D(string name, string sdir = "");
+		bool is3D(string name, string sdir = "");
 
-		void removeFromDir( string name, string sdir = "" ){
-			TH1 * h = get( name, sdir );
-			if ( h )
-				h->SetDirectory( 0 );
-		}
+		void removeFromDir( string name, string sdir = "" );
 
 	private:
 		void globalStyle();
