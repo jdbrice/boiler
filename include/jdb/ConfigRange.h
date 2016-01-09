@@ -154,8 +154,9 @@ namespace jdb{
 				return true;
 			return false;
 		} 
-		
+#ifdef __CINT__
 		ClassDef( jdb::ConfigRange, 1)
+#endif
 	};
 
 }

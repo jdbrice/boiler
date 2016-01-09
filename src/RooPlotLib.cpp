@@ -274,6 +274,7 @@ RooPlotLib &jdb::RooPlotLib::set( string option, vector<string> params ){
 	// Marker attributes
 	TAttMarker * marker = dynamic_cast<TAttMarker*>( styling );
 	if ( marker ){
+		
 		if ( "markercolor" == option || "mc" == option 
 			|| "color" == option || "c" == option ){
 			int c = atoi( params[ 0 ].c_str() );
