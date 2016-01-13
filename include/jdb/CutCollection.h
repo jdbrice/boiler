@@ -5,6 +5,7 @@
 #include "Utils.h"
 #include "ConfigRange.h"
 #include "ConfigPoint.h"
+#include "Logger.h"
 
 
 
@@ -27,6 +28,14 @@ namespace jdb{
 		}
 
 		static constexpr auto tag = "CutCollection";
+
+
+		void report() {
+			for ( auto k : ranges ){
+				INFO( tag, k.first << " : " << k.second->toString() );
+			}
+		}
+
 	protected:
 
 		void init( XmlConfig * cfg, string np ){

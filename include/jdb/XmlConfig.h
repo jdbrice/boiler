@@ -19,18 +19,17 @@
 #include <memory>
 #include <utility>      // std::pair, std::make_pair
 
-// JDB
+// Roobarb
 #include "Logger.h"
+	// Interfaces
+	#include "IObject.h"
+
 
 namespace jdb {
-	class XmlConfig
+	class XmlConfig : public IObject
 	{
 	protected:
 
-
-		// Logger instance
-		Logger logger;
-		
 		// Node existance
 		map<string, bool> nodeExists;
 		
@@ -74,7 +73,52 @@ namespace jdb {
 		 * Loads the file, parses its content and makes its data available
 		 */
 		XmlConfig( string filename );
+
+		/* Default Ctor, empty config
+		 *
+		 */
+		XmlConfig();
+
+		/* Dtor, closes resources
+		 *
+		 */
 		~XmlConfig();
+
+		/* Copy Ctor
+		 *
+		 * Copies maps to new object, it is now an effective copy of the original config
+		 */
+		XmlConfig( const XmlConfig &rhs){
+			DEBUG( tag, "copy constructor!" );
+
+			setDefaults();
+
+			this->filename = rhs.filename;
+
+			this->nodeExists = rhs.nodeExists;
+			this->data = rhs.data;
+			this->isAttribute = rhs.isAttribute;
+		}
+
+		virtual const char* classname() { return "XmlConfig";}
+
+		/* Sets the default strings / delimeters
+		 * 
+		 */
+		void setDefaults(){
+			// currently set may change
+			pathDelim = '.';
+			attrDelim = ':';
+			indexOpenDelim = "[";
+			indexCloseDelim = "]";
+			equalDelim = '=';
+			mapDelim = "::";
+		}
+
+		void loadFile( string filename );
+
+
+		static constexpr auto tag = "XmlConfig";
 
 		void saveXml(string filename);
 
@@ -305,6 +349,102 @@ namespace jdb {
 		 * @return the path to the parent of given node
 		 */
         string pathToParent( string nodePath );
+
+        /* Gets the base path from a node path
+         * @nodePath Path to node. See getString(...)
+         *
+         * Given 'Test.Node...' or '...Test.Node:bleh'
+         * gives 'Test.Node'
+         *
+         * @return the path to the base node
+         */
+        string basePath( string nodePath, bool keepAttribute = false ){
+        	DEBUG( tag, "(" << nodePath <<")" );
+        	string np = sanitize( nodePath );
+
+        	// first split off any attributes
+			vector<string> attr = split( np, attrDelim );
+			if ( attr.size() >= 1 )
+				np = attr[ 0 ];
+
+			// now split by path
+			vector<string> ntf = split( np, pathDelim );
+
+			vector<string> goodPaths;
+			for ( string p : ntf ){
+				if ( "" == p ) continue;
+				goodPaths.push_back( p );
+			}
+			// rebuild as a fully sanitized and normalized path
+			string ret ="";
+			for ( int i = 0; i < goodPaths.size(); i++ ){
+				
+				ret += goodPaths[i];
+
+				if ( i < goodPaths.size() - 1 )
+					ret += pathDelim;
+			}
+
+			if ( keepAttribute ){
+				ret += attr[ attr.size() - 1 ];
+			}
+			
+			return ret;
+        }
+
+        /* Joins two paths correctly
+         *
+         * @paths 	list of string type paths to join
+         * 1) 	Given 'A.B' and 'C.D'
+         * 		Gives : 'A.B.C.D'
+         * 
+         * 2) 	Given 'A.B..' and 'C.D.'
+         * 		Gives : 'A.B.C.D'
+         * 3) 	Given 'A.B..' and 'C.D' and '.E:attribute'
+         * 		Gives : 'A.B.C.D.E:attribute'
+         *
+         * @return properly joined full path
+         */
+        string join( std::initializer_list<string> paths ){
+        	if ( paths.size() == 1 ){
+        		WARN( classname(), "Only one path given, returning unaltered" );
+        		for ( string p : paths ){
+        			return p;
+        		}
+        		return "";
+        	} else if ( paths.size() < 1 ){
+        		ERROR( classname(), "No paths given" );
+        		return "";
+        	} else {
+
+        		string full = "";
+        		int count = 0;
+        		for ( string p : paths ){
+        			
+        			// keep the attribute only on the last one
+        			bool keepAttribute = false;
+        			if ( count >= paths.size() - 1 )
+        				keepAttribute = true; 
+
+        			// get the base path
+        			string tmp = basePath( sanitize( p ), keepAttribute );
+        			if ( "" == tmp ) continue;
+
+        			if ( count > 0 )
+        				full += ( pathDelim + tmp );
+        			else 
+        				full += tmp;	// only first time
+
+        			count ++;
+        		}
+        		return full;
+        	}
+        	return "";
+        }
+
+        string join( string a, string b, string c="", string d="", string e="", string f="" ){
+        	return join( {a, b, c, d, e, f} );
+        }
 		
 		/* Get the attribute name from a full path
 		 *@nodePath Path to node. See getString(...)

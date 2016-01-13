@@ -12,7 +12,7 @@
 
 #pragma link C++ class jdb::Logger+;
 #pragma link C++ class jdb::Reporter-;
-#pragma link C++ class jdb::XmlConfig-;
+#pragma link C++ class jdb::XmlConfig+;
 
 #pragma link C++ class jdb::LoggerConfig-;
 #pragma link C++ class jdb::TaskTimer-;

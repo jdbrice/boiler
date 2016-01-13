@@ -14,6 +14,10 @@
 #include "Reporter.h"
 #include "DataSource.h"
 
+	// Interfaces
+	#include "IConfig.h"
+	#include "IObject.h"
+
 //ROOT
 #include "TChain.h"
 #include "TError.h"
@@ -27,17 +31,14 @@ namespace jdb{
 	 * Formalizes the structure for the config file, automatically loading
 	 * the config, logger, reporter, and histobook objects. These become available to any subclass
 	 */
-	class TreeAnalyzer
+	class TreeAnalyzer : public IConfig, public IObject
 	{
 	// protected properties
 	protected:
 		
-		//The logging object for the job
-		Logger  	*logger = nullptr;
-		//Project config
-		XmlConfig 	*cfg = nullptr;
-		//Node path in config file to the root for everything related to this job
-		string 		nodePath;
+		//Application config pointer
+		XmlConfig 	*cfg = nullptr; // current for backwards compatibility
+		
 		//Basepath for output of data and reports
 		string 		outputPath;
 		//Store project histograms and data
@@ -75,6 +76,13 @@ namespace jdb{
 		 */
 		TreeAnalyzer( XmlConfig * config, string np, string fileList ="", string jobPrefix ="");
 		~TreeAnalyzer();
+
+		void init();
+		void initHistoBook();
+		void initReporter();
+		void initDataSource();
+
+		virtual const char* classname() { return "TreeAnalyzer";}
 
 		/*The maker function for publicly starting the job
 		 *

@@ -3,101 +3,122 @@
 
 namespace jdb{
 
-	TreeAnalyzer::TreeAnalyzer( XmlConfig * config, string np, string fileList, string _jobPrefix ){
+	TreeAnalyzer::TreeAnalyzer( XmlConfig * _config, string _nodePath, string _fileList, string _jobPrefix ){
 		
 		//Set the Root Output Level
 		//gErrorIgnoreLevel = kSysError;
 
-		// Save config
-		cfg = config;
-		jobPrefix = _jobPrefix;
+		// Save inputs
+		this->cfg 		= _config;
+		this->config 	= *_config;
+		this->jobPrefix = _jobPrefix;
+		this->fileList 	= _fileList;
 
-		// We want our nodePath in the form of TreeAnalyzer.  
-		// ie with trailing dot
-		// make sure this is the case
-		TString tsnp = np;
-		nodePath = np;
-		if ( tsnp.EndsWith( "." ) ){
-			nodePath = np;	// this is the form we want
-		} else if ( tsnp.EndsWith( ":" ) ){
-			// remove the trailing : assuming it is good and add the .
-			nodePath = np.substr( 0, np.length()-1) + ".";
-		} else { // assume it is just the nodeName ie TreeAnalyzer with no trailing dot or colon
-			// just add the trailing dot that we want
-			nodePath = np + ".";
-		}
+		// makes sure it is in the right form
+		// not ending in '.' or ':attribute' etc.
+		this->nodePath = this->config.basePath( _nodePath );
 
-		//get the output path
-		outputPath = cfg->getString( nodePath + "output:path", "" );
+		INFO( classname(), "Got config with nodePath = " << nodePath );
+
+		init();
 		
-		// make the Logger
-		logger =LoggerConfig::makeLogger( cfg, nodePath + "Logger" );
-		logger->setClassSpace( "TreeAnalyzer" );
-		logger->info(__FUNCTION__) << "Got config with nodePath = " << nodePath << endl;
-		
-		/**
-		 * Check for valid input
-		 */
-		if ( !cfg->exists( nodePath+"DataSource" ) && !cfg->exists( nodePath+"input.dst" )){
-			logger->error(__FUNCTION__) << "Invalid nodePath. Cannot find" << nodePath+"DataSource" << " or " << nodePath+"input.dst" << " Make sure that there is an input specified and the node path is correct. " << endl;
-			return;
-		}
+	}
 
-	    // create the book
-	    logger->info(__FUNCTION__) << " Creating book " << config->getString( nodePath +  "output.data", "TreeAnalyzer" ) << endl;
-	    skipMake = cfg->getBool( nodePath + "SkipMake", false );
-	    INFO( "TreeAnalyzer", "Skip Make == " << skipMake );
+	TreeAnalyzer::~TreeAnalyzer(){
+		DEBUG( classname(), "" );
+		if ( book )
+			delete book;
+		DEBUG( classname(), "Deleted book" );
+		if ( reporter )
+			delete reporter;
+		DEBUG( classname(), "Deleted Reporter" );
+	}
+
+
+	void TreeAnalyzer::init(){
+
+		initHistoBook();
+		initReporter();
+		initDataSource();
+
+	}
+
+	void TreeAnalyzer::initHistoBook() {
+
+		outputPath = config[ config.join( nodePath, "output:path" ) ];
+		string outputDataPath = config[ config.join( nodePath, "output", "data" ) ];
+
+		// create the book
+	    INFO( "TreeAnalyzer", " Creating book for datafile : " << outputDataPath );
+	    
+	    // should we skip make?
+	    skipMake = config.getBool( config.join( nodePath, "SkipMake"), false );
+	    INFO( classname(), "Skip Make == " << skipMake );
+
 	    if ( !skipMake )
-		    book = new HistoBook( outputPath + jobPrefix + config->getString( nodePath +  "output.data", "TreeAnalyzer" ), config, "", "" );
+		    book = new HistoBook( outputPath + jobPrefix + outputDataPath, config, "", "" );
 		else
-			book = new HistoBook( outputPath + jobPrefix + "_copy_" + config->getString( nodePath +  "output.data", "TreeAnalyzer" ) , config, outputPath + jobPrefix + config->getString( nodePath +  "output.data", "TreeAnalyzer" ), "" );
-	    	    
-	   	INFO( "TreeAnalyzer", "Creating Reporter" );
-	   	// Default reporter
-	    if ( "" == jobPrefix && cfg->exists( np+"Reporter.output:url" ) ) {
-		    reporter = new Reporter( cfg, np+"Reporter.", jobPrefix );
-		    logger->info(__FUNCTION__) << "Creating report " << config->getString( nodePath+"Reporter.output:url" ) << endl;
-	    } else
-			reporter = nullptr;
+			book = new HistoBook( outputPath + jobPrefix + "_copy_" + outputDataPath , config, outputPath + jobPrefix + outputDataPath, "" );
+	}
 
+
+	void TreeAnalyzer::initReporter(){
+		INFO( classname(), "Creating Reporter" );
+		string pRepOut = config.join( nodePath, "Reporter", "output:url" );
+		string outputURL = config[ pRepOut ];
+
+	   	// Default reporter
+	    if ( "" == jobPrefix && config.exists( pRepOut ) ) {
+		    reporter = new Reporter( cfg, config.join( nodePath, "Reporter" ), jobPrefix ); // TODO: is reporter's path handeling broken?
+		    INFO( classname(), "Creating report @" << outputURL );
+	    } else{
+	    	INFO( classname(), "No Reporter created" );
+			reporter = nullptr;
+	    }
+	}
+
+
+	void TreeAnalyzer::initDataSource(){
 	    /**
 	     * Sets up the input, should switch seemlessly between chain only 
 	     * and a DataSource 
 	     */
-	    INFO( "TreeAnalyzer", "Creating DataSource" );
-	    if ( cfg->exists( nodePath+"DataSource" ) ){
-	    	ds = new DataSource( cfg, nodePath +  "DataSource", fileList );
+	    INFO( classname(), "Creating DataSource" );
+	    if ( config.exists( nodePath + ".DataSource" ) ){
+	    
+	    	ds = new DataSource( cfg, config.join(nodePath, ".DataSource") , fileList );
 	    	chain = ds->getChain();
-	    	logger->debug(__FUNCTION__) << "Chain " << chain << endl;
-	    } else {
-	    	chain = new TChain( cfg->getString( nodePath+"input.dst:treeName" ).c_str() );
+
+	    	DEBUG( classname(), "Datasrouce for chain : " << chain );
+	    
+	    } else if ( config.exists( config.join( nodePath, "input", "dst" ) ) ) {
+	    	
+	    	chain = new TChain( this->config.getString( nodePath + ".input.dst:treeName" ).c_str() );
+		    
 		    if ( "" == fileList ){
-		    	logger->info(__FUNCTION__) << " Loading data from " << config->getString( nodePath +  "input.dst:url" ) << endl;
-		    	ChainLoader::load( chain, cfg->getString( nodePath+"input.dst:url" ), cfg->getInt( nodePath+"input.dst:maxFiles", -1 ) );
+		    	INFO( classname(), " Loading data from " << config->getString( nodePath + ".input.dst:url" ) );
+
+		    	ChainLoader::load( 	chain, 
+		    						this->config.getString( nodePath + ".input.dst:url" ), 
+		    						this->config.getInt( nodePath + ".input.dst:maxFiles", -1 ) );
 		    } else {
-		    	logger->info(__FUNCTION__) << " Parallel Job From " << fileList << ", prefix : " << jobPrefix << endl;
-		    	ChainLoader::loadList( chain, fileList, cfg->getInt( nodePath+"input.dst:maxFiles", -1 ) );
+		    	INFO( classname(), " Parallel Job From " << fileList << ", prefix : " << jobPrefix );
+
+		    	ChainLoader::loadList( 	chain, 
+		    							fileList, 
+		    							this->config.getInt( nodePath + ".input.dst:maxFiles", -1 ) );
 		    }	
+	    } else {
+	    	chain = nullptr;
+	    	ERROR( classname(), "No Chain was created" );
 	    }
 	}
 
-	TreeAnalyzer::~TreeAnalyzer(){
-		logger->info(__FUNCTION__) << endl;
-		if ( book )
-			delete book;
-		logger->debug(__FUNCTION__) << "Deleted book" << endl;
-		if ( reporter )
-			delete reporter;
-		logger->debug(__FUNCTION__) << "Deleted Reporter" << endl;
-
-		logger->debug(__FUNCTION__) << "Deleting Logger" << endl;
-		delete logger;
-	}
 
 	void TreeAnalyzer::make(){
 
 		if ( !chain ){
-			logger->error(__FUNCTION__) << " ERROR: Invalid chain " << endl;
+			ERROR( classname(), "Invalid chain object" );
 			return;
 		}
 
@@ -113,13 +134,19 @@ namespace jdb{
 			t.start();
 
 			Int_t nEvents = (Int_t)chain->GetEntries();
-			nEventsToProcess = cfg->getInt( nodePath+"input.dst:nEvents", nEvents );
+			nEventsToProcess = config.getInt( nodePath+"input.dst:nEvents", nEvents );
+			
+			// if neg then process all
+			if ( nEventsToProcess < 0 )
+				nEventsToProcess = nEvents;
+
+			// check for datastore
 			if ( ds )
-				nEventsToProcess = cfg->getInt( nodePath+"DataSource:maxEvents", nEvents );
+				nEventsToProcess = config.getInt( nodePath+"DataSource:maxEvents", nEvents );
 			if ( nEventsToProcess > nEvents )
 				nEventsToProcess = nEvents;
 			
-			logger->info(__FUNCTION__) << "Loaded: " << nEventsToProcess << " events " << endl;
+			INFO( classname(), "Loaded: " << nEventsToProcess << " events " );
 			
 			TaskProgress tp( "Event Loop", nEventsToProcess );
 			// loop over all events
@@ -139,7 +166,7 @@ namespace jdb{
 		    	
 		    	
 			} // end loop on events
-			logger->info(__FUNCTION__) << "Completed in " << t.elapsed() << endl;
+			INFO( classname(), "Completed in " << t.elapsed() );
 		}
 		/**
 		 * Run the post event loop
@@ -150,8 +177,8 @@ namespace jdb{
 	void TreeAnalyzer::preEventLoop(){
 
 		// make some histos here
-		if ( cfg->exists( nodePath+"histograms" ) )
-			book->makeAll( nodePath+"histograms" );
+		if ( config.exists( nodePath+".histograms" ) )
+			book->makeAll( nodePath+".histograms" );
 	}
 
 	/**

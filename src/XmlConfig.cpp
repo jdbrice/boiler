@@ -8,21 +8,26 @@ ClassImp( jdb::XmlConfig );
 namespace jdb{
 
 	XmlConfig::XmlConfig( string filename){
+		DEBUG( classname(), "Loading Xml Configuration from : " << filename );
 
-		this->filename = filename;
+		setDefaults();
+		loadFile( filename );
+		
+		// typedef map<string, string>::iterator map_it_type;
+	}
 
-		logger.setClassSpace( "XmlConfig" );
-		logger.info( __FUNCTION__ ) << "Loading Xml Configuration from : " << filename << endl;
+	XmlConfig::XmlConfig(){
+		DEBUG( classname(), "Empty XmlConfig");
 
-		// currently set may change
-		pathDelim = '.';
-		attrDelim = ':';
-		indexOpenDelim = "[";
-		indexCloseDelim = "]";
-		equalDelim = '=';
-		mapDelim = "::";
+		setDefaults();
+	}
 
+	XmlConfig::~XmlConfig(){
+	}
+
+	void XmlConfig::loadFile( string filename ){
 		// check that the config file exists
+		this->filename = filename;
 		struct stat buffer;   
   		bool exists = (stat (filename.c_str(), &buffer) == 0);
 	
@@ -34,21 +39,8 @@ namespace jdb{
 
             parseIncludes();
 		} else {
-			logger.error(__FUNCTION__) << "Config File \"" << filename << "\" DNE " << endl; 
+			ERROR( classname(), "Config File \"" << filename << "\" DNE " ); 
 		}
-
-		typedef map<string, string>::iterator map_it_type;
-
-		/**
-		* Simple report
-		cout << "Found " << data.size() << " Nodes" << endl;
-		for ( map_it_type it = data.begin(); it != data.end(); it++ ){
-			cout << it->first << " : " << it->second << endl;
-		}
-		*/
-	}
-
-	XmlConfig::~XmlConfig(){
 	}
 
 

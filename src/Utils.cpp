@@ -120,7 +120,20 @@ namespace jdb{
 					if ( elapsedTime >= 1 )
 						nDig = ceil( log10( elapsedTime ) ) + 2;
 
-					cout << " : " << ts(elapsedTime, nDig) << " sec ";
+					if ( elapsedTime < 60 )
+						cout << " : " << ts(elapsedTime, nDig) << " s";
+					else {
+						int nh = (int)elapsedTime / 3600;
+						int nm = (int)elapsedTime / 60;
+						nm = nm % 60;
+						double ns = elapsedTime - ((int)elapsedTime / 60) * 60.0;
+						nDig = ceil( log10( ns ) ) + 2;
+						
+						if ( nh > 0 )
+							cout << " : " << nh << "h " << nm << "m " << ts( ns, nDig ) << "s";
+						else 
+							cout << " : " << nm << "m " << ts( ns, nDig ) << "s";
+					}
 				}
 				cout << "\r";
 				std::cout.flush();
