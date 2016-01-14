@@ -6,6 +6,8 @@
 #include "Utils.h"
 #include "Logger.h"
 
+	#include "IObject.h"
+
 // STL
 #include <memory>
 #include <string> 
@@ -23,11 +25,11 @@ namespace jdb{
 	 *
 	 * Provides a stand-alone binning container. Can be create directly from configs.
 	 */
-	class HistoBins
+	class HistoBins : public IObject
 	{
 	public:
 		
-		static constexpr auto tag = "HistoBins";
+		virtual const char* classname() { return "HistoBins"; }
 
 		/* Makes a vector of bins with fixed width
 		 * Divides the range high - low into a fixed number of bins from low to high"
@@ -49,7 +51,7 @@ namespace jdb{
 		 * @return vector of bin edges from low to high
 		 */
 		static vector<double> makeFixedWidthBins( double binWidth, double low, double high ){
-            DEBUG( tag, "( binWidth=" << binWidth << ", low="<<low << ", high=" << high << " )" );
+            DEBUG( "HistoBins", "( binWidth=" << binWidth << ", low="<<low << ", high=" << high << " )" );
 			vector<double> bins;
 			for (double i = low; i <= high; i += binWidth ){
 				bins.push_back( i );
@@ -73,7 +75,7 @@ namespace jdb{
                 sbe = "lower";
             else
                 sbe = "upper";
-            Logger::log.debug(__FUNCTION__) << "( vector<double> , value=" << val << ", binEdge=" << sbe << " ) " << endl;
+            DEBUG( "HistoBins", "( vector<double> , value=" << val << ", binEdge=" << sbe << " ) " );
 
 
 			int n = bins.size();
@@ -118,7 +120,7 @@ namespace jdb{
 		static double binWidth( vector<double> &bins, int binIndex = 0 ){
 
 			if ( binIndex < 0 || binIndex >= bins.size() ){
-				ERROR( tag, "Bin Index " << binIndex << " out of range ( 0, " << bins.size() << " )" );
+				ERROR( "HistoBins", "Bin Index " << binIndex << " out of range ( 0, " << bins.size() << " )" );
 				return 0.0;
 			}
 			return (bins[ binIndex + 1 ] - bins[ binIndex ]);
@@ -185,11 +187,11 @@ namespace jdb{
 		 *  <Bins>10, 12, 14, 16, 18, 20</Bins>
 		 * ```
 		 */
-		HistoBins( XmlConfig * config, string nodePath, string ml = "" ){
+		HistoBins( XmlConfig config, string nodePath, string ml = "" ){
 
 			// get the bins as an array of edges
-			if ( config->exists( nodePath ) && config->getDoubleVector( nodePath ).size() >= 2 ){
-				bins = config->getDoubleVector( nodePath );
+			if ( config.exists( nodePath ) && config.getDoubleVector( nodePath ).size() >= 2 ){
+				bins = config.getDoubleVector( nodePath );
 				min = bins[ 0 ];
 				max = bins[ nBins() ];
 				width = -1;
@@ -201,7 +203,7 @@ namespace jdb{
 			string maxt = ":max";
 			string nt = ":nBins";
 
-			DEBUG( tag, "Lowercase! mod is " << ml );
+			DEBUG( classname(), "Lowercase! mod is " << ml );
 
 			// Specail case : for modifier "x" also allow no modifier - this makes th histobook able to make 1D histos without a modifier in the xml
 			// skip for others so that we dont make the same bins for other modifiers
@@ -209,7 +211,7 @@ namespace jdb{
 				getValuesFromConfig( config, nodePath, wt, nt, mint, maxt );
 				if ( goodValues() ){
 					
-					DEBUG( tag, "Found HistoBins @ " << nodePath << " with " << wt << nt << mint << maxt );
+					DEBUG( classname(), "Found HistoBins @ " << nodePath << " with " << wt << nt << mint << maxt );
 					
 					bins = makeFixedWidthBins( width, min, max );
 					return;
@@ -220,37 +222,37 @@ namespace jdb{
 			string mml = "_" + ml;
 			getValuesFromConfig( config, nodePath, wt + mml, nt + mml, mint + mml, maxt + mml );
 			if ( goodValues() ){
-				DEBUG( tag, "Found HistoBins @ " << nodePath << " with " << wt + mml << nt + mml << mint + mml << maxt + mml );
+				DEBUG( classname(), "Found HistoBins @ " << nodePath << " with " << wt + mml << nt + mml << mint + mml << maxt + mml );
 				bins = makeFixedWidthBins( width, min, max );
 				return;
 			}
 			
 			
-			TRACE( tag, "Could not make HistoBins @ " << nodePath );
+			TRACE( classname(), "Could not make HistoBins @ " << nodePath );
 
 		} // Constructor
 
 
-		void getValuesFromConfig( XmlConfig * config, string nodePath, 
+		void getValuesFromConfig( XmlConfig config, string nodePath, 
 			string widthTag =":width", string nBinsTag=":nBins", string minTag = ":min", string maxTag=":max" ){
 
-			DEBUG( tag, nodePath );
-			DEBUG( tag, widthTag << " " << nBinsTag << " " << minTag << " " << maxTag );
+			DEBUG( classname(), nodePath );
+			DEBUG( classname(), widthTag << " " << nBinsTag << " " << minTag << " " << maxTag );
 			min = 1;
 			max = 0;
 			width = 0.0;
 
-			min = config->getDouble( nodePath + minTag, min );
-			max = config->getDouble( nodePath + maxTag, max );
-			width = config->getDouble( nodePath + widthTag, width );
+			min = config.getDouble( nodePath + minTag, min );
+			max = config.getDouble( nodePath + maxTag, max );
+			width = config.getDouble( nodePath + widthTag, width );
 
 
 
-			if ( config->exists( nodePath + nBinsTag ) ){
-				int  n = config->getInt( nodePath + nBinsTag );
+			if ( config.exists( nodePath + nBinsTag ) ){
+				int  n = config.getInt( nodePath + nBinsTag );
 				width = ( max - min ) / (double)n;
 			}
-			DEBUG( tag, "min=" << min << ", max=" << max << ", width=" << width );
+			DEBUG( classname(), "min=" << min << ", max=" << max << ", width=" << width );
 		}
 
 		bool goodValues(){

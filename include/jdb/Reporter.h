@@ -5,11 +5,16 @@
 #include "Logger.h"
 #include "XmlConfig.h"
 
+// Interfaces
+	#include "IObject.h"
+	#include "IConfig.h"
+
+
 namespace jdb {
 	/* Create PDF Reports in ROOT
 	 * A utility class to easily create multi-page PDF reports in ROOT
 	 */
-	class Reporter
+	class Reporter : public IObject, public IConfig
 	{
 	public:
 		/* Creates a Reporter
@@ -23,8 +28,10 @@ namespace jdb {
 		 * @np Path to Node
 		 * @prefix Prefix to prepend to filename (usually for multiple jobs)
 		 */
-		Reporter( XmlConfig * config, string np, string prefix = "" );
+		Reporter( XmlConfig &config, string np, string prefix = "" );
 		~Reporter();
+
+		virtual const char * classname() { return "Reporter"; }
 
 		/* Creates a new page in the report
 		 * @dx The number of divisions horizontally
@@ -72,12 +79,6 @@ namespace jdb {
 
 	protected:
 
-		// Xml Config
-		XmlConfig * cfg;
-		// Path to Node
-		string nodePath;
-		// Logger instance
-		Logger * logger;
 		// TCanvas used for drawing and saving graphics
 		TCanvas* canvas;
 		// Index of the current Pad

@@ -53,6 +53,8 @@ namespace jdb{
 		DataSource * ds = nullptr;
 		// Prefix for this job ( optional, used for parallel)
 		string jobPrefix;
+
+		string fileList;
 		// Skips the making phase
 		// loads the output file of the same name as the input ( must exist )
 		// and skips to the postEventLoop() method

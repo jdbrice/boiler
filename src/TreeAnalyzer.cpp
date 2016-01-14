@@ -52,7 +52,7 @@ namespace jdb{
 	    INFO( "TreeAnalyzer", " Creating book for datafile : " << outputDataPath );
 	    
 	    // should we skip make?
-	    skipMake = config.getBool( config.join( nodePath, "SkipMake"), false );
+	    skipMake = config.getBool( nodePath + ".SkipMake", false );
 	    INFO( classname(), "Skip Make == " << skipMake );
 
 	    if ( !skipMake )
@@ -69,7 +69,7 @@ namespace jdb{
 
 	   	// Default reporter
 	    if ( "" == jobPrefix && config.exists( pRepOut ) ) {
-		    reporter = new Reporter( cfg, config.join( nodePath, "Reporter" ), jobPrefix ); // TODO: is reporter's path handeling broken?
+		    reporter = new Reporter( config, config.join( nodePath, "Reporter" ), jobPrefix ); // TODO: is reporter's path handeling broken?
 		    INFO( classname(), "Creating report @" << outputURL );
 	    } else{
 	    	INFO( classname(), "No Reporter created" );
@@ -96,7 +96,7 @@ namespace jdb{
 	    	chain = new TChain( this->config.getString( nodePath + ".input.dst:treeName" ).c_str() );
 		    
 		    if ( "" == fileList ){
-		    	INFO( classname(), " Loading data from " << config->getString( nodePath + ".input.dst:url" ) );
+		    	INFO( classname(), " Loading data from " << config.getString( nodePath + ".input.dst:url" ) );
 
 		    	ChainLoader::load( 	chain, 
 		    						this->config.getString( nodePath + ".input.dst:url" ), 

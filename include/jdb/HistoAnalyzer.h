@@ -11,6 +11,10 @@
 #include "ConfigRange.h"
 #include "ConfigPoint.h"
 #include "Reporter.h"
+// Interface
+	#include "IObject.h"
+	#include "IConfig.h"
+
 using namespace jdb;
 
 // ROOT
@@ -29,15 +33,11 @@ namespace jdb{
 	 * modules that take a root file containing histograms as input.
 	 *
 	 */
-	class HistoAnalyzer
+	class HistoAnalyzer : public IConfig, public IObject
 	{
 	// protected properties
 	protected:
 		
-		// Xml Config
-		XmlConfig 	*cfg;
-		// Node Path
-		string 		nodePath;
 		// HistoBook used to organize ROOT objects
 		shared_ptr<HistoBook> 	book;
 		// Reporter for generating pdf reports
@@ -48,7 +48,7 @@ namespace jdb{
 	// public methods
 	public:
 
-		static constexpr auto tag = "HistoAnalyzer";
+		virtual const char* classname() { return "HistoAnalyzer"; }
 
 		/* Creates a HistoAnalyzer from an Xml Config
 		 * @nodePath The path to the node containing the HistoAnalyzer data

@@ -8,34 +8,30 @@ namespace jdb{
 	int Reporter::instances = 0;
 
 	Reporter::Reporter( string filename, int w, int h ){
-		DEBUG( "(" <<  filename <<  ", width=" <<  w <<  ", height=" <<  h << ")" )
-		
-		logger = new Logger( Logger::getGlobalLogLevel(), "Reporter" );
-		
-
+		DEBUG( classname(), "(" <<  filename <<  ", width=" <<  w <<  ", height=" <<  h << ")" )
+	
 		this->filename = filename;
 
 		canvas = new TCanvas( ("Reporter"+ts(instances)).c_str() , "canvas", w, h);
 		canvas->Print( ( filename + "[" ).c_str() );
-		logger->info(__FUNCTION__) << " Opening " << filename << endl;
+		INFO( classname(), " Opening report " << filename );
 		instances++;
 
-		logger->info(__FUNCTION__) << " Instance #" << instances << endl;
+		DEBUG( classname(), " Instance #" << instances );
 	}
-	Reporter::Reporter( XmlConfig*config, string np, string prefix ){
-		DEBUG( "(" << config << ", np=" << np << ", prefix=" << prefix << ")" )
 
-		cfg = config;
-		nodePath = np;
+	Reporter::Reporter( XmlConfig &config, string np, string prefix ){
+		DEBUG( "( config, np=" << np << ", prefix=" << prefix << ")" )
 
-		logger = LoggerConfig::makeLogger( config, np+"Logger" );
-		
-		this->filename = prefix + cfg->getString( np+"output:url" );
+		this->config = config;
+		this->nodePath = config.basePath( np );
 
-		int w = cfg->getInt( np+"output:width", 400 );
-		int h = cfg->getInt( np+"output:height", 400 );
+		this->filename = prefix + config.getString( nodePath + ".output:url" );
 
-		canvas = new TCanvas( ("Reporter"+ts(instances)).c_str() , "canvas", w, h);
+		int w = config.getInt( nodePath + ".output:width", 400 );
+		int h = config.getInt( nodePath + ".output:height", 400 );
+
+		canvas = new TCanvas( ("Reporter" + ts( instances ) ).c_str() , "canvas", w, h);
 		canvas->Print( ( filename + "[" ).c_str() );
 		
 		DEBUG( " Opening " << filename ) 
@@ -47,17 +43,16 @@ namespace jdb{
 
 	Reporter::~Reporter() {
 		// properly close the report file
-		logger->info(__FUNCTION__) << " " << endl;
+		DEBUG( classname(), "" )
 		
 		canvas->Print( ( filename + "]" ).c_str() );
 		delete canvas;
 
-		logger->info(__FUNCTION__) << filename << " Closed " << endl;
-		delete logger;
+		DEBUG( classname(), filename << " Closed " );
 	}
 
 	void Reporter::newPage( int dx, int dy, float marginX, float marginY ){
-		logger->info(__FUNCTION__) << " New Page ( " << dx << ", " << dy << ", " << marginX << ", " << marginY << " ) " << endl;
+		DEBUG( classname(), " New Page ( " << dx << ", " << dy << ", " << marginX << ", " << marginY << " ) " );
 
 		this->dx = dx;
 		this->dy = dy;
@@ -68,7 +63,7 @@ namespace jdb{
 	}
 
 	void Reporter::cd( int pad ){
-		logger->info(__FUNCTION__) << " Current Pad " << pad << endl;
+		DEBUG( classname(), " Current Pad " << pad  );
 		canvas->cd( pad );
 		currentPad = pad;
 	}
@@ -78,7 +73,7 @@ namespace jdb{
 	}
 
 	void Reporter::next(){
-		logger->info(__FUNCTION__) << " Pushing to next pad " << endl;
+		DEBUG( classname(), " Pushing to next pad " );
 		currentPad++;
 		if ( currentPad > dx*dy){
 			savePage();
@@ -89,19 +84,19 @@ namespace jdb{
 	}
 
 	void Reporter::savePage( string name ) {
-
+		DEBUG( classname(), "Save : " << name  );
 		if ( "" == name ){
 			canvas->Print( ( filename ).c_str() );
-			logger->info(__FUNCTION__) << " Saving Page to " << filename << endl;
+			DEBUG( classname(), " Saving Page to " << filename );
 		}
 		else {
 			canvas->Print( name.c_str() );
-			logger->info(__FUNCTION__) << " Saving Page to " << name << endl;
+			DEBUG( classname(), " Saving Page to " << name );
 		}
 	}
 
 	void Reporter::saveImage( string name ){
-		logger->info(__FUNCTION__) << " Saving Image to " << name << endl;
+		DEBUG( classname(), " Saving Image to " << name );
 		canvas->SaveAs( name.c_str() );
 	}
 	

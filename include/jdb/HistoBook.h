@@ -11,6 +11,10 @@
 #include "XmlConfig.h"
 #include "Logger.h"
 #include "HistoBins.h"
+// Interface
+	#include "IConfig.h"
+	#include "IObject.h"
+
 
 // ROOT 
 #include "TROOT.h"
@@ -33,7 +37,7 @@ namespace jdb{
 	/* A book keeper and helper for storing and using ROOT histograms
 	 *
 	 */
-	class HistoBook {
+	class HistoBook : public IConfig, public IObject {
 
 	protected:
 
@@ -52,19 +56,18 @@ namespace jdb{
 		// Output file
 		TFile *file;
 
-		// Optional config to use for all config related calls
-		XmlConfig * config;
+
 		// Save on Exit or not
 		bool saveAllOnExit;
 
 
 	public:
-
-		static const string tag;
 		
 		HistoBook( string name, string input = "", string inDir = "" );		
-		HistoBook( string name, XmlConfig* config, string input = "", string inDir = "");
+		HistoBook( string name, XmlConfig config, string input = "", string inDir = "");
 		~HistoBook();
+
+		virtual const char* classname() { return "HistoBook"; }
 
 		void initialize();
 		void mergeIn( string _filename, string _dir );
@@ -114,7 +117,7 @@ namespace jdb{
 		 * Makes a histogram from a node in a config file 
 		 * 
 		 */
-		void make( XmlConfig * config, string nodeName );
+		void make( XmlConfig config, string nodeName );
 		
 		/*
 		 *Makes a single histogram from the class config file given during construction
@@ -128,7 +131,7 @@ namespace jdb{
 		 *node in the class config file given during construction"
 		 */
 		void makeAll( string nodeName );
-		void makeAll( XmlConfig * config, string nodeName );
+		void makeAll( XmlConfig config, string nodeName );
 
 		void clone( string existing, string create );
 		void clone( string ePath, string existing, string cPath, string create );
@@ -143,7 +146,7 @@ namespace jdb{
 		void save( bool saveAllInDirectory = false );
 
 		void saveOnExit( bool doIt = true ){
-			INFO( tag, "Auto Save on exit set to " << doIt );
+			INFO( classname(), "Auto Save on exit set to " << doIt );
 			saveAllOnExit = doIt;
 		}
 

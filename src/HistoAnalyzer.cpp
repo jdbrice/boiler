@@ -9,8 +9,8 @@ namespace jdb{
 		gErrorIgnoreLevel = kSysError;
 
 		// Save Class Members for config
-		cfg = config;
-		nodePath = np;
+		this->config = *config;
+		this->nodePath = this->config.basePath( np );
 		
 		if ( _setup )
 			setup();
@@ -20,24 +20,24 @@ namespace jdb{
 
 		
 	    // create the book
-	    INFO( tag, " Creating book " << cfg->getString( nodePath + "output.data" ) )
-	    book = shared_ptr<HistoBook>(new HistoBook( cfg->getString( nodePath + "output:path", "" ) + cfg->getString( nodePath + "output.data" ), cfg, "", "" ));
+	    INFO( classname(), " Creating book " << this->config.getString( nodePath + ".output.data" ) )
+	    book = shared_ptr<HistoBook>(new HistoBook( this->config.getString( nodePath + ".output:path", "" ) + this->config.getString( nodePath + "output.data" ), this->config, "", "" ));
 
 
-	    INFO( tag, " Creating report " << cfg->getString( nodePath + "output.report" ) );
-	    if ( cfg->exists( nodePath + "Reporter.output:url" ) )
-		    reporter = shared_ptr<Reporter>(new Reporter( cfg, nodePath + "Reporter." ));
+	    INFO( classname(), " Creating report " << this->config.getString( nodePath + ".output.report" ) );
+	    if ( this->config.exists( nodePath + ".Reporter.output:url" ) )
+		    reporter = shared_ptr<Reporter>(new Reporter( this->config, nodePath + ".Reporter." ));
 		else 
 			reporter = nullptr;
 
 
-        INFO( "Looking for input @ input.data:url" )
-	    INFO( " Loading data from " << cfg->getString( nodePath + "input.data:url" ) )
-		inFile = new TFile( cfg->getString( nodePath + "input.data:url" ).c_str(), "READ" );
-		INFO( "Input file : " << inFile )
+        INFO( classname(), "Looking for input @ input.data:url" )
+	    INFO( classname(), " Loading data from " << this->config.getString( nodePath + ".input.data:url" ) )
+		inFile = new TFile( this->config.getString( nodePath + ".input.data:url" ).c_str(), "READ" );
+		INFO( classname(), "Input file : " << inFile )
 
 		if ( !inFile->IsOpen()  )
-			ERROR( "Data File Could not be opened" )
+			ERROR( classname(), "Data File Could not be opened" )
 	}
 
 	HistoAnalyzer::~HistoAnalyzer(){
