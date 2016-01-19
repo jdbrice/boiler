@@ -1,0 +1,130 @@
+<class xmlns="http://jessevdk.github.com/cldoc/1.0" abstract="true" id="jdb::ConfigPoint" name="ConfigPoint">
+  <brief>Config Point easily loads (x, y) points from XmlConfigs</brief>
+  <doc>This class is a utility class used for quickly loading and aliasing point data in an xml config
+
+**Headers** : ConfigPoint.h
+
+XML should contain a node like:
+``` xml
+         * &lt;Point x="100" y="100" /&gt;
+```
+
+</doc>
+  <field id="jdb::ConfigPoint::x" name="x">
+    <brief>x value</brief>
+    <type builtin="yes" name="double" />
+  </field>
+  <field id="jdb::ConfigPoint::y" name="y">
+    <brief>y value</brief>
+    <type builtin="yes" name="double" />
+  </field>
+  <constructor id="jdb::ConfigPoint::ConfigPoint" name="ConfigPoint">
+    <brief>Load point data from an XmlConfig</brief>
+    <doc>This class reads in data from an XmlConfig instance. The underlying xml should contain a node at *nodePath* like
+``` xml
+&lt;Point x="100" y="100" /&gt;
+```
+</doc>
+    <argument id="jdb::ConfigPoint::ConfigPoint::cfg" name="cfg">
+      <doc>XmlConfig instance to load data from</doc>
+      <type name="XmlConfig" qualifier="*" ref="jdb::XmlConfig#jdb::XmlConfig" />
+    </argument>
+    <argument id="jdb::ConfigPoint::ConfigPoint::nodePath" name="nodePath">
+      <doc>Path to the XmlNode containg point data</doc>
+      <type name="string" />
+    </argument>
+    <argument id="jdb::ConfigPoint::ConfigPoint::dX" name="dX">
+      <doc>Default = 0 : default x value if not found in node</doc>
+      <type builtin="yes" name="double" />
+    </argument>
+    <argument id="jdb::ConfigPoint::ConfigPoint::dY" name="dY">
+      <doc>Default = 0 : default y value if not found in node</doc>
+      <type builtin="yes" name="double" />
+    </argument>
+    <argument id="jdb::ConfigPoint::ConfigPoint::attrX" name="attrX">
+      <doc>Default = ":x" : attribute tag to search for x value</doc>
+      <type name="string" />
+    </argument>
+    <argument id="jdb::ConfigPoint::ConfigPoint::attrY" name="attrY">
+      <doc>Default = ":y" : attribute tag to search for y value</doc>
+      <type name="string" />
+    </argument>
+  </constructor>
+  <destructor id="jdb::ConfigPoint::~ConfigPoint" name="~ConfigPoint" />
+  <method abstract="yes" id="jdb::ConfigPoint::Class" name="Class" static="yes">
+    <return>
+      <type name="TClass" qualifier="*" />
+    </return>
+  </method>
+  <method abstract="yes" id="jdb::ConfigPoint::Class_Name" name="Class_Name" static="yes">
+    <return>
+      <type builtin="yes" name="char" qualifier=" const *" />
+    </return>
+  </method>
+  <method id="jdb::ConfigPoint::Class_Version" name="Class_Version" static="yes">
+    <return>
+      <type name="Version_t" />
+    </return>
+  </method>
+  <method id="jdb::ConfigPoint::DeclFileLine" name="DeclFileLine" static="yes">
+    <return>
+      <type builtin="yes" name="int" />
+    </return>
+  </method>
+  <method id="jdb::ConfigPoint::DeclFileName" name="DeclFileName" static="yes">
+    <return>
+      <type builtin="yes" name="char" qualifier=" const *" />
+    </return>
+  </method>
+  <method abstract="yes" id="jdb::ConfigPoint::Dictionary" name="Dictionary" static="yes">
+    <return>
+      <type name="TClass" qualifier="*" />
+    </return>
+  </method>
+  <method abstract="yes" id="jdb::ConfigPoint::ImplFileLine" name="ImplFileLine" static="yes">
+    <return>
+      <type builtin="yes" name="int" />
+    </return>
+  </method>
+  <method abstract="yes" id="jdb::ConfigPoint::ImplFileName" name="ImplFileName" static="yes">
+    <return>
+      <type builtin="yes" name="char" qualifier=" const *" />
+    </return>
+  </method>
+  <method id="jdb::ConfigPoint::IsA" name="IsA" virtual="yes">
+    <return>
+      <type name="TClass" qualifier="*" />
+    </return>
+  </method>
+  <method id="jdb::ConfigPoint::ShowMembers" name="ShowMembers" virtual="yes">
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+    <argument id="jdb::ConfigPoint::ShowMembers::insp" name="insp">
+      <type name="TMemberInspector" qualifier=" &amp;" />
+    </argument>
+  </method>
+  <method abstract="yes" id="jdb::ConfigPoint::Streamer" name="Streamer" virtual="yes">
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+    <argument id="jdb::ConfigPoint::Streamer::" name="">
+      <type name="TBuffer" qualifier=" &amp;" />
+    </argument>
+  </method>
+  <method id="jdb::ConfigPoint::StreamerNVirtual" name="StreamerNVirtual">
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+    <argument id="jdb::ConfigPoint::StreamerNVirtual::ClassDef_StreamerNVirtual_b" name="ClassDef_StreamerNVirtual_b">
+      <type name="TBuffer" qualifier=" &amp;" />
+    </argument>
+  </method>
+  <method id="jdb::ConfigPoint::toString" name="toString">
+    <brief> Outputs the point as a human readable string</brief>
+    <return>
+      <doc>A string representation of the point data in the format "( x, y )"</doc>
+      <type name="string" />
+    </return>
+  </method>
+</class>

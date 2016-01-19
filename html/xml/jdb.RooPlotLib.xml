@@ -1,0 +1,134 @@
+<class xmlns="http://jessevdk.github.com/cldoc/1.0" abstract="true" id="jdb::RooPlotLib" name="RooPlotLib">
+  <constructor abstract="yes" id="jdb::RooPlotLib::RooPlotLib" name="RooPlotLib" />
+  <destructor abstract="yes" id="jdb::RooPlotLib::~RooPlotLib" name="~RooPlotLib" />
+  <method abstract="yes" id="jdb::RooPlotLib::color" name="color">
+    <return>
+      <type builtin="yes" name="int" />
+    </return>
+    <argument id="jdb::RooPlotLib::color::color" name="color">
+      <type name="string" />
+    </argument>
+  </method>
+  <method id="jdb::RooPlotLib::defaultStyle" name="defaultStyle">
+    <return>
+      <type name="RooPlotLib" qualifier=" &amp;" ref="jdb::RooPlotLib#jdb::RooPlotLib" />
+    </return>
+    <argument id="jdb::RooPlotLib::defaultStyle::_cfg" name="_cfg">
+      <type name="XmlConfig" qualifier="*" ref="jdb::XmlConfig#jdb::XmlConfig" />
+    </argument>
+    <argument id="jdb::RooPlotLib::defaultStyle::stylePath" name="stylePath">
+      <type name="string" />
+    </argument>
+  </method>
+  <method abstract="yes" id="jdb::RooPlotLib::draw" name="draw">
+    <brief>*</brief>
+    <doc>Draws the object being styled
+</doc>
+    <return>
+      <doc>reference to RooPlotLib object for method chaining</doc>
+      <type name="RooPlotLib" qualifier=" &amp;" ref="jdb::RooPlotLib#jdb::RooPlotLib" />
+    </return>
+  </method>
+  <method id="jdb::RooPlotLib::set" name="set">
+    <return>
+      <type name="RooPlotLib" qualifier=" &amp;" ref="jdb::RooPlotLib#jdb::RooPlotLib" />
+    </return>
+    <argument id="jdb::RooPlotLib::set::opt" name="opt">
+      <type name="string" />
+    </argument>
+    <argument id="jdb::RooPlotLib::set::p0" name="p0">
+      <type builtin="yes" name="float" />
+    </argument>
+    <argument id="jdb::RooPlotLib::set::p1" name="p1">
+      <type builtin="yes" name="float" />
+    </argument>
+    <argument id="jdb::RooPlotLib::set::p2" name="p2">
+      <type builtin="yes" name="float" />
+    </argument>
+    <argument id="jdb::RooPlotLib::set::p3" name="p3">
+      <type builtin="yes" name="float" />
+    </argument>
+  </method>
+  <method abstract="yes" id="jdb::RooPlotLib::set" name="set">
+    <return>
+      <type name="RooPlotLib" qualifier=" &amp;" ref="jdb::RooPlotLib#jdb::RooPlotLib" />
+    </return>
+    <argument id="jdb::RooPlotLib::set::" name="">
+      <type name="string" />
+    </argument>
+    <argument id="jdb::RooPlotLib::set::l" name="l">
+      <type name="std::initializer_list&lt;string &gt;" />
+    </argument>
+  </method>
+  <method abstract="yes" id="jdb::RooPlotLib::set" name="set">
+    <return>
+      <type name="RooPlotLib" qualifier=" &amp;" ref="jdb::RooPlotLib#jdb::RooPlotLib" />
+    </return>
+    <argument id="jdb::RooPlotLib::set::" name="">
+      <type name="string" />
+    </argument>
+    <argument id="jdb::RooPlotLib::set::l" name="l">
+      <type name="vector&lt;string&gt;" />
+    </argument>
+  </method>
+  <method id="jdb::RooPlotLib::set" name="set">
+    <return>
+      <type name="RooPlotLib" qualifier=" &amp;" ref="jdb::RooPlotLib#jdb::RooPlotLib" />
+    </return>
+    <argument id="jdb::RooPlotLib::set::opt" name="opt">
+      <type name="string" />
+    </argument>
+    <argument id="jdb::RooPlotLib::set::p0" name="p0">
+      <type name="string" />
+    </argument>
+    <argument id="jdb::RooPlotLib::set::p1" name="p1">
+      <type name="string" />
+    </argument>
+    <argument id="jdb::RooPlotLib::set::p2" name="p2">
+      <type name="string" />
+    </argument>
+    <argument id="jdb::RooPlotLib::set::p3" name="p3">
+      <type name="string" />
+    </argument>
+  </method>
+  <method abstract="yes" id="jdb::RooPlotLib::set" name="set">
+    <return>
+      <type name="RooPlotLib" qualifier=" &amp;" ref="jdb::RooPlotLib#jdb::RooPlotLib" />
+    </return>
+    <argument id="jdb::RooPlotLib::set::cfg" name="cfg">
+      <type name="XmlConfig" qualifier="*" ref="jdb::XmlConfig#jdb::XmlConfig" />
+    </argument>
+    <argument id="jdb::RooPlotLib::set::np" name="np">
+      <type name="string" />
+    </argument>
+  </method>
+  <method abstract="yes" id="jdb::RooPlotLib::style" name="style">
+    <return>
+      <type name="RooPlotLib" qualifier=" &amp;" ref="jdb::RooPlotLib#jdb::RooPlotLib" />
+    </return>
+    <argument id="jdb::RooPlotLib::style::" name="">
+      <type name="TObject" qualifier="*" />
+    </argument>
+  </method>
+  <field access="protected" id="jdb::RooPlotLib::styling" name="styling">
+    <brief>string type = "";</brief>
+    <type name="TObject" qualifier="*" />
+  </field>
+  <field access="protected" id="jdb::RooPlotLib::drawOption" name="drawOption">
+    <type name="string" />
+  </field>
+  <field access="protected" id="jdb::RooPlotLib::cfgForDefaultStyle" name="cfgForDefaultStyle">
+    <type name="XmlConfig" qualifier="*" ref="jdb::XmlConfig#jdb::XmlConfig" />
+  </field>
+  <field access="protected" id="jdb::RooPlotLib::defaultStylePath" name="defaultStylePath">
+    <type name="string" />
+  </field>
+  <method abstract="yes" access="protected" id="jdb::RooPlotLib::validObject" name="validObject">
+    <return>
+      <type builtin="yes" name="bool" />
+    </return>
+    <argument id="jdb::RooPlotLib::validObject::obj" name="obj">
+      <type name="TObject" qualifier="*" />
+    </argument>
+  </method>
+</class>

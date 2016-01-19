@@ -1,0 +1,71 @@
+<class xmlns="http://jessevdk.github.com/cldoc/1.0" abstract="true" id="jdb::ConfigFunction" name="ConfigFunction">
+  <brief>Loads a TF1 or subclass function from an Xml Config</brief>
+  <doc>Loads a function from an XmlConfig.
+</doc>
+  <variable id="jdb::ConfigFunction::tag" name="tag">
+    <type name="const auto" qualifier=" const" />
+  </variable>
+  <constructor abstract="yes" id="jdb::ConfigFunction::ConfigFunction" name="ConfigFunction">
+    <brief> Creates a function from xml config</brief>
+    <argument id="jdb::ConfigFunction::ConfigFunction::cfg" name="cfg">
+      <type name="XmlConfig" qualifier="*" ref="jdb::XmlConfig#jdb::XmlConfig" />
+    </argument>
+    <argument id="jdb::ConfigFunction::ConfigFunction::nodePath" name="nodePath">
+      <type name="string" />
+    </argument>
+    <argument id="jdb::ConfigFunction::ConfigFunction::pMod" name="pMod">
+      <type name="string" />
+    </argument>
+    <argument id="jdb::ConfigFunction::ConfigFunction::eMod" name="eMod">
+      <type name="string" />
+    </argument>
+    <argument id="jdb::ConfigFunction::ConfigFunction::formMod" name="formMod">
+      <type name="string" />
+    </argument>
+    <argument id="jdb::ConfigFunction::ConfigFunction::covMod" name="covMod">
+      <type name="string" />
+    </argument>
+  </constructor>
+  <destructor id="jdb::ConfigFunction::~ConfigFunction" name="~ConfigFunction">
+    <brief> Destructor</brief>
+  </destructor>
+  <method id="jdb::ConfigFunction::eval" name="eval">
+    <brief> Evaluate the function</brief>
+    <doc>Checks for the valid state of function before eval
+
+</doc>
+    <return>
+      <doc>evaluated value of function or 0.0 if function is undefined</doc>
+      <type builtin="yes" name="double" />
+    </return>
+    <argument id="jdb::ConfigFunction::eval::x" name="x">
+      <type builtin="yes" name="double" />
+    </argument>
+  </method>
+  <method id="jdb::ConfigFunction::getCov" name="getCov">
+    <return>
+      <type name="vector&lt;double&gt;" />
+    </return>
+  </method>
+  <method id="jdb::ConfigFunction::getTF1" name="getTF1">
+    <return>
+      <type name="shared_ptr&lt;TF1&gt;" />
+    </return>
+  </method>
+  <method id="jdb::ConfigFunction::toString" name="toString">
+    <return>
+      <type name="string" />
+    </return>
+  </method>
+  <variable access="protected" id="jdb::ConfigFunction::instances" name="instances">
+    <brief>instance count to make sure wee keep a unique ROOT name on our function</brief>
+    <type builtin="yes" name="int" />
+  </variable>
+  <field access="protected" id="jdb::ConfigFunction::func" name="func">
+    <brief>The ROOT TF1 object backing the function</brief>
+    <type name="shared_ptr&lt;TF1&gt;" />
+  </field>
+  <field access="protected" id="jdb::ConfigFunction::cov" name="cov">
+    <type name="vector&lt;double&gt;" />
+  </field>
+</class>

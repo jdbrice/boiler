@@ -1,0 +1,6 @@
+<class xmlns="http://jessevdk.github.com/cldoc/1.0" access="protected" id="jdb::Logger::NullStream" name="NullStream">
+  <base access="public">
+    <type name="ostream" />
+  </base>
+  <constructor id="jdb::Logger::NullStream::NullStream" name="NullStream" />
+</class>

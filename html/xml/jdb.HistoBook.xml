@@ -1,0 +1,472 @@
+<class xmlns="http://jessevdk.github.com/cldoc/1.0" abstract="true" id="jdb::HistoBook" name="HistoBook">
+  <brief>A book keeper and helper for storing and using ROOT histograms</brief>
+  <base access="public">
+    <type name="IConfig" />
+  </base>
+  <base access="public">
+    <type name="IObject" />
+  </base>
+  <constructor abstract="yes" id="jdb::HistoBook::HistoBook" name="HistoBook">
+    <argument id="jdb::HistoBook::HistoBook::name" name="name">
+      <type name="string" />
+    </argument>
+    <argument id="jdb::HistoBook::HistoBook::input" name="input">
+      <type name="string" />
+    </argument>
+    <argument id="jdb::HistoBook::HistoBook::inDir" name="inDir">
+      <type name="string" />
+    </argument>
+  </constructor>
+  <constructor abstract="yes" id="jdb::HistoBook::HistoBook" name="HistoBook">
+    <argument id="jdb::HistoBook::HistoBook::name" name="name">
+      <type name="string" />
+    </argument>
+    <argument id="jdb::HistoBook::HistoBook::config" name="config">
+      <type name="XmlConfig" ref="jdb::XmlConfig#jdb::XmlConfig" />
+    </argument>
+    <argument id="jdb::HistoBook::HistoBook::input" name="input">
+      <type name="string" />
+    </argument>
+    <argument id="jdb::HistoBook::HistoBook::inDir" name="inDir">
+      <type name="string" />
+    </argument>
+  </constructor>
+  <destructor abstract="yes" id="jdb::HistoBook::~HistoBook" name="~HistoBook" virtual="yes" />
+  <method abstract="yes" id="jdb::HistoBook::add" name="add">
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+    <argument id="jdb::HistoBook::add::name" name="name">
+      <type name="string" />
+    </argument>
+    <argument id="jdb::HistoBook::add::" name="">
+      <type name="TH1" qualifier="*" />
+    </argument>
+  </method>
+  <method abstract="yes" id="jdb::HistoBook::add" name="add">
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+    <argument id="jdb::HistoBook::add::name" name="name">
+      <type name="string" />
+    </argument>
+    <argument id="jdb::HistoBook::add::" name="">
+      <type name="TObject" qualifier="*" />
+    </argument>
+  </method>
+  <method abstract="yes" id="jdb::HistoBook::cd" name="cd">
+    <doc>
+Changes into the given directory.
+If the dir DNE it is created, or it is simply set as the current.
+Subdirectories can be used if the entire path is given, paths are never relative
+
+</doc>
+    <return>
+      <type name="string" />
+    </return>
+    <argument id="jdb::HistoBook::cd::dir" name="dir">
+      <type name="string" />
+    </argument>
+  </method>
+  <method id="jdb::HistoBook::classname" name="classname" virtual="yes">
+    <return>
+      <type builtin="yes" name="char" qualifier=" const *" />
+    </return>
+  </method>
+  <method abstract="yes" id="jdb::HistoBook::clone" name="clone">
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+    <argument id="jdb::HistoBook::clone::existing" name="existing">
+      <type name="string" />
+    </argument>
+    <argument id="jdb::HistoBook::clone::create" name="create">
+      <type name="string" />
+    </argument>
+  </method>
+  <method abstract="yes" id="jdb::HistoBook::clone" name="clone">
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+    <argument id="jdb::HistoBook::clone::ePath" name="ePath">
+      <type name="string" />
+    </argument>
+    <argument id="jdb::HistoBook::clone::existing" name="existing">
+      <type name="string" />
+    </argument>
+    <argument id="jdb::HistoBook::clone::cPath" name="cPath">
+      <type name="string" />
+    </argument>
+    <argument id="jdb::HistoBook::clone::create" name="create">
+      <type name="string" />
+    </argument>
+  </method>
+  <method abstract="yes" id="jdb::HistoBook::exists" name="exists">
+    <return>
+      <type builtin="yes" name="bool" />
+    </return>
+    <argument id="jdb::HistoBook::exists::name" name="name">
+      <type name="string" />
+    </argument>
+    <argument id="jdb::HistoBook::exists::sdir" name="sdir">
+      <type name="string" />
+    </argument>
+  </method>
+  <method abstract="yes" id="jdb::HistoBook::fill" name="fill">
+    <doc>
+This method checks for existance unlike using get(...)-&gt;Fill(...).
+If the histo DNE then an error is reported through the Logger and execution continues.
+</doc>
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+    <argument id="jdb::HistoBook::fill::name" name="name">
+      <type name="string" />
+    </argument>
+    <argument id="jdb::HistoBook::fill::bin" name="bin">
+      <type builtin="yes" name="double" />
+    </argument>
+    <argument id="jdb::HistoBook::fill::weight" name="weight">
+      <type builtin="yes" name="double" />
+    </argument>
+  </method>
+  <method abstract="yes" id="jdb::HistoBook::fill" name="fill">
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+    <argument id="jdb::HistoBook::fill::name" name="name">
+      <type name="string" />
+    </argument>
+    <argument id="jdb::HistoBook::fill::binx" name="binx">
+      <type builtin="yes" name="double" />
+    </argument>
+    <argument id="jdb::HistoBook::fill::biny" name="biny">
+      <type builtin="yes" name="double" />
+    </argument>
+    <argument id="jdb::HistoBook::fill::weight" name="weight">
+      <type builtin="yes" name="double" />
+    </argument>
+  </method>
+  <method abstract="yes" id="jdb::HistoBook::fill" name="fill">
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+    <argument id="jdb::HistoBook::fill::name" name="name">
+      <type name="string" />
+    </argument>
+    <argument id="jdb::HistoBook::fill::binx" name="binx">
+      <type builtin="yes" name="double" />
+    </argument>
+    <argument id="jdb::HistoBook::fill::biny" name="biny">
+      <type builtin="yes" name="double" />
+    </argument>
+    <argument id="jdb::HistoBook::fill::binz" name="binz">
+      <type builtin="yes" name="double" />
+    </argument>
+    <argument id="jdb::HistoBook::fill::weight" name="weight">
+      <type builtin="yes" name="double" />
+    </argument>
+  </method>
+  <method abstract="yes" id="jdb::HistoBook::fill" name="fill">
+    <brief> Fill a histogram by name</brief>
+    <doc>Checks for existance
+</doc>
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+    <argument id="jdb::HistoBook::fill::name" name="name">
+      <type name="string" />
+    </argument>
+    <argument id="jdb::HistoBook::fill::binLabel" name="binLabel">
+      <type name="string" />
+    </argument>
+    <argument id="jdb::HistoBook::fill::weight" name="weight">
+      <type builtin="yes" name="double" />
+    </argument>
+  </method>
+  <method abstract="yes" id="jdb::HistoBook::get" name="get">
+    <return>
+      <type name="TH1" qualifier="*" />
+    </return>
+    <argument id="jdb::HistoBook::get::name" name="name">
+      <type name="string" />
+    </argument>
+    <argument id="jdb::HistoBook::get::sdir" name="sdir">
+      <type name="string" />
+    </argument>
+  </method>
+  <method abstract="yes" id="jdb::HistoBook::get2D" name="get2D">
+    <return>
+      <type name="TH2" qualifier="*" />
+    </return>
+    <argument id="jdb::HistoBook::get2D::name" name="name">
+      <type name="string" />
+    </argument>
+    <argument id="jdb::HistoBook::get2D::sdir" name="sdir">
+      <type name="string" />
+    </argument>
+  </method>
+  <method abstract="yes" id="jdb::HistoBook::get3D" name="get3D">
+    <return>
+      <type name="TH3" qualifier="*" />
+    </return>
+    <argument id="jdb::HistoBook::get3D::name" name="name">
+      <type name="string" />
+    </argument>
+    <argument id="jdb::HistoBook::get3D::sdir" name="sdir">
+      <type name="string" />
+    </argument>
+  </method>
+  <method id="jdb::HistoBook::getDirectory" name="getDirectory">
+    <return>
+      <type name="TDirectory" qualifier="*" />
+    </return>
+  </method>
+  <method abstract="yes" id="jdb::HistoBook::initialize" name="initialize">
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+  </method>
+  <method abstract="yes" id="jdb::HistoBook::is1D" name="is1D">
+    <return>
+      <type builtin="yes" name="bool" />
+    </return>
+    <argument id="jdb::HistoBook::is1D::name" name="name">
+      <type name="string" />
+    </argument>
+    <argument id="jdb::HistoBook::is1D::sdir" name="sdir">
+      <type name="string" />
+    </argument>
+  </method>
+  <method abstract="yes" id="jdb::HistoBook::is2D" name="is2D">
+    <return>
+      <type builtin="yes" name="bool" />
+    </return>
+    <argument id="jdb::HistoBook::is2D::name" name="name">
+      <type name="string" />
+    </argument>
+    <argument id="jdb::HistoBook::is2D::sdir" name="sdir">
+      <type name="string" />
+    </argument>
+  </method>
+  <method abstract="yes" id="jdb::HistoBook::is3D" name="is3D">
+    <return>
+      <type builtin="yes" name="bool" />
+    </return>
+    <argument id="jdb::HistoBook::is3D::name" name="name">
+      <type name="string" />
+    </argument>
+    <argument id="jdb::HistoBook::is3D::sdir" name="sdir">
+      <type name="string" />
+    </argument>
+  </method>
+  <method abstract="yes" id="jdb::HistoBook::ls" name="ls">
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+    <argument id="jdb::HistoBook::ls::print" name="print">
+      <type builtin="yes" name="bool" />
+    </argument>
+  </method>
+  <method abstract="yes" id="jdb::HistoBook::make" name="make">
+    <return>
+      <type name="TH1" qualifier="*" />
+    </return>
+    <argument id="jdb::HistoBook::make::type" name="type">
+      <type name="string" />
+    </argument>
+    <argument id="jdb::HistoBook::make::name" name="name">
+      <type name="string" />
+    </argument>
+    <argument id="jdb::HistoBook::make::title" name="title">
+      <type name="string" />
+    </argument>
+    <argument id="jdb::HistoBook::make::bx" name="bx">
+      <type name="HistoBins" qualifier=" &amp;" />
+    </argument>
+    <argument id="jdb::HistoBook::make::by" name="by">
+      <type name="HistoBins" qualifier=" &amp;" />
+    </argument>
+    <argument id="jdb::HistoBook::make::bz" name="bz">
+      <type name="HistoBins" qualifier=" &amp;" />
+    </argument>
+  </method>
+  <method abstract="yes" id="jdb::HistoBook::make" name="make">
+    <doc>
+Makes a histogram from a node in a config file
+
+</doc>
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+    <argument id="jdb::HistoBook::make::config" name="config">
+      <type name="XmlConfig" ref="jdb::XmlConfig#jdb::XmlConfig" />
+    </argument>
+    <argument id="jdb::HistoBook::make::nodeName" name="nodeName">
+      <type name="string" />
+    </argument>
+  </method>
+  <method abstract="yes" id="jdb::HistoBook::make" name="make">
+    <doc>
+Makes a single histogram from the class config file given during construction
+
+
+</doc>
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+    <argument id="jdb::HistoBook::make::nodeName" name="nodeName">
+      <type name="string" />
+    </argument>
+  </method>
+  <method abstract="yes" id="jdb::HistoBook::makeAll" name="makeAll">
+    <doc>
+Makes all histograms that are children of the given parent
+node in the class config file given during construction"
+</doc>
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+    <argument id="jdb::HistoBook::makeAll::nodeName" name="nodeName">
+      <type name="string" />
+    </argument>
+  </method>
+  <method abstract="yes" id="jdb::HistoBook::makeAll" name="makeAll">
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+    <argument id="jdb::HistoBook::makeAll::config" name="config">
+      <type name="XmlConfig" ref="jdb::XmlConfig#jdb::XmlConfig" />
+    </argument>
+    <argument id="jdb::HistoBook::makeAll::nodeName" name="nodeName">
+      <type name="string" />
+    </argument>
+  </method>
+  <method abstract="yes" id="jdb::HistoBook::mergeIn" name="mergeIn">
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+    <argument id="jdb::HistoBook::mergeIn::_filename" name="_filename">
+      <type name="string" />
+    </argument>
+    <argument id="jdb::HistoBook::mergeIn::_dir" name="_dir">
+      <type name="string" />
+    </argument>
+  </method>
+  <method abstract="yes" id="jdb::HistoBook::operator[]" name="operator[]">
+    <return>
+      <type name="TH1" qualifier="*" />
+    </return>
+    <argument id="jdb::HistoBook::operator[]::name" name="name">
+      <type name="string" />
+    </argument>
+  </method>
+  <method abstract="yes" id="jdb::HistoBook::removeFromDir" name="removeFromDir">
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+    <argument id="jdb::HistoBook::removeFromDir::name" name="name">
+      <type name="string" />
+    </argument>
+    <argument id="jdb::HistoBook::removeFromDir::sdir" name="sdir">
+      <type name="string" />
+    </argument>
+  </method>
+  <method abstract="yes" id="jdb::HistoBook::save" name="save">
+    <doc>
+Saves all histograms and other Root objects attached to the current file to
+the permanent file given during construction
+</doc>
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+    <argument id="jdb::HistoBook::save::saveAllInDirectory" name="saveAllInDirectory">
+      <type builtin="yes" name="bool" />
+    </argument>
+  </method>
+  <method id="jdb::HistoBook::saveOnExit" name="saveOnExit">
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+    <argument id="jdb::HistoBook::saveOnExit::doIt" name="doIt">
+      <type builtin="yes" name="bool" />
+    </argument>
+  </method>
+  <method abstract="yes" id="jdb::HistoBook::setBin" name="setBin">
+    <return>
+      <type builtin="yes" name="bool" />
+    </return>
+    <argument id="jdb::HistoBook::setBin::name" name="name">
+      <type name="string" />
+    </argument>
+    <argument id="jdb::HistoBook::setBin::bin" name="bin">
+      <type builtin="yes" name="int" />
+    </argument>
+    <argument id="jdb::HistoBook::setBin::content" name="content">
+      <type builtin="yes" name="double" />
+    </argument>
+    <argument id="jdb::HistoBook::setBin::error" name="error">
+      <type builtin="yes" name="double" />
+    </argument>
+  </method>
+  <method abstract="yes" id="jdb::HistoBook::setBinContent" name="setBinContent">
+    <return>
+      <type builtin="yes" name="bool" />
+    </return>
+    <argument id="jdb::HistoBook::setBinContent::name" name="name">
+      <type name="string" />
+    </argument>
+    <argument id="jdb::HistoBook::setBinContent::bin" name="bin">
+      <type builtin="yes" name="int" />
+    </argument>
+    <argument id="jdb::HistoBook::setBinContent::content" name="content">
+      <type builtin="yes" name="double" />
+    </argument>
+  </method>
+  <method abstract="yes" id="jdb::HistoBook::setBinError" name="setBinError">
+    <return>
+      <type builtin="yes" name="bool" />
+    </return>
+    <argument id="jdb::HistoBook::setBinError::name" name="name">
+      <type name="string" />
+    </argument>
+    <argument id="jdb::HistoBook::setBinError::bin" name="bin">
+      <type builtin="yes" name="int" />
+    </argument>
+    <argument id="jdb::HistoBook::setBinError::error" name="error">
+      <type builtin="yes" name="double" />
+    </argument>
+  </method>
+  <field access="protected" id="jdb::HistoBook::currentDir" name="currentDir">
+    <brief>Current directory in output file</brief>
+    <type name="string" />
+  </field>
+  <field access="protected" id="jdb::HistoBook::configPath" name="configPath">
+    <brief>Map of hitogram names to paths in the Xml Config File for automaticlly created histos</brief>
+    <type name="map&lt;string, string&gt;" />
+  </field>
+  <field access="protected" id="jdb::HistoBook::book" name="book">
+    <brief>Map of histogram names to objects</brief>
+    <type name="map&lt;string, TObject *&gt;" />
+  </field>
+  <field access="protected" id="jdb::HistoBook::filename" name="filename">
+    <brief>Filename of output file</brief>
+    <type name="string" />
+  </field>
+  <field access="protected" id="jdb::HistoBook::inputFilename" name="inputFilename">
+    <brief>filename for input</brief>
+    <type name="string" />
+  </field>
+  <field access="protected" id="jdb::HistoBook::inputDir" name="inputDir">
+    <brief>directory to read in input file</brief>
+    <type name="string" />
+  </field>
+  <field access="protected" id="jdb::HistoBook::file" name="file">
+    <brief>Output file</brief>
+    <type name="TFile" qualifier="*" />
+  </field>
+  <field access="protected" id="jdb::HistoBook::saveAllOnExit" name="saveAllOnExit">
+    <brief>Save on Exit or not</brief>
+    <type builtin="yes" name="bool" />
+  </field>
+</class>

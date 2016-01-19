@@ -1,0 +1,32 @@
+<class xmlns="http://jessevdk.github.com/cldoc/1.0" id="jdb::TaskTimer" interface="true" name="TaskTimer">
+  <brief>Task Timer</brief>
+  <doc>Utility Class for timing tasks and reporting
+</doc>
+  <field id="jdb::TaskTimer::startTime" name="startTime">
+    <brief>start time of task</brief>
+    <type name="clock_t" />
+  </field>
+  <method abstract="yes" id="jdb::TaskTimer::elapsed" name="elapsed">
+    <brief> Return the amount of time elapsed since start() was called</brief>
+    <return>
+      <doc>Time past in seconds as double</doc>
+      <type builtin="yes" name="double" />
+    </return>
+  </method>
+  <method abstract="yes" id="jdb::TaskTimer::elapsedTime" name="elapsedTime">
+    <brief> Return the elapsed time as a string</brief>
+    <doc>Formats the string to be human readable
+
+</doc>
+    <return>
+      <doc>The amount of elapsed time</doc>
+      <type name="string" />
+    </return>
+  </method>
+  <method abstract="yes" id="jdb::TaskTimer::start" name="start">
+    <brief>set the start time to now</brief>
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+  </method>
+</class>

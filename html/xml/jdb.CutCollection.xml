@@ -1,0 +1,54 @@
+<class xmlns="http://jessevdk.github.com/cldoc/1.0" id="jdb::CutCollection" name="CutCollection">
+  <base access="public">
+    <type name="IConfig" />
+  </base>
+  <base access="public">
+    <type name="IObject" />
+  </base>
+  <variable id="jdb::CutCollection::tag" name="tag">
+    <brief>operator[]</brief>
+    <type name="const auto" qualifier=" const" />
+  </variable>
+  <field id="jdb::CutCollection::ranges" name="ranges">
+    <type name="map&lt;string, shared_ptr&lt;jdb::ConfigRange&gt;&gt;" />
+  </field>
+  <constructor id="jdb::CutCollection::CutCollection" name="CutCollection" />
+  <constructor id="jdb::CutCollection::CutCollection" name="CutCollection">
+    <argument id="jdb::CutCollection::CutCollection::_config" name="_config">
+      <type name="XmlConfig" ref="jdb::XmlConfig#jdb::XmlConfig" />
+    </argument>
+    <argument id="jdb::CutCollection::CutCollection::_nodePath" name="_nodePath">
+      <type name="string" />
+    </argument>
+  </constructor>
+  <destructor id="jdb::CutCollection::~CutCollection" name="~CutCollection" virtual="yes" />
+  <method id="jdb::CutCollection::classname" name="classname" virtual="yes">
+    <return>
+      <type builtin="yes" name="char" qualifier=" const *" />
+    </return>
+  </method>
+  <method id="jdb::CutCollection::operator[]" name="operator[]">
+    <return>
+      <type name="shared_ptr&lt;jdb::ConfigRange&gt;" />
+    </return>
+    <argument id="jdb::CutCollection::operator[]::name" name="name">
+      <type name="string" />
+    </argument>
+  </method>
+  <method id="jdb::CutCollection::report" name="report">
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+  </method>
+  <method access="protected" id="jdb::CutCollection::init" name="init">
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+    <argument id="jdb::CutCollection::init::_config" name="_config">
+      <type name="XmlConfig" ref="jdb::XmlConfig#jdb::XmlConfig" />
+    </argument>
+    <argument id="jdb::CutCollection::init::_nodePath" name="_nodePath">
+      <type name="string" />
+    </argument>
+  </method>
+</class>

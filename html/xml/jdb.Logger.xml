@@ -1,0 +1,326 @@
+<class xmlns="http://jessevdk.github.com/cldoc/1.0" abstract="true" id="jdb::Logger" name="Logger">
+  <brief>An all purpose logging utility with log level functionality.</brief>
+  <doc>Meant to be used in modular projects. Multpile Logger instances can be used with different log levels.
+</doc>
+  <variable id="jdb::Logger::llAll" name="llAll">
+    <brief>Log everything ( Debug, Trace, Info, Warnings, Error )</brief>
+    <type builtin="yes" name="int" qualifier=" const" />
+  </variable>
+  <variable id="jdb::Logger::llDebug" name="llDebug">
+    <brief>Log Debug messages and below ( Debug, Trace, Info, Warnings, Error )</brief>
+    <type builtin="yes" name="int" qualifier=" const" />
+  </variable>
+  <variable id="jdb::Logger::llDefault" name="llDefault">
+    <brief>The default log level at compile time</brief>
+    <type builtin="yes" name="int" qualifier=" const" />
+  </variable>
+  <variable id="jdb::Logger::llError" name="llError">
+    <brief>Log Error messages and below ( Error )</brief>
+    <type builtin="yes" name="int" qualifier=" const" />
+  </variable>
+  <variable id="jdb::Logger::llGlobal" name="llGlobal">
+    <brief>The global log level - used by any newly created log IF not overridden</brief>
+    <type builtin="yes" name="int" />
+  </variable>
+  <variable id="jdb::Logger::llInfo" name="llInfo">
+    <brief>Log Info messages and below ( Info, Warning, Error )</brief>
+    <type builtin="yes" name="int" qualifier=" const" />
+  </variable>
+  <variable id="jdb::Logger::llNone" name="llNone">
+    <brief>Log nothing</brief>
+    <type builtin="yes" name="int" qualifier=" const" />
+  </variable>
+  <variable id="jdb::Logger::llTrace" name="llTrace">
+    <brief>Log Trace messages and below ( Trace, Info, Warning, Error )</brief>
+    <type builtin="yes" name="int" qualifier=" const" />
+  </variable>
+  <variable id="jdb::Logger::llWarn" name="llWarn">
+    <brief>Log Warning messages and below ( Warning, Error )</brief>
+    <type builtin="yes" name="int" qualifier=" const" />
+  </variable>
+  <variable id="jdb::Logger::log" name="log">
+    <brief>Singelton Instance</brief>
+    <type name="Logger" ref="jdb::Logger#jdb::Logger" />
+  </variable>
+  <variable id="jdb::Logger::showColors" name="showColors">
+    <type builtin="yes" name="bool" />
+  </variable>
+  <constructor id="jdb::Logger::Logger" name="Logger">
+    <doc>
+Creates a Logger with
+@param ll 	Log Level ( llAll, llDebug, ... )
+@param cs 	ClassSpace for prefixing messages
+@param oss	Pointer to an output stream to use
+
+</doc>
+    <argument id="jdb::Logger::Logger::ll" name="ll">
+      <type builtin="yes" name="int" />
+    </argument>
+    <argument id="jdb::Logger::Logger::cs" name="cs">
+      <type name="string" />
+    </argument>
+    <argument id="jdb::Logger::Logger::oss" name="oss">
+      <type name="ostream" qualifier="*" />
+    </argument>
+  </constructor>
+  <constructor id="jdb::Logger::Logger" name="Logger">
+    <doc>
+Default constructor creates a Logger with the global log level and no class space prefix
+@param ll 	LogLevel
+@param cs 	ClassSpace prefix for messages
+</doc>
+    <argument id="jdb::Logger::Logger::ll" name="ll">
+      <type builtin="yes" name="int" />
+    </argument>
+    <argument id="jdb::Logger::Logger::cs" name="cs">
+      <type name="string" />
+    </argument>
+  </constructor>
+  <method id="jdb::Logger::debug" name="debug">
+    <doc>
+Debug level ( and below ) log messages
+@param functionName 	The name of the calling function to prepend to output
+@param showPrefix 	Show the LogLevel, classSpace, and Function name
+@return 	The output stream for writing. If the LogLevel does not permit this
+             level of output then a NullStream is returned.
+</doc>
+    <return>
+      <doc>The output stream for writing. If the LogLevel does not permit this
+             level of output then a NullStream is returned.</doc>
+      <type name="ostream" qualifier=" &amp;" />
+    </return>
+    <argument id="jdb::Logger::debug::functionName" name="functionName">
+      <type name="string" />
+    </argument>
+    <argument id="jdb::Logger::debug::showPrefix" name="showPrefix">
+      <type builtin="yes" name="bool" />
+    </argument>
+  </method>
+  <method id="jdb::Logger::error" name="error">
+    <doc>
+Error level ( and below ) log messages
+@param functionName 	The name of the calling function to prepend to output
+@param showPrefix 	Show the LogLevel, classSpace, and Function name
+@return 	The output stream for writing. If the LogLevel does not permit this
+             level of output then a NullStream is returned.
+</doc>
+    <return>
+      <doc>The output stream for writing. If the LogLevel does not permit this
+             level of output then a NullStream is returned.</doc>
+      <type name="ostream" qualifier=" &amp;" />
+    </return>
+    <argument id="jdb::Logger::error::functionName" name="functionName">
+      <type name="string" />
+    </argument>
+    <argument id="jdb::Logger::error::showPrefix" name="showPrefix">
+      <type builtin="yes" name="bool" />
+    </argument>
+  </method>
+  <method id="jdb::Logger::getClassSpace" name="getClassSpace">
+    <doc>
+Get Class Space prefix
+@return ClassSpace prefix string
+</doc>
+    <return>
+      <doc>ClassSpace prefix string</doc>
+      <type name="string" />
+    </return>
+  </method>
+  <method abstract="yes" id="jdb::Logger::getGlobalColor" name="getGlobalColor" static="yes">
+    <return>
+      <type builtin="yes" name="bool" />
+    </return>
+  </method>
+  <method abstract="yes" id="jdb::Logger::getGlobalLogLevel" name="getGlobalLogLevel" static="yes">
+    <doc>
+Gets the global log level for all Logger instances
+</doc>
+    <return>
+      <type builtin="yes" name="int" />
+    </return>
+  </method>
+  <method id="jdb::Logger::getLogLevel" name="getLogLevel">
+    <doc>
+Get the Log Level of this Logger instance
+@return the current int value LogLevel
+</doc>
+    <return>
+      <doc>the current int value LogLevel</doc>
+      <type builtin="yes" name="int" />
+    </return>
+  </method>
+  <method id="jdb::Logger::info" name="info">
+    <doc>
+Info level ( and below ) log messages
+@param functionName 	The name of the calling function to prepend to output
+@param showPrefix 	Show the LogLevel, classSpace, and Function name
+@return 	The output stream for writing. If the LogLevel does not permit this
+             level of output then a NullStream is returned.
+</doc>
+    <return>
+      <doc>The output stream for writing. If the LogLevel does not permit this
+             level of output then a NullStream is returned.</doc>
+      <type name="ostream" qualifier=" &amp;" />
+    </return>
+    <argument id="jdb::Logger::info::functionName" name="functionName">
+      <type name="string" />
+    </argument>
+    <argument id="jdb::Logger::info::showPrefix" name="showPrefix">
+      <type builtin="yes" name="bool" />
+    </argument>
+  </method>
+  <method id="jdb::Logger::logLevelFromString" name="logLevelFromString" static="yes">
+    <doc>
+Converts a Human Readable string to the corresponding LogLevel
+@param ll 	String log level
+</doc>
+    <return>
+      <type builtin="yes" name="int" />
+    </return>
+    <argument id="jdb::Logger::logLevelFromString::ll" name="ll">
+      <type name="string" />
+    </argument>
+  </method>
+  <method id="jdb::Logger::setClassSpace" name="setClassSpace">
+    <doc>
+Set the ClassSpace Prefix
+@param cs 	ClassSpace Prefix String - usually the name of the class
+</doc>
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+    <argument id="jdb::Logger::setClassSpace::cs" name="cs">
+      <type name="string" />
+    </argument>
+  </method>
+  <method abstract="yes" id="jdb::Logger::setGlobalColor" name="setGlobalColor" static="yes">
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+    <argument id="jdb::Logger::setGlobalColor::state" name="state">
+      <type builtin="yes" name="bool" />
+    </argument>
+  </method>
+  <method abstract="yes" id="jdb::Logger::setGlobalLogLevel" name="setGlobalLogLevel" static="yes">
+    <doc>
+Sets the global log level used by Logger instances
+@param ll Log level
+</doc>
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+    <argument id="jdb::Logger::setGlobalLogLevel::ll" name="ll">
+      <type builtin="yes" name="int" />
+    </argument>
+  </method>
+  <method abstract="yes" id="jdb::Logger::setGlobalLogLevel" name="setGlobalLogLevel" static="yes">
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+    <argument id="jdb::Logger::setGlobalLogLevel::ll" name="ll">
+      <type name="string" />
+    </argument>
+  </method>
+  <method id="jdb::Logger::setLogLevel" name="setLogLevel">
+    <doc>
+Set the LogLevel for this Logger instance
+@param ll 	LogLevel ( llAll, llDebug, ... )
+</doc>
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+    <argument id="jdb::Logger::setLogLevel::ll" name="ll">
+      <type builtin="yes" name="int" />
+    </argument>
+  </method>
+  <method id="jdb::Logger::setLogLevel" name="setLogLevel">
+    <doc>
+Set the LogLevel for this Logger instance
+@param ll 	LogLEvel as string
+</doc>
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+    <argument id="jdb::Logger::setLogLevel::ll" name="ll">
+      <type name="string" />
+    </argument>
+  </method>
+  <method id="jdb::Logger::summary" name="summary">
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+  </method>
+  <method id="jdb::Logger::trace" name="trace">
+    <doc>
+Trace level ( and below ) log messages
+@param functionName 	The name of the calling function to prepend to output
+@param showPrefix 	Show the LogLevel, classSpace, and Function name
+@return 	The output stream for writing. If the LogLevel does not permit this
+             level of output then a NullStream is returned.
+</doc>
+    <return>
+      <doc>The output stream for writing. If the LogLevel does not permit this
+             level of output then a NullStream is returned.</doc>
+      <type name="ostream" qualifier=" &amp;" />
+    </return>
+    <argument id="jdb::Logger::trace::functionName" name="functionName">
+      <type name="string" />
+    </argument>
+    <argument id="jdb::Logger::trace::showPrefix" name="showPrefix">
+      <type builtin="yes" name="bool" />
+    </argument>
+  </method>
+  <method id="jdb::Logger::warn" name="warn">
+    <doc>
+Warning level ( and below ) log messages
+@param functionName 	The name of the calling function to prepend to output
+@param showPrefix 	Show the LogLevel, classSpace, and Function name
+@return 	The output stream for writing. If the LogLevel does not permit this
+             level of output then a NullStream is returned.
+</doc>
+    <return>
+      <doc>The output stream for writing. If the LogLevel does not permit this
+             level of output then a NullStream is returned.</doc>
+      <type name="ostream" qualifier=" &amp;" />
+    </return>
+    <argument id="jdb::Logger::warn::functionName" name="functionName">
+      <type name="string" />
+    </argument>
+    <argument id="jdb::Logger::warn::showPrefix" name="showPrefix">
+      <type builtin="yes" name="bool" />
+    </argument>
+  </method>
+  <class name="NullBuffer" ref="jdb::Logger::NullBuffer#jdb::Logger::NullBuffer">
+    <brief>*</brief>
+  </class>
+  <class name="NullStream" ref="jdb::Logger::NullStream#jdb::Logger::NullStream" />
+  <field access="protected" id="jdb::Logger::logLevel" name="logLevel">
+    <type builtin="yes" name="int" />
+  </field>
+  <field access="protected" id="jdb::Logger::counts" name="counts">
+    <type name="map&lt;string, int&gt;" />
+  </field>
+  <field access="protected" id="jdb::Logger::os" name="os">
+    <brief>The output stream used for printing messages</brief>
+    <type name="ostream" qualifier="*" />
+  </field>
+  <field access="protected" id="jdb::Logger::ns" name="ns">
+    <brief>The Null Stream used to swallow messages</brief>
+    <type name="NullStream" ref="jdb::Logger::NullStream#jdb::Logger::NullStream" />
+  </field>
+  <field access="protected" id="jdb::Logger::cSpace" name="cSpace">
+    <brief>The "class space" ie the context</brief>
+    <type name="string" />
+  </field>
+  <method access="protected" id="jdb::Logger::preMessage" name="preMessage">
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+    <argument id="jdb::Logger::preMessage::level" name="level">
+      <type name="string" />
+    </argument>
+    <argument id="jdb::Logger::preMessage::functionName" name="functionName">
+      <type name="string" />
+    </argument>
+  </method>
+</class>

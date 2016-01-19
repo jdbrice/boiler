@@ -1,0 +1,165 @@
+<class xmlns="http://jessevdk.github.com/cldoc/1.0" abstract="true" id="jdb::TreeAnalyzer" name="TreeAnalyzer">
+  <brief>Boiler for analyzing data distributed accross TTrees in many files</brief>
+  <doc>Automatically loads the TTrees from each file into a TChain.
+Formalizes the structure for the config file, automatically loading
+the config, logger, reporter, and histobook objects. These become available to any subclass
+</doc>
+  <base access="public">
+    <type name="TaskRunner" ref="jdb::TaskRunner#jdb::TaskRunner" />
+  </base>
+  <constructor id="jdb::TreeAnalyzer::TreeAnalyzer" name="TreeAnalyzer">
+    <brief>Creates the TreeAnalyzer and sets up members</brief>
+    <doc>Creates the Reporter, HistoBook and initializes the TChain
+If not filelist is given then data is loaded from the directory specified in the
+config file. Otherwise the files in the filelist are used.
+
+Optionally a jobPrefix can be used to allow for parallel execution such that
+each job writes out to different files.
+</doc>
+  </constructor>
+  <constructor abstract="yes" id="jdb::TreeAnalyzer::TreeAnalyzer" name="TreeAnalyzer">
+    <argument id="jdb::TreeAnalyzer::TreeAnalyzer::_config" name="_config">
+      <type name="XmlConfig" ref="jdb::XmlConfig#jdb::XmlConfig" />
+    </argument>
+    <argument id="jdb::TreeAnalyzer::TreeAnalyzer::_nodePath" name="_nodePath">
+      <type name="string" />
+    </argument>
+    <argument id="jdb::TreeAnalyzer::TreeAnalyzer::_fileList" name="_fileList">
+      <type name="string" />
+    </argument>
+    <argument id="jdb::TreeAnalyzer::TreeAnalyzer::_prefix" name="_prefix">
+      <type name="string" />
+    </argument>
+  </constructor>
+  <destructor abstract="yes" id="jdb::TreeAnalyzer::~TreeAnalyzer" name="~TreeAnalyzer" virtual="yes" />
+  <method id="jdb::TreeAnalyzer::classname" name="classname" override="yes" virtual="yes">
+    <return>
+      <type builtin="yes" name="char" qualifier=" const *" />
+    </return>
+    <override name="TaskRunner::classname" ref="jdb::TaskRunner#jdb::TaskRunner::classname" />
+  </method>
+  <method abstract="yes" id="jdb::TreeAnalyzer::init" name="init" override="yes" virtual="yes">
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+    <argument id="jdb::TreeAnalyzer::init::_config" name="_config">
+      <type name="XmlConfig" ref="jdb::XmlConfig#jdb::XmlConfig" />
+    </argument>
+    <argument id="jdb::TreeAnalyzer::init::_nodePath" name="_nodePath">
+      <type name="string" />
+    </argument>
+    <argument id="jdb::TreeAnalyzer::init::_fileList" name="_fileList">
+      <type name="string" />
+    </argument>
+    <argument id="jdb::TreeAnalyzer::init::_prefix" name="_prefix">
+      <type name="string" />
+    </argument>
+    <override name="TaskRunner::init" ref="jdb::TaskRunner#jdb::TaskRunner::init" />
+  </method>
+  <method abstract="yes" id="jdb::TreeAnalyzer::initDataSource" name="initDataSource">
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+  </method>
+  <method abstract="yes" id="jdb::TreeAnalyzer::initHistoBook" name="initHistoBook">
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+  </method>
+  <method abstract="yes" id="jdb::TreeAnalyzer::initReporter" name="initReporter">
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+  </method>
+  <field access="protected" id="jdb::TreeAnalyzer::outputPath" name="outputPath">
+    <brief>Basepath for output of data and reports</brief>
+    <type name="string" />
+  </field>
+  <field access="protected" id="jdb::TreeAnalyzer::book" name="book">
+    <brief>Store project histograms and data</brief>
+    <type name="HistoBook" qualifier="*" ref="jdb::HistoBook#jdb::HistoBook" />
+  </field>
+  <field access="protected" id="jdb::TreeAnalyzer::reporter" name="reporter">
+    <brief>For generating generic reports</brief>
+    <type name="Reporter" qualifier="*" ref="jdb::Reporter#jdb::Reporter" />
+  </field>
+  <field access="protected" id="jdb::TreeAnalyzer::chain" name="chain">
+    <brief>The chain object which gets automatically set up</brief>
+    <type name="TChain" qualifier="*" />
+  </field>
+  <field access="protected" id="jdb::TreeAnalyzer::nEventsToProcess" name="nEventsToProcess">
+    <brief>the maximum number of events to process. If not set all events will be processed</brief>
+    <type builtin="yes" name="int" />
+  </field>
+  <field access="protected" id="jdb::TreeAnalyzer::ds" name="ds">
+    <brief>Sets up a DataSource if there is a DataSource node</brief>
+    <type name="DataSource" qualifier="*" ref="jdb::DataSource#jdb::DataSource" />
+  </field>
+  <field access="protected" id="jdb::TreeAnalyzer::skipMake" name="skipMake">
+    <brief>Skips the making phase</brief>
+    <doc>loads the output file of the same name as the input ( must exist )
+and skips to the postEventLoop() method</doc>
+    <type builtin="yes" name="bool" />
+  </field>
+  <method access="protected" id="jdb::TreeAnalyzer::analyzeEvent" name="analyzeEvent" virtual="yes">
+    <brief> Used to analyze events</brief>
+    <doc>Analyzes a single event in the chain
+</doc>
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+  </method>
+  <method access="protected" id="jdb::TreeAnalyzer::analyzeEventBeforeCuts" name="analyzeEventBeforeCuts" virtual="yes">
+    <brief> Used to analyze all events</brief>
+    <doc>Events that do not pass the keepEvent are still processed
+</doc>
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+  </method>
+  <method access="protected" id="jdb::TreeAnalyzer::analyzeRejectedEvent" name="analyzeRejectedEvent" virtual="yes">
+    <brief> Used to analyze all events</brief>
+    <doc>Events that do not pass the keepEvent are still processed
+</doc>
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+  </method>
+  <method abstract="yes" access="protected" id="jdb::TreeAnalyzer::keepEvent" name="keepEvent" virtual="yes">
+    <brief> Called for each event</brief>
+    <doc>Function decides whether an event should be kept or not
+Applies cuts to data
+</doc>
+    <return>
+      <doc>True    - Keep Event
+         False  - Skip event</doc>
+      <type builtin="yes" name="bool" />
+    </return>
+  </method>
+  <method abstract="yes" access="protected" id="jdb::TreeAnalyzer::make" name="make" override="yes" virtual="yes">
+    <brief>The maker function for publicly starting the job</brief>
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+    <override name="TaskRunner::make" ref="jdb::TaskRunner#jdb::TaskRunner::make" />
+  </method>
+  <method access="protected" id="jdb::TreeAnalyzer::postEventLoop" name="postEventLoop" virtual="yes">
+    <doc>
+Called after the event loop for cleanup,
+report generation, etc."
+</doc>
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+  </method>
+  <method abstract="yes" access="protected" id="jdb::TreeAnalyzer::preEventLoop" name="preEventLoop" virtual="yes">
+    <brief> Called before event loop</brief>
+    <doc>Used for setup + initialization before
+        processing the entire loop
+
+</doc>
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+  </method>
+</class>

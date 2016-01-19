@@ -13,6 +13,7 @@
     <class name="ConfigRange" ref="jdb::ConfigRange#jdb::ConfigRange">
       <brief>ConfigRange easily loads (min -&gt; max) ranges from XmlConfigs</brief>
     </class>
+    <class name="CutCollection" ref="jdb::CutCollection#jdb::CutCollection" />
     <class name="DataSource" ref="jdb::DataSource#jdb::DataSource">
       <brief>Automatically maps tree branches and leaves</brief>
     </class>
@@ -24,9 +25,6 @@
     </class>
     <class name="HistoBook" ref="jdb::HistoBook#jdb::HistoBook">
       <brief>A book keeper and helper for storing and using ROOT histograms</brief>
-    </class>
-    <class name="legendAlignment" ref="jdb::legendAlignment#jdb::legendAlignment">
-      <brief>For legend Alignment</brief>
     </class>
     <class name="Logger" ref="jdb::Logger#jdb::Logger">
       <brief>An all purpose logging utility with log level functionality.</brief>
@@ -45,6 +43,7 @@
     <class name="TaskProgress" ref="jdb::TaskProgress#jdb::TaskProgress">
       <brief>Task Progress</brief>
     </class>
+    <class name="TaskRunner" ref="jdb::TaskRunner#jdb::TaskRunner" />
     <class name="TaskTimer" ref="jdb::TaskTimer#jdb::TaskTimer">
       <brief>Task Timer</brief>
     </class>

@@ -1,0 +1,113 @@
+<class xmlns="http://jessevdk.github.com/cldoc/1.0" id="jdb::ChainLoader" interface="true" name="ChainLoader">
+  <brief>Static use class for loading .root files into a TChain</brief>
+  <doc>Static class used for loading files into TChains.
+Can be used to load an entire directory, or files from a filelist.lis
+
+---
+
+**Headers** : ChainLoader.h 
+**Source** : ChainLoader.cpp
+
+
+### ChainLoader Example usage
+
+To load the first N files in a directory:
+``` cpp
+TChain * chain = new TChain( "treeName" );
+ChainLoader::load( chain, "path_to_dir_containg_.roots", N );
+```
+
+A single file can be loaded by replacing path_to_dir with the path_to_root_file:
+``` cpp
+TChain * chain = new TChain( "treeName" );
+ChainLoader::load( chain, "path_to_data.root" );
+```
+
+To load the files i through k (optional) in a directory:
+``` cpp
+TChain * chain = new TChain( "treeName" );
+ChainLoader::loadRange( chain, "path_to_dir_containg_.roots", i, k );
+```
+
+If you are running parallel or want to load from a file list use:
+
+``` cpp
+TChain * chain = new TChain( "treeName" );
+ChainLoader::loadList( chain, "path_to_dir_listfile.lis", maxFilesToLoad );
+```</doc>
+  <method abstract="yes" id="jdb::ChainLoader::load" name="load" static="yes">
+    <brief> Loads files in a directory to the TChain</brief>
+    <doc>Loads .root files containing TTrees into
+a TChain from the given directory. Make sure
+that the TChain was created with the correct
+tree name.
+
+</doc>
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+    <argument id="jdb::ChainLoader::load::chain" name="chain">
+      <doc>an initialized TChain to recieve the files</doc>
+      <type name="TChain" qualifier="*" />
+    </argument>
+    <argument id="jdb::ChainLoader::load::ntdir" name="ntdir">
+      <doc>path to directory containing .root files or the path to a single .root file</doc>
+      <type name="string" />
+    </argument>
+    <argument id="jdb::ChainLoader::load::maxFiles" name="maxFiles">
+      <doc>maximum number of files to load</doc>
+      <type builtin="yes" name="int" />
+    </argument>
+  </method>
+  <method abstract="yes" id="jdb::ChainLoader::loadList" name="loadList" static="yes">
+    <brief> Loads files in a directory to the TChain</brief>
+    <doc>Loads .root files containing TTrees into
+a TChain from the given list file. This
+method allows parallel jobs to work on separate
+file lists. Make sure that the TChain was
+created with the correct tree name.
+</doc>
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+    <argument id="jdb::ChainLoader::loadList::chain" name="chain">
+      <doc>an initialized TChain to recieve the files</doc>
+      <type name="TChain" qualifier="*" />
+    </argument>
+    <argument id="jdb::ChainLoader::loadList::listFile" name="listFile">
+      <doc>list of files to add to chain. Should
+use full pathto file</doc>
+      <type name="string" />
+    </argument>
+    <argument id="jdb::ChainLoader::loadList::maxFiles" name="maxFiles">
+      <doc>maximum number of files to load</doc>
+      <type builtin="yes" name="int" />
+    </argument>
+  </method>
+  <method abstract="yes" id="jdb::ChainLoader::loadRange" name="loadRange" static="yes">
+    <brief> Loads files in a directory to the TChain</brief>
+    <doc>Loads .root files containing TTrees into
+a TChain from the given directory. Make sure
+that the TChain was created with the correct
+tree name.
+</doc>
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+    <argument id="jdb::ChainLoader::loadRange::chain" name="chain">
+      <doc>an initialized TChain to recieve the files</doc>
+      <type name="TChain" qualifier="*" />
+    </argument>
+    <argument id="jdb::ChainLoader::loadRange::ntdir" name="ntdir">
+      <doc>path to directory containing .root files</doc>
+      <type name="string" />
+    </argument>
+    <argument id="jdb::ChainLoader::loadRange::firstFile" name="firstFile">
+      <doc>the index of the first file to include</doc>
+      <type builtin="yes" name="int" />
+    </argument>
+    <argument id="jdb::ChainLoader::loadRange::nFiles" name="nFiles">
+      <type builtin="yes" name="int" />
+    </argument>
+  </method>
+</class>

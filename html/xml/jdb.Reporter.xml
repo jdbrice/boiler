@@ -1,0 +1,160 @@
+<class xmlns="http://jessevdk.github.com/cldoc/1.0" abstract="true" id="jdb::Reporter" name="Reporter">
+  <brief>Create PDF Reports in ROOT</brief>
+  <doc>A utility class to easily create multi-page PDF reports in ROOT
+</doc>
+  <base access="public">
+    <type name="IObject" />
+  </base>
+  <base access="public">
+    <type name="IConfig" />
+  </base>
+  <constructor abstract="yes" id="jdb::Reporter::Reporter" name="Reporter">
+    <brief> Creates a Reporter</brief>
+    <argument id="jdb::Reporter::Reporter::filename" name="filename">
+      <doc>The filename of the report</doc>
+      <type name="string" />
+    </argument>
+    <argument id="jdb::Reporter::Reporter::w" name="w">
+      <doc>the width of the pages</doc>
+      <type builtin="yes" name="int" />
+    </argument>
+    <argument id="jdb::Reporter::Reporter::h" name="h">
+      <doc>the height of the pages</doc>
+      <type builtin="yes" name="int" />
+    </argument>
+  </constructor>
+  <constructor abstract="yes" id="jdb::Reporter::Reporter" name="Reporter">
+    <brief> Create a Reporter from an Xml Config</brief>
+    <argument id="jdb::Reporter::Reporter::config" name="config">
+      <doc>Xml Config instance</doc>
+      <type name="XmlConfig" qualifier=" &amp;" ref="jdb::XmlConfig#jdb::XmlConfig" />
+    </argument>
+    <argument id="jdb::Reporter::Reporter::np" name="np">
+      <doc>Path to Node</doc>
+      <type name="string" />
+    </argument>
+    <argument id="jdb::Reporter::Reporter::prefix" name="prefix">
+      <doc>Prefix to prepend to filename (usually for multiple jobs)</doc>
+      <type name="string" />
+    </argument>
+  </constructor>
+  <destructor abstract="yes" id="jdb::Reporter::~Reporter" name="~Reporter" virtual="yes" />
+  <method abstract="yes" id="jdb::Reporter::cd" name="cd">
+    <brief> Change the current pad</brief>
+    <doc>Pad 0 is the whole page, Pad 1 is the first division, etc.
+</doc>
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+    <argument id="jdb::Reporter::cd::pad" name="pad">
+      <doc>The pad number to set active</doc>
+      <type builtin="yes" name="int" />
+    </argument>
+  </method>
+  <method abstract="yes" id="jdb::Reporter::cd" name="cd">
+    <brief> Change the current pad</brief>
+    <doc>Indexed at 1, so ( 1, 1 ) is the top left
+</doc>
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+    <argument id="jdb::Reporter::cd::padX" name="padX">
+      <doc>The index of the pad in the horizontal direction</doc>
+      <type builtin="yes" name="int" />
+    </argument>
+    <argument id="jdb::Reporter::cd::padY" name="padY">
+      <doc>The index of the pad in the vertical direction</doc>
+      <type builtin="yes" name="int" />
+    </argument>
+  </method>
+  <method id="jdb::Reporter::classname" name="classname" virtual="yes">
+    <return>
+      <type builtin="yes" name="char" qualifier=" const *" />
+    </return>
+  </method>
+  <method id="jdb::Reporter::getCanvas" name="getCanvas">
+    <brief> Get the canvas used by the Reporter</brief>
+    <return>
+      <type name="TCanvas" qualifier="*" />
+    </return>
+  </method>
+  <method abstract="yes" id="jdb::Reporter::newPage" name="newPage">
+    <brief> Creates a new page in the report</brief>
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+    <argument id="jdb::Reporter::newPage::dx" name="dx">
+      <doc>The number of divisions horizontally</doc>
+      <type builtin="yes" name="int" />
+    </argument>
+    <argument id="jdb::Reporter::newPage::dy" name="dy">
+      <doc>The number of divisions vertically</doc>
+      <type builtin="yes" name="int" />
+    </argument>
+    <argument id="jdb::Reporter::newPage::marginX" name="marginX">
+      <type builtin="yes" name="float" />
+    </argument>
+    <argument id="jdb::Reporter::newPage::marginY" name="marginY">
+      <type builtin="yes" name="float" />
+    </argument>
+  </method>
+  <method abstract="yes" id="jdb::Reporter::next" name="next">
+    <brief> Pushes the active pad</brief>
+    <doc>The next pad is set active.
+If needed the page is saved and a new page is started with the same divisions.
+</doc>
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+  </method>
+  <method abstract="yes" id="jdb::Reporter::saveImage" name="saveImage">
+    <brief> Saves an image to the given filename. </brief>
+    <doc>Must have suffix to determine format, ie .png, .jpg etc."
+</doc>
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+    <argument id="jdb::Reporter::saveImage::name" name="name">
+      <type name="string" />
+    </argument>
+  </method>
+  <method abstract="yes" id="jdb::Reporter::savePage" name="savePage">
+    <brief> Saves the current page</brief>
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+    <argument id="jdb::Reporter::savePage::name" name="name">
+      <type name="string" />
+    </argument>
+  </method>
+  <method id="jdb::Reporter::update" name="update">
+    <brief> Update the ROOT undertanding of contents on the current canvas</brief>
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+  </method>
+  <variable access="protected" id="jdb::Reporter::instances" name="instances">
+    <brief>Number of instances of the Reporter running</brief>
+    <type builtin="yes" name="int" />
+  </variable>
+  <field access="protected" id="jdb::Reporter::canvas" name="canvas">
+    <brief>TCanvas used for drawing and saving graphics</brief>
+    <type name="TCanvas" qualifier="*" />
+  </field>
+  <field access="protected" id="jdb::Reporter::currentPad" name="currentPad">
+    <brief>Index of the current Pad</brief>
+    <type builtin="yes" name="int" />
+  </field>
+  <field access="protected" id="jdb::Reporter::dx" name="dx">
+    <brief>The number of horizontal and vertical divisions on the page</brief>
+    <type builtin="yes" name="int" />
+  </field>
+  <field access="protected" id="jdb::Reporter::dy" name="dy">
+    <brief>The number of horizontal and vertical divisions on the page</brief>
+    <type builtin="yes" name="int" />
+  </field>
+  <field access="protected" id="jdb::Reporter::filename" name="filename">
+    <brief>Filename of the report</brief>
+    <type name="string" />
+  </field>
+</class>

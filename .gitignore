@@ -16,3 +16,4 @@ src/dictionary_rdict.pcm
 /script/sandbox/
 
 /bin/Debug/*
+/docs_venv/

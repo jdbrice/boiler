@@ -1,0 +1,63 @@
+<class xmlns="http://jessevdk.github.com/cldoc/1.0" abstract="true" id="jdb::HistoAnalyzer" name="HistoAnalyzer">
+  <brief>Base class for creating histogram analysis projects</brief>
+  <doc>Sublcassing HistoAnalyzer provides a good starting point for
+modules that take a root file containing histograms as input.
+
+</doc>
+  <base access="public">
+    <type name="IConfig" />
+  </base>
+  <base access="public">
+    <type name="IObject" />
+  </base>
+  <constructor abstract="yes" id="jdb::HistoAnalyzer::HistoAnalyzer" name="HistoAnalyzer">
+    <brief> Creates a HistoAnalyzer from an Xml Config</brief>
+    <argument id="jdb::HistoAnalyzer::HistoAnalyzer::config" name="config">
+      <type name="XmlConfig" qualifier="*" ref="jdb::XmlConfig#jdb::XmlConfig" />
+    </argument>
+    <argument id="jdb::HistoAnalyzer::HistoAnalyzer::nodePath" name="nodePath">
+      <doc>The path to the node containing the HistoAnalyzer data</doc>
+      <type name="string" />
+    </argument>
+    <argument id="jdb::HistoAnalyzer::HistoAnalyzer::setup" name="setup">
+      <type builtin="yes" name="bool" />
+    </argument>
+  </constructor>
+  <destructor abstract="yes" id="jdb::HistoAnalyzer::~HistoAnalyzer" name="~HistoAnalyzer" virtual="yes">
+    <brief> Destructor</brief>
+    <doc>Saves output and closes input
+</doc>
+  </destructor>
+  <method id="jdb::HistoAnalyzer::classname" name="classname" virtual="yes">
+    <return>
+      <type builtin="yes" name="char" qualifier=" const *" />
+    </return>
+  </method>
+  <method id="jdb::HistoAnalyzer::make" name="make" virtual="yes">
+    <brief> The Maker function</brief>
+    <doc>Use this public function to start the job.
+Subclasses should override.
+</doc>
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+  </method>
+  <method abstract="yes" id="jdb::HistoAnalyzer::setup" name="setup">
+    <brief> Sets up the analyzer</brief>
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+  </method>
+  <field access="protected" id="jdb::HistoAnalyzer::book" name="book">
+    <brief>HistoBook used to organize ROOT objects</brief>
+    <type name="shared_ptr&lt;jdb::HistoBook&gt;" />
+  </field>
+  <field access="protected" id="jdb::HistoAnalyzer::reporter" name="reporter">
+    <brief>Reporter for generating pdf reports</brief>
+    <type name="shared_ptr&lt;jdb::Reporter&gt;" />
+  </field>
+  <field access="protected" id="jdb::HistoAnalyzer::inFile" name="inFile">
+    <brief>File containing input</brief>
+    <type name="TFile" qualifier="*" />
+  </field>
+</class>

@@ -16,6 +16,7 @@ It can be used from the ROOT interpreter or as a library for compiled projects.<
   <class name="ConfigRange" ref="jdb::ConfigRange#jdb::ConfigRange">
     <brief>ConfigRange easily loads (min -&gt; max) ranges from XmlConfigs</brief>
   </class>
+  <class name="CutCollection" ref="jdb::CutCollection#jdb::CutCollection" />
   <class name="DataSource" ref="jdb::DataSource#jdb::DataSource">
     <brief>Automatically maps tree branches and leaves</brief>
   </class>
@@ -27,9 +28,6 @@ It can be used from the ROOT interpreter or as a library for compiled projects.<
   </class>
   <class name="HistoBook" ref="jdb::HistoBook#jdb::HistoBook">
     <brief>A book keeper and helper for storing and using ROOT histograms</brief>
-  </class>
-  <class name="legendAlignment" ref="jdb::legendAlignment#jdb::legendAlignment">
-    <brief>For legend Alignment</brief>
   </class>
   <class name="Logger" ref="jdb::Logger#jdb::Logger">
     <brief>An all purpose logging utility with log level functionality.</brief>
@@ -44,6 +42,7 @@ It can be used from the ROOT interpreter or as a library for compiled projects.<
   <class name="TaskProgress" ref="jdb::TaskProgress#jdb::TaskProgress">
     <brief>Task Progress</brief>
   </class>
+  <class name="TaskRunner" ref="jdb::TaskRunner#jdb::TaskRunner" />
   <class name="TaskTimer" ref="jdb::TaskTimer#jdb::TaskTimer">
     <brief>Task Timer</brief>
   </class>
@@ -53,7 +52,7 @@ It can be used from the ROOT interpreter or as a library for compiled projects.<
   <class name="XmlConfig" ref="jdb::XmlConfig#jdb::XmlConfig">
     <brief>Use xml formatted config files easily in projects</brief>
   </class>
-  <function id="dts" name="dts">
+  <function id="jdb::dts" name="dts">
     <brief>Converts a double to a string and trims trailing zeros</brief>
     <doc>Converts a float (or double) to string and trims trailing zeros
 
@@ -62,12 +61,12 @@ It can be used from the ROOT interpreter or as a library for compiled projects.<
       <doc>the string representation of the value</doc>
       <type name="string" />
     </return>
-    <argument id="dts::d" name="d">
+    <argument id="jdb::dts::d" name="d">
       <doc>double to convert</doc>
       <type builtin="yes" name="double" />
     </argument>
   </function>
-  <function id="plural" name="plural">
+  <function id="jdb::plural" name="plural">
     <brief>Used to properly pluralize words</brief>
     <doc>Example :
 ``` c++
@@ -83,56 +82,56 @@ and
       <doc>the proper pluralization based on count</doc>
       <type name="string" />
     </return>
-    <argument id="plural::count" name="count">
+    <argument id="jdb::plural::count" name="count">
       <doc>the countable value</doc>
       <type builtin="yes" name="double" />
     </argument>
-    <argument id="plural::fSingle" name="fSingle">
+    <argument id="jdb::plural::fSingle" name="fSingle">
       <doc>the singular form</doc>
       <type name="string" />
     </argument>
-    <argument id="plural::fPlural" name="fPlural">
+    <argument id="jdb::plural::fPlural" name="fPlural">
       <doc>the plural form</doc>
       <type name="string" />
     </argument>
   </function>
-  <function id="progressBar" name="progressBar">
+  <function id="jdb::progressBar" name="progressBar">
     <brief>Plain text progress bar that only updates when it needs to</brief>
     <return>
       <type builtin="yes" name="void" />
     </return>
-    <argument id="progressBar::i" name="i">
+    <argument id="jdb::progressBar::i" name="i">
       <doc>the current step in a loop</doc>
       <type builtin="yes" name="int" />
     </argument>
-    <argument id="progressBar::nevents" name="nevents">
+    <argument id="jdb::progressBar::nevents" name="nevents">
       <doc>the maximum number of steps</doc>
       <type builtin="yes" name="int" />
     </argument>
-    <argument id="progressBar::textWidth" name="textWidth">
+    <argument id="jdb::progressBar::textWidth" name="textWidth">
       <doc>The maximum width of the bar in characters</doc>
       <type builtin="yes" name="int" />
     </argument>
-    <argument id="progressBar::elapsedTime" name="elapsedTime">
+    <argument id="jdb::progressBar::elapsedTime" name="elapsedTime">
       <doc>shows the elapsed time if positive</doc>
       <type builtin="yes" name="double" />
     </argument>
-    <argument id="progressBar::skipNonTTY" name="skipNonTTY">
+    <argument id="jdb::progressBar::skipNonTTY" name="skipNonTTY">
       <type builtin="yes" name="bool" />
     </argument>
   </function>
-  <function id="trimTrailingZeros" name="trimTrailingZeros">
+  <function id="jdb::trimTrailingZeros" name="trimTrailingZeros">
     <brief>Removes trailing zeros</brief>
     <return>
       <doc>The input string with trailing zeros removed</doc>
       <type name="string" />
     </return>
-    <argument id="trimTrailingZeros::in" name="in">
+    <argument id="jdb::trimTrailingZeros::in" name="in">
       <doc>string representation of a number</doc>
       <type name="string" />
     </argument>
   </function>
-  <function id="ts" name="ts">
+  <function id="jdb::ts" name="ts">
     <brief>Converts an integer to a string</brief>
     <doc>Requires c++11 or newer
 
@@ -141,56 +140,56 @@ and
       <doc>the string representation of the value</doc>
       <type name="string" />
     </return>
-    <argument id="ts::i" name="i">
+    <argument id="jdb::ts::i" name="i">
       <doc>integer to convert</doc>
       <type builtin="yes" name="int" />
     </argument>
-    <argument id="ts::len" name="len">
+    <argument id="jdb::ts::len" name="len">
       <doc>the maximum length of string</doc>
       <type builtin="yes" name="int" />
     </argument>
   </function>
-  <function id="ts" name="ts">
+  <function id="jdb::ts" name="ts">
     <brief>Converts a double to a string</brief>
     <return>
       <doc>the string representation of the value</doc>
       <type name="string" />
     </return>
-    <argument id="ts::d" name="d">
+    <argument id="jdb::ts::d" name="d">
       <doc>double to convert</doc>
       <type builtin="yes" name="double" />
     </argument>
-    <argument id="ts::len" name="len">
+    <argument id="jdb::ts::len" name="len">
       <doc>the maximum length of string</doc>
       <type builtin="yes" name="int" />
     </argument>
   </function>
-  <function id="ts" name="ts">
+  <function id="jdb::ts" name="ts">
     <brief>Converts a float to a string</brief>
     <return>
       <doc>the string representation of the value</doc>
       <type name="string" />
     </return>
-    <argument id="ts::f" name="f">
+    <argument id="jdb::ts::f" name="f">
       <doc>float to convert</doc>
       <type builtin="yes" name="float" />
     </argument>
-    <argument id="ts::len" name="len">
+    <argument id="jdb::ts::len" name="len">
       <doc>the maximum length of string</doc>
       <type builtin="yes" name="int" />
     </argument>
   </function>
-  <function id="ts" name="ts">
+  <function id="jdb::ts" name="ts">
     <brief>Converts an unsigned integer to a string</brief>
     <return>
       <doc>the string representation of the value</doc>
       <type name="string" />
     </return>
-    <argument id="ts::u" name="u">
+    <argument id="jdb::ts::u" name="u">
       <doc>unsigned int to convert</doc>
       <type builtin="yes" name="unsigned int" />
     </argument>
-    <argument id="ts::len" name="len">
+    <argument id="jdb::ts::len" name="len">
       <doc>the maximum length of string</doc>
       <type builtin="yes" name="int" />
     </argument>
