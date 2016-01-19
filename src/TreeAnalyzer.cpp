@@ -3,24 +3,15 @@
 
 namespace jdb{
 
-	TreeAnalyzer::TreeAnalyzer( XmlConfig * _config, string _nodePath, string _fileList, string _jobPrefix ){
+	TreeAnalyzer::TreeAnalyzer( XmlConfig _config, string _nodePath, string _fileList, string _jobPrefix )
+		: TaskRunner( _config, _nodePath, _fileList, _jobPrefix ){
 		
 		//Set the Root Output Level
 		//gErrorIgnoreLevel = kSysError;
 
 		// Save inputs
-		this->cfg 		= _config;
-		this->config 	= *_config;
-		this->jobPrefix = _jobPrefix;
-		this->fileList 	= _fileList;
-
-		// makes sure it is in the right form
-		// not ending in '.' or ':attribute' etc.
-		this->nodePath = this->config.basePath( _nodePath );
-
 		INFO( classname(), "Got config with nodePath = " << nodePath );
-
-		init();
+		init( _config, _nodePath, _fileList, _jobPrefix );
 		
 	}
 
@@ -35,7 +26,15 @@ namespace jdb{
 	}
 
 
-	void TreeAnalyzer::init(){
+	void TreeAnalyzer::init( XmlConfig _config, string _nodePath, string _fileList, string _jobPrefix ){
+		DEBUG( classname(), " wow" );
+		this->config 	= _config;
+		this->jobPrefix = _jobPrefix;
+		this->fileList 	= _fileList;
+
+		// makes sure it is in the right form
+		// not ending in '.' or ':attribute' etc.
+		this->nodePath = this->config.basePath( _nodePath );
 
 		initHistoBook();
 		initReporter();
@@ -86,7 +85,8 @@ namespace jdb{
 	    INFO( classname(), "Creating DataSource" );
 	    if ( config.exists( nodePath + ".DataSource" ) ){
 	    
-	    	ds = new DataSource( cfg, config.join(nodePath, ".DataSource") , fileList );
+	    	// TODO: Data source shouldn't need config pointer
+	    	ds = new DataSource( &config, config.join(nodePath, ".DataSource") , fileList );
 	    	chain = ds->getChain();
 
 	    	DEBUG( classname(), "Datasrouce for chain : " << chain );
@@ -163,7 +163,6 @@ namespace jdb{
 		    	}
 
 		    	analyzeEvent();
-		    	
 		    	
 			} // end loop on events
 			INFO( classname(), "Completed in " << t.elapsed() );

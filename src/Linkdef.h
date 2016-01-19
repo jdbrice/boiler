@@ -28,4 +28,6 @@
 #pragma link C++ class jdb::DataSource-;
 #pragma link C++ class jdb::RooPlotLib-;
 
+#pragma link C++ class jdb::TaskRunner+;
+
 #endif

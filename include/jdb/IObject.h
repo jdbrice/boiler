@@ -7,7 +7,7 @@ namespace jdb {
 	public:
 		virtual ~IObject() {};
 		
-		virtual const char* classname() = 0;
+		virtual const char* classname() const = 0;
 	};
 }
 

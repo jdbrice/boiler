@@ -8,15 +8,21 @@
 #include "Logger.h"
 
 
+#include "IConfig.h"
+#include "IObject.h"
+
 
 #include <memory>
 using namespace jdb;
 
 namespace jdb{
 
-	class CutCollection{
+	class CutCollection : public IConfig, public IObject {
 	public:
-		CutCollection( XmlConfig * cfg, string np ){ init( cfg, np ); }
+
+		virtual const char* classname() const { return "CutCollection"; }
+		CutCollection() {};
+		CutCollection( XmlConfig _config, string _nodePath ){ init( _config, nodePath ); }
 		~CutCollection(){}
 
 		map< string, shared_ptr<ConfigRange> > ranges;
@@ -25,7 +31,7 @@ namespace jdb{
 				return ranges[ name ];
 
 			return nullptr;
-		}
+		} // operator[]
 
 		static constexpr auto tag = "CutCollection";
 
@@ -34,20 +40,20 @@ namespace jdb{
 			for ( auto k : ranges ){
 				INFO( tag, k.first << " : " << k.second->toString() );
 			}
-		}
+		} // report
 
 	protected:
 
-		void init( XmlConfig * cfg, string np ){
+		void init( XmlConfig _config, string _nodePath ){
 
-			vector<string> children = cfg->childrenOf( np, "Range" );
+			vector<string> children = _config.childrenOf( _nodePath, "Range" );
 
 			for ( string p : children ){
 				
 
-				if ( cfg->exists( p + ":name" ) ){
-					string name = cfg->getString( p + ":name" );	
-					shared_ptr<ConfigRange> cr = shared_ptr<ConfigRange>( new ConfigRange( cfg, p ) );	
+				if ( _config.exists( p + ":name" ) ){
+					string name = _config.getString( p + ":name" );	
+					shared_ptr<ConfigRange> cr = shared_ptr<ConfigRange>( new ConfigRange( &_config, p ) );	
 
 					ranges[ name ] = cr;
 
@@ -55,11 +61,7 @@ namespace jdb{
 					DEBUG( tag, cr->toString() );
 				}	
 			}
-
-		}
-
-
-
+		} // init
 	};
 }
 

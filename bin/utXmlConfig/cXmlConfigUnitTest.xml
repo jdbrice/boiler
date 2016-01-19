@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- A root node is required -->
+<!--  It can be anything <root></root>, it just has to exist -->
+<config>
+
+	<Analyzer1 name="MakerOfThings" p1="workerOfKings" p2="RunnerOfDreams">
+		<Include url="./guts1.xml" />
+	</Analyzer1>
+
+	<Analyzer2 name="DestroyerOfThings">
+		<Include url="./guts2.xml" />
+	</Analyzer2>
+
+</config>

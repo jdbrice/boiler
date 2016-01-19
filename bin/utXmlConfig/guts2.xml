@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- A root node is required -->
+<!--  It can be anything <root></root>, it just has to exist -->
+<config>
+
+	<Items>
+		7000, 6000, 5000, 4000, 3000, 2000
+	</Items>
+
+</config>

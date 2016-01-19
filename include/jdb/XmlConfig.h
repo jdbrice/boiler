@@ -18,6 +18,7 @@
 #include <iomanip>
 #include <memory>
 #include <utility>      // std::pair, std::make_pair
+#include <stdexcept>      // std::out_of_range
 
 // Roobarb
 #include "Logger.h"
@@ -41,6 +42,7 @@ namespace jdb {
 		
 		// typedef of commonly used iterator for the class
 		typedef map<string, string>::iterator map_it_type;
+		typedef map<string, string>::const_iterator const_map_it_type;
 
 		//Filename of the config file
 		string filename;
@@ -89,7 +91,7 @@ namespace jdb {
 		 * Copies maps to new object, it is now an effective copy of the original config
 		 */
 		XmlConfig( const XmlConfig &rhs){
-			DEBUG( tag, "copy constructor!" );
+			DEBUG( classname(), "copy constructor!" );
 
 			setDefaults();
 
@@ -100,7 +102,7 @@ namespace jdb {
 			this->isAttribute = rhs.isAttribute;
 		}
 
-		virtual const char* classname() { return "XmlConfig";}
+		virtual const char* classname() const { return "XmlConfig";}
 
 		/* Sets the default strings / delimeters
 		 * 
@@ -116,11 +118,7 @@ namespace jdb {
 		}
 
 		void loadFile( string filename );
-
-
-		static constexpr auto tag = "XmlConfig";
-
-		void saveXml(string filename);
+		string getFilename() const { return filename; }
 
 
 		/**
@@ -139,7 +137,14 @@ namespace jdb {
 		 * @nodePath See getString(...)
 		 * @returns The underlying xml data at nodePath as a string
 		 */
-		string operator[]( string nodePath );
+		string operator[]( string nodePath ) const;
+
+		/* Set operator
+		 * Usage:
+		 * 	config[ full.node.path:to_attrib ] = "value_as_string"
+		 */
+		// TODO: [] assignment for adding nodes ?
+		// string & operator[]( string nodePath );
 		
 		/* Gets xml node or attribute data as a string
 		   @nodePath The path to the desired node from the root node. See examples below.
@@ -162,7 +167,7 @@ namespace jdb {
 		   
 		   @return The underlying xml data at nodePath as a string
 		 */
-		string getString( string nodePath, string def = "" );
+		string getString( string nodePath, string def = "" ) const;
 
 		/* Gets a vector of strings from a comma delimeter list
 		 * @nodePath Path to node. See getString.
@@ -171,7 +176,7 @@ namespace jdb {
 		 *
 		 * @return A vector of strings or an empty vector if the node DNE
 		 */
-		vector<string> getStringVector( string nodePath );
+		vector<string> getStringVector( string nodePath ) const;
 
 		/* Gets a node or attribute as integer data
 		 * @nodePath Path to node. See getString(...)
@@ -180,7 +185,7 @@ namespace jdb {
 		 * Uses atoi(...) to convert string data to builtin type int
 		 * @return The underlying xml data at nodePath as an builtin type integer
 		 */
-		int getInt( string nodePath, int def = 0 );
+		int getInt( string nodePath, int def = 0 ) const;
 
 		/* Gets a vector of integers from a comma delimeted list
 		 * @nodePath See getString(...)
@@ -189,7 +194,7 @@ namespace jdb {
 		 * Uses atoi(...) for string to int conversion.
 		 * @return vector of integers, one for each item in the comma delimeted list
 		 */
-		vector<int> getIntVector( string nodePath );
+		vector<int> getIntVector( string nodePath ) const;
 
 		/* Gets a map<string, string> from a config node 
 		 * @nodePath See getString(...)
@@ -203,8 +208,8 @@ namespace jdb {
 		 * Into a map where map[ "from" ] = "to" and map[ "alpha" ] = "beta".
 		 * 
 		 */
-		map<string, string> getStringMap( string nodePath );
-		map<int, int> getIntMap( string nodePath );
+		map<string, string> getStringMap( string nodePath ) const;
+		map<int, int> getIntMap( string nodePath ) const;
 		/* Gets a node or attribute as double type
 		 * @nodePath Path to node. See getString(...)
 		 * @def Default value if the endpoint DNE or conversion to double fails
@@ -212,7 +217,7 @@ namespace jdb {
 		 * Uses atof(...) to convert string data to builtin type double
 		 * @return The underlying xml data at nodePath as an builtin type double
 		 */
-		double getDouble( string nodePath, double def = 0 );
+		double getDouble( string nodePath, double def = 0 ) const;
 
 		/* Gets a vector of doubles from a comma delimeted list
 		 * @nodePath See getString(...)
@@ -221,7 +226,7 @@ namespace jdb {
 		 * Uses atof(...) for string to double conversion.
 		 * @return vector of doubles, one for each item in the comma delimeted list
 		 */
-		vector<double> getDoubleVector( string nodePath );
+		vector<double> getDoubleVector( string nodePath ) const;
 
 		/* Gets a node or attribute as foat type
 		 * @nodePath Path to node. See getString(...)
@@ -230,7 +235,7 @@ namespace jdb {
 		 * Uses atof(...) and cast to convert string data to builtin type foat
 		 * @return The underlying xml data at nodePath as an builtin type foat
 		 */
-		float getFloat( string nodePath, float def = 0 );
+		float getFloat( string nodePath, float def = 0 ) const;
 		
 		/* Gets a node or attribute as bool type
 		 * @nodePath Path to node. See getString(...)
@@ -240,7 +245,7 @@ namespace jdb {
 		 * Uses atoi(...)  to convert string data to builtin type bool
 		 * @return The underlying xml data at nodePath as an builtin type bool
 		 */
-		bool getBool( string nodePath, bool def = false );
+		bool getBool( string nodePath, bool def = false ) const;
 
 		/* Determine whether a node exists in the xml or not
 		 * @nodePath Path to node. See getString(...)
@@ -248,7 +253,7 @@ namespace jdb {
 		 * Searches the xml structure for the given node.
 		 * @return **True** - node or attribute is found. **False** otherwise
 		 */
-		bool exists( string nodePath );
+		bool exists( string nodePath ) const;
 
 		/* Lists the children of a node
 		 * @nodePath Path to node. See getString(...)
@@ -260,7 +265,7 @@ namespace jdb {
 		 *
 		 * @return Vector of strings containg paths to each node or attribute
 		 */
-		vector<string> childrenOf( string nodePath, int depth = -1, bool attrs = false );
+		vector<string> childrenOf( string nodePath, int depth = -1, bool attrs = false ) const;
 
 		/* Lists the children of a node selecting only a given tag
 		 * @nodePath Path to node. See getString(...)
@@ -274,7 +279,7 @@ namespace jdb {
 		 * 
 		 * @return Vector of strings containg paths to each node or attribute
 		 */
-		vector<string> childrenOf( string nodePath, string tagName, int depth = -1);
+		vector<string> childrenOf( string nodePath, string tagName, int depth = -1) const;
 
 		/* Get the attributes of a node
 		 * @nodePath Path to node. See getString(...)
@@ -286,7 +291,8 @@ namespace jdb {
 		 *
 		 * @return Vector of strings containg paths to each attribute
 		 */
-		vector<string> attributesOf( string nodePath );
+		vector<string> attributesOf( string nodePath ) const;
+		map<string, string> attributesMap( string nodePath ) const;
 
 		/* Find nodes based on search criteria
 		 * @nodePath Path to node. See getString(...). May also 
@@ -309,7 +315,7 @@ namespace jdb {
 		 * @return A Vector of strings. One for each path to a 
 		 * node or attribute matching the query
 		 */
-		vector<string> getNodes( string nodePath );
+		vector<string> getNodes( string nodePath ) const;
 
 		/*Splits a string into pieces by the delimeter character
 		 *@s Input string to split
@@ -319,13 +325,13 @@ namespace jdb {
 		 *splitting on the delimeting character. If the delimeting 
 		 *character is not found a zero length Vector is returned.
 		 */
-		vector<string> split(const string &s, char delim);
+		vector<string> split(const string &s, char delim) const ;
 
 		/*Trims characters off the front and back of strings
 		 *@str Input string to trim
 		 *@whitespace A string containing characters to trim. **Default** = " \t\n".
 		 */
-		std::string trim(const std::string& str, const std::string& whitespace = " \t\n");
+		std::string trim(const std::string& str, const std::string& whitespace = " \t\n") const;
 
 		
 		/* Get just the tag name from a full path
@@ -337,7 +343,7 @@ namespace jdb {
 		 *
 		 * @return the tag name of the node pointed to by nodePath
 		 */
-		string tagName( string nodePath );
+		string tagName( string nodePath ) const;
 
         /* Get the path to the parent of this node
 		 * @nodePath Path to node. See getString(...)
@@ -348,7 +354,7 @@ namespace jdb {
 		 *
 		 * @return the path to the parent of given node
 		 */
-        string pathToParent( string nodePath );
+        string pathToParent( string nodePath ) const;
 
         /* Gets the base path from a node path
          * @nodePath Path to node. See getString(...)
@@ -358,8 +364,8 @@ namespace jdb {
          *
          * @return the path to the base node
          */
-        string basePath( string nodePath, bool keepAttribute = false ){
-        	DEBUG( tag, "(" << nodePath <<")" );
+        string basePath( string nodePath, bool keepAttribute = false ) const{
+        	DEBUG( classname(), "(" << nodePath <<")" );
         	string np = sanitize( nodePath );
 
         	// first split off any attributes
@@ -405,7 +411,7 @@ namespace jdb {
          *
          * @return properly joined full path
          */
-        string join( std::initializer_list<string> paths ){
+        string join( std::initializer_list<string> paths ) const {
         	if ( paths.size() == 1 ){
         		WARN( classname(), "Only one path given, returning unaltered" );
         		for ( string p : paths ){
@@ -442,7 +448,7 @@ namespace jdb {
         	return "";
         }
 
-        string join( string a, string b, string c="", string d="", string e="", string f="" ){
+        string join( string a, string b, string c="", string d="", string e="", string f="" ) const {
         	return join( {a, b, c, d, e, f} );
         }
 		
@@ -456,7 +462,7 @@ namespace jdb {
 		 * @return The attribute name if the path contains one.
 		 * Empty string otherwise
 		 */
-		string attributeName( string nodePath );
+		string attributeName( string nodePath ) const;
 
 		/* Determines the depth of a node
 		 * @nodePath Path to Node
@@ -464,9 +470,10 @@ namespace jdb {
 		 * Calulates the depth of the node from the root node
 		 * @return the depth of the given node. Children of the root node have depth 0
 		 */
-		int depthOf( string nodePath ){
+		int depthOf( string nodePath ) const{
 
 			nodePath = sanitize( nodePath );
+			if ( "" == nodePath ) return -1;
 			int depth = 0;
 			for ( int i = 0; i < nodePath.length(); i++ ){
 				if ( pathDelim == nodePath[ i ] )
@@ -479,32 +486,129 @@ namespace jdb {
 		 * @nodePath Path to node of interest
 		 * @relativeTo The node whose depth is considered 0
 		 */
-		int depthOf( string nodePath, string relativeTo ){
+		int depthOf( string nodePath, string relativeTo ) const {
 			return depthOf( nodePath ) - depthOf( relativeTo );
 		}
 
-        string report( string nodePath = "" );
+        string report( string nodePath = "" ) const;
 
         void applyOverrides( map< string, string > over );
+
+
+        string indentation( int count, string tab="\t" ) const {
+        	string is = "";
+        	for ( int i = 0; i < count; i++ )
+        		is += tab;
+        	return is;
+        }
+
+        string toXml( string nodePath ="", int tabCount = 0, string tab="\t", string nl = "\r\n" ) const {
+
+			string xml = "";
+
+			// learn about this node
+			string ind = indentation( tabCount, tab );
+			nodePath = basePath( nodePath );
+			string tn = tagName( nodePath );
+			// handle root node export:
+			if ( "" == tn || "" == nodePath )
+				tn = "config";
+
+			string content = getString( nodePath );
+			vector<string> children = childrenOf( nodePath, 1 );
+			DEBUG( classname(), tn << " has " << children.size() << " children" );
+			string childrens = "";
+			for ( string c : children ){
+				childrens += c + "\n";
+			}
+			DEBUG( classname(), "children: " << childrens );
+
+			map<string, string> attrs = attributesMap( nodePath );
+
+
+			// write the encoding if we are exporting from root node
+			if ( "config" == tn && "" == nodePath )
+				xml += ( nl + "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + nl );
+
+			// write the header
+			xml += nl + ind + "<" + tn;
+
+			// add attributes
+			for (auto a : attrs){
+				xml += ( " " + a.first + "=\"" + a.second + "\"" );
+			}			
+
+			// Close tag inline or allow contents
+			if ( 0 >= children.size() && "" == content )
+				xml += "/>"; // inline close
+			else
+				xml += ">";	// just close the open tag
+
+			// write contents if they exist
+			// if ( "" != content )
+				// xml += ( nl + ind + tab + content );
+
+			// handle children
+			if ( 0 < children.size() ){
+				// recurse on children nodes
+				for ( string cp : children ){
+					DEBUG( classname(), "XML for " << cp );
+					string cXml = toXml( cp, tabCount + 1, tab, nl );
+					xml += cXml;	
+				}
+			}
+
+			// write the closing tag if we didnt close inline
+			if ( 0 < children.size() || "" != content )
+				xml += nl + ind + "</" + tn + ">";
+			
+			return xml;
+		}
+
+		void toXmlFile( string filename ) const {
+			ofstream out;
+			out.open( filename.c_str(), ios::out );
+
+			if ( out.is_open() ){
+				out << toXml(  );
+				out.close();
+			} else {
+				ERROR( classname(), "Cannot open " << filename );
+			}
+
+		}
+
+		void add( string nodePath, string value="" ){
+			DEBUG( classname(), "(" << nodePath << " = " << value << ")" );
+			nodePath = sanitize( nodePath );
+			bool isAttr = (nodePath.find( attrDelim )!=std::string::npos);
+
+			if( isAttr )
+				addAttribute( nodePath, value );
+			else
+				addNode( nodePath, value );
+		}
+
+
 
 	protected:
 
 		// A manual case lowing function
-		string manualToLower( string str );
+		string manualToLower( string str ) const;
 		// Sanatizes node paths
-		string sanitize( string nodePath );
+		string sanitize( string nodePath ) const;
 		// Gets a vector from comma delimeted strings
-		vector<string> vectorFromString( string data );
+		vector<string> vectorFromString( string data ) const;
 		// Splits strings using the given delim character
-		vector<string> &split(const string &s, char delim, vector<string> &elems);
+		vector<string> &split(const string &s, char delim, vector<string> &elems) const;
 
 		// A special case version of split used for the map decoding
 		// Allows string delimeter
-		pair<string, string> stringToPair( string &s, string delim  );
+		pair<string, string> stringToPair( string &s, string delim  ) const;
 
 
 
-        string pathFromFilename (const string& str) {
+        string pathFromFilename (const string& str) const {
             size_t found;
             found=str.find_last_of("/\\");
             //cout << " folder: " << str.substr(0,found+1) << endl;
@@ -514,6 +618,38 @@ namespace jdb {
 
 		// 
 		void parseIncludes(  );
+
+
+		// Adding content
+		void addNode( string nodePath, string value="" ) {
+			DEBUG( classname(), "(" << nodePath << " = " << value << ")" );
+			if ( exists( nodePath ) ){
+				WARN( classname(), "Overwriting nodePath " << nodePath );
+			}
+
+			data[ nodePath ] = value;
+			nodeExists[ nodePath ] = true;
+		}
+		void addAttribute( string nodePath, string value="" ){
+			DEBUG( classname(), "(" << nodePath << " = " << value << ")" );
+			if ( exists( nodePath ) ){
+				WARN( classname(), "Overwriting nodePath " << nodePath );
+			}
+
+			// TODO: test nodePath for attribute char, set isAttribute map and exists map
+			// 
+
+			
+			string base = basePath( nodePath );
+			if ( !exists( base  ) )
+				addNode( base, "" );
+			
+			// add myself
+			data[ nodePath ] = value;
+			isAttribute[ nodePath ] = true;
+			nodeExists[ nodePath ] = true;
+
+		}
 
 
 #ifdef __CINT__

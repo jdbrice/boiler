@@ -29,7 +29,7 @@ namespace jdb{
 	{
 	public:
 		
-		virtual const char* classname() { return "HistoBins"; }
+		virtual const char* classname() const { return "HistoBins"; }
 
 		/* Makes a vector of bins with fixed width
 		 * Divides the range high - low into a fixed number of bins from low to high"

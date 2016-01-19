@@ -380,6 +380,7 @@ namespace jdb{
 		vector<string> paths = config.childrenOf( nodeName );
 		INFO( classname(), " Found " << paths.size() << " histogram paths " );
 		for ( int i=0; i < paths.size(); i++ ){
+			if ( "Include" == config.tagName( paths[ i ] ) ) continue;
 
 			make( config, paths[ i ] );
 		}

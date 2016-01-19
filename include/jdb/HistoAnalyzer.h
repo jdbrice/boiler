@@ -48,7 +48,7 @@ namespace jdb{
 	// public methods
 	public:
 
-		virtual const char* classname() { return "HistoAnalyzer"; }
+		virtual const char* classname() const { return "HistoAnalyzer"; }
 
 		/* Creates a HistoAnalyzer from an Xml Config
 		 * @nodePath The path to the node containing the HistoAnalyzer data

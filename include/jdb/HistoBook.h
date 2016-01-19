@@ -67,7 +67,7 @@ namespace jdb{
 		HistoBook( string name, XmlConfig config, string input = "", string inDir = "");
 		~HistoBook();
 
-		virtual const char* classname() { return "HistoBook"; }
+		virtual const char* classname() const { return "HistoBook"; }
 
 		void initialize();
 		void mergeIn( string _filename, string _dir );

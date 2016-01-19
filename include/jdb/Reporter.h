@@ -31,7 +31,7 @@ namespace jdb {
 		Reporter( XmlConfig &config, string np, string prefix = "" );
 		~Reporter();
 
-		virtual const char * classname() { return "Reporter"; }
+		virtual const char * classname() const { return "Reporter"; }
 
 		/* Creates a new page in the report
 		 * @dx The number of divisions horizontally

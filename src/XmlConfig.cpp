@@ -29,46 +29,40 @@ namespace jdb{
 		// check that the config file exists
 		this->filename = filename;
 		struct stat buffer;   
-  		bool exists = (stat (filename.c_str(), &buffer) == 0);
+		bool exists = (stat (filename.c_str(), &buffer) == 0);
 	
 		if ( exists ){
 #ifndef __CINT__
-            RapidXmlWrapper rxw( filename );
+			RapidXmlWrapper rxw( filename );
 #endif
 			rxw.getMaps( &data, &isAttribute, &nodeExists );
 
-            parseIncludes();
+			parseIncludes();
 		} else {
 			ERROR( classname(), "Config File \"" << filename << "\" DNE " ); 
 		}
 	}
 
 
-	void XmlConfig::saveXml( string filename ){
-
-		vector<string> children = childrenOf( "", 0 );
-
-		for ( int i = 0; i < children.size(); i++ ){
-			cout << children[ i ] << endl;
-		}
-	}
-
-
-	string XmlConfig::getString( string nodePath, string def ){
+	string XmlConfig::getString( string nodePath, string def ) const {
 
 		string snp = sanitize( currentNode + nodePath );
-		if ( nodeExists[ snp ] ){
-			return data[ snp ];
+		if ( nodeExists.count( snp ) >= 1 ){
+			try{
+				return data.at( snp );
+			} catch (const std::out_of_range &oor ){
+				return def;
+			}
 		}
 		return def;
 	}
 
-	vector<string> XmlConfig::getStringVector( string nodePath ){
+	vector<string> XmlConfig::getStringVector( string nodePath ) const {
 		string value = getString( nodePath );
 		return vectorFromString( value );
 	}
 
-	map<string, string> XmlConfig::getStringMap( string nodePath ){
+	map<string, string> XmlConfig::getStringMap( string nodePath ) const{
 
 		// first get a vector of comma delimeted pairs
 		string value = getString( nodePath );
@@ -83,7 +77,7 @@ namespace jdb{
 		return rmap;
 	}
 
-	map<int, int> XmlConfig::getIntMap( string nodePath ){
+	map<int, int> XmlConfig::getIntMap( string nodePath ) const{
 
 		// first get a vector of comma delimeted pairs
 		string value = getString( nodePath );
@@ -98,13 +92,13 @@ namespace jdb{
 		return rmap;
 	}
 
-	int XmlConfig::getInt( string nodePath, int def  ){
+	int XmlConfig::getInt( string nodePath, int def  ) const{
 		string str = getString( nodePath, "" );
 		if ( "" != str && str.length() >= 1 )
 			return atoi( str.c_str() );
 		return def;
 	}
-	vector<int> XmlConfig::getIntVector( string nodePath ){
+	vector<int> XmlConfig::getIntVector( string nodePath ) const{
 		vector<string> vec = getStringVector( nodePath );
 		vector<int> d;
 		for ( int i = 0; i < vec.size(); i++  ){
@@ -113,13 +107,13 @@ namespace jdb{
 		return d;
 	}
 
-	double XmlConfig::getDouble( string nodePath, double def  ){
+	double XmlConfig::getDouble( string nodePath, double def  ) const {
 		string str = getString( nodePath, "" );
 		if ( "" != str && str.length() >= 1 )
 			return atof( str.c_str() );
 		return def;
 	}
-	vector<double> XmlConfig::getDoubleVector( string nodePath ){
+	vector<double> XmlConfig::getDoubleVector( string nodePath ) const{
 		vector<string> vec = getStringVector( nodePath );
 		vector<double> d;
 		for ( int i = 0; i < vec.size(); i++  ){
@@ -128,12 +122,12 @@ namespace jdb{
 		return d;
 	}
 
-	float XmlConfig::getFloat( string nodePath, float def  ){
+	float XmlConfig::getFloat( string nodePath, float def  ) const{
 		return (float) getDouble( nodePath, (double)def );
 	}
 
 
-	bool XmlConfig::getBool( string nodePath, bool def  ) {
+	bool XmlConfig::getBool( string nodePath, bool def  ) const{
 
 		string str = getString( nodePath );
 
@@ -155,18 +149,22 @@ namespace jdb{
 		return def;
 	}
 
-	bool XmlConfig::exists( string nodePath ){
+	bool XmlConfig::exists( string nodePath ) const{
 		string snp = sanitize( currentNode + nodePath );
-		if( nodeExists[ snp ] )
-			return true;
+		try{
+			if( true == nodeExists.at( snp ) )
+				return true;
+		} catch ( std::out_of_range &oor ){
+			return false;
+		}
 		return false;
 	}
 
-	string XmlConfig::sanitize( string nodePath ){
+	string XmlConfig::sanitize( string nodePath ) const{
 
-        // TODO
-        // make the cn option applied here so everything uses it.
-        // currently childrenOf does not work with it
+		// TODO
+		// make the cn option applied here so everything uses it.
+		// currently childrenOf does not work with it
 		/**
 		 * Remove internal whitespaces
 		 */
@@ -190,27 +188,20 @@ namespace jdb{
 		return ret;
 	}
 
-	string XmlConfig::operator[]( string nodePath ){
-		if ( nodeExists[ nodePath ] )
-			return data[ nodePath ];
-
-		string other = sanitize( nodePath );
-		if ( nodeExists[ other ] )
-			return data[ other ];
-
-		return "";
+	string XmlConfig::operator[]( string nodePath ) const {
+		return getString( nodePath);
 	}
 
-	vector<string> & XmlConfig::split(const string &s, char delim, vector<string> &elems) {
-	    stringstream ss(s);
-	    string item;
-	    while (std::getline(ss, item, delim)) {
-	        elems.push_back(item);
-	    }
-	    return elems;
+	vector<string> & XmlConfig::split(const string &s, char delim, vector<string> &elems) const {
+		stringstream ss(s);
+		string item;
+		while (std::getline(ss, item, delim)) {
+			elems.push_back(item);
+		}
+		return elems;
 	}
 
-	vector<string> XmlConfig::vectorFromString( string data ){
+	vector<string> XmlConfig::vectorFromString( string data ) const {
 				
 		vector<string> d = split( data, ',' );
 		
@@ -221,49 +212,49 @@ namespace jdb{
 
 	}
 
-	std::string XmlConfig::trim(const std::string& str, const std::string& whitespace ) {
-	    std::size_t strBegin = str.find_first_not_of(whitespace);
-	    if (strBegin == std::string::npos)
-	        return ""; // no content
+	std::string XmlConfig::trim(const std::string& str, const std::string& whitespace ) const {
+		std::size_t strBegin = str.find_first_not_of(whitespace);
+		if (strBegin == std::string::npos)
+			return ""; // no content
 
-	    std::size_t strEnd = str.find_last_not_of(whitespace);
-	    std::size_t strRange = strEnd - strBegin + 1;
+		std::size_t strEnd = str.find_last_not_of(whitespace);
+		std::size_t strRange = strEnd - strBegin + 1;
 
-	    return str.substr(strBegin, strRange);
+		return str.substr(strBegin, strRange);
 	}
 
-	vector<string> XmlConfig::split(const string &s, char delim) {
-	    vector<string> elems;
-	    split(s, delim, elems);
-	    return elems;
+	vector<string> XmlConfig::split(const string &s, char delim) const {
+		vector<string> elems;
+		split(s, delim, elems);
+		return elems;
 	}
 
-	string XmlConfig::manualToLower( string str ){
+	string XmlConfig::manualToLower( string str ) const {
 		string str2 = str;
 		for ( int i = 0; i < str.length(); i++ ){
 			str2[ i ] = std::tolower( str[ i ] );
 		}
 		return str2;
 	}
-    string XmlConfig::pathToParent( string nodePath ){
-        vector<string> ntf = split( nodePath, pathDelim );
-        vector<string> attr = split( nodePath, attrDelim );
-        if ( attr.size() >= 2 ){
-            ntf[ ntf.size() - 1 ] = ntf[ ntf.size() - 1 ].substr( 0, ntf[ ntf.size() - 1 ].length() - (attr[ 1].length() + 1) );
-        }
-        if ( ntf.size() >= 2 ){
-            string fullPath ="";
-            for ( int i = 0; i < ntf.size() - 1; i++ ){
-                fullPath += (ntf[ i ] + pathDelim );
-            }
+	string XmlConfig::pathToParent( string nodePath ) const {
+		vector<string> ntf = split( nodePath, pathDelim );
+		vector<string> attr = split( nodePath, attrDelim );
+		if ( attr.size() >= 2 ){
+			ntf[ ntf.size() - 1 ] = ntf[ ntf.size() - 1 ].substr( 0, ntf[ ntf.size() - 1 ].length() - (attr[ 1].length() + 1) );
+		}
+		if ( ntf.size() >= 2 ){
+			string fullPath ="";
+			for ( int i = 0; i < ntf.size() - 1; i++ ){
+				fullPath += (ntf[ i ] + pathDelim );
+			}
 
-            // remove the final pathDelim
-            fullPath = fullPath.substr( 0, fullPath.length() - 1 );
-            return fullPath;
-        }
-        return "";
-    }
-    string XmlConfig::tagName( string nodePath ){
+			// remove the final pathDelim
+			fullPath = fullPath.substr( 0, fullPath.length() - 1 );
+			return fullPath;
+		}
+		return "";
+	}
+	string XmlConfig::tagName( string nodePath ) const{
 		vector<string> ntf = split( nodePath, pathDelim );
 		vector<string> attr = split( nodePath, attrDelim );
 		if ( attr.size() >= 2 ){
@@ -279,7 +270,7 @@ namespace jdb{
 		}
 		return "";
 	}
-	string XmlConfig::attributeName( string nodePath ){
+	string XmlConfig::attributeName( string nodePath ) const {
 		vector<string> ntf = split( nodePath, pathDelim );
 		vector<string> attr = split( nodePath, attrDelim );
 		if ( attr.size() >= 2 ){
@@ -289,19 +280,18 @@ namespace jdb{
 		return "";
 	}
 
-	vector<string> XmlConfig::childrenOf( string nodePath, int relDepth, bool attrs ){
+	vector<string> XmlConfig::childrenOf( string nodePath, int relDepth, bool attrs ) const {
 
 		
 		nodePath = sanitize( nodePath );
-
-		if ( 	nodePath[ nodePath.length() - 1] != pathDelim && 
-				nodePath[ nodePath.length() - 1] != attrDelim  && "" != nodePath )
-			nodePath += pathDelim;
+		// if ( 	nodePath[ nodePath.length() - 1] != pathDelim && 
+		// 		nodePath[ nodePath.length() - 1] != attrDelim  && "" != nodePath )
+		// 	nodePath += pathDelim;
 	
 		int npDepth = depthOf( nodePath );
 
 		vector<string> paths;
-		for ( map_it_type it = data.begin(); it != data.end(); it++ ){
+		for ( const_map_it_type it = data.begin(); it != data.end(); it++ ){
 
 			size_t found = it->first.find( attrDelim );
 			if ( found != string::npos && false == attrs )
@@ -318,8 +308,8 @@ namespace jdb{
 					paths.push_back( it->first );
 				else {
 					int dp = depthOf( it->first );
-					
-					if ( dp - npDepth >= 0 && dp - npDepth <= relDepth ) 
+
+					if ( dp - npDepth > 0 && dp - npDepth <= relDepth ) 
 						paths.push_back( it->first );
 				}
 			}
@@ -328,7 +318,7 @@ namespace jdb{
 
 	}
 
-	vector<string> XmlConfig::childrenOf( string nodePath, string tag, int depth){
+	vector<string> XmlConfig::childrenOf( string nodePath, string tag, int depth) const {
 
 		nodePath = sanitize( nodePath );
 		if ( 	nodePath[ nodePath.length() - 1] != pathDelim && 
@@ -336,7 +326,7 @@ namespace jdb{
 			nodePath += pathDelim;
 	
 		vector<string> paths;
-		for ( map_it_type it = data.begin(); it != data.end(); it++ ){
+		for ( const_map_it_type it = data.begin(); it != data.end(); it++ ){
 
 			size_t found = it->first.find( attrDelim );
 			if ( found != string::npos )
@@ -350,22 +340,33 @@ namespace jdb{
 			if ( nodePath == parent && (tag == tagName( it->first )) ){
 				paths.push_back( it->first );
 			} else if ( nodePath != parent ){
-                // DEBUG( "Rejected because parent does not match" )
-                // DEBUG( "parent=" << parent << ", shouldBe=" << nodePath )
-            } else if ( tag != tagName( it->first ) ){
-                // DEBUG( "Rejected because tag does not match" )
-                // DEBUG( "tag=" << tagName( it->first ) << ", shouldBe=" << tag )
-            }
+				// DEBUG( "Rejected because parent does not match" )
+				// DEBUG( "parent=" << parent << ", shouldBe=" << nodePath )
+			} else if ( tag != tagName( it->first ) ){
+				// DEBUG( "Rejected because tag does not match" )
+				// DEBUG( "tag=" << tagName( it->first ) << ", shouldBe=" << tag )
+			}
 		}
 		return paths;
 
 	}
 
-	vector< string > XmlConfig::attributesOf( string nodePath ){
+	vector< string > XmlConfig::attributesOf( string nodePath ) const{
 		return childrenOf( nodePath + attrDelim, -1, true );
 	}
 
-	vector<string> XmlConfig::getNodes( string nodePath ){
+	map<string, string> XmlConfig::attributesMap( string nodePath ) const{
+		DEBUG( classname(), "(" << nodePath << ")" )
+		vector<string> pathToAttrs = attributesOf( nodePath );
+		
+		map<string, string> rmap;
+		for ( string p : pathToAttrs ){
+			rmap[ attributeName( p ) ] = getString( p );
+		}
+		return rmap;
+	}
+
+	vector<string> XmlConfig::getNodes( string nodePath ) const{
 
 		nodePath = sanitize( nodePath );
 		// for instance
@@ -380,10 +381,14 @@ namespace jdb{
 		if ( attrs.size() <= 1  ){
 			
 			vector<string> paths;
-			for ( map_it_type it = data.begin(); it != data.end(); it++ ){
+			for ( const_map_it_type it = data.begin(); it != data.end(); it++ ){
 				
-				if ( isAttribute[ it->first ]  )
-					continue;
+				try {
+					if ( isAttribute.at( it->first ) )
+						continue;				
+				} catch ( std::out_of_range &oor ){
+					// TODO: nothing?
+				}
 
 				
 				string parent = (it->first).substr( 0, nodePath.length() );
@@ -416,10 +421,14 @@ namespace jdb{
 			}
 
 			vector<string> paths;
-			for ( map_it_type it = data.begin(); it != data.end(); it++ ){
+			for ( const_map_it_type it = data.begin(); it != data.end(); it++ ){
 
-				if ( isAttribute[ it->first ] )
-					continue;				
+				try {
+					if ( isAttribute.at( it->first ) )
+						continue;				
+				} catch ( std::out_of_range &oor ){
+					// TODO: nothing?
+				}
 
 				string wA = it->first + attrDelim + attrName;
 				string parent = (it->first).substr( 0, baseNodePath.length() );
@@ -446,7 +455,7 @@ namespace jdb{
 		return ret;
 	}
 
-	pair<string, string> XmlConfig::stringToPair( string &s, string delim  ){
+	pair<string, string> XmlConfig::stringToPair( string &s, string delim  ) const{
 
 		std::size_t delimPos = s.find( delim );
 
@@ -465,39 +474,39 @@ namespace jdb{
 
 
 	void XmlConfig::parseIncludes() {
-        DEBUG( "" );
+		DEBUG( "" );
 		vector<string> allPaths = childrenOf( "", "Include" );
 
 		DEBUG( "Found " << allPaths.size() << " Include Tag(s)" );
 
-        for ( string path : allPaths ){
-            DEBUG( path )
-            DEBUG( "parent path: " << pathToParent( path ) )
+		for ( string path : allPaths ){
+			DEBUG( path )
+			DEBUG( "parent path: " << pathToParent( path ) )
 
-            string ifn = getString( path + ":url" );
-            struct stat buffer;
-            bool exists = (stat (ifn.c_str(), &buffer) == 0);
-            DEBUG( "file " << ifn << " exists " << exists )
+			string ifn = getString( path + ":url" );
+			struct stat buffer;
+			bool exists = (stat (ifn.c_str(), &buffer) == 0);
+			DEBUG( "file " << ifn << " exists " << exists )
 
-            // if we can't find it from the path directly then try relative to base config path
-            if ( !exists ) { // try relative to this config file
-                string basePath = pathFromFilename( filename );
-                ifn = basePath + ifn;
+			// if we can't find it from the path directly then try relative to base config path
+			if ( !exists ) { // try relative to this config file
+				string basePath = pathFromFilename( filename );
+				ifn = basePath + ifn;
 
-                exists = (stat (ifn.c_str(), &buffer) == 0);
-                DEBUG( "file " << ifn << " exists " << exists )
-            }
+				exists = (stat (ifn.c_str(), &buffer) == 0);
+				DEBUG( "file " << ifn << " exists " << exists )
+			}
 
-            if ( exists ){
+			if ( exists ){
 #ifndef __CINT__
-                RapidXmlWrapper rxw(  ifn  );
+				RapidXmlWrapper rxw(  ifn  );
 #endif
-                rxw.includeMaps( pathToParent( path ), &data,  &isAttribute, &nodeExists );
-            }
+				rxw.includeMaps( pathToParent( path ), &data,  &isAttribute, &nodeExists );
+			}
 
-        }
+		}
 
-       //DEBUG( report() );
+	   //DEBUG( report() );
 	}
 
 	void XmlConfig::applyOverrides( map< string, string > over ) {
@@ -510,19 +519,22 @@ namespace jdb{
 		}
 	}
 
-    string XmlConfig::report( string nodePath ){
+	string XmlConfig::report( string nodePath ) const {
 
-        vector<string> allPaths = childrenOf( nodePath, -1, true );
+		vector<string> allPaths = childrenOf( nodePath, -1, true );
 
-        stringstream sstr;
-        for ( string path : allPaths ){
-            string val = getString( path, "" );
-            if ( "" != val )
-                sstr << path << " === " << val << endl;
-        }
-        return sstr.str();
+		stringstream sstr;
+		for ( string path : allPaths ){
+			string val = getString( path, "" );
+			if ( "" != val )
+				sstr << path << " === " << val << endl;
+		}
+		return sstr.str();
 
-    }
+	}
+
+
+
 
 
 
