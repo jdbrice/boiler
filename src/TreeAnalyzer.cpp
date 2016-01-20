@@ -3,15 +3,15 @@
 
 namespace jdb{
 
-	TreeAnalyzer::TreeAnalyzer( XmlConfig _config, string _nodePath, string _fileList, string _jobPrefix )
-		: TaskRunner( _config, _nodePath, _fileList, _jobPrefix ){
+	TreeAnalyzer::TreeAnalyzer( XmlConfig _config, string _nodePath, int _jobIndex )
+		: TaskRunner( _config, _nodePath, _jobIndex ){
 		
 		//Set the Root Output Level
 		//gErrorIgnoreLevel = kSysError;
 
 		// Save inputs
 		INFO( classname(), "Got config with nodePath = " << nodePath );
-		init( _config, _nodePath, _fileList, _jobPrefix );
+		init( _config, _nodePath, _jobIndex );
 		
 	}
 
@@ -26,19 +26,19 @@ namespace jdb{
 	}
 
 
-	void TreeAnalyzer::init( XmlConfig _config, string _nodePath, string _fileList, string _jobPrefix ){
-		DEBUG( classname(), " wow" );
-		this->config 	= _config;
-		this->jobPrefix = _jobPrefix;
-		this->fileList 	= _fileList;
+	void TreeAnalyzer::init( XmlConfig _config, string _nodePath, int _jobIndex ){
+		DEBUG( classname(), "( " << _config.getFilename() << ", " << nodePath << ", " << _jobIndex << " )" );
 
+		TaskRunner::init( _config, _nodePath, _jobIndex );
+
+		this->config 	= _config;
 		// makes sure it is in the right form
 		// not ending in '.' or ':attribute' etc.
 		this->nodePath = this->config.basePath( _nodePath );
 
 		initHistoBook();
 		initReporter();
-		initDataSource();
+		initDataSource( _jobIndex );
 
 	}
 
@@ -77,14 +77,14 @@ namespace jdb{
 	}
 
 
-	void TreeAnalyzer::initDataSource(){
+	void TreeAnalyzer::initDataSource( int _jobIndex ){
 	    /**
 	     * Sets up the input, should switch seemlessly between chain only 
 	     * and a DataSource 
 	     */
 	    INFO( classname(), "Creating Data Adapter" );
 
-
+	    // DataSource auto-tree mapper mehh
 	    if ( config.exists( nodePath + ".DataSource" ) ){
 	    
 	    	// TODO: Data source shouldn't need config pointer
@@ -95,20 +95,32 @@ namespace jdb{
 	    
 	    } else if ( config.exists( config.join( nodePath, "input", "dst" ) ) ) {
 	    	
+	    	// create the Chain object
 	    	chain = new TChain( this->config.getString( nodePath + ".input.dst:treeName" ).c_str() );
-		    
-		    if ( "" == fileList ){
-		    	INFO( classname(), " Loading data from " << config.getString( nodePath + ".input.dst:url" ) );
+		    string url = this->config.getString( nodePath + ".input.dst:url" );
 
-		    	ChainLoader::load( 	chain, 
-		    						this->config.getString( nodePath + ".input.dst:url" ), 
-		    						this->config.getInt( nodePath + ".input.dst:maxFiles", -1 ) );
-		    } else {
-		    	INFO( classname(), " Parallel Job From " << fileList << ", prefix : " << jobPrefix );
+		    // load from a file list!
+		    if ( url.find( '.lis' ) != std::string::npos ){
+		    	
+		    	INFO( classname(), " Loading data from listfile : " << url );
+		    	// parallel job - load from list range
+		    	if ( _jobIndex >= 0 ){
 
-		    	ChainLoader::loadList( 	chain, 
-		    							fileList, 
-		    							this->config.getInt( nodePath + ".input.dst:maxFiles", -1 ) );
+		    		int splitBy = config.getInt( nodePath + ".input.dst:splitBy", 50 );
+		    		INFO( classname(), " Parallel Job index=" << _jobIndex << " splitBy=" << splitBy );
+		    		ChainLoader::loadListRange( chain, url, _jobIndex, splitBy );
+
+		    	} else { // load the entire list (up to maxFiles )
+
+		    		int maxFiles = this->config.getInt( nodePath + ".input.dst:maxFiles", -1 );
+		    		ChainLoader::loadList( 	chain, url, maxFiles );
+
+		    	}
+
+		    } else { // NOT a list file - a directory or file
+				INFO( classname(), " Loading data from file or dir: " << url );
+				int maxFiles = this->config.getInt( nodePath + ".input.dst:maxFiles", -1 );
+				ChainLoader::load( 	chain, url, maxFiles ); 
 		    }	
 	    } else {
 	    	chain = nullptr;

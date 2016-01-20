@@ -82,18 +82,20 @@ namespace jdb{
 		 * each job writes out to different files.
 		 */
 		TreeAnalyzer() {};
-		TreeAnalyzer( XmlConfig _config, string _nodePath="", string _fileList="", string _prefix="");
+		TreeAnalyzer( XmlConfig _config, string _nodePath="", int _jobIndex = -1);
 		~TreeAnalyzer();
 
-		void init(XmlConfig _config, string _nodePath="", string _fileList="", string _prefix="");
+		void init(XmlConfig _config, string _nodePath="", int _jobIndex = -1);
 
-		void initHistoBook();
-		void initReporter();
-		void initDataSource();
+		
 
 		
 	protected:
+		void initHistoBook();
+		void initReporter();
+		void initDataSource( int _jobIndex );
 
+		
 		/*The maker function for publicly starting the job
 		 *
 		 */

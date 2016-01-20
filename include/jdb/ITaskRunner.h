@@ -14,7 +14,7 @@ namespace jdb {
 	class ITaskRunner {
 	public:
 		virtual ~ITaskRunner() {}
-		virtual void init( XmlConfig _config, string _nodePath="", string _fileList="", string _prefix="" ) = 0;
+		virtual void init( XmlConfig _config, string _nodePath="", int _jobIndex = -1 ) = 0;
 		virtual void run() = 0;
 
 	protected:

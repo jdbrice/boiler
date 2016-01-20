@@ -16,13 +16,18 @@ namespace jdb {
 
 		virtual const char* classname() const { return "TaskRunner"; }
 		TaskRunner(){}
-		TaskRunner( XmlConfig _config, string _nodePath="", string _fileList="", string _prefix="" ) {
-			init( _config, _nodePath, _fileList, _prefix );
+		TaskRunner( XmlConfig _config, string _nodePath="", int _jobIndex = -1 ) {
+			init( _config, _nodePath, _jobIndex );
 		}
 		~TaskRunner(){}
 
-		virtual void init(XmlConfig _config, string _nodePath="", string _fileList="", string _prefix="") {
-			DEBUG( classname(), "( config, " << nodePath << ", " << _fileList << ", " << _prefix << " )" );
+		virtual void init(XmlConfig _config, string _nodePath="", int _jobIndex = -1) {
+			DEBUG( classname(), "( " << _config.getFilename() << ", " << nodePath << ", " << _jobIndex << " )" );
+
+			this->config 	= _config;
+			// makes sure it is in the right form
+			// not ending in '.' or ':attribute' etc.
+			this->nodePath = this->config.basePath( _nodePath );
 		}
 
 		virtual void run(){
@@ -33,12 +38,6 @@ namespace jdb {
 			
 
 	protected:
-
-		// Prefix for this job ( optional, used for parallel)
-		string jobPrefix;
-		
-		// fileList for running data
-		string fileList;
 		
 		virtual void preMake(){
 			DEBUG( classname(), "" );
