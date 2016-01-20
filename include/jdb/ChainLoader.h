@@ -5,7 +5,7 @@
 #include "dirent.h"
 #include "TChain.h"
 #include "Logger.h"
-
+#include "IObject.h"
 
 
 namespace jdb{
@@ -13,10 +13,10 @@ namespace jdb{
 	/* 
 	 * see mergedoc/jdb::ChainLoader
 	 */
-	class ChainLoader{
+	class ChainLoader {
 
 	public:
-	
+
 		/* Loads files in a directory to the TChain
 		 * @chain an initialized TChain to recieve the files
 		 * @ntdir path to directory containing .root files or the path to a single .root file
@@ -57,6 +57,22 @@ namespace jdb{
 		 * created with the correct tree name.
 		 */
 		static void loadList( TChain * chain, string listFile, int maxFiles = -1 );
+
+
+		/* Loads files in a filelist to a TChain
+		 * @chain an initialized TChain to recieve the files
+		 * @listFile list of files to add to chain. Should 
+		 * use full path to file
+		 * @index	job index. 
+		 *        	files processed is : index * splitBy --> (index+1) * splitBy - 1
+		 *
+		 * Loads .root files containing TTrees into 
+		 * a TChain from the given list file. This 
+		 * method allows parallel jobs to work on separate
+		 * file lists. Make sure that the TChain was 
+		 * created with the correct tree name.
+		 */
+		static void loadListRange( TChain * chain, string listFile, int index, int splitBy = 50 );
 	};
 
 

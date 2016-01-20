@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- A root node is required -->
+<!--  It can be anything <root></root>, it just has to exist -->
+
+<config>
+
+	<TreeAnalyzer>
+		
+		<input>
+			<dst treeName="tree" splitBy="10" maxEvents="1000" url="/Users/danielbrandenburg/bnl/local/work/roobarb/script/utTreeAnalyzer/list.lis"/>
+		</input>
+
+
+	</TreeAnalyzer>
+
+</config>

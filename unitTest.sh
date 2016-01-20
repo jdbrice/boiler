@@ -1,4 +1,4 @@
 
-cd script/
-root -l -b -q DataSourceSpeedTest.C
-cd ../
+cd script/ut$1
+root -l -b -q ut.C
+cd ../../

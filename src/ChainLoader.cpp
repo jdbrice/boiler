@@ -111,23 +111,21 @@ namespace jdb{
 
 
 
-	void ChainLoader::loadList(  TChain * chain, string listFile, int maxFiles ){
+	void ChainLoader::loadList(  TChain * _chain, string _listFile, int _maxFiles ){
 		
-		Logger * logger = new Logger( Logger::llDefault, "ChainLoader" );
+		DEBUG( classname, "( chain, listFile=" << _listFile << ", maxFiles=" << _maxFiles << " )" );
 
-		logger->info(__FUNCTION__) << "Opening " << listFile << " for list of ntuples" << endl;
-
-		uint nFiles = 0;
+		int nFiles = 0;
 
 		string line;
-		ifstream fListFile( listFile.c_str());
+		ifstream fListFile( _listFile.c_str());
 		if ( fListFile.is_open() ){
 
 			while ( getline( fListFile, line ) ){
-				chain->Add( line.c_str() );
+				_chain->Add( line.c_str() );
 				nFiles++;
 
-				if ( maxFiles >= 1 && nFiles >= maxFiles ){
+				if ( _maxFiles >= 1 && nFiles >= _maxFiles ){
 					break;
 				}
 
@@ -136,12 +134,57 @@ namespace jdb{
 				
 
 		} else {
-			cout << " Could not open " << listFile << endl;
+			ERROR( classname, "Could not open " << _listFile );
 		}
 
-		logger->info( __FUNCTION__ ) << nFiles << " files loaded into chain" << endl;
+		INFO( classname, nFiles << " files loaded into chain" );
 
 		delete logger;
 
 	}
+
+
+
+	void ChainLoader::loadListRange(  TChain * _chain, string _listFile, int _jobIndex, int _splitBy ){
+		
+		string classname = "ChainLoader";
+		DEBUG( classname, "( chain, listFile=" << _listFile << ", index=" << _jobIndex << ", splitBy=" << _splitBy << ")" )
+		
+		int min = _jobIndex * _splitBy;
+		int max = (_jobIndex + 1) * _splitBy - 1;
+		
+		if ( 0 > splitBy || 0 > _jobIndex ){
+			DEBUG( classname, "splitBy or jobIndex are negative" );
+			DEBUG( classname, "Accepting all files, not a range" );
+			ChainLoader::loadList( _chain, _listFile, -1 );
+			return;
+		}
+
+		int fileIndex = 0;
+
+		string line;
+		ifstream fListFile( _listFile.c_str());
+		if ( fListFile.is_open() ){
+
+			while ( getline( fListFile, line ) ){
+				
+				if ( fileIndex < min || fileIndex > max ){
+					// do not add
+				} else {
+					_chain->Add( line.c_str() );
+					DEBUG( classname, "Adding File[" << fileIndex << "] : " << line );
+				}
+				
+				fileIndex ++;
+			}
+
+			fListFile.close();
+				
+
+		} else {
+			ERROR( classname, "Could not open " << _listFile );
+		}
+	} // loadListRange
+
+
 }

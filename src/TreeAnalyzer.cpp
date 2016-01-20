@@ -82,7 +82,9 @@ namespace jdb{
 	     * Sets up the input, should switch seemlessly between chain only 
 	     * and a DataSource 
 	     */
-	    INFO( classname(), "Creating DataSource" );
+	    INFO( classname(), "Creating Data Adapter" );
+
+
 	    if ( config.exists( nodePath + ".DataSource" ) ){
 	    
 	    	// TODO: Data source shouldn't need config pointer
