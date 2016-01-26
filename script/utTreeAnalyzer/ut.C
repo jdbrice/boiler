@@ -10,7 +10,7 @@
 
 	XmlConfig config( "config.xml" );
 
-	TreeAnalyzer ta(  )
+	TreeAnalyzer ta( config, "TreeAnalyzer", 2 );
 
 
 }

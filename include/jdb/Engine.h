@@ -34,14 +34,13 @@ namespace jdb{
 				if ( argc >= 2 ){
 
 
-					fileList = "";
-					jobPrefix = "";
+					jobIndex = -1;
+					
 
-					if ( argc >= 4 ){
-						fileList = argv[ 2 ];
-						jobPrefix = argv[ 3 ];
-						INFO( classname(), "Filelist = " << fileList );
-						INFO( classname(), "Job Prefix = " << jobPrefix );
+					if ( argc >= 3 ){
+						jobIndex = atoi( argv[ 2 ] );
+						
+						INFO( classname(), "JobIndex = " << jobIndex );
 					}
 					// create the config file for understanding jobs
 					INFO( classname(), "Loading engine config : " << argv[1] );
@@ -101,7 +100,7 @@ namespace jdb{
 					continue;
 				}
 
-				taskRunner->init( _taskConfig, _nodePath, fileList, jobPrefix );
+				taskRunner->init( _taskConfig, _nodePath, jobIndex );
 				taskRunner->run();
 
 				delete taskRunner;
@@ -110,8 +109,8 @@ namespace jdb{
 		}// runTasks
 
 	protected:
-		string fileList;
-		string jobPrefix;
+		int jobIndex;
+		
 
 
 #ifdef __CINT__

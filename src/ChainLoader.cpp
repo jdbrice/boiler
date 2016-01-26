@@ -113,6 +113,7 @@ namespace jdb{
 
 	void ChainLoader::loadList(  TChain * _chain, string _listFile, int _maxFiles ){
 		
+		string classname = "ChainLoader";
 		DEBUG( classname, "( chain, listFile=" << _listFile << ", maxFiles=" << _maxFiles << " )" );
 
 		int nFiles = 0;
@@ -138,10 +139,7 @@ namespace jdb{
 		}
 
 		INFO( classname, nFiles << " files loaded into chain" );
-
-		delete logger;
-
-	}
+	} // loadList
 
 
 
@@ -153,7 +151,7 @@ namespace jdb{
 		int min = _jobIndex * _splitBy;
 		int max = (_jobIndex + 1) * _splitBy - 1;
 		
-		if ( 0 > splitBy || 0 > _jobIndex ){
+		if ( 0 > _splitBy || 0 > _jobIndex ){
 			DEBUG( classname, "splitBy or jobIndex are negative" );
 			DEBUG( classname, "Accepting all files, not a range" );
 			ChainLoader::loadList( _chain, _listFile, -1 );

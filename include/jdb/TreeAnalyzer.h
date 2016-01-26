@@ -14,6 +14,7 @@
 #include "Reporter.h"
 #include "DataSource.h"
 #include "TaskRunner.h"
+#include "Utils.h"
 
 	// Interfaces
 	#include "IConfig.h"
@@ -91,11 +92,11 @@ namespace jdb{
 
 		
 	protected:
-		void initHistoBook();
-		void initReporter();
+		void initHistoBook( int _jobIndex );
+		void initReporter( int _jobIndex );
 		void initDataSource( int _jobIndex );
 
-		
+
 		/*The maker function for publicly starting the job
 		 *
 		 */

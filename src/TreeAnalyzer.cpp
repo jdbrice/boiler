@@ -36,13 +36,15 @@ namespace jdb{
 		// not ending in '.' or ':attribute' etc.
 		this->nodePath = this->config.basePath( _nodePath );
 
-		initHistoBook();
-		initReporter();
+		initHistoBook( _jobIndex );
+		initReporter( _jobIndex );
 		initDataSource( _jobIndex );
 
 	}
 
-	void TreeAnalyzer::initHistoBook() {
+	void TreeAnalyzer::initHistoBook( int _jobIndex ) {
+
+		string jobPrefix = ts( _jobIndex );
 
 		outputPath = config[ config.join( nodePath, "output:path" ) ];
 		string outputDataPath = config[ config.join( nodePath, "output", "data" ) ];
@@ -61,7 +63,9 @@ namespace jdb{
 	}
 
 
-	void TreeAnalyzer::initReporter(){
+	void TreeAnalyzer::initReporter( int _jobIndex ){
+		string jobPrefix = ts( _jobIndex );
+
 		INFO( classname(), "Creating Reporter" );
 		string pRepOut = config.join( nodePath, "Reporter", "output:url" );
 		string outputURL = config[ pRepOut ];
@@ -88,8 +92,8 @@ namespace jdb{
 	    if ( config.exists( nodePath + ".DataSource" ) ){
 	    
 	    	// TODO: Data source shouldn't need config pointer
-	    	ds = new DataSource( &config, config.join(nodePath, ".DataSource") , fileList );
-	    	chain = ds->getChain();
+	    	// ds = new DataSource( &config, config.join(nodePath, ".DataSource") , fileList );
+	    	// chain = ds->getChain();
 
 	    	DEBUG( classname(), "Datasrouce for chain : " << chain );
 	    
@@ -100,7 +104,7 @@ namespace jdb{
 		    string url = this->config.getString( nodePath + ".input.dst:url" );
 
 		    // load from a file list!
-		    if ( url.find( '.lis' ) != std::string::npos ){
+		    if ( url.find( ".lis" ) != std::string::npos ){
 		    	
 		    	INFO( classname(), " Loading data from listfile : " << url );
 		    	// parallel job - load from list range
