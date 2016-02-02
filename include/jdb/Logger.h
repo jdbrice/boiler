@@ -7,7 +7,7 @@
 #define JDB_LOG_LEVEL_INFO 	30
 #define JDB_LOG_LEVEL_WARN 	20
 #define JDB_LOG_LEVEL_ERROR 10
-#define JDB_LOG_LEVEL 60
+
 
 // Allows the macros to use variable number of args
 // so ERROR( "message" ) just outputs a message
@@ -29,7 +29,6 @@
 using namespace std;
 
 #include "TObject.h"
-
 
 
 namespace jdb {
@@ -339,37 +338,15 @@ namespace jdb {
 }
 
 
+#define LOG_D(x) Logger::log.debug( __func__ ) << x << endl;
+#define LOG_T(x) Logger::log.trace( __func__ ) << x << endl;
+#define LOG_I(x)  Logger::log.info( __func__ ) << x << endl;
+#define LOG_W(x)  Logger::log.warn( __func__ ) << x << endl;
+#define LOG_E(x) Logger::log.error( __func__ ) << x << endl;
 
-#if JDB_LOG_LEVEL<JDB_LOG_LEVEL_DEBUG
-	#define LOG_D(x)
-#else
-	#define LOG_D(x) Logger::log.debug( __func__ ) << x << endl;
-#endif
-
-#if JDB_LOG_LEVEL<JDB_LOG_LEVEL_DEBUG
-	#define LOG_T(x)
-#else
-	#define LOG_T(x) Logger::log.trace( __func__ ) << x << endl;
-#endif
-
-#if JDB_LOG_LEVEL<JDB_LOG_LEVEL_DEBUG
-	#define LOG_I(x)
-#else
-	#define LOG_I(x)  Logger::log.info( __func__ ) << x << endl;
-#endif
-
-#if JDB_LOG_LEVEL<JDB_LOG_LEVEL_DEBUG
-	#define LOG_W(x)
-#else
-	#define LOG_W(x)  Logger::log.warn( __func__ ) << x << endl;
-#endif
-
-#if JDB_LOG_LEVEL<JDB_LOG_LEVEL_DEBUG
-	#define LOG_E(x)
-#else
-	#define LOG_E(x) Logger::log.error( __func__ ) << x << endl;
-#endif
 // TODO: same here
+
+
 #define LOG_D_TAG( tag, x ) Logger::log.setClassSpace( tag ); Logger::log.debug( __func__ ) << x << endl; 
 #define LOG_T_TAG( tag, x ) Logger::log.setClassSpace( tag ); Logger::log.trace( __func__ ) << x << endl; 
 #define LOG_I_TAG( tag, x ) Logger::log.setClassSpace( tag ); Logger::log.info( __func__ ) << x << endl; 

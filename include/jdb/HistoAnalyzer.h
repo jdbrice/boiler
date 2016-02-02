@@ -54,7 +54,7 @@ namespace jdb{
 		 * @nodePath The path to the node containing the HistoAnalyzer data
 		 * 
 		 */
-		HistoAnalyzer( XmlConfig * config, string nodePath, bool setup = true );
+		HistoAnalyzer( XmlConfig config, string nodePath, bool setup = true );
 
 		/* Destructor
 		 * Saves output and closes input

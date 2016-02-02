@@ -44,7 +44,7 @@ namespace jdb{
 	}	// Constructor
 
 	void HistoBook::initialize(){
-		INFO( classname(), "" );
+		DEBUG( classname(), "" );
 
 		// append .root to end if needed
 		if (this->filename.find(  ".root") == std::string::npos){
@@ -56,7 +56,7 @@ namespace jdb{
 		this->file->cd();
 
 		if ( this->file->IsOpen() ){
-			INFO( classname(), "Output File : " << this->filename << " opened" );
+			DEBUG( classname(), "Output File : " << this->filename << " opened" );
 		} else {
 			ERROR( classname(), "Output File : " << this->filename << " not opened" );
 		}
@@ -69,8 +69,12 @@ namespace jdb{
 
 		this->currentDir = "";
 
+
 		// default to auto save on exit
 		saveOnExit( true );
+
+		nullHisto = new TH1C( "NULL", "NULL", 1, 0, 1 );
+		nullHisto->SetDirectory( 0 );
 	}
 
 
@@ -81,14 +85,14 @@ namespace jdb{
 	 * @param _dir      Optional: sub directory to load
 	 */
 	void HistoBook::mergeIn( string _filename, string _dir ){
-		INFO( classname(), "(" << _filename << ", " << _dir << " )"  );
+		DEBUG( classname(), "(" << _filename << ", " << _dir << " )"  );
 
 		if (_filename.find(  ".root") == std::string::npos){
 			_filename = _filename + ".root";
 		}
 
 		if ( _filename.length() >= 6 ){
-			INFO( classname(), "Loading : " << _dir << " from " << _filename );
+			DEBUG( classname(), "Loading : " << _dir << " from " << _filename );
 			
 			TFile * fin = new TFile( _filename.c_str() );
 			
@@ -105,7 +109,7 @@ namespace jdb{
 	 * and the file is closed properly
 	 */
 	HistoBook::~HistoBook(){
-		INFO( classname(), "" );
+		DEBUG( classname(), "" );
 
 		if ( saveAllOnExit  ){
 			save();
@@ -113,11 +117,11 @@ namespace jdb{
 			WARN( classname(), "Not Saving Book" );
 		}
 		file->Close();
-		INFO( classname(), "Shutting Down" );
+		DEBUG( classname(), "Shutting Down" );
 	}	// Destructor
 
-	void HistoBook::save(bool saveAllInDirectory ) {
-		INFO( classname(), " Save to File " << filename );
+	void HistoBook::save(bool saveAllInDirectory ) const  {
+		DEBUG( classname(), " Save to File " << filename );
 		
 		if ( true )
 			file->Write();
@@ -137,14 +141,14 @@ namespace jdb{
 	 * Loads a directory into the histobook
 	 */
 	void HistoBook::loadRootDir( TDirectory* tDir, string path ){
-		INFO( classname(), " Loading from directory " << path );
+		DEBUG( classname(), " Loading from directory " << path );
 
 		TList* list;
 
 		if ( tDir ){
 			list = tDir->GetListOfKeys();
 		} else {
-			INFO( classname(), " Bad Directory " << path );
+			DEBUG( classname(), " Bad Directory " << path );
 			return;
 		}
 
@@ -235,30 +239,56 @@ namespace jdb{
 		h->Write();
 	} 	// add
 
+	void HistoBook::mkdir( string path){
+		path = sanitizePath( path );
+		char* csdir = (char*)path.c_str();
+		TRACE( classname(), "Creating Directory \"" << path << "\"" );
+		file->mkdir( csdir );
+	}
+
 	string HistoBook::cd( string sdir  ){
 
-		string old = currentDir;
-		if ( old != sdir )
-			TRACE( classname(), " cd to directory " << sdir );
+		sdir = sanitizePath( sdir );
 		
+		DEBUG( classname(), "cd \"" << sdir << "\"" );
+
+		string old = currentDir;
 
 		char* csdir = (char*)sdir.c_str();
 		file->cd();
 
-		if ( file->GetDirectory( csdir ) ){
-			file->cd( csdir );
-		} else {
-			TRACE( classname(), " Creating Directory " << sdir );
-			file->mkdir( csdir );
-			file->cd( csdir );
-		}
+		// make it if it does not exist
+		if ( !file->GetDirectory( csdir ) )
+			mkdir( sdir );
+		
+		file->cd( csdir );
 
+		// set current directory
 		currentDir = sdir;
 
 		return old;
 	}	// cd
 
+	string HistoBook::sanitizePath( string path ) const{
+		DEBUG( classname(), "(path = \"" << path << "\")" );
+		
+		// change unset paths to cwd
+		if ( "UNSET_PATH" == path )
+			path = currentDir;
 
+		if ( 0 == path.compare( 0, 1, "/" ) && path.length() >= 2 )
+			path = path.substr( 1 );
+		
+		if ( path.length() >= 1 && 0 != path.compare( path.length() - 1, 1, "/" ) )
+			path = path + "/";
+		
+		// but we don't want "/" as the base path
+		if ( "/" == path )
+			path = "";
+
+		return path;
+	}	// sanitizePath
+	
 	TH1 * HistoBook::make( string _type, string _name, string _title, HistoBins &_bx, HistoBins &_by, HistoBins &_bz ){
 		DEBUG( classname(), "type=" << _type << " name=\"" << _name << "\" title=\"" << _title << "\" bx=" << _bx.toString() << ", by=" << _by.toString() << ", bz=" << _bz.toString() );
 
@@ -378,7 +408,7 @@ namespace jdb{
 	void HistoBook::makeAll( XmlConfig config, string nodeName ){
 
 		vector<string> paths = config.childrenOf( nodeName );
-		INFO( classname(), " Found " << paths.size() << " histogram paths " );
+		TRACE( classname(), " Found " << paths.size() << " histogram paths " );
 		for ( int i=0; i < paths.size(); i++ ){
 			if ( "Include" == config.tagName( paths[ i ] ) ) continue;
 
@@ -390,8 +420,8 @@ namespace jdb{
 	}	//makeAll
 
 	void HistoBook::clone( string existing, string create ){
+		DEBUG( classname(), " Cloning " << existing << " into " << create );
 
-		INFO( classname(), " Cloning " << existing << " into " << create );
 		if ( get( existing ) ){
 			TH1* nHist = (TH1*)get( existing )->Clone( create.c_str() );
 			// add the new one
@@ -400,15 +430,18 @@ namespace jdb{
 			WARN( classname(), existing << " Does Not Exist " );
 		}
 	}	//clone
-	void HistoBook::clone( string ePath, string existing, string cPath, string create ){
 
-		INFO( classname(), " Cloning " << existing << " into " << create );
+	void HistoBook::clone( string ePath, string existing, string cPath, string create ){
+		
+		ePath = sanitizePath( ePath );
+		cPath = sanitizePath( cPath );
+
+		DEBUG( classname(), " Cloning " << existing << " into " << create );
+		
 		if ( get( existing, ePath ) ){
 			string oDir = cd( cPath ); 
-			
 			TH1* nHist = (TH1*)get( existing, ePath )->Clone( create.c_str() );
-			
-			
+		
 			// add the new one
 			add( create, nHist );
 
@@ -418,19 +451,29 @@ namespace jdb{
 		}
 	}	//clone
 
-	bool HistoBook::exists( string name, string sdir ){
+	void HistoBook::clone( string ePath, string existing, string create ){
+		ePath = sanitizePath( ePath );
+		DEBUG( classname(), " Cloning " << existing << " into " << create );
+		
+		if ( get( existing, ePath ) ){
+			TH1* nHist = (TH1*)get( existing, ePath )->Clone( create.c_str() );
+		
+			// add the new one
+			add( create, nHist );
+		} else {
+			WARN( classname(), existing << " Does Not Exist " );
+		}
+	}	//clone
+
+	bool HistoBook::exists( string name, string sdir ) const {
+		sdir = sanitizePath( sdir );
 		DEBUG( classname(), "( name=\"" << name << "\" dir=\"" << sdir << "\")");
 
-		if ( sdir.compare("") == 0)
-			sdir = currentDir;
-
-		// if ( NULL == book[ ( sdir + name  ) ] ){
 		if ( book.count( sdir + name ) <= 0 ) {
 			DEBUG( sdir + name  << " Does Not Exist " ) 
 			return false;
 		}
 
-		DEBUG( sdir + name  << " Does Exist " ) 
 		return true;
 	}
 
@@ -439,18 +482,15 @@ namespace jdb{
 	}
 
 	TH1* HistoBook::get( string name, string sdir  ){
+		sdir = sanitizePath( sdir );
 		DEBUG( classname(), "( name=\"" << name << "\" dir=\"" << sdir << "\")");
 
 		string fullPath = sdir + name;
-		if ( sdir.compare("") == 0){
-			fullPath = currentDir + name;
-		}
-
 		DEBUG( classname(), "fullPath=\"" << fullPath << "\"" );
 
-		if ( !exists( fullPath ) ){
+		if ( !exists( name, sdir ) ){
 			WARN( classname(), fullPath  << " Does Not Exist " );
-			return nullptr;
+			return nullHisto;
 		}
 
 		return (TH1*)book[ fullPath ];
@@ -578,10 +618,11 @@ namespace jdb{
 	} 
 
 	void HistoBook::removeFromDir( string name, string sdir ){
+		sdir = sanitizePath( sdir );
 		DEBUG( classname(), "( name=\"" << name << "\" dir=\"" << sdir << "\")");
 		TH1 * h = get( name, sdir );	
 		if ( h ){
-			INFO( classname(), "Removing \"" << name << "\" from directory " );
+			TRACE( classname(), "Removing \"" << name << "\" from directory " );
 			h->SetDirectory( 0 );
 		}
 	}

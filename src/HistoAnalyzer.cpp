@@ -2,14 +2,14 @@
 
 namespace jdb{
 
-	HistoAnalyzer::HistoAnalyzer( XmlConfig * config, string np, bool _setup ){
+	HistoAnalyzer::HistoAnalyzer( XmlConfig config, string np, bool _setup ) {
 		
 
 		//Set the Root Output Level
 		gErrorIgnoreLevel = kSysError;
 
 		// Save Class Members for config
-		this->config = *config;
+		this->config = config;
 		this->nodePath = this->config.basePath( np );
 		
 		if ( _setup )

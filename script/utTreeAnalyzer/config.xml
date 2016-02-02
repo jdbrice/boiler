@@ -11,6 +11,10 @@
 			<dst treeName="tree" splitBy="10" maxEvents="1000" url="/Users/danielbrandenburg/bnl/local/work/roobarb/script/utTreeAnalyzer/list.lis"/>
 		</input>
 
+		<output path="./" name="test.root" >
+			<data>test2.root</data>
+		</output>
+
 
 	</TreeAnalyzer>
 

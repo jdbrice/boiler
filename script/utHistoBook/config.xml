@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- A root node is required -->
+<!--  It can be anything <root></root>, it just has to exist -->
+
+<config>
+
+	<Histos>
+		<Histo name="pt1d" title="pt" bins_x="bins.pt" />
+		<Histo name="pt2d" title="pt" bins_x="bins.pt" bins_y="bins.pt" />
+		<Histo name="pt3d" title="pt" bins_x="bins.pt" bins_y="bins.pt" bins_z="bins.pt"  />
+
+		<Histo name="inlineBins1" title="inlineBins" min="0" max="10" width="1" />
+		<Histo name="inlineBins2" title="inlineBins" min="0" max="10" nBins="10" />
+
+		<Histo name="inlineBins3" title="inlineBins" min_x="0" max_x="10" width_x="1" min_y="0" max_y="10" width_y="1" />
+		<Histo name="inlineBins4" title="inlineBins" min_x="0" max_x="10" width_x="1" min_y="0" max_y="10" nBins_y="10" />
+		<Histo name="inlineBins5" title="inlineBins" min_x="0" max_x="10" width_x="1" min_y="0" max_y="10" nBins_y="10" min_z="0" max_z="10" width_z="1" />
+	</Histos>
+
+	<bins>
+		<pt min="0" max="10" width="0.1" />
+	</bins>
+
+</config>

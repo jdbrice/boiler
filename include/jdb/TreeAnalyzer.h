@@ -63,10 +63,13 @@ namespace jdb{
 		bool skipMake = false;
 		
 
+		int jobIndex;
+		string jobPostfix;
+
 
 	// public methods
 	public:
-		virtual const char* classname() { return "TreeAnalyzer";}
+		virtual const char* classname() const { return "TreeAnalyzer";}
 
 		/*Creates the TreeAnalyzer and sets up members
 		 * @config 	XmlConfig with a node for the TreeAnalyzer config
@@ -84,17 +87,21 @@ namespace jdb{
 		 */
 		TreeAnalyzer() {};
 		TreeAnalyzer( XmlConfig _config, string _nodePath="", int _jobIndex = -1);
+		TreeAnalyzer( XmlConfig _config, string _nodePath="", string _fileList = "", string _jobPostfix = "" );
 		~TreeAnalyzer();
 
-		void init(XmlConfig _config, string _nodePath="", int _jobIndex = -1);
+		virtual void init(XmlConfig _config, string _nodePath="", int _jobIndex = -1);
+		virtual void init( XmlConfig _config, string _nodePath="", string _fileList = "", string _jobPostfix = "" );
 
 		
 
 		
 	protected:
-		void initHistoBook( int _jobIndex );
-		void initReporter( int _jobIndex );
+		void initHistoBook( string _jobPostfix );
+		void initReporter( string _jobPostfix );
 		void initDataSource( int _jobIndex );
+		void initDataSource( string _fileList );
+		void initLogger(  );
 
 
 		/*The maker function for publicly starting the job

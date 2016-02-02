@@ -43,23 +43,29 @@ namespace jdb{
 
 		// Current directory in output file
 		string currentDir;
+	
 		// Map of hitogram names to paths in the Xml Config File for automaticlly created histos
 		std::map<string, string> configPath;
+
 		// Map of histogram names to objects
 		std::map<string, TObject*> book;
+
 		// Filename of output file
 		string filename;
+
 		// filename for input 
 		string inputFilename;
+
 		// directory to read in input file
 		string inputDir;
+
 		// Output file
 		TFile *file;
-
 
 		// Save on Exit or not
 		bool saveAllOnExit;
 
+		TH1 * nullHisto;
 
 	public:
 		
@@ -72,6 +78,7 @@ namespace jdb{
 		void initialize();
 		void mergeIn( string _filename, string _dir );
 
+		unsigned int size() const { return book.size(); }
 
 		/*
 		 *Changes into the given directory. 
@@ -80,15 +87,20 @@ namespace jdb{
 		 *
 		 */
 		string cd( string dir = "" );
+		void mkdir( string path );
+		string sanitizePath( string path ) const;
+
+
 
 		void ls( bool print = true );
 		
 		void add( string name, TH1 * );
 		void add( string name, TObject* );
-		TH1* get( string name, string sdir = "" );
+		TH1* get( string name, string sdir = "UNSET_PATH" );
 		TH1 * operator[]( string name );
-		TH2* get2D( string name, string sdir = "" );
-		TH3* get3D( string name, string sdir = "" );
+
+		TH2* get2D( string name, string sdir = "UNSET_PATH" );
+		TH3* get3D( string name, string sdir = "UNSET_PATH" );
 
 
 
@@ -134,29 +146,41 @@ namespace jdb{
 		void makeAll( XmlConfig config, string nodeName );
 
 		void clone( string existing, string create );
+		void clone( string ePath, string existing, string create );
 		void clone( string ePath, string existing, string cPath, string create );
+
 		
 
-		TDirectory* getDirectory( ) { return gDirectory; }
+		TDirectory* getDirectory( ) const { return gDirectory; }
 
 		/*
 		 * Saves all histograms and other Root objects attached to the current file to 
 		 * the permanent file given during construction
 		 */
-		void save( bool saveAllInDirectory = false );
+		void save( bool saveAllInDirectory = false ) const;
 
-		void saveOnExit( bool doIt = true ){
+		void saveOnExit( bool doIt = true ) {
 			INFO( classname(), "Auto Save on exit set to " << doIt );
 			saveAllOnExit = doIt;
 		}
 
-		bool exists( string name, string sdir = "" );
+		bool exists( string name, string sdir = "UNSET_PATH" ) const;
 
-		bool is1D(string name, string sdir = "");
-		bool is2D(string name, string sdir = "");
-		bool is3D(string name, string sdir = "");
+		bool is1D(string name, string sdir = "UNSET_PATH");
+		bool is2D(string name, string sdir = "UNSET_PATH");
+		bool is3D(string name, string sdir = "UNSET_PATH");
 
-		void removeFromDir( string name, string sdir = "" );
+		void removeFromDir( string name, string sdir = "UNSET_PATH" );
+
+
+		string report() const {
+			string rp = "";
+			for (auto i : book ){
+				rp += ( "\"" + i.first + "\" == (" + i.second->ClassName() + "*) " + i.second->GetTitle() + "\n");
+			}
+			return rp;
+		}
+
 
 	private:
 		void globalStyle();

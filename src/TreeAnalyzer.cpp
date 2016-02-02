@@ -12,7 +12,17 @@ namespace jdb{
 		// Save inputs
 		INFO( classname(), "Got config with nodePath = " << nodePath );
 		init( _config, _nodePath, _jobIndex );
+	}
+
+	TreeAnalyzer::TreeAnalyzer( XmlConfig _config, string _nodePath, string _fileList, string _jobPostfix )
+		: TaskRunner( _config, _nodePath, _fileList, _jobPostfix ){
 		
+		//Set the Root Output Level
+		//gErrorIgnoreLevel = kSysError;
+
+		// Save inputs
+		INFO( classname(), "Got config with nodePath = " << nodePath << " fileList = " << _fileList );
+		init( _config, _nodePath, _fileList, _jobPostfix );
 	}
 
 	TreeAnalyzer::~TreeAnalyzer(){
@@ -31,48 +41,82 @@ namespace jdb{
 
 		TaskRunner::init( _config, _nodePath, _jobIndex );
 
-		this->config 	= _config;
-		// makes sure it is in the right form
-		// not ending in '.' or ':attribute' etc.
-		this->nodePath = this->config.basePath( _nodePath );
+		string jobPostfix = "_" + ts( _jobIndex ) + ".root";
+ 		if ( -1 == _jobIndex )
+ 			jobPostfix = ".root";
 
-		initHistoBook( _jobIndex );
-		initReporter( _jobIndex );
+ 		this->jobPostfix = jobPostfix;
+
+		initHistoBook( jobPostfix );
+		initReporter( jobPostfix );
 		initDataSource( _jobIndex );
-
+		initLogger();
 	}
 
-	void TreeAnalyzer::initHistoBook( int _jobIndex ) {
+	void TreeAnalyzer::init( XmlConfig _config, string _nodePath, string _fileList, string _jobPostfix ){
+		DEBUG( classname(), "( " << _config.getFilename() << ", " << nodePath << ", \"" << _fileList << "\", \"" << _jobPostfix << "\" )" );
 
-		string jobPrefix = ts( _jobIndex );
+		TaskRunner::init( _config, _nodePath, _fileList, _jobPostfix );
+
+		this->jobPostfix = _jobPostfix;
+
+		initHistoBook( _jobPostfix );
+		initReporter( _jobPostfix );
+		initDataSource( _fileList );
+		initLogger();
+	}
+
+	void TreeAnalyzer::initHistoBook( string _jobPostfix ) {
+
+		string jobPrefix = "";  // will we ever use this?
 
 		outputPath = config[ config.join( nodePath, "output:path" ) ];
-		string outputDataPath = config[ config.join( nodePath, "output", "data" ) ];
+		// string outputDataPath = config[ config.join( nodePath, "output", "data" ) ];
+		string name = config[ config.join( nodePath, "output", "data" ) ];
 
+		// add in the inline output node
+		if ( config.exists( nodePath + ".output:name" ) )
+			name = config[ nodePath + ".output:name" ];
+
+
+		// remove .root from the name if it is in there
+		// the jobPostfix will add it back
+		// Warning - this assumes that the '.root' is at the end of the string
+		string ext = ".root";
+		size_t extPos = name.find_last_of( ext );
+		INFO( classname(), "name = \"" << name << "\"");
+		if ( extPos != std::string::npos )
+			name = name.substr( 0, extPos - (ext.length() - 1) );
+		INFO( classname(), "name = \"" << name << "\"");
+
+
+		string full = outputPath + jobPrefix + name + _jobPostfix;
+		string fullCopy = outputPath + jobPrefix + name + "_copy" + _jobPostfix;
+		
 		// create the book
-	    INFO( "TreeAnalyzer", " Creating book for datafile : " << outputDataPath );
+	    INFO( "TreeAnalyzer", " Creating book : " << full );
 	    
 	    // should we skip make?
 	    skipMake = config.getBool( nodePath + ".SkipMake", false );
 	    INFO( classname(), "Skip Make == " << skipMake );
 
 	    if ( !skipMake )
-		    book = new HistoBook( outputPath + jobPrefix + outputDataPath, config, "", "" );
-		else
-			book = new HistoBook( outputPath + jobPrefix + "_copy_" + outputDataPath , config, outputPath + jobPrefix + outputDataPath, "" );
+		    book = new HistoBook( full, config );
+		else {
+			book = new HistoBook( fullCopy, config, full );
+		}
 	}
 
 
-	void TreeAnalyzer::initReporter( int _jobIndex ){
-		string jobPrefix = ts( _jobIndex );
+	void TreeAnalyzer::initReporter( string _jobPostfix ){
 
 		INFO( classname(), "Creating Reporter" );
 		string pRepOut = config.join( nodePath, "Reporter", "output:url" );
 		string outputURL = config[ pRepOut ];
 
 	   	// Default reporter
-	    if ( "" == jobPrefix && config.exists( pRepOut ) ) {
-		    reporter = new Reporter( config, config.join( nodePath, "Reporter" ), jobPrefix ); // TODO: is reporter's path handeling broken?
+	    if ( "" == _jobPostfix && config.exists( pRepOut ) ) {
+		    reporter = new Reporter( config, config.join( nodePath, "Reporter" ), _jobPostfix ); // TODO: is reporter's path handeling broken?
 		    INFO( classname(), "Creating report @" << outputURL );
 	    } else{
 	    	INFO( classname(), "No Reporter created" );
@@ -81,6 +125,46 @@ namespace jdb{
 	}
 
 
+	void TreeAnalyzer::initDataSource( string _fileList ){
+
+		// DataSource auto-tree mapper mehh
+	    if ( config.exists( nodePath + ".DataSource" ) ){
+	    
+	    	// TODO: Data source shouldn't need config pointer
+	    	ds = new DataSource( &config, config.join(nodePath, ".DataSource") , _fileList );
+	    	chain = ds->getChain();
+
+	    	DEBUG( classname(), "DataSrouce for chain : " << chain );
+	    
+	    } else if ( config.exists( config.join( nodePath, "input", "dst" ) ) ) {
+	    	
+	    	chain = new TChain( this->config.getString( nodePath + ".input.dst:treeName" ).c_str() );
+
+	    	// single job
+		    if ( "" == _fileList ){
+		    	INFO( classname(), " Loading data from " << config.getString( nodePath + ".input.dst:url" ) );
+
+		    	ChainLoader::load( 	chain, 
+		    						this->config.getString( nodePath + ".input.dst:url" ), 
+		    						this->config.getInt( nodePath + ".input.dst:maxFiles", -1 ) );
+		    } else { // or parallel
+			    	// star-submit style condor files
+		    	INFO( classname(), " Parallel Job From " << _fileList );
+
+				ChainLoader::loadList( 	chain, 
+										_fileList, 
+										this->config.getInt( nodePath + ".input.dst:maxFiles", -1 ) );	
+		    }
+
+
+	    	
+	    } else {
+	    	chain = nullptr;
+	    	ERROR( classname(), "No Chain was created" );
+	    }
+
+	}
+
 	void TreeAnalyzer::initDataSource( int _jobIndex ){
 	    /**
 	     * Sets up the input, should switch seemlessly between chain only 
@@ -88,16 +172,7 @@ namespace jdb{
 	     */
 	    INFO( classname(), "Creating Data Adapter" );
 
-	    // DataSource auto-tree mapper mehh
-	    if ( config.exists( nodePath + ".DataSource" ) ){
-	    
-	    	// TODO: Data source shouldn't need config pointer
-	    	// ds = new DataSource( &config, config.join(nodePath, ".DataSource") , fileList );
-	    	// chain = ds->getChain();
-
-	    	DEBUG( classname(), "Datasrouce for chain : " << chain );
-	    
-	    } else if ( config.exists( config.join( nodePath, "input", "dst" ) ) ) {
+	    if ( config.exists( config.join( nodePath, "input", "dst" ) ) ) {
 	    	
 	    	// create the Chain object
 	    	chain = new TChain( this->config.getString( nodePath + ".input.dst:treeName" ).c_str() );
@@ -133,8 +208,13 @@ namespace jdb{
 	}
 
 
-	void TreeAnalyzer::make(){
+	void TreeAnalyzer::initLogger(){
+		Logger::setGlobalLogLevel( config.getString( nodePath + ".Logger:globalLogLevel" ) );
+	}
 
+
+	void TreeAnalyzer::make(){
+		DEBUG( classname(), "" );
 		if ( !chain ){
 			ERROR( classname(), "Invalid chain object" );
 			return;
@@ -152,7 +232,7 @@ namespace jdb{
 			t.start();
 
 			Int_t nEvents = (Int_t)chain->GetEntries();
-			nEventsToProcess = config.getInt( nodePath+"input.dst:nEvents", nEvents );
+			nEventsToProcess = config.getInt( nodePath + ".input.dst:nEvents", nEvents );
 			
 			// if neg then process all
 			if ( nEventsToProcess < 0 )
@@ -160,7 +240,7 @@ namespace jdb{
 
 			// check for datastore
 			if ( ds )
-				nEventsToProcess = config.getInt( nodePath+"DataSource:maxEvents", nEvents );
+				nEventsToProcess = config.getInt( nodePath + ".DataSource:maxEvents", nEvents );
 			if ( nEventsToProcess > nEvents )
 				nEventsToProcess = nEvents;
 			
