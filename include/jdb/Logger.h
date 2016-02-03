@@ -8,6 +8,9 @@
 #define JDB_LOG_LEVEL_WARN 	20
 #define JDB_LOG_LEVEL_ERROR 10
 
+#ifndef JDB_LOG_LEVEL
+	#define JDB_LOG_LEVEL JDB_LOG_LEVEL_ALL
+#endif
 
 // Allows the macros to use variable number of args
 // so ERROR( "message" ) just outputs a message
@@ -16,9 +19,20 @@
 #define ERROR(...) GET_MACRO(__VA_ARGS__, LOG_E_TAG, LOG_E )(__VA_ARGS__)
 #define WARN(...) GET_MACRO(__VA_ARGS__, LOG_W_TAG, LOG_W )(__VA_ARGS__)
 #define INFO(...) GET_MACRO(__VA_ARGS__, LOG_I_TAG, LOG_I )(__VA_ARGS__)
-#define TRACE(...) GET_MACRO(__VA_ARGS__, LOG_T_TAG, LOG_T )(__VA_ARGS__)
-#define DEBUG(...) GET_MACRO(__VA_ARGS__, LOG_D_TAG, LOG_D )(__VA_ARGS__)
  
+#if JDB_LOG_LEVEL<JDB_LOG_LEVEL_DEBUG
+	#define DEBUG(...) 0;
+#else
+	#define DEBUG(...) {GET_MACRO(__VA_ARGS__, LOG_D_TAG, LOG_D )(__VA_ARGS__)};
+#endif
+
+#if JDB_LOG_LEVEL<JDB_LOG_LEVEL_TRACE
+	#define TRACE(...) 0;
+#else
+	#define TRACE(...) {GET_MACRO(__VA_ARGS__, LOG_T_TAG, LOG_T )(__VA_ARGS__)};
+#endif
+
+
 
 
 #include <iostream>

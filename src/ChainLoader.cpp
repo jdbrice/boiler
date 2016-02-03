@@ -148,8 +148,8 @@ namespace jdb{
 		string classname = "ChainLoader";
 		DEBUG( classname, "( chain, listFile=" << _listFile << ", index=" << _jobIndex << ", splitBy=" << _splitBy << ")" )
 		
-		int min = _jobIndex * _splitBy;
-		int max = (_jobIndex + 1) * _splitBy - 1;
+		unsigned long int min = _jobIndex * _splitBy;
+		unsigned long int max = (_jobIndex + 1) * _splitBy - 1;
 		
 		if ( 0 > _splitBy || 0 > _jobIndex ){
 			DEBUG( classname, "splitBy or jobIndex are negative" );
@@ -158,7 +158,7 @@ namespace jdb{
 			return;
 		}
 
-		int fileIndex = 0;
+		unsigned long int fileIndex = 0;
 
 		string line;
 		ifstream fListFile( _listFile.c_str());
@@ -172,13 +172,10 @@ namespace jdb{
 					_chain->Add( line.c_str() );
 					DEBUG( classname, "Adding File[" << fileIndex << "] : " << line );
 				}
-				
 				fileIndex ++;
 			}
 
 			fListFile.close();
-				
-
 		} else {
 			ERROR( classname, "Could not open " << _listFile );
 		}

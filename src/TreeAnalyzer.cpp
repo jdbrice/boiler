@@ -3,26 +3,30 @@
 
 namespace jdb{
 
-	TreeAnalyzer::TreeAnalyzer( XmlConfig _config, string _nodePath, int _jobIndex )
-		: TaskRunner( _config, _nodePath, _jobIndex ){
+	// TreeAnalyzer::TreeAnalyzer( XmlConfig _config, string _nodePath, int _jobIndex )
+	// 	: TaskRunner( _config, _nodePath, _jobIndex ){
 		
-		//Set the Root Output Level
-		//gErrorIgnoreLevel = kSysError;
+	// 	//Set the Root Output Level
+	// 	//gErrorIgnoreLevel = kSysError;
 
-		// Save inputs
-		INFO( classname(), "Got config with nodePath = " << nodePath );
-		init( _config, _nodePath, _jobIndex );
-	}
+	// 	// Save inputs
+	// 	INFO( classname(), "Got config with nodePath = " << nodePath );
+	// 	init( _config, _nodePath, _jobIndex );
+	// }
 
-	TreeAnalyzer::TreeAnalyzer( XmlConfig _config, string _nodePath, string _fileList, string _jobPostfix )
-		: TaskRunner( _config, _nodePath, _fileList, _jobPostfix ){
+	// TreeAnalyzer::TreeAnalyzer( XmlConfig _config, string _nodePath, string _fileList, string _jobPostfix )
+	// 	: TaskRunner( _config, _nodePath, _fileList, _jobPostfix ){
 		
-		//Set the Root Output Level
-		//gErrorIgnoreLevel = kSysError;
+	// 	//Set the Root Output Level
+	// 	//gErrorIgnoreLevel = kSysError;
 
-		// Save inputs
-		INFO( classname(), "Got config with nodePath = " << nodePath << " fileList = " << _fileList );
-		init( _config, _nodePath, _fileList, _jobPostfix );
+	// 	// Save inputs
+	// 	INFO( classname(), "Got config with nodePath = " << nodePath << " fileList = " << _fileList );
+	// 	init( _config, _nodePath, _fileList, _jobPostfix );
+	// }
+
+	TreeAnalyzer::TreeAnalyzer(){
+		DEBUG( classname(), "" );
 	}
 
 	TreeAnalyzer::~TreeAnalyzer(){
@@ -47,10 +51,14 @@ namespace jdb{
 
  		this->jobPostfix = jobPostfix;
 
-		initHistoBook( jobPostfix );
-		initReporter( jobPostfix );
 		initDataSource( _jobIndex );
-		initLogger();
+		if ( chain && chain->GetListOfFiles()->GetEntries() >= 1 ){
+			initHistoBook( jobPostfix );
+			initReporter( jobPostfix );
+			initLogger();	
+		}
+		DEBUG( classname(), "Common Initialization" );
+		initialize();
 	}
 
 	void TreeAnalyzer::init( XmlConfig _config, string _nodePath, string _fileList, string _jobPostfix ){
@@ -60,17 +68,21 @@ namespace jdb{
 
 		this->jobPostfix = _jobPostfix;
 
-		initHistoBook( _jobPostfix );
-		initReporter( _jobPostfix );
 		initDataSource( _fileList );
-		initLogger();
+		if (  chain && chain->GetListOfFiles()->GetEntries() >= 1 ){
+			initHistoBook( _jobPostfix );
+			initReporter( _jobPostfix );
+			initLogger();
+		}
+		DEBUG( classname(), "Common Initialization" );
+		initialize();
 	}
 
 	void TreeAnalyzer::initHistoBook( string _jobPostfix ) {
 
 		string jobPrefix = "";  // will we ever use this?
 
-		outputPath = config[ config.join( nodePath, "output:path" ) ];
+		outputPath = config[ nodePath + ".output:path" ];
 		// string outputDataPath = config[ config.join( nodePath, "output", "data" ) ];
 		string name = config[ config.join( nodePath, "output", "data" ) ];
 
@@ -115,18 +127,18 @@ namespace jdb{
 		string outputURL = config[ pRepOut ];
 
 	   	// Default reporter
-	    if ( "" == _jobPostfix && config.exists( pRepOut ) ) {
-		    reporter = new Reporter( config, config.join( nodePath, "Reporter" ), _jobPostfix ); // TODO: is reporter's path handeling broken?
+	    if ( ".root" == _jobPostfix && config.exists( pRepOut ) ) {
+		    reporter = new Reporter( config, config.join( nodePath, "Reporter" ), "" ); // TODO: is reporter's path handeling broken?
 		    INFO( classname(), "Creating report @" << outputURL );
 	    } else{
-	    	INFO( classname(), "No Reporter created" );
+	    	INFO( classname(), "No Reporter created, jobPostfix == " << _jobPostfix );
 			reporter = nullptr;
 	    }
 	}
 
 
 	void TreeAnalyzer::initDataSource( string _fileList ){
-
+		DEBUG( classname(), "nodePath = " << nodePath );
 		// DataSource auto-tree mapper mehh
 	    if ( config.exists( nodePath + ".DataSource" ) ){
 	    
@@ -171,7 +183,7 @@ namespace jdb{
 	     * and a DataSource 
 	     */
 	    INFO( classname(), "Creating Data Adapter" );
-
+	    
 	    if ( config.exists( config.join( nodePath, "input", "dst" ) ) ) {
 	    	
 	    	// create the Chain object
@@ -201,6 +213,14 @@ namespace jdb{
 				int maxFiles = this->config.getInt( nodePath + ".input.dst:maxFiles", -1 );
 				ChainLoader::load( 	chain, url, maxFiles ); 
 		    }	
+	    } else if ( config.exists( nodePath + ".DataSource" ) ){
+
+	    	// TODO: Data source shouldn't need config pointer
+	    	ds = new DataSource( &config, config.join(nodePath, ".DataSource") );
+	    	chain = ds->getChain();
+
+	    	DEBUG( classname(), "DataSource for chain : " << chain );
+	    
 	    } else {
 	    	chain = nullptr;
 	    	ERROR( classname(), "No Chain was created" );
@@ -217,6 +237,10 @@ namespace jdb{
 		DEBUG( classname(), "" );
 		if ( !chain ){
 			ERROR( classname(), "Invalid chain object" );
+			return;
+		}
+		if ( chain->GetListOfFiles()->GetEntries() <= 0 ){
+			INFO( classname(), "Empty Chain" );
 			return;
 		}
 

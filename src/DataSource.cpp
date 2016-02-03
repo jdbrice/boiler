@@ -11,6 +11,7 @@ namespace jdb{
 	
 
 	DataSource::DataSource( XmlConfig * _cfg, string _nodePath, string _fileList ){
+		DEBUG( "DataSource", "( config=" << _cfg->getFilename() << ", nodePath = " << _nodePath << ", filelist=" << _fileList << " )" );
 
 		cfg = _cfg;
 		assert( cfg );
@@ -18,8 +19,9 @@ namespace jdb{
 		fileList = _fileList;
 		cache = NULL;
 
-		if ( cfg->exists( nodePath ) && cfg->exists( nodePath+":treeName" ) ){
+		if ( cfg->exists( nodePath ) && cfg->exists( nodePath + ":treeName" ) ){
 			treeName = cfg->getString( nodePath + ":treeName", "" );
+			
 			if ( "" == treeName ){
 				lg.warn(__FUNCTION__) << "Provide <DataSource treeName=\"theName\" /> " << endl;
 			}

@@ -16,12 +16,6 @@ namespace jdb {
 
 		virtual const char* classname() const { return "TaskRunner"; }
 		TaskRunner(){}
-		TaskRunner( XmlConfig _config, string _nodePath="", int _jobIndex = -1 ) {
-			init( _config, _nodePath, _jobIndex );
-		}
-		TaskRunner( XmlConfig _config, string _nodePath="", string _fileList = "", string _jobPostfix = "" ) {
-			init( _config, _nodePath, _fileList, _jobPostfix );
-		}
 		~TaskRunner(){}
 
 		virtual void init(XmlConfig _config, string _nodePath="", int _jobIndex = -1) {
@@ -41,6 +35,11 @@ namespace jdb {
 			// not ending in '.' or ':attribute' etc.
 			this->nodePath = this->config.basePath( _nodePath );
 		}
+
+		/* This is where you should set up your task
+		 *
+		 */
+		virtual void init() { DEBUG( classname(), "TaskRunner" ); }
 
 		virtual void run(){
 			preMake();

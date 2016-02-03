@@ -85,14 +85,12 @@ namespace jdb{
 		 * Optionally a jobPrefix can be used to allow for parallel execution such that 
 		 * each job writes out to different files.
 		 */
-		TreeAnalyzer() {};
-		TreeAnalyzer( XmlConfig _config, string _nodePath="", int _jobIndex = -1);
-		TreeAnalyzer( XmlConfig _config, string _nodePath="", string _fileList = "", string _jobPostfix = "" );
+		TreeAnalyzer();
 		~TreeAnalyzer();
 
-		virtual void init(XmlConfig _config, string _nodePath="", int _jobIndex = -1);
+		virtual void init( XmlConfig _config, string _nodePath="", int _jobIndex = -1);
 		virtual void init( XmlConfig _config, string _nodePath="", string _fileList = "", string _jobPostfix = "" );
-
+		virtual void initialize() { DEBUG( classname(), "TreeAnalyzer" ); };
 		
 
 		
