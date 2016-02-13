@@ -9,70 +9,97 @@
 
 namespace jdb{
 	
+	DataSource::DataSource( XmlConfig _config, string _nodePath, string _treeName, TChain * _chain ){
+		DEBUG( classname(), "" );
 
-	DataSource::DataSource( XmlConfig * _cfg, string _nodePath, string _fileList ){
-		DEBUG( "DataSource", "( config=" << _cfg->getFilename() << ", nodePath = " << _nodePath << ", filelist=" << _fileList << " )" );
-
-		cfg = _cfg;
-		assert( cfg );
-		nodePath = _nodePath;
-		fileList = _fileList;
+		config = _config;
+		nodePath = config.basePath( _nodePath );
 		cache = NULL;
+		chain = _chain;
+		treeName = _treeName;
+		assert( chain );
+		/**
+		 * Now create the data access structure
+		 */
+		if ( cacheExists() ){
+			INFO( classname(), "Loading cache from " << (".DataSource_" + treeName + ".xml") );
+			cache = new XmlConfig( ".DataSource_" + treeName + ".xml" );
+		} else
+			INFO( classname(), "No cache found for " << treeName  );
 
-		if ( cfg->exists( nodePath ) && cfg->exists( nodePath + ":treeName" ) ){
-			treeName = cfg->getString( nodePath + ":treeName", "" );
-			
-			if ( "" == treeName ){
-				lg.warn(__FUNCTION__) << "Provide <DataSource treeName=\"theName\" /> " << endl;
-			}
+		mapTree();
+		addressBranches();
+		addressLeaves();
 
-			chain = new TChain( treeName.c_str() );
-
-			if ( "" == fileList ){
-				if ( cfg->exists( nodePath + ":url" ) ){
-					lg.info(__FUNCTION__) <<"Loading from url " << fileList << endl;
-					ChainLoader::load( chain, cfg->getString( nodePath+":url" ), cfg->getInt( nodePath + ":maxFiles", -1 ) );
-				} else if ( cfg->exists( nodePath + ":filelist" ) ){
-					lg.info(__FUNCTION__) <<"Loading from filelist " << cfg->getString( nodePath+":filelist" ) << endl;
-					ChainLoader::loadList( chain, cfg->getString( nodePath+":filelist" ), cfg->getInt( nodePath + ":maxFiles", -1 ) );
-				}
-				else 
-					lg.warn(__FUNCTION__) << "Provide a url to folder containing data or a filelist <DataSource url=\"...\" (or) filelist=\"list.lis\" /> " << endl;
-			} else if ( fileList.find( ".root" ) == std::string::npos ) {
-				// normal file list
-				lg.info(__FUNCTION__) <<"Loading from filelist " << fileList << endl;
-				ChainLoader::loadList( chain, fileList, cfg->getInt( nodePath + ":maxFiles", -1 ) );
-			} else {
-				// load just a single .root file 
-				ChainLoader::load( chain, fileList );
-			}
-
-			/**
-			 * Now create the data access structure
-			 */
-			if ( cacheExists() ){
-				lg.info(__FUNCTION__) << "Loading cache from " << (".DataSource_" + treeName + ".xml") << endl;
-				cache = new XmlConfig( ".DataSource_" + treeName + ".xml" );
-			} else
-				lg.info(__FUNCTION__) << "No cache found for " << treeName  << endl;
-			mapTree();
-			addressBranches();
-			addressLeaves();
-
-			initializeBranchStatus();
-			makeAliases();
-			makeEvaluatedLeaves();
-			cacheTreeInfo();
-
-
-		} else {
-			lg.error(__FUNCTION__) << "Could not create DataSource : Invalid Config " << endl;
-		}
+		initializeBranchStatus();
+		makeAliases();
+		makeEvaluatedLeaves();
+		cacheTreeInfo();
 	}
+
+	// DataSource::DataSource( XmlConfig * _cfg, string _nodePath, string _fileList ){
+	// 	DEBUG( classname(), "( config=" << _config.getFilename() << ", nodePath = " << _nodePath << ", filelist=" << _fileList << " )" );
+
+	// 	cfg = _cfg;
+	// 	assert( cfg );
+	// 	nodePath = _nodePath;
+	// 	fileList = _fileList;
+	// 	cache = NULL;
+
+	// 	if ( config.exists( nodePath ) && config.exists( nodePath + ":treeName" ) ){
+	// 		treeName = config.getString( nodePath + ":treeName", "" );
+			
+	// 		if ( "" == treeName ){
+	// 			lg.warn(__FUNCTION__) << "Provide <DataSource treeName=\"theName\" /> " << endl;
+	// 		}
+
+	// 		chain = new TChain( treeName.c_str() );
+
+	// 		if ( "" == fileList ){
+	// 			if ( config.exists( nodePath + ":url" ) ){
+	// 				lg.info(__FUNCTION__) <<"Loading from url " << fileList << endl;
+	// 				ChainLoader::load( chain, config.getString( nodePath+":url" ), config.getInt( nodePath + ":maxFiles", -1 ) );
+	// 			} else if ( config.exists( nodePath + ":filelist" ) ){
+	// 				lg.info(__FUNCTION__) <<"Loading from filelist " << config.getString( nodePath+":filelist" ) << endl;
+	// 				ChainLoader::loadList( chain, config.getString( nodePath+":filelist" ), config.getInt( nodePath + ":maxFiles", -1 ) );
+	// 			}
+	// 			else 
+	// 				lg.warn(__FUNCTION__) << "Provide a url to folder containing data or a filelist <DataSource url=\"...\" (or) filelist=\"list.lis\" /> " << endl;
+	// 		} else if ( fileList.find( ".root" ) == std::string::npos ) {
+	// 			// normal file list
+	// 			lg.info(__FUNCTION__) <<"Loading from filelist " << fileList << endl;
+	// 			ChainLoader::loadList( chain, fileList, config.getInt( nodePath + ":maxFiles", -1 ) );
+	// 		} else {
+	// 			// load just a single .root file 
+	// 			ChainLoader::load( chain, fileList );
+	// 		}
+
+	// 		/**
+	// 		 * Now create the data access structure
+	// 		 */
+	// 		if ( cacheExists() ){
+	// 			INFO( classname(), "Loading cache from " << (".DataSource_" + treeName + ".xml") );
+	// 			cache = new XmlConfig( ".DataSource_" + treeName + ".xml" );
+	// 		} else
+	// 			INFO( classname(), "No cache found for " << treeName  );
+	// 		mapTree();
+	// 		addressBranches();
+	// 		addressLeaves();
+
+	// 		initializeBranchStatus();
+	// 		makeAliases();
+	// 		makeEvaluatedLeaves();
+	// 		cacheTreeInfo();
+
+
+	// 	} else {
+	// 		lg.error(__FUNCTION__) << "Could not create DataSource : Invalid Config " << endl;
+	// 	}
+	// }
 
 	DataSource::~DataSource(){
 
-		lg.info(__FUNCTION__) << "Cleaning up" << endl;
+		INFO( classname(), "Cleaning up" );
 
 		if (cache)
 			delete cache;
@@ -81,7 +108,7 @@ namespace jdb{
 		for(svp_it_type iterator = data.begin(); iterator != data.end(); iterator++) {
 
 			if ( iterator->second ){
-				lg.debug(__FUNCTION__) << "Releasing " << iterator->first << endl;
+				DEBUG( classname(), "Releasing " << iterator->first );
 				free( data[ iterator->first ] );
 			}
 
@@ -91,29 +118,26 @@ namespace jdb{
 		for(sel_it_type it = evalLeaf.begin(); it != evalLeaf.end(); it++) {
 
 			if ( it->second ){
-				lg.debug(__FUNCTION__) << "Releasing " << it->first << endl;
+				DEBUG( classname(), "Releasing " << it->first );
 				delete evalLeaf[ it->first ];
 			}
 
 		}
 
-		lg.debug(__FUNCTION__) << "Memory Released" << endl;
+		DEBUG( classname(), "Memory Released" );
 
 	}
 
 
 	void DataSource::mapTree(){
 
-		lg.info( __FUNCTION__ ) << endl;
+		DEBUG( classname(), "" );
 
-		if ( !chain ){
-			lg.error(__FUNCTION__) << "Invalid Chain" << endl;
-			return;
-		}
+		assert( chain );
 
 		nEntries = chain->GetEntries();
 		nTrees = chain->GetNtrees();
-		lg.info(__FUNCTION__) << "Chain contains " << nTrees << " TTrees" << endl;
+		INFO( classname(), "Chain contains " << nTrees << " TTrees" );
 
 
 		/**
@@ -124,7 +148,7 @@ namespace jdb{
 
 		for ( int i = 0; i < l; i++ ){
 			string name = ((TBranchElement*)brs->At( i ))->GetName();
-			lg.debug() << "Branch " << name << endl;
+			DEBUG( classname(), "Branch " << name );
 			branchName.push_back( name );
 
 			/*TObjArray * lfs = ((TBranchElement*)brs->At( i ))->GetListOfBranches();
@@ -177,45 +201,45 @@ namespace jdb{
 				string name = leafName[ i ];
 				leafLength[ name ] = chainLeafLength( name );
 			}
-			lg.info(__FUNCTION__) << "Finding Lengths : Elapsed " << tt.elapsedTime() << endl;
+			INFO( classname(), "Finding Lengths : Elapsed " << tt.elapsedTime() );
 		}
-		lg.info(__FUNCTION__) << "Complete" << endl;
+		INFO( classname(), "Complete" );
 	}
 
 	void DataSource::initializeBranchStatus(){
 
-		vector<string> children = cfg->childrenOf( nodePath );
+		vector<string> children = config.childrenOf( nodePath );
 
 		for ( int i = 0; i < children.size(); i++ ){
 
 			// we are only interested in the branch status nodes
-			if ( "BranchStatus" == cfg->tagName( children[ i ] )){
+			if ( "BranchStatus" == config.tagName( children[ i ] )){
 				string path = children[ i ];
-				int status = cfg->getInt( path + ":status", 0 );
+				int status = config.getInt( path + ":status", 0 );
 				string active = "Active";
 				if ( !status )
 						active = "Inactive";
 
-				vector<string> bNames = cfg->getStringVector( path );
+				vector<string> bNames = config.getStringVector( path );
 
 				for ( int ib = 0; ib < bNames.size(); ib++ ){
-					lg.info(__FUNCTION__) << "Setting " << bNames[ ib ] << " to " << active << endl;
+					INFO( classname(), "Setting " << bNames[ ib ] << " to " << active );
 					chain->SetBranchStatus( bNames[ ib ].c_str(), status );
 				} // loop on branch names
 			} // require node to be a BranchStatus node
 		} // loop on children of nodepPath
 	}
 	void DataSource::makeAliases(){
-		vector<string> children = cfg->childrenOf( nodePath );
+		vector<string> children = config.childrenOf( nodePath );
 
 		for ( int i = 0; i < children.size(); i++ ){
 
 			// we are only interested in the branch status nodes
-			if ( "Alias" == cfg->tagName( children[ i ] )){
+			if ( "Alias" == config.tagName( children[ i ] )){
 				string path = children[ i ];
 				
-				string aName = cfg->getString( path + ":name" );
-				string pointsTo = cfg->getString( path + ":pointsTo" );
+				string aName = config.getString( path + ":name" );
+				string pointsTo = config.getString( path + ":pointsTo" );
 
 				addAlias(aName, pointsTo );
 
@@ -224,14 +248,14 @@ namespace jdb{
 	}
 
 	void DataSource::makeEvaluatedLeaves(){
-		vector<string> children = cfg->childrenOf( nodePath );
+		vector<string> children = config.childrenOf( nodePath );
 
 		for ( int i = 0; i < children.size(); i++ ){
 			string path = children[ i ];
 			// we are only interested in the branch status nodes
-			if ( "EvaluatedLeaf" == cfg->tagName( path ) && cfg->exists( path+":name" ) && cfg->exists( path+":value" ) ){
-				string name = cfg->getString( path+":name" );
-				EvaluatedLeaf * evl = new EvaluatedLeaf( cfg, path );
+			if ( "EvaluatedLeaf" == config.tagName( path ) && config.exists( path+":name" ) && config.exists( path+":value" ) ){
+				string name = config.getString( path+":name" );
+				EvaluatedLeaf * evl = new EvaluatedLeaf( &config, path );
 				evalLeaf[ name ] = evl;
 
 			} // require node to be a Alias node
@@ -247,7 +271,7 @@ namespace jdb{
 
 		TLeaf * l = chain->GetLeaf( name.c_str() );
 		if ( !l ){
-			lg.debug( __FUNCTION__ ) << name << " is not a leaf" << endl;
+			DEBUG( classname(), name << " is not a leaf" );
 			DEBUG( "Trying to get Branch->Leaf" )
 			TBranch * b = chain->GetBranch( name.c_str() );
 			if ( b ){
@@ -277,31 +301,31 @@ namespace jdb{
 		if ( 0 >= length)
 			length = 1;
 
-		lg.debug( __FUNCTION__ ) << "\t" << l->GetTitle() << endl;
-		lg.debug( __FUNCTION__ ) << "\tLength = " << length << endl;
-		lg.debug( __FUNCTION__ ) << "\tMaximum = " << l->GetMaximum() << endl;
-		lg.debug( __FUNCTION__ ) << "\tnElem = " << nElem << endl;
+		DEBUG( classname(), "\t" << l->GetTitle() );
+		DEBUG( classname(), "\tLength = " << length );
+		DEBUG( classname(), "\tMaximum = " << l->GetMaximum() );
+		DEBUG( classname(), "\tnElem = " << nElem );
 		if ( cl )
-			lg.debug( __FUNCTION__ ) << "\tCount Leaf Maximum = " << cl->GetMaximum() << endl;
+			DEBUG( classname(), "\tCount Leaf Maximum = " << cl->GetMaximum() );
 
 		if ( 1 == nElem && cl )	{ // Leaf like pt[ nTracks ] where nTracks is another leaf
 			dim = cl->GetMaximum();
 			if ( 0 == dim )
 				dim = 1;
-			lg.debug(__FUNCTION__) << "\t\tCase 1" << endl;
+			DEBUG( classname(), "\t\tCase 1" );
 		} else if ( 1 <= nElem && !cl ){ // Leaf like channelHits[ 19 ] ( ie fixed array size )
 			// could be single or multi-dim array based on the title
 			// eg 	var[10][20] => nElem = 200
 			// 		var[200] => nElem = 200
 			// 		same memory footprint anyways so no worries really
 			dim = nElem;
-			lg.debug(__FUNCTION__) << "\t\tCase 2" << endl;
+			DEBUG( classname(), "\t\tCase 2" );
 		} else {
-			lg.debug( __FUNCTION__ ) << "\tCould not determine dimensions of " << name << endl;
+			DEBUG( classname(), "\tCould not determine dimensions of " << name );
 			return -1;
 		}
 
-		lg.trace( __FUNCTION__ ) << "\t" << name << "@size ==> " << dim * length << endl;
+		TRACE( classname(), "\t" << name << "@size ==> " << dim * length );
 		return dim * length;
 	}
 
@@ -313,11 +337,11 @@ namespace jdb{
 		//the entire chain is then the maximum value of each tree max 
 		int max = 0;
 		int nt = chain->GetNtrees();
-		lg.debug(__FUNCTION__) << "Looping over " << nt << " trees" << endl;
+		DEBUG( classname(), "Looping over " << nt << " trees" );
 		for ( int i = 0; i < nt; i ++ ){
 			Long64_t first = chain->GetTreeOffset()[i];
 			chain->LoadTree( first );
-			lg.debug(__FUNCTION__) << "Getting leaf length for tree " << i << endl;
+			DEBUG( classname(), "Getting leaf length for tree " << i );
 			int stl = singleTreeLeafLength( name );
 			if ( stl > max) 
 				max = stl;
@@ -325,7 +349,7 @@ namespace jdb{
 		}
 		// reload the first tree to put us back at the beg.
 		chain->LoadTree( 0 );
-		lg.trace( __FUNCTION__) << name << "@size = " << max << endl;
+		TRACE( classname(), name << "@size = " << max );
 
 		return max;
 	}
@@ -347,9 +371,9 @@ namespace jdb{
 				data[bName] = malloc( ms );
 				chain->SetBranchAddress( bName.c_str(), data[bName] );
 
-				lg.debug( __FUNCTION__ ) << leafType[ lName ] << " " << bName << "(" << lName << ") addressed to " << ms << " bytes" << endl;
+				DEBUG( classname(), leafType[ lName ] << " " << bName << "(" << lName << ") addressed to " << ms << " bytes" );
 			} else {
-				lg.debug( __FUNCTION__ ) << "Cannot address branch" << bName << endl;	
+				DEBUG( classname(), "Cannot address branch" << bName );	
 			}
 			
 
@@ -372,7 +396,7 @@ namespace jdb{
 				continue;
 
 			int ms = memSize( name );
-			lg.debug(__FUNCTION__) << "Allocating " << ms << " bytes for " << name << endl;
+			DEBUG( classname(), "Allocating " << ms << " bytes for " << name );
 
 			if ( 0 == ms )
 				continue;
@@ -388,7 +412,7 @@ namespace jdb{
 				Int_t len = l->GetLen();
 				if ( len >= 2  && len  == leafLength[ name ] ){
 					string nName = name + "[" + ts(len) + "]";
-					lg.debug(__FUNCTION__) << l->GetTitle() << " : " << name << " --> " << nName << endl;
+					DEBUG( classname(), l->GetTitle() << " : " << name << " --> " << nName );
 					name = nName;
 				}	
 
@@ -402,7 +426,7 @@ namespace jdb{
 			// Address the leaves
 			branches[ name ] = 0;
 			chain->SetBranchAddress( name.c_str(), data[ name ], &branches[ name ] );
-			lg.debug(__FUNCTION__) << "Addressed " << name << endl;
+			DEBUG( classname(), "Addressed " << name );
 		}
 	}
 
@@ -420,11 +444,11 @@ namespace jdb{
 		}
 
 		if ( i >= leafLength[ name ] || i < 0 ){
-			lg.debug(__FUNCTION__) << name << "[ " << i << " ] Out Of Bounds" << endl;
+			DEBUG( classname(), name << "[ " << i << " ] Out Of Bounds" );
 			return numeric_limits<double>::quiet_NaN();
 		}
 		if ( !data[ name ]){
-			lg.debug(__FUNCTION__) << name << "[ " << i << " ] Invalid data" << endl;
+			DEBUG( classname(), name << "[ " << i << " ] Invalid data" );
 			return numeric_limits<double>::quiet_NaN();	
 		}
 
@@ -463,7 +487,7 @@ namespace jdb{
 
 
 		if ( cacheExists() && ( (cache) && cache->getInt( "TreeInfo:nTrees" ) >= nTrees) ){
-			lg.info(__FUNCTION__) << "No need to recache" << endl;
+			INFO( classname(), "No need to recache" );
 			// no need to recache
 			return;
 		}
@@ -496,7 +520,7 @@ namespace jdb{
 
 	void DataSource::loadLengthsFromCache(){
 
-		lg.info(__FUNCTION__)<< endl;
+		DEBUG( classname(), "" );
 		vector<string> cli = cache->childrenOf( "TreeInfo" );
 		for ( int i = 0; i < cli.size(); i++ ){
 
@@ -528,7 +552,7 @@ namespace jdb{
 			
 
 			if ( !((TLeafElement*)lfs->At( i ))->IsOnTerminalBranch() ){
-				lg.debug() << tName << " " <<  pname << "." << name << endl;
+				DEBUG( classname(), tName << " " <<  pname << "." << name );
 
 				leafName.push_back( pname + "." + name );
 				leafType[ pname + "." + name ] = tName; 

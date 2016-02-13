@@ -3,7 +3,8 @@
 
 // STL
 #include <string>
-
+#include <map>
+using namespace std;
 // ROOBARB
 
 namespace jdb {
@@ -44,11 +45,9 @@ namespace jdb {
 		}
 
 	private:
-		static map_type * trMap;
+		static TaskFactory::map_type * trMap;
 
 	};
-
-
 }
 
 

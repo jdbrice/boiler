@@ -3,28 +3,6 @@
 
 namespace jdb{
 
-	// TreeAnalyzer::TreeAnalyzer( XmlConfig _config, string _nodePath, int _jobIndex )
-	// 	: TaskRunner( _config, _nodePath, _jobIndex ){
-		
-	// 	//Set the Root Output Level
-	// 	//gErrorIgnoreLevel = kSysError;
-
-	// 	// Save inputs
-	// 	INFO( classname(), "Got config with nodePath = " << nodePath );
-	// 	init( _config, _nodePath, _jobIndex );
-	// }
-
-	// TreeAnalyzer::TreeAnalyzer( XmlConfig _config, string _nodePath, string _fileList, string _jobPostfix )
-	// 	: TaskRunner( _config, _nodePath, _fileList, _jobPostfix ){
-		
-	// 	//Set the Root Output Level
-	// 	//gErrorIgnoreLevel = kSysError;
-
-	// 	// Save inputs
-	// 	INFO( classname(), "Got config with nodePath = " << nodePath << " fileList = " << _fileList );
-	// 	init( _config, _nodePath, _fileList, _jobPostfix );
-	// }
-
 	TreeAnalyzer::TreeAnalyzer(){
 		DEBUG( classname(), "" );
 	}
@@ -138,19 +116,13 @@ namespace jdb{
 
 
 	void TreeAnalyzer::initDataSource( string _fileList ){
-		DEBUG( classname(), "nodePath = " << nodePath );
-		// DataSource auto-tree mapper mehh
-	    if ( config.exists( nodePath + ".DataSource" ) ){
-	    
-	    	// TODO: Data source shouldn't need config pointer
-	    	ds = new DataSource( &config, config.join(nodePath, ".DataSource") , _fileList );
-	    	chain = ds->getChain();
+		INFO( classname(), "( fileList=" << _fileList << ")" );
+		
+		chain = new TChain( this->config.getString( nodePath + ".input.dst:treeName" ).c_str() );
 
-	    	DEBUG( classname(), "DataSrouce for chain : " << chain );
-	    
-	    } else if ( config.exists( config.join( nodePath, "input", "dst" ) ) ) {
+		if ( config.exists( config.join( nodePath, "input", "dst" ) ) ) {
 	    	
-	    	chain = new TChain( this->config.getString( nodePath + ".input.dst:treeName" ).c_str() );
+	    	
 
 	    	// single job
 		    if ( "" == _fileList ){
@@ -173,21 +145,31 @@ namespace jdb{
 	    } else {
 	    	chain = nullptr;
 	    	ERROR( classname(), "No Chain was created" );
+	    	return;
 	    }
 
+
+		// DataSource if requested
+		if ( config.exists( nodePath + ".DataSource" ) && chain && chain->GetListOfFiles()->GetEntries() >= 1 ){
+
+			// TODO: Data source shouldn't need config pointer
+			ds = new DataSource( config, config.join(nodePath, ".DataSource") , "treename", chain );
+			chain = ds->getChain();
+
+			DEBUG( classname(), "DataSrouce for chain : " << chain );
+
+		}
 	}
 
 	void TreeAnalyzer::initDataSource( int _jobIndex ){
-	    /**
-	     * Sets up the input, should switch seemlessly between chain only 
-	     * and a DataSource 
-	     */
-	    INFO( classname(), "Creating Data Adapter" );
-	    
+	    INFO( classname(), "( jobIndex=" << _jobIndex << ")" );
+
+	    chain = new TChain( this->config.getString( nodePath + ".input.dst:treeName" ).c_str() );
+
 	    if ( config.exists( config.join( nodePath, "input", "dst" ) ) ) {
 	    	
 	    	// create the Chain object
-	    	chain = new TChain( this->config.getString( nodePath + ".input.dst:treeName" ).c_str() );
+	    	
 		    string url = this->config.getString( nodePath + ".input.dst:url" );
 
 		    // load from a file list!
@@ -213,18 +195,23 @@ namespace jdb{
 				int maxFiles = this->config.getInt( nodePath + ".input.dst:maxFiles", -1 );
 				ChainLoader::load( 	chain, url, maxFiles ); 
 		    }	
-	    } else if ( config.exists( nodePath + ".DataSource" ) ){
-
-	    	// TODO: Data source shouldn't need config pointer
-	    	ds = new DataSource( &config, config.join(nodePath, ".DataSource") );
-	    	chain = ds->getChain();
-
-	    	DEBUG( classname(), "DataSource for chain : " << chain );
-	    
 	    } else {
 	    	chain = nullptr;
 	    	ERROR( classname(), "No Chain was created" );
+	    	return;
 	    }
+
+		// make a DataSource if you want it
+		if ( config.exists( nodePath + ".DataSource" ) && chain && chain->GetListOfFiles()->GetEntries() >= 1 ){
+
+			// TODO: Data source shouldn't need config pointer
+			ds = new DataSource( config, config.join(nodePath, ".DataSource"), "treename", chain );
+			
+
+			DEBUG( classname(), "DataSource for chain : " << chain );
+
+		}
+
 	}
 
 

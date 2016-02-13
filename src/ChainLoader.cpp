@@ -124,6 +124,7 @@ namespace jdb{
 
 			while ( getline( fListFile, line ) ){
 				_chain->Add( line.c_str() );
+				DEBUG( classname, "Adding File : " << line );
 				nFiles++;
 
 				if ( _maxFiles >= 1 && nFiles >= _maxFiles ){

@@ -98,9 +98,19 @@ namespace jdb{
 			return atoi( str.c_str() );
 		return def;
 	}
-	vector<int> XmlConfig::getIntVector( string nodePath ) const{
-		vector<string> vec = getStringVector( nodePath );
+	vector<int> XmlConfig::getIntVector( string nodePath, int defaultVal, int defaultLength ) const{
+		
 		vector<int> d;
+		// default if node does not exist
+		if ( !exists( nodePath ) ){
+			for ( int i = 0; i < defaultLength; i++ )
+				d.push_back( defaultVal);
+			return d;
+		}
+		
+
+		vector<string> vec = getStringVector( nodePath );
+		
 		for ( int i = 0; i < vec.size(); i++  ){
 			d.push_back( atoi( vec[ i ].c_str() ) );
 		}

@@ -72,6 +72,28 @@ namespace jdb{
 			line += " ) ";
 			return line;
 		}
+
+		static string toXml( TF1 * f ) {
+
+			string line = "<XmlFunction ";
+			line += "formula=\"";
+			line += f->GetTitle();
+			line += "\"";
+
+			for ( int ip = 0; ip < f->GetNpar(); ip++ ){
+
+				line += " p" + ts(ip) + "=\"";
+				line += dts(f->GetParameter(ip));
+				line += "\"";
+
+				line += " e" + ts(ip) + "=\"";
+				line += dts(f->GetParError(ip));
+				line += "\"";
+			}
+
+			line += " />";
+			return line;
+		}
 	};
 
 }

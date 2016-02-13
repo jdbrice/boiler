@@ -25,6 +25,9 @@ using namespace std;
 #include "TChain.h"
 #include "TBranchElement.h"
 
+#include "IConfig.h"
+#include "IObject.h"
+
 namespace jdb{
 
 
@@ -34,18 +37,10 @@ namespace jdb{
 	 * class for every new TTree structure.
 	 *
 	 */
-	class DataSource {
+	class DataSource : public IConfig, public IObject{
 
 	protected:
 
-		// Logger object
-		Logger lg;
-		// Path to <DataSource ...> ... </DataSource>
-		string nodePath;
-		// Xml Config
-		XmlConfig * cfg;
-		// The file list containg input files if given
-		string fileList;
 		// The Xml Config used to load the cache if found
 		XmlConfig * cache;
 		
@@ -86,7 +81,7 @@ namespace jdb{
 		map< string, EvaluatedLeaf * > evalLeaf;
 
 	public:
-
+		virtual const char* classname() const { return "DataSource"; }
 		// Ctor
 		// Creates a DataSource from an XML node
 		// @_cfg 		The XmlConfig 
@@ -94,8 +89,10 @@ namespace jdb{
 		// @_fileList 	Optional filelist provided via sys arg - Default = ""
 		// 
 		// Creates a DataSource if the given node is valid
-		DataSource( XmlConfig * _cfg, string _nodePath, string _fileList = "" );
+		// DataSource( XmlConfig * _cfg, string _nodePath, string _fileList = "" );
 		
+		DataSource( XmlConfig _config, string _nodePath, string _treeName, TChain * chain );
+
 		// Dtor
 		~DataSource();
 
@@ -109,15 +106,15 @@ namespace jdb{
 		inline T get(string name, int i = 0 ){
 			DEBUG( "Checking for valid pointer at " << name );
 			if ( !data[ name ]){
-				lg.debug(__FUNCTION__) << name << "[ " << i << " ] Invalid data" << endl;
+				DEBUG( classname(), name << "[ " << i << " ] Invalid data" );
 				return numeric_limits<T>::quiet_NaN();	
 			}
 			DEBUG( "Checking for valid length" )
 			if ( i >= leafLength[ name ] || i < 0 ){
-				lg.debug(__FUNCTION__) << name << "[ " << i << " ] Out Of Bounds" << endl;
+				DEBUG( classname(), name << "[ " << i << " ] Out Of Bounds" );
 				return numeric_limits<T>::quiet_NaN();
 			}
-			DEBUG( "Casting to datatype and returning" )
+			DEBUG( classname(), "Casting to datatype and returning" );
 			T * pData = (T*)data[ name ];
 			return pData[ i ];
 		}
@@ -218,8 +215,8 @@ namespace jdb{
 		// @return 	The memory block size
 		int memSize( string name ){
 
-			lg.debug(__FUNCTION__) << "SizeType " << leafType[ name ] << endl;
-			lg.debug(__FUNCTION__) << "Length of Leaf : " << leafLength[ name ] << endl;
+			DEBUG( classname(), "SizeType " << leafType[ name ] );
+			DEBUG( classname(), "Length of Leaf : " << leafLength[ name ] );
 			if ( "Int_t" == leafType[ name ] )
 				return sizeof(Int_t) * leafLength[ name ];
 			else if ( "UInt_t" == leafType[ name ] )

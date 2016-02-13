@@ -194,7 +194,7 @@ namespace jdb {
 		 * Uses atoi(...) for string to int conversion.
 		 * @return vector of integers, one for each item in the comma delimeted list
 		 */
-		vector<int> getIntVector( string nodePath ) const;
+		vector<int> getIntVector( string nodePath, int defaultVal = 0, int defaultLength = 0 ) const;
 
 		/* Gets a map<string, string> from a config node 
 		 * @nodePath See getString(...)
