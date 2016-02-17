@@ -27,7 +27,7 @@ namespace jdb{
  		if ( -1 == _jobIndex )
  			jobPostfix = ".root";
 
- 		this->jobPostfix = jobPostfix;
+ 		this->jobModifier = ts( _jobIndex );
 
 		initDataSource( _jobIndex );
 		if ( chain && chain->GetListOfFiles()->GetEntries() >= 1 ){
@@ -44,7 +44,7 @@ namespace jdb{
 
 		TaskRunner::init( _config, _nodePath, _fileList, _jobPostfix );
 
-		this->jobPostfix = _jobPostfix;
+		this->jobModifier = _jobPostfix;
 
 		initDataSource( _fileList );
 		if (  chain && chain->GetListOfFiles()->GetEntries() >= 1 ){

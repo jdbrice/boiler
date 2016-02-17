@@ -64,7 +64,7 @@ namespace jdb{
 		
 
 		int jobIndex;
-		string jobPostfix;
+		string jobModifier;
 
 
 	// public methods
