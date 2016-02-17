@@ -24,10 +24,13 @@ namespace jdb{
 		TaskRunner::init( _config, _nodePath, _jobIndex );
 
 		string jobPostfix = "_" + ts( _jobIndex ) + ".root";
- 		if ( -1 == _jobIndex )
+		this->jobModifier = "job_" + ts( _jobIndex );
+ 		if ( -1 == _jobIndex ){
  			jobPostfix = ".root";
+ 			this->jobModifier = "";
+ 		}
 
- 		this->jobModifier = ts( _jobIndex );
+ 		
 
 		initDataSource( _jobIndex );
 		if ( chain && chain->GetListOfFiles()->GetEntries() >= 1 ){
