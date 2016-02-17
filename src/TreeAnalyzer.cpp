@@ -24,7 +24,7 @@ namespace jdb{
 		TaskRunner::init( _config, _nodePath, _jobIndex );
 
 		string jobPostfix = "_" + ts( _jobIndex ) + ".root";
-		this->jobModifier = "job_" + ts( _jobIndex );
+		this->jobModifier = "job_" + ts( _jobIndex ) +"_";
  		if ( -1 == _jobIndex ){
  			jobPostfix = ".root";
  			this->jobModifier = "";
