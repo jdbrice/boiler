@@ -278,7 +278,7 @@ namespace jdb{
 			else {
 				string ba = "< " + ts( nBins() ) + " bins { ";
 
-				for ( int i = 0; i < bins.size(); i++  ){
+				for ( unsigned int i = 0; i < bins.size(); i++  ){
 					if ( i+1  < bins.size() )
 						ba += ("(" + dts( bins[i] ) +"->" + dts( bins[i+1] ) + ")" );
 					if ( i+2  < bins.size() )
