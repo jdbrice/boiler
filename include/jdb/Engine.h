@@ -16,6 +16,8 @@
 #include <exception>
 #include <sys/stat.h>
 
+// format
+#include "format.h"
 
 namespace jdb{
 
@@ -32,10 +34,8 @@ namespace jdb{
 
 
 				if ( argc >= 2 ){
-
-
-					jobIndex = -1;
 					
+					jobIndex = -1;	// job index for parallel
 
 					if ( argc >= 3 ){
 						jobIndex = atoi( argv[ 2 ] );

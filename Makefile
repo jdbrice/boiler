@@ -5,7 +5,8 @@ ARCH          = $(shell root-config --arch)
 
 #------------------------------------------------------------------------------
 Classes = Logger Reporter XmlConfig ChainLoader HistoBook TreeAnalyzer HistoAnalyzer \
-			XmlConfig DataSource EvaluatedLeaf RooPlotLib Utils ConfigFunction TaskFactory
+			XmlConfig DataSource EvaluatedLeaf RooPlotLib Utils ConfigFunction TaskFactory \
+			format
 HeaderOnlyClasses = LoggerConfig ConfigPoint ConfigRange ConfigGraph CutCollection TaskRunner
 ##-----------------------------------------------------------------------------
 
@@ -33,7 +34,7 @@ ROOTLDFLAGS    	= $(shell root-config --ldflags)
 
 includes		= -I$(JDB_LIB)/include -I$(JDB_LIB)/include/jdb -I. -I$(ROOTSYS)/include -I$(ROOTDEV)/include 
 
-CXX           = g++ -o3 -DJDB_LOG_LEVEL=60
+CXX           = g++ -o3 -DJDB_LOG_LEVEL=60 -Wall -Wextra -pedantic
 CXXFLAGS      = -std=c++11 -fPIC 
 LD            = g++
 LDFLAGS       = -std=c++11 $(includes)

@@ -37,6 +37,33 @@ namespace jdb{
 		cacheTreeInfo();
 	}
 
+
+	DataSource::DataSource( string _treeName, TChain * _chain ){
+		DEBUG( classname(), "" );
+
+		cache = NULL;
+		chain = _chain;
+		treeName = _treeName;
+		assert( chain );
+		/**
+		 * Now create the data access structure
+		 */
+		if ( cacheExists() ){
+			INFO( classname(), "Loading cache from " << (".DataSource_" + treeName + ".xml") );
+			cache = new XmlConfig( ".DataSource_" + treeName + ".xml" );
+		} else
+			INFO( classname(), "No cache found for " << treeName  );
+
+		mapTree();
+		addressBranches();
+		addressLeaves();
+
+		// initializeBranchStatus();
+		// makeAliases();
+		// makeEvaluatedLeaves();
+		cacheTreeInfo();
+	}
+
 	// DataSource::DataSource( XmlConfig * _cfg, string _nodePath, string _fileList ){
 	// 	DEBUG( classname(), "( config=" << _config.getFilename() << ", nodePath = " << _nodePath << ", filelist=" << _fileList << " )" );
 

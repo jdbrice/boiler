@@ -92,6 +92,7 @@ namespace jdb{
 		// DataSource( XmlConfig * _cfg, string _nodePath, string _fileList = "" );
 		
 		DataSource( XmlConfig _config, string _nodePath, string _treeName, TChain * chain );
+		DataSource( string treename, TChain * chain );
 
 		// Dtor
 		~DataSource();
