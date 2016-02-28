@@ -14,7 +14,11 @@ namespace jdb{
 							) {
 		
 
-		Logger * logger = new Logger( Logger::llGlobal, "ChainLoader" );
+		
+		if ( chain == nullptr ){
+			ERROR( "ChainLoader", "badd chain" );
+			return;
+		}
 
 		if ( ntdir.find( ".root" ) != std::string::npos ){
 
@@ -22,10 +26,10 @@ namespace jdb{
 
 
 		} else {
-			logger->info(__FUNCTION__) << "Searching " << ntdir << " for ntuples" << endl;
+			DEBUG( "ChainLoader", "Searching " << ntdir << " for ntuples" );
 
 			if ( ntdir[ ntdir.length()-1] != '/' ){
-				logger->info(__FUNCTION__) << "Appending / to path" << endl;
+				DEBUG( "ChainLoader", "Appending / to path" );
 				ntdir += "/";
 			}
 
@@ -51,14 +55,13 @@ namespace jdb{
 			    		sprintf( fn, "%s%s", ntdir.c_str(), ent->d_name );
 			    		chain->Add( fn );
 
-			    		//cout << "[ChainLoader] Adding file " << fn << " to chain" << endl;
+			    		DEBUG( "ChainLoader", "Adding file " << fn << " to chain" );
 			    		nFiles++;
 
 			    	}
 			  	}
 			  	
-			  	logger->info( __FUNCTION__ ) << nFiles << " files loaded into chain" << endl;
-			  	delete logger;
+			  	DEBUG( "ChainLoader", nFiles << " files loaded into chain" );
 
 			  	closedir (dir);
 			}

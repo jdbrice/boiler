@@ -13,10 +13,11 @@ namespace jdb{
 	/* 
 	 * see mergedoc/jdb::ChainLoader
 	 */
-	class ChainLoader {
+	class ChainLoader : public IObject {
 
 	public:
 
+		virtual const char * classname() const { return "ChainLoader"; }
 		/* Loads files in a directory to the TChain
 		 * @chain an initialized TChain to recieve the files
 		 * @ntdir path to directory containing .root files or the path to a single .root file
