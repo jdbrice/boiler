@@ -5,6 +5,12 @@ TTree structures so you don't need to make a new
 class for every new TTree structure.
 
 </doc>
+  <base access="public">
+    <type name="IConfig" />
+  </base>
+  <base access="public">
+    <type name="IObject" />
+  </base>
   <methodtemplate id="jdb::DataSource::get" name="get">
     <return>
       <type name="T" />
@@ -21,17 +27,28 @@ class for every new TTree structure.
     <brief>Ctor</brief>
     <doc>Creates a DataSource from an XML node
 </doc>
-    <argument id="jdb::DataSource::DataSource::_cfg" name="_cfg">
-      <type name="XmlConfig" qualifier="*" ref="jdb::XmlConfig#jdb::XmlConfig" />
+    <argument id="jdb::DataSource::DataSource::_config" name="_config">
+      <type name="XmlConfig" ref="jdb::XmlConfig#jdb::XmlConfig" />
     </argument>
     <argument id="jdb::DataSource::DataSource::_nodePath" name="_nodePath">
       <type name="string" />
     </argument>
-    <argument id="jdb::DataSource::DataSource::_fileList" name="_fileList">
+    <argument id="jdb::DataSource::DataSource::_treeName" name="_treeName">
       <type name="string" />
     </argument>
+    <argument id="jdb::DataSource::DataSource::chain" name="chain">
+      <type name="TChain" qualifier="*" />
+    </argument>
   </constructor>
-  <destructor abstract="yes" id="jdb::DataSource::~DataSource" name="~DataSource">
+  <constructor abstract="yes" id="jdb::DataSource::DataSource" name="DataSource">
+    <argument id="jdb::DataSource::DataSource::treename" name="treename">
+      <type name="string" />
+    </argument>
+    <argument id="jdb::DataSource::DataSource::chain" name="chain">
+      <type name="TChain" qualifier="*" />
+    </argument>
+  </constructor>
+  <destructor abstract="yes" id="jdb::DataSource::~DataSource" name="~DataSource" virtual="yes">
     <brief>Dtor</brief>
   </destructor>
   <method id="jdb::DataSource::addAlias" name="addAlias">
@@ -47,6 +64,11 @@ class for every new TTree structure.
       <doc>Name of leaf that the leaf points to</doc>
       <type name="string" />
     </argument>
+  </method>
+  <method id="jdb::DataSource::classname" name="classname" virtual="yes">
+    <return>
+      <type builtin="yes" name="char" qualifier=" const *" />
+    </return>
   </method>
   <method abstract="yes" id="jdb::DataSource::get" name="get">
     <brief>General purpose data retrival</brief>
@@ -114,22 +136,6 @@ This method is required for Alias or Evaluated Leaves</doc>
       <type builtin="yes" name="int" />
     </argument>
   </method>
-  <field access="protected" id="jdb::DataSource::lg" name="lg">
-    <brief>Logger object</brief>
-    <type name="Logger" ref="jdb::Logger#jdb::Logger" />
-  </field>
-  <field access="protected" id="jdb::DataSource::nodePath" name="nodePath">
-    <brief>Path to &amp;lt;DataSource ...&amp;gt; ... &amp;lt;/DataSource&amp;gt;</brief>
-    <type name="string" />
-  </field>
-  <field access="protected" id="jdb::DataSource::cfg" name="cfg">
-    <brief>Xml Config</brief>
-    <type name="XmlConfig" qualifier="*" ref="jdb::XmlConfig#jdb::XmlConfig" />
-  </field>
-  <field access="protected" id="jdb::DataSource::fileList" name="fileList">
-    <brief>The file list containg input files if given</brief>
-    <type name="string" />
-  </field>
   <field access="protected" id="jdb::DataSource::cache" name="cache">
     <brief>The Xml Config used to load the cache if found</brief>
     <type name="XmlConfig" qualifier="*" ref="jdb::XmlConfig#jdb::XmlConfig" />

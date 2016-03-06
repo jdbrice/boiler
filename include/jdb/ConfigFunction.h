@@ -98,5 +98,7 @@ namespace jdb{
 
 }
 
+typedef ConfigFunction XmlFunction;
+
 
 #endif

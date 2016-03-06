@@ -1,4 +1,4 @@
-<class xmlns="http://jessevdk.github.com/cldoc/1.0" id="jdb::ChainLoader" interface="true" name="ChainLoader">
+<class xmlns="http://jessevdk.github.com/cldoc/1.0" abstract="true" id="jdb::ChainLoader" name="ChainLoader">
   <brief>Static use class for loading .root files into a TChain</brief>
   <doc>Static class used for loading files into TChains.
 Can be used to load an entire directory, or files from a filelist.lis
@@ -35,6 +35,14 @@ If you are running parallel or want to load from a file list use:
 TChain * chain = new TChain( "treeName" );
 ChainLoader::loadList( chain, "path_to_dir_listfile.lis", maxFilesToLoad );
 ```</doc>
+  <base access="public">
+    <type name="IObject" />
+  </base>
+  <method id="jdb::ChainLoader::classname" name="classname" virtual="yes">
+    <return>
+      <type builtin="yes" name="char" qualifier=" const *" />
+    </return>
+  </method>
   <method abstract="yes" id="jdb::ChainLoader::load" name="load" static="yes">
     <brief> Loads files in a directory to the TChain</brief>
     <doc>Loads .root files containing TTrees into
@@ -81,6 +89,35 @@ use full pathto file</doc>
     </argument>
     <argument id="jdb::ChainLoader::loadList::maxFiles" name="maxFiles">
       <doc>maximum number of files to load</doc>
+      <type builtin="yes" name="int" />
+    </argument>
+  </method>
+  <method abstract="yes" id="jdb::ChainLoader::loadListRange" name="loadListRange" static="yes">
+    <brief> Loads files in a filelist to a TChain</brief>
+    <doc>Loads .root files containing TTrees into
+a TChain from the given list file. This
+method allows parallel jobs to work on separate
+file lists. Make sure that the TChain was
+created with the correct tree name.
+</doc>
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+    <argument id="jdb::ChainLoader::loadListRange::chain" name="chain">
+      <doc>an initialized TChain to recieve the files</doc>
+      <type name="TChain" qualifier="*" />
+    </argument>
+    <argument id="jdb::ChainLoader::loadListRange::listFile" name="listFile">
+      <doc>list of files to add to chain. Should
+use full path to file</doc>
+      <type name="string" />
+    </argument>
+    <argument id="jdb::ChainLoader::loadListRange::index" name="index">
+      <doc>job index.
+        files processed is : index * splitBy --&gt; (index+1) * splitBy - 1</doc>
+      <type builtin="yes" name="int" />
+    </argument>
+    <argument id="jdb::ChainLoader::loadListRange::splitBy" name="splitBy">
       <type builtin="yes" name="int" />
     </argument>
   </method>

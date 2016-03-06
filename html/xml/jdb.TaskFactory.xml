@@ -1,0 +1,35 @@
+<class xmlns="http://jessevdk.github.com/cldoc/1.0" id="jdb::TaskFactory" name="TaskFactory">
+  <methodtemplate id="jdb::TaskFactory::createInstance" name="createInstance" static="yes">
+    <return>
+      <type name="TaskRunner" qualifier="*" ref="jdb::TaskRunner#jdb::TaskRunner" />
+    </return>
+    <templatetypeparameter id="jdb::TaskFactory::createInstance::T" name="T" />
+  </methodtemplate>
+  <methodtemplate id="jdb::TaskFactory::registerTaskRunner" name="registerTaskRunner" static="yes">
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+    <argument id="jdb::TaskFactory::registerTaskRunner::typeName" name="typeName">
+      <type name="string" qualifier=" const &amp;" />
+    </argument>
+    <templatetypeparameter id="jdb::TaskFactory::registerTaskRunner::T" name="T" />
+  </methodtemplate>
+  <typedef id="jdb::TaskFactory::map_type" name="map_type">
+    <type name="map&lt;string, jdb::TaskRunner *(*)()&gt;" />
+  </typedef>
+  <constructor id="jdb::TaskFactory::TaskFactory" name="TaskFactory" />
+  <destructor id="jdb::TaskFactory::~TaskFactory" name="~TaskFactory" />
+  <method id="jdb::TaskFactory::createTaskRunner" name="createTaskRunner" static="yes">
+    <return>
+      <type name="TaskRunner" qualifier="*" ref="jdb::TaskRunner#jdb::TaskRunner" />
+    </return>
+    <argument id="jdb::TaskFactory::createTaskRunner::typeName" name="typeName">
+      <type name="string" qualifier=" const &amp;" />
+    </argument>
+  </method>
+  <method access="protected" id="jdb::TaskFactory::getMap" name="getMap" static="yes">
+    <return>
+      <type name="map_typ&gt;" qualifier="*" ref="jdb::TaskFactory#jdb::TaskFactory::map_type" />
+    </return>
+  </method>
+</class>

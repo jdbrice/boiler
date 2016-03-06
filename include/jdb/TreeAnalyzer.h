@@ -32,6 +32,16 @@ namespace jdb{
 	 * Automatically loads the TTrees from each file into a TChain.
 	 * Formalizes the structure for the config file, automatically loading
 	 * the config, logger, reporter, and histobook objects. These become available to any subclass
+	 *
+	 *	initialize() - setup the job
+	 *	run() 
+	 *		preMake()
+	 *		make()
+	 *  		preEventLoop() : 1...N
+	 *  		eventLoop()
+	 *  		postEventLoop() 
+	 *  	postMake()
+	 * 
 	 */
 	class TreeAnalyzer : public TaskRunner
 	{
@@ -66,9 +76,13 @@ namespace jdb{
 		int jobIndex;
 		string jobModifier;
 
+		int iEventLoop = 0;
+		int nEventLoops = 1;
+
 
 	// public methods
 	public:
+		/* @inherit */
 		virtual const char* classname() const { return "TreeAnalyzer";}
 
 		/*Creates the TreeAnalyzer and sets up members

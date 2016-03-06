@@ -38,6 +38,7 @@ namespace jdb{
 			initReporter( jobPostfix );
 			initLogger();	
 		}
+		nEventLoops = config.getInt( nodePath + ":nEventLoops", 1 );
 		DEBUG( classname(), "Common Initialization" );
 		initialize();
 	}
@@ -55,6 +56,7 @@ namespace jdb{
 			initReporter( _jobPostfix );
 			initLogger();
 		}
+		nEventLoops = config.getInt( nodePath + ":nEventLoops", 1 );
 		DEBUG( classname(), "Common Initialization" );
 		initialize();
 	}
@@ -239,9 +241,7 @@ namespace jdb{
 		 */
 		if ( !skipMake ){
 			book->cd( );
-			preEventLoop();
-
-
+			
 			TaskTimer t;
 			t.start();
 
@@ -260,30 +260,40 @@ namespace jdb{
 			
 			INFO( classname(), "Loaded: " << nEventsToProcess << " events " );
 			
-			TaskProgress tp( "Event Loop", nEventsToProcess );
-			// loop over all events
-			for(Int_t i=0; i<nEventsToProcess; i++) {
-		    	chain->GetEntry(i);
+			for ( iEventLoop = 0; iEventLoop < nEventLoops; iEventLoop++ ){
 
-		    	tp.showProgress( i );
+				preEventLoop();
 
-		    	analyzeEventBeforeCuts();
 
-		    	if ( !keepEvent() ){
-		    		analyzeRejectedEvent();
-		    		continue;
-		    	}
+				TaskProgress tp( "Event Loop", nEventsToProcess );
+				// loop over all events
+				for(Int_t i=0; i<nEventsToProcess; i++) {
+			    	chain->GetEntry(i);
 
-		    	analyzeEvent();
-		    	
-			} // end loop on events
-			INFO( classname(), "Completed in " << t.elapsed() );
+			    	tp.showProgress( i );
+
+			    	analyzeEventBeforeCuts();
+
+			    	if ( !keepEvent() ){
+			    		analyzeRejectedEvent();
+			    		continue;
+			    	}
+
+			    	analyzeEvent();
+			    	
+				} // end loop on events
+				INFO( classname(), "Completed in " << t.elapsed() );
+
+				/**
+				 * Run the post event loop
+				 */
+				postEventLoop();
+			} // end loop on iEventLoop
+		} // skipMake
+		else {
+			postEventLoop();
 		}
-		/**
-		 * Run the post event loop
-		 */
-		postEventLoop();
-	}
+	} // eventLoop
 
 	void TreeAnalyzer::preEventLoop(){
 

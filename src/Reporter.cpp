@@ -17,6 +17,8 @@ namespace jdb{
 		INFO( classname(), " Opening report " << filename );
 		instances++;
 
+		isOpen = true;
+
 		DEBUG( classname(), " Instance #" << instances );
 	}
 
@@ -38,6 +40,8 @@ namespace jdb{
 		
 		instances++;
 
+		isOpen = true;
+
 		DEBUG( " Instance #" << instances )
 	}
 
@@ -45,10 +49,16 @@ namespace jdb{
 		// properly close the report file
 		DEBUG( classname(), "" )
 		
-		canvas->Print( ( filename + "]" ).c_str() );
+		if ( isOpen )
+			canvas->Print( ( filename + "]" ).c_str() );
 		delete canvas;
 
 		DEBUG( classname(), filename << " Closed " );
+	}
+
+	void Reporter::close(){
+		canvas->Print( ( filename + "]" ).c_str() );
+		isOpen = false;
 	}
 
 	void Reporter::newPage( int dx, int dy, float marginX, float marginY ){

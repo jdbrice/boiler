@@ -57,6 +57,14 @@
       <type name="string" />
     </return>
   </method>
+  <method id="jdb::ConfigFunction::toXml" name="toXml" static="yes">
+    <return>
+      <type name="string" />
+    </return>
+    <argument id="jdb::ConfigFunction::toXml::f" name="f">
+      <type name="TF1" qualifier="*" />
+    </argument>
+  </method>
   <variable access="protected" id="jdb::ConfigFunction::instances" name="instances">
     <brief>instance count to make sure wee keep a unique ROOT name on our function</brief>
     <type builtin="yes" name="int" />

@@ -3,11 +3,21 @@
   <doc>Automatically loads the TTrees from each file into a TChain.
 Formalizes the structure for the config file, automatically loading
 the config, logger, reporter, and histobook objects. These become available to any subclass
+
+        initialize() - setup the job
+        run()
+                preMake()
+                make()
+                preEventLoop() : 1...N
+                eventLoop()
+                postEventLoop()
+        postMake()
+
 </doc>
   <base access="public">
     <type name="TaskRunner" ref="jdb::TaskRunner#jdb::TaskRunner" />
   </base>
-  <constructor id="jdb::TreeAnalyzer::TreeAnalyzer" name="TreeAnalyzer">
+  <constructor abstract="yes" id="jdb::TreeAnalyzer::TreeAnalyzer" name="TreeAnalyzer">
     <brief>Creates the TreeAnalyzer and sets up members</brief>
     <doc>Creates the Reporter, HistoBook and initializes the TChain
 If not filelist is given then data is loaded from the directory specified in the
@@ -17,22 +27,9 @@ Optionally a jobPrefix can be used to allow for parallel execution such that
 each job writes out to different files.
 </doc>
   </constructor>
-  <constructor abstract="yes" id="jdb::TreeAnalyzer::TreeAnalyzer" name="TreeAnalyzer">
-    <argument id="jdb::TreeAnalyzer::TreeAnalyzer::_config" name="_config">
-      <type name="XmlConfig" ref="jdb::XmlConfig#jdb::XmlConfig" />
-    </argument>
-    <argument id="jdb::TreeAnalyzer::TreeAnalyzer::_nodePath" name="_nodePath">
-      <type name="string" />
-    </argument>
-    <argument id="jdb::TreeAnalyzer::TreeAnalyzer::_fileList" name="_fileList">
-      <type name="string" />
-    </argument>
-    <argument id="jdb::TreeAnalyzer::TreeAnalyzer::_prefix" name="_prefix">
-      <type name="string" />
-    </argument>
-  </constructor>
   <destructor abstract="yes" id="jdb::TreeAnalyzer::~TreeAnalyzer" name="~TreeAnalyzer" virtual="yes" />
   <method id="jdb::TreeAnalyzer::classname" name="classname" override="yes" virtual="yes">
+    <brief>@inherit</brief>
     <return>
       <type builtin="yes" name="char" qualifier=" const *" />
     </return>
@@ -48,25 +45,30 @@ each job writes out to different files.
     <argument id="jdb::TreeAnalyzer::init::_nodePath" name="_nodePath">
       <type name="string" />
     </argument>
+    <argument id="jdb::TreeAnalyzer::init::_jobIndex" name="_jobIndex">
+      <type builtin="yes" name="int" />
+    </argument>
+    <override name="TaskRunner::init" ref="jdb::TaskRunner#jdb::TaskRunner::init" />
+  </method>
+  <method abstract="yes" id="jdb::TreeAnalyzer::init" name="init" override="yes" virtual="yes">
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+    <argument id="jdb::TreeAnalyzer::init::_config" name="_config">
+      <type name="XmlConfig" ref="jdb::XmlConfig#jdb::XmlConfig" />
+    </argument>
+    <argument id="jdb::TreeAnalyzer::init::_nodePath" name="_nodePath">
+      <type name="string" />
+    </argument>
     <argument id="jdb::TreeAnalyzer::init::_fileList" name="_fileList">
       <type name="string" />
     </argument>
-    <argument id="jdb::TreeAnalyzer::init::_prefix" name="_prefix">
+    <argument id="jdb::TreeAnalyzer::init::_jobPostfix" name="_jobPostfix">
       <type name="string" />
     </argument>
     <override name="TaskRunner::init" ref="jdb::TaskRunner#jdb::TaskRunner::init" />
   </method>
-  <method abstract="yes" id="jdb::TreeAnalyzer::initDataSource" name="initDataSource">
-    <return>
-      <type builtin="yes" name="void" />
-    </return>
-  </method>
-  <method abstract="yes" id="jdb::TreeAnalyzer::initHistoBook" name="initHistoBook">
-    <return>
-      <type builtin="yes" name="void" />
-    </return>
-  </method>
-  <method abstract="yes" id="jdb::TreeAnalyzer::initReporter" name="initReporter">
+  <method id="jdb::TreeAnalyzer::initialize" name="initialize" virtual="yes">
     <return>
       <type builtin="yes" name="void" />
     </return>
@@ -101,6 +103,18 @@ each job writes out to different files.
 and skips to the postEventLoop() method</doc>
     <type builtin="yes" name="bool" />
   </field>
+  <field access="protected" id="jdb::TreeAnalyzer::jobIndex" name="jobIndex">
+    <type builtin="yes" name="int" />
+  </field>
+  <field access="protected" id="jdb::TreeAnalyzer::jobModifier" name="jobModifier">
+    <type name="string" />
+  </field>
+  <field access="protected" id="jdb::TreeAnalyzer::iEventLoop" name="iEventLoop">
+    <type builtin="yes" name="int" />
+  </field>
+  <field access="protected" id="jdb::TreeAnalyzer::nEventLoops" name="nEventLoops">
+    <type builtin="yes" name="int" />
+  </field>
   <method access="protected" id="jdb::TreeAnalyzer::analyzeEvent" name="analyzeEvent" virtual="yes">
     <brief> Used to analyze events</brief>
     <doc>Analyzes a single event in the chain
@@ -124,6 +138,43 @@ and skips to the postEventLoop() method</doc>
     <return>
       <type builtin="yes" name="void" />
     </return>
+  </method>
+  <method abstract="yes" access="protected" id="jdb::TreeAnalyzer::initDataSource" name="initDataSource">
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+    <argument id="jdb::TreeAnalyzer::initDataSource::_jobIndex" name="_jobIndex">
+      <type builtin="yes" name="int" />
+    </argument>
+  </method>
+  <method abstract="yes" access="protected" id="jdb::TreeAnalyzer::initDataSource" name="initDataSource">
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+    <argument id="jdb::TreeAnalyzer::initDataSource::_fileList" name="_fileList">
+      <type name="string" />
+    </argument>
+  </method>
+  <method abstract="yes" access="protected" id="jdb::TreeAnalyzer::initHistoBook" name="initHistoBook">
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+    <argument id="jdb::TreeAnalyzer::initHistoBook::_jobPostfix" name="_jobPostfix">
+      <type name="string" />
+    </argument>
+  </method>
+  <method abstract="yes" access="protected" id="jdb::TreeAnalyzer::initLogger" name="initLogger">
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+  </method>
+  <method abstract="yes" access="protected" id="jdb::TreeAnalyzer::initReporter" name="initReporter">
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+    <argument id="jdb::TreeAnalyzer::initReporter::_jobPostfix" name="_jobPostfix">
+      <type name="string" />
+    </argument>
   </method>
   <method abstract="yes" access="protected" id="jdb::TreeAnalyzer::keepEvent" name="keepEvent" virtual="yes">
     <brief> Called for each event</brief>

@@ -13,7 +13,7 @@ modules that take a root file containing histograms as input.
   <constructor abstract="yes" id="jdb::HistoAnalyzer::HistoAnalyzer" name="HistoAnalyzer">
     <brief> Creates a HistoAnalyzer from an Xml Config</brief>
     <argument id="jdb::HistoAnalyzer::HistoAnalyzer::config" name="config">
-      <type name="XmlConfig" qualifier="*" ref="jdb::XmlConfig#jdb::XmlConfig" />
+      <type name="XmlConfig" ref="jdb::XmlConfig#jdb::XmlConfig" />
     </argument>
     <argument id="jdb::HistoAnalyzer::HistoAnalyzer::nodePath" name="nodePath">
       <doc>The path to the node containing the HistoAnalyzer data</doc>

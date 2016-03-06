@@ -94,6 +94,20 @@ Subdirectories can be used if the entire path is given, paths are never relative
     <argument id="jdb::HistoBook::clone::existing" name="existing">
       <type name="string" />
     </argument>
+    <argument id="jdb::HistoBook::clone::create" name="create">
+      <type name="string" />
+    </argument>
+  </method>
+  <method abstract="yes" id="jdb::HistoBook::clone" name="clone">
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+    <argument id="jdb::HistoBook::clone::ePath" name="ePath">
+      <type name="string" />
+    </argument>
+    <argument id="jdb::HistoBook::clone::existing" name="existing">
+      <type name="string" />
+    </argument>
     <argument id="jdb::HistoBook::clone::cPath" name="cPath">
       <type name="string" />
     </argument>
@@ -353,6 +367,14 @@ node in the class config file given during construction"
       <type name="string" />
     </argument>
   </method>
+  <method abstract="yes" id="jdb::HistoBook::mkdir" name="mkdir">
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+    <argument id="jdb::HistoBook::mkdir::path" name="path">
+      <type name="string" />
+    </argument>
+  </method>
   <method abstract="yes" id="jdb::HistoBook::operator[]" name="operator[]">
     <return>
       <type name="TH1" qualifier="*" />
@@ -369,6 +391,19 @@ node in the class config file given during construction"
       <type name="string" />
     </argument>
     <argument id="jdb::HistoBook::removeFromDir::sdir" name="sdir">
+      <type name="string" />
+    </argument>
+  </method>
+  <method id="jdb::HistoBook::report" name="report">
+    <return>
+      <type name="string" />
+    </return>
+  </method>
+  <method abstract="yes" id="jdb::HistoBook::sanitizePath" name="sanitizePath">
+    <return>
+      <type name="string" />
+    </return>
+    <argument id="jdb::HistoBook::sanitizePath::path" name="path">
       <type name="string" />
     </argument>
   </method>
@@ -437,6 +472,11 @@ the permanent file given during construction
       <type builtin="yes" name="double" />
     </argument>
   </method>
+  <method id="jdb::HistoBook::size" name="size">
+    <return>
+      <type builtin="yes" name="unsigned int" />
+    </return>
+  </method>
   <field access="protected" id="jdb::HistoBook::currentDir" name="currentDir">
     <brief>Current directory in output file</brief>
     <type name="string" />
@@ -468,5 +508,8 @@ the permanent file given during construction
   <field access="protected" id="jdb::HistoBook::saveAllOnExit" name="saveAllOnExit">
     <brief>Save on Exit or not</brief>
     <type builtin="yes" name="bool" />
+  </field>
+  <field access="protected" id="jdb::HistoBook::nullHisto" name="nullHisto">
+    <type name="TH1" qualifier="*" />
   </field>
 </class>

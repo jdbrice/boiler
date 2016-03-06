@@ -77,6 +77,8 @@ namespace jdb {
 		 */
 		TCanvas * getCanvas() { return canvas; }
 
+		void close();
+
 	protected:
 
 		// TCanvas used for drawing and saving graphics
@@ -89,6 +91,7 @@ namespace jdb {
 		string filename;
 		// Number of instances of the Reporter running
 		static int instances;
+		bool isOpen;
 
 	};
 	

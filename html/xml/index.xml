@@ -40,6 +40,7 @@
       <brief>Create PDF Reports in ROOT</brief>
     </class>
     <class name="RooPlotLib" ref="jdb::RooPlotLib#jdb::RooPlotLib" />
+    <class name="TaskFactory" ref="jdb::TaskFactory#jdb::TaskFactory" />
     <class name="TaskProgress" ref="jdb::TaskProgress#jdb::TaskProgress">
       <brief>Task Progress</brief>
     </class>
@@ -55,5 +56,8 @@
     </class>
   </namespace>
   <class name="ConfigGraph" ref="ConfigGraph#ConfigGraph" />
+  <typedef id="XmlFunction" name="XmlFunction">
+    <type name="jdb::ConfigFunction" ref="jdb::ConfigFunction#jdb::ConfigFunction" />
+  </typedef>
   <report name="Documentation generator" ref="report" />
 </index>

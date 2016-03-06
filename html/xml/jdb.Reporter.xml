@@ -72,6 +72,11 @@
       <type builtin="yes" name="char" qualifier=" const *" />
     </return>
   </method>
+  <method abstract="yes" id="jdb::Reporter::close" name="close">
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+  </method>
   <method id="jdb::Reporter::getCanvas" name="getCanvas">
     <brief> Get the canvas used by the Reporter</brief>
     <return>
@@ -156,5 +161,8 @@ If needed the page is saved and a new page is started with the same divisions.
   <field access="protected" id="jdb::Reporter::filename" name="filename">
     <brief>Filename of the report</brief>
     <type name="string" />
+  </field>
+  <field access="protected" id="jdb::Reporter::isOpen" name="isOpen">
+    <type builtin="yes" name="bool" />
   </field>
 </class>

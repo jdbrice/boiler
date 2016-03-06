@@ -61,6 +61,8 @@ ClassSource = $(addsuffix .$(srcSuf), $(addprefix $(srcDir)/, $(Classes)))
 ClassHeaders = $(addsuffix .$(hdrSuf), $(addprefix $(incDir)/, $(Classes)))
 ClassHeaders += $(addsuffix .$(hdrSuf), $(addprefix $(incDir)/, $(HeaderOnlyClasses)))
 ClassObjs = $(addprefix $(srcDir)/, $(addsuffix .$(objSuf), $(Classes)))
+NoDocs = include/jdb/format.h
+ClassHeaderDocs = $(filter-out $(NoDocs),$(ClassHeaders))
 
 #------------------------------------------------------------------------------
 
@@ -111,14 +113,18 @@ $(jdbLibStatic): $(ClassObjs)
 	ar rcs $@ $^
 
 doc:
-	@echo "Generating Documentations";			\
+	# @echo "Generating Documentations";			\
+	# @echo "HEADERS for DOCS : $(ClassHeaderDocs)\n\n"\
+	
 	clDoc generate $(includes) $(CXXFLAGS) -- 	\
 			--report 							\
 			--output html						\
 			--merge html/mergedocs/				\
-			$(ClassHeaders)
+			$(ClassHeaderDocs)
 	python /Users/danielbrandenburg/bnl/local/work/boiler/html/sanitize_std.py html/xml/
 
-
+cleandoc:
+	@rm -rf html/xml
+	@rm html/search.json
 
 
