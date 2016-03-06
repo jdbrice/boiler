@@ -1,11 +1,11 @@
-#include "ConfigFunction.h"
+#include "XmlFunction.h"
 #include "Utils.h"
 
 namespace jdb {
 
-	int ConfigFunction::instances = 0; 
+	int XmlFunction::instances = 0; 
 
-	ConfigFunction::ConfigFunction( XmlConfig * cfg, string nodePath, string pMod, string eMod, string formMod, string covMod ){
+	XmlFunction::XmlFunction( XmlConfig * cfg, string nodePath, string pMod, string eMod, string formMod, string covMod ){
 
 		string formula = cfg->getString( nodePath + formMod );
 		func = unique_ptr<TF1> (new TF1( ("xmlfunction_" + ts(instances)).c_str(), formula.c_str() ) );

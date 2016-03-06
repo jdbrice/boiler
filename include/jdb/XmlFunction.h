@@ -1,5 +1,5 @@
-#ifndef CONFIG_FUNCTION_H
-#define CONFIG_FUNCTION_H
+#ifndef JDB_XML_FUNCTION_H
+#define JDB_XML_FUNCTION_H
 
 // ROOBARB
 #include "XmlConfig.h"
@@ -18,7 +18,7 @@ namespace jdb{
 	 *
 	 * Loads a function from an XmlConfig.
 	 */
-	class ConfigFunction {
+	class XmlFunction {
 	protected:
 		// The ROOT TF1 object backing the function
 		shared_ptr<TF1> func = nullptr;
@@ -28,7 +28,7 @@ namespace jdb{
 		static int instances;
 	public:
 
-		static constexpr auto tag = "ConfigFunction";
+		static constexpr auto tag = "XmlFunction";
 
 		/* Creates a function from xml config
 		 *
@@ -38,11 +38,11 @@ namespace jdb{
 		 * @eMod 		Default : ':e' - the modifier to get the parameter error from node path
 		 * @formMod 	Default : ':formula' - the modifier to get the formula from node path
 		 */
-		ConfigFunction( XmlConfig * cfg, string nodePath, string pMod = ":p", string eMod = ":e", string formMod = ":formula", string covMod = ":cov");
+		XmlFunction( XmlConfig * cfg, string nodePath, string pMod = ":p", string eMod = ":e", string formMod = ":formula", string covMod = ":cov");
 		/* Destructor
 		 *
 		 */
-		~ConfigFunction() {}
+		~XmlFunction() {}
 
 		/* Evaluate the function
 		 * Checks for the valid state of function before eval
@@ -97,8 +97,6 @@ namespace jdb{
 	};
 
 }
-
-typedef ConfigFunction XmlFunction;
 
 
 #endif

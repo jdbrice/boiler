@@ -3,8 +3,8 @@
 
 #include "XmlConfig.h"
 #include "Utils.h"
-#include "ConfigRange.h"
-#include "ConfigPoint.h"
+#include "XmlRange.h"
+#include "XmlPoint.h"
 #include "Logger.h"
 
 
@@ -25,8 +25,8 @@ namespace jdb{
 		CutCollection( XmlConfig _config, string _nodePath ){ init( _config, nodePath ); }
 		~CutCollection(){}
 
-		map< string, shared_ptr<ConfigRange> > ranges;
-		shared_ptr<ConfigRange> operator[]( string name ) {
+		map< string, shared_ptr<XmlRange> > ranges;
+		shared_ptr<XmlRange> operator[]( string name ) {
 			if ( ranges.count( name ) > 0 )
 				return ranges[ name ];
 
@@ -53,7 +53,7 @@ namespace jdb{
 
 				if ( _config.exists( p + ":name" ) ){
 					string name = _config.getString( p + ":name" );	
-					shared_ptr<ConfigRange> cr = shared_ptr<ConfigRange>( new ConfigRange( &_config, p ) );	
+					shared_ptr<XmlRange> cr = shared_ptr<XmlRange>( new XmlRange( &_config, p ) );	
 
 					ranges[ name ] = cr;
 

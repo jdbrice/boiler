@@ -8,8 +8,8 @@ using namespace std;
 
 #include "XmlConfig.h"
 #include "Logger.h"
-#include "ConfigRange.h"
-#include "ConfigPoint.h"
+#include "XmlRange.h"
+#include "XmlPoint.h"
 
 namespace jdb {
 	class CutSequence{
@@ -21,7 +21,7 @@ namespace jdb {
 		public:
 			string name;	// name of variable to cut on in DataSource
 			string title;	// for plotting / printing
-			ConfigRange * cr;
+			XmlRange * cr;
 
 			string toString(){
 				return "< " + name + " : " + cr->toString() + " > ";
@@ -65,7 +65,7 @@ namespace jdb {
 					continue;
 				}
 				RangeCut rangeCut;
-				rangeCut.cr = new ConfigRange( cfg, children[ i ], std::numeric_limits<double>::min(), std::numeric_limits<double>::max()   );
+				rangeCut.cr = new XmlRange( cfg, children[ i ], std::numeric_limits<double>::min(), std::numeric_limits<double>::max()   );
 				rangeCut.name = cfg->getString( children[ i ] + ":name" );
 				rangeCut.title = cfg->getString( children[ i ] + ":title", "" );
 				rangeCuts.push_back( rangeCut );

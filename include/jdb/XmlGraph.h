@@ -1,5 +1,5 @@
-#ifndef CONFIG_GRAPH_H
-#define CONFIG_GRAPH_H
+#ifndef JDB_XML_GRAPH_H
+#define JDB_XML_GRAPH_H
 
 // ROOBARB
 #include "XmlConfig.h"
@@ -14,18 +14,18 @@
 #include "TGraphAsymmErrors.h"
 
 
-class ConfigGraph
+class XmlGraph
 {
 protected:
 
 	vector<double> x, y, exh, exl, eyh, eyl;
 public:
-	ConfigGraph( XmlConfig * cfg, string nodePath ){
+	XmlGraph( XmlConfig * cfg, string nodePath ){
 
 		x = cfg->getDoubleVector( nodePath + ".x" );
 		y = cfg->getDoubleVector( nodePath + ".y" );
 	}
-	~ConfigGraph(){
+	~XmlGraph(){
 		
 	}
 

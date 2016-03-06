@@ -8,8 +8,8 @@
 #include "Logger.h"
 #include "LoggerConfig.h"
 #include "HistoBook.h"
-#include "ConfigRange.h"
-#include "ConfigPoint.h"
+#include "XmlRange.h"
+#include "XmlPoint.h"
 #include "Reporter.h"
 // Interface
 	#include "IObject.h"

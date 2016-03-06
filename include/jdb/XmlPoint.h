@@ -1,5 +1,5 @@
-#ifndef CONFIG_POINT_H
-#define CONFIG_POINT_H
+#ifndef ROOBARB_XML_POINT_H
+#define ROOBARB_XML_POINT_H
 
 #include "XmlConfig.h"
 #include "Utils.h"
@@ -12,7 +12,7 @@ namespace jdb{
 	 *
 	 * This class is a utility class used for quickly loading and aliasing point data in an xml config
 	 *
-	 * **Headers** : ConfigPoint.h
+	 * **Headers** : XmlPoint.h
 	 *
 	 * XML should contain a node like:
 	 * ``` xml
@@ -20,7 +20,7 @@ namespace jdb{
 	 * ```
 	 * 
 	 */
-	class ConfigPoint
+	class XmlPoint
 	{
 	public:
 
@@ -43,7 +43,7 @@ namespace jdb{
 		 * <Point x="100" y="100" />
 		 * ```
 		 */
-		ConfigPoint( XmlConfig * cfg, std::string nodePath, double dX = 0, double dY = 0, string attrX = ":x", string attrY = ":y"){
+		XmlPoint( XmlConfig * cfg, std::string nodePath, double dX = 0, double dY = 0, string attrX = ":x", string attrY = ":y"){
 			if ( cfg ){
 				x = cfg->getDouble( nodePath + attrX, dX );
 				y = cfg->getDouble( nodePath + attrY, dY );
@@ -52,7 +52,7 @@ namespace jdb{
 				y = dY;
 			}
 		}
-		~ConfigPoint(){}
+		~XmlPoint(){}
 
 		/* Outputs the point as a human readable string
 		 *
@@ -62,7 +62,7 @@ namespace jdb{
 			return ("( " + dts( x ) + ", " + dts( y ) + " )");
 		}
 
-		ClassDef( jdb::ConfigPoint, 1 )
+		ClassDef( jdb::XmlPoint, 1 )
 	};
 
 }

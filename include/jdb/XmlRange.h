@@ -1,5 +1,5 @@
-#ifndef CONFIG_RANGE_H
-#define CONFIG_RANGE_H
+#ifndef JDB_XML_RANGE_H
+#define JDB_XML_RANGE_H
 
 #include "XmlConfig.h"
 #include "Utils.h"
@@ -9,17 +9,17 @@ using namespace jdb;
 
 namespace jdb{
 
-	/*ConfigRange easily loads (min -> max) ranges from XmlConfigs
+	/*XmlRange easily loads (min -> max) ranges from XmlConfigs
 	 *
 	 * This class is a utility class used for quickly loading and aliasing range data in an xml config
 	 *
-	 * **Headers** : ConfigRange.h
+	 * **Headers** : XmlRange.h
 	 *
 	 * ``` xml
 	 * <Range min="100" max="100" />
 	 * ```
 	 */
-	class ConfigRange
+	class XmlRange
 	{
 	public:
 		
@@ -41,7 +41,7 @@ namespace jdb{
 		 * <Range name="danny" min="100" max=":100" />
 		 * ```
 		 */
-		ConfigRange( XmlConfig * cfg, string np, double dMin = 0, double dMax = 0, string attrMin = ":min", string attrMax = ":max"){
+		XmlRange( XmlConfig * cfg, string np, double dMin = 0, double dMax = 0, string attrMin = ":min", string attrMax = ":max"){
 			if ( cfg ){
 				min = cfg->getDouble( np + attrMin, dMin );
 				max = cfg->getDouble( np + attrMax, dMax );
@@ -54,11 +54,11 @@ namespace jdb{
 		/* Default empty constructor
 		 * initializes min and max to 0
 		 */
-		ConfigRange( ) {
+		XmlRange( ) {
 			min = 0;
 			max = 0;
 		}
-		~ConfigRange(){}
+		~XmlRange(){}
 
 		/* Outputs the range as a human readable string
 		 *
@@ -155,7 +155,7 @@ namespace jdb{
 			return false;
 		} 
 #ifdef __CINT__
-		ClassDef( jdb::ConfigRange, 1)
+		ClassDef( jdb::XmlRange, 1)
 #endif
 	};
 
