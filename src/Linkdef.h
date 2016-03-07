@@ -29,5 +29,6 @@
 #pragma link C++ class jdb::RooPlotLib-;
 
 #pragma link C++ class jdb::TaskRunner+;
+#pragma link C++ class jdb::FitConfidence+;
 
 #endif

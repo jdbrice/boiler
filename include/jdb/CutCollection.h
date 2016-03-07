@@ -17,15 +17,36 @@ using namespace jdb;
 
 namespace jdb{
 
+	/* Collection of range cuts
+	 * Provides a collection of range cuts in a lookup table by name
+	 */
 	class CutCollection : public IConfig, public IObject {
 	public:
 
+		/* @inherit */
 		virtual const char* classname() const { return "CutCollection"; }
+		/* Default 
+		*/
 		CutCollection() {};
+		/* Create from config path
+		 * Creates all cuts <Range> children of "_nodePath"
+		 *
+		 * @_config XmlConfig
+		 * @_nodePath path to Ranges
+		 */
 		CutCollection( XmlConfig _config, string _nodePath ){ init( _config, _nodePath ); }
+		/* Default 
+		*/
 		~CutCollection(){}
 
+		// Map that holds range cuts
 		map< string, shared_ptr<XmlRange> > ranges;
+
+		/* Get a range cut
+		 * 
+		 * @name the name of the cut to get
+		 * @return XmlRange object
+		 */
 		shared_ptr<XmlRange> operator[]( string name ) {
 			if ( ranges.count( name ) > 0 )
 				return ranges[ name ];
@@ -33,6 +54,10 @@ namespace jdb{
 			return nullptr;
 		} // operator[]
 
+
+		/* Reports the cut names and ranges
+		 *
+		 */
 		void report() {
 			for ( auto k : ranges ){
 				INFO( classname(), k.first << " : " << k.second->toString() );

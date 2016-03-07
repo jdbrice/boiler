@@ -4,6 +4,9 @@
 #include "XmlConfig.h"
 
 namespace jdb{
+	/* Interface for classes using an XmlConfig
+	 * Provides an XmlConfig object and nodePath variable
+	 */
 	class IConfig
 	{
 	public:
