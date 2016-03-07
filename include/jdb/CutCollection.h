@@ -22,7 +22,7 @@ namespace jdb{
 
 		virtual const char* classname() const { return "CutCollection"; }
 		CutCollection() {};
-		CutCollection( XmlConfig _config, string _nodePath ){ init( _config, nodePath ); }
+		CutCollection( XmlConfig _config, string _nodePath ){ init( _config, _nodePath ); }
 		~CutCollection(){}
 
 		map< string, shared_ptr<XmlRange> > ranges;
@@ -33,12 +33,9 @@ namespace jdb{
 			return nullptr;
 		} // operator[]
 
-		static constexpr auto tag = "CutCollection";
-
-
 		void report() {
 			for ( auto k : ranges ){
-				INFO( tag, k.first << " : " << k.second->toString() );
+				INFO( classname(), k.first << " : " << k.second->toString() );
 			}
 		} // report
 
@@ -57,8 +54,8 @@ namespace jdb{
 
 					ranges[ name ] = cr;
 
-					DEBUG( tag, "Added cut range '" << name << "' " );
-					DEBUG( tag, cr->toString() );
+					DEBUG( classname(), "Added cut range '" << name << "' " );
+					DEBUG( classname(), cr->toString() );
 				}	
 			}
 		} // init

@@ -224,7 +224,7 @@ namespace jdb{
 		} else {
 			TaskTimer tt;
 			tt.start();
-			for ( int i = 0; i < leafName.size(); i++ ){
+			for ( unsigned int i = 0; i < leafName.size(); i++ ){
 				string name = leafName[ i ];
 				leafLength[ name ] = chainLeafLength( name );
 			}
@@ -237,7 +237,7 @@ namespace jdb{
 
 		vector<string> children = config.childrenOf( nodePath );
 
-		for ( int i = 0; i < children.size(); i++ ){
+		for ( unsigned int i = 0; i < children.size(); i++ ){
 
 			// we are only interested in the branch status nodes
 			if ( "BranchStatus" == config.tagName( children[ i ] )){
@@ -249,7 +249,7 @@ namespace jdb{
 
 				vector<string> bNames = config.getStringVector( path );
 
-				for ( int ib = 0; ib < bNames.size(); ib++ ){
+				for ( unsigned int ib = 0; ib < bNames.size(); ib++ ){
 					INFO( classname(), "Setting " << bNames[ ib ] << " to " << active );
 					chain->SetBranchStatus( bNames[ ib ].c_str(), status );
 				} // loop on branch names
@@ -259,7 +259,7 @@ namespace jdb{
 	void DataSource::makeAliases(){
 		vector<string> children = config.childrenOf( nodePath );
 
-		for ( int i = 0; i < children.size(); i++ ){
+		for ( unsigned int i = 0; i < children.size(); i++ ){
 
 			// we are only interested in the branch status nodes
 			if ( "Alias" == config.tagName( children[ i ] )){
@@ -277,7 +277,7 @@ namespace jdb{
 	void DataSource::makeEvaluatedLeaves(){
 		vector<string> children = config.childrenOf( nodePath );
 
-		for ( int i = 0; i < children.size(); i++ ){
+		for ( unsigned int i = 0; i < children.size(); i++ ){
 			string path = children[ i ];
 			// we are only interested in the branch status nodes
 			if ( "EvaluatedLeaf" == config.tagName( path ) && config.exists( path+":name" ) && config.exists( path+":value" ) ){
@@ -299,25 +299,25 @@ namespace jdb{
 		TLeaf * l = chain->GetLeaf( name.c_str() );
 		if ( !l ){
 			DEBUG( classname(), name << " is not a leaf" );
-			DEBUG( "Trying to get Branch->Leaf" )
+			DEBUG( classname(), "Trying to get Branch->Leaf" )
 			TBranch * b = chain->GetBranch( name.c_str() );
 			if ( b ){
 
 				size_t dotp = name.find( '.' );
 				if ( dotp != std::string::npos ){
 					string lname = name.substr( dotp + 1);
-					DEBUG( "Now looking for '" << lname << "' in the branch " << name  )
+					DEBUG( classname(), "Now looking for '" << lname << "' in the branch " << name  )
 
 					if ( b->GetLeaf( lname.c_str() ) ){
 						l = b->GetLeaf( lname.c_str() );
-						DEBUG( "Got usable branch" ); 
+						DEBUG( classname(), "Got usable branch" ); 
 					} else 
 						return dim;
 				} else 
 					return dim;
 
 			} else {
-				DEBUG( "Unable to find length for " << name )
+				DEBUG( classname(), "Unable to find length for " << name )
 				return dim;
 			}
 		}
@@ -386,7 +386,7 @@ namespace jdb{
 		// Set the Tree into decomposed object mode
 		chain->SetMakeClass(1);
 
-		for ( int i = 0; i < branchName.size(); i ++ ){
+		for ( unsigned int i = 0; i < branchName.size(); i ++ ){
 
 			// get the data type from the "leaf" stored as "BranchName_"
 			string bName = branchName[ i ];
@@ -410,10 +410,10 @@ namespace jdb{
 
 	void DataSource::addressLeaves() {
 
-		for ( int i = 0; i < leafName.size(); i++ ){
+		for ( unsigned int i = 0; i < leafName.size(); i++ ){
 
 			string name = leafName[ i ];
-			DEBUG( "Leaf Name = " << name )
+			DEBUG( classname(), "Leaf Name = " << name )
 			//Skip "leaves" for top level branches since these are already taken care of
 			TString addressName(name);
 			if ( addressName.EndsWith( "_" ) )	
@@ -445,7 +445,7 @@ namespace jdb{
 
 				TBranch * b = l->GetBranch();
 				if ( b )
-					DEBUG( "Leaf's Branch Address : " << b  )
+					DEBUG( classname(), "Leaf's Branch Address : " << b  )
 			}
 			
 
@@ -549,7 +549,7 @@ namespace jdb{
 
 		DEBUG( classname(), "" );
 		vector<string> cli = cache->childrenOf( "TreeInfo" );
-		for ( int i = 0; i < cli.size(); i++ ){
+		for ( unsigned int i = 0; i < cli.size(); i++ ){
 
 			string ln = cache->getString( cli[ i ] + ":name" );
 			int ls = cache->getInt( cli[ i ] +":size" );
@@ -585,7 +585,7 @@ namespace jdb{
 				leafType[ pname + "." + name ] = tName; 
 			}
 			else {
-				DEBUG( tName << " " <<  pname );
+				DEBUG( classname(), tName << " " <<  pname );
 				leafName.push_back( pname );
 				leafType[ pname ] = tName;	
 			}

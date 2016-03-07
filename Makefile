@@ -4,8 +4,10 @@ ARCH          = $(shell root-config --arch)
 
 
 #------------------------------------------------------------------------------
-Classes = Logger Reporter XmlConfig ChainLoader HistoBook TreeAnalyzer HistoAnalyzer \
-			DataSource EvaluatedLeaf RooPlotLib Utils XmlFunction TaskFactory \
+Classes = 	Logger Reporter XmlConfig ChainLoader HistoBook RooPlotLib Utils \
+			TaskFactory TreeAnalyzer HistoAnalyzer \
+			DataSource EvaluatedLeaf \
+			XmlFunction \
 			format
 HeaderOnlyClasses = LoggerConfig XmlPoint XmlRange XmlGraph CutCollection TaskRunner
 ##-----------------------------------------------------------------------------
@@ -19,12 +21,12 @@ hdrSuf        = h
 exeSuf        =
 
 ifeq ($(ARCH),macosx)
-	DllSuf        = dylib
+	DllSuf     	= dylib
 else
-	DllSuf        = so
+	DllSuf    	= so
 endif
 
-OutPutOpt     = -o 
+OutPutOpt     	= -o 
 
 # Root libs
 ROOTCFLAGS    	= $(shell root-config --cflags)
@@ -34,34 +36,34 @@ ROOTLDFLAGS    	= $(shell root-config --ldflags)
 
 includes		= -I$(JDB_LIB)/include -I$(JDB_LIB)/include/jdb -I. -I$(ROOTSYS)/include -I$(ROOTDEV)/include 
 
-CXX           = g++ -o3 -DJDB_LOG_LEVEL=60 -Wgnu-zero-variadic-macro-arguments -Wall -Wextra -pedantic 
-CXXFLAGS      = -std=c++11 -fPIC 
-LD            = g++
-LDFLAGS       = -std=c++11 $(includes)
+CXX           	= g++ -o3 -Wall -Wextra -pedantic -DJDB_LOG_LEVEL=60
+CXXFLAGS      	= -std=c++11 -fPIC 
+LD            	= g++
+LDFLAGS       	= -std=c++11 $(includes)
 
 
 
 ifeq ($(ARCH),macosx64)
-	SOFLAGS       = -dynamiclib -single_module -undefined dynamic_lookup
+	SOFLAGS   	= -dynamiclib -single_module -undefined dynamic_lookup
 else
-	SOFLAGS       = -shared
+	SOFLAGS    	= -shared
 endif
 
 
-CXXFLAGS     += $(ROOTCFLAGS)
-LIBS          = $(ROOTLIBS) $(SYSLIBS)
-LDFLAGS 	+= $(ROOTLDFLAGS)
+CXXFLAGS     	+= $(ROOTCFLAGS)
+LIBS          	= $(ROOTLIBS) $(SYSLIBS)
+LDFLAGS 		+= $(ROOTLDFLAGS)
 
 
 #------------------------------------------------------------------------------
-Dictionary = dictionary
-DictionaryObj = $(srcDir)/$(Dictionary).$(objSuf)
+Dictionary 		= dictionary
+DictionaryObj 	= $(srcDir)/$(Dictionary).$(objSuf)
 
-ClassSource = $(addsuffix .$(srcSuf), $(addprefix $(srcDir)/, $(Classes)))
-ClassHeaders = $(addsuffix .$(hdrSuf), $(addprefix $(incDir)/, $(Classes)))
-ClassHeaders += $(addsuffix .$(hdrSuf), $(addprefix $(incDir)/, $(HeaderOnlyClasses)))
-ClassObjs = $(addprefix $(srcDir)/, $(addsuffix .$(objSuf), $(Classes)))
-NoDocs = include/jdb/format.h
+ClassSource 	= $(addsuffix .$(srcSuf), $(addprefix $(srcDir)/, $(Classes)))
+ClassHeaders 	= $(addsuffix .$(hdrSuf), $(addprefix $(incDir)/, $(Classes)))
+ClassHeaders 	+= $(addsuffix .$(hdrSuf), $(addprefix $(incDir)/, $(HeaderOnlyClasses)))
+ClassObjs 		= $(addprefix $(srcDir)/, $(addsuffix .$(objSuf), $(Classes)))
+NoDocs 			= include/jdb/format.h
 ClassHeaderDocs = $(filter-out $(NoDocs),$(ClassHeaders))
 
 #------------------------------------------------------------------------------
@@ -70,7 +72,7 @@ ClassHeaderDocs = $(filter-out $(NoDocs),$(ClassHeaders))
 
 jdbLibSo		= $(libDir)/libJDB.$(DllSuf)
 jdbLibStatic	= $(libDir)/libJDB.a
-sources := $(shell find src -mindepth 1 -maxdepth 4 -name "*.cpp")
+sources 		:= $(shell find src -mindepth 1 -maxdepth 4 -name "*.cpp")
 
 .PHONY: $(ClassHeaders)
 

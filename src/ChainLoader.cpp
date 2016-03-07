@@ -36,7 +36,7 @@ namespace jdb{
 			if (maxFiles <= 0)
 				maxFiles = 10000000;
 
-			uint nFiles = 0;
+			int nFiles = 0;
 			DIR *dir;
 			struct dirent *ent;
 			bool go = true;

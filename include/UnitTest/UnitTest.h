@@ -11,38 +11,102 @@ using namespace jdb;
 
 // STL
 #include <string>
+#include <sstream>
 using namespace std;
 
 // ROOT
 #include "TNamed.h"
 
+
+// Unit testing macros
 #define UT_EQ( x, y ) UnitTest::eq( x, y )
 #define UT_R_NAMED( x, y ) UnitTest::root_named( x, y )
+#define UT_TRUE( x ) UnitTest::eq_true( x )
 
-class UnitTest{
+
+#define UT_PASSED UnitTest::passed
+#define UT_FAILED !UnitTest::passed
+
+#define UT_START(x) UnitTest::start( x )
+#define UT_SUMMARY UnitTest::summary()
+
+
+class UnitTest {
 
 public:
     // state of the last run op
-    bool pass;
+    static bool passed;
+    static int nPassed;
+    static int nFailed;
+    static int nTotal;
+
+    static void start( string msg = ""){
+        nTotal = 0;
+        nPassed = 0;
+        nFailed = 0;
+        INFO( "UnitTest", yellow("Starting Unit Tests for " + msg ) );
+    }
+
+    static string summary(){
+        stringstream sstr;
+        sstr << green( "PASSED " ) << nPassed << " of " << nTotal;
+        if ( nFailed > 0 ){
+            sstr << ", " << red( "FAILED " ) << nFailed << " of " << nTotal;
+        }
+        sstr << endl;
+        return sstr.str();
+    }
+
+    static string green( string in ) {
+        return "\033[1;32m" + in + "\033[0;m";
+    }
+
+    static string red( string in ) {
+        return "\033[1;31m" + in + "\033[0;m";
+    }
+
+    static string yellow( string in ){
+        return "\033[1;33m" + in + "\033[0;m";
+    }
 
     static string eq( int life, int hope ){
-        // 033[1;32m
-        // 033[0;m
-
-        if ( life == hope )
-            return ts( life ) + " PASS";
+        nTotal++;
+        if ( life == hope ){
+            passed = true;
+            nPassed ++;
+            return green( "PASS" );
+        }
         else {
-            return  ts(life) + " != " + ts(hope) + " FAIL";
+            passed = false;
+            nFailed++;
+            return  ts(life) + " != " + ts(hope) + red( " FAIL" );
         }
     }
+
+    static string eq( string life, string hope ){
+        // 033[1;32m
+        // 033[0;m
+        nTotal++;
+        if ( life == hope ){
+            passed = true;
+            nPassed ++;
+            return green( "PASS" );
+        }
+        else {
+            passed = false;
+            nFailed++;
+            return  "\"" + life + "\" != \"" + hope + "\"" + red( " FAIL" );
+        }
+    }
+
     static string nn( void * val ){
         // 033[1;32m
         // 033[0;m
 
         if ( NULL == val || nullptr == val )
-            return  "NULL/nullptr FAIL";
+            return  green("NULL/nullptr FAIL");
         else {
-            return "Valid Pointer PASS";
+            return red("Valid Pointer PASS");
             
         }
     }
@@ -52,9 +116,13 @@ public:
             return nn( obj );
 
         if ( obj->GetName() == name )
-            return "Object " + name + " PASS";
+            return green("Object " + name + " PASS");
         else
-            return "Object " + string(obj->GetName()) + " != " + name + " FAIL";
+            return red("Object " + string(obj->GetName()) + " != " + name + " FAIL");
+    }
+
+    static string eq_true( int life ){
+        return eq( life, true );
     }
 
 
@@ -62,3 +130,11 @@ public:
 
 
 #endif //ROOBARB_UNITTEST_H
+
+
+#ifdef UNITTEST_NO_CXX
+    bool UnitTest::passed = false;
+    int UnitTest::nPassed = 0;
+    int UnitTest::nFailed = 0;
+    int UnitTest::nTotal = 0;
+#endif

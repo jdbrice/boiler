@@ -476,7 +476,7 @@ namespace jdb {
 			nodePath = sanitize( nodePath );
 			if ( "" == nodePath ) return -1;
 			int depth = 0;
-			for ( int i = 0; i < nodePath.length(); i++ ){
+			for ( unsigned int i = 0; i < nodePath.length(); i++ ){
 				if ( pathDelim == nodePath[ i ] )
 					depth++;
 			}

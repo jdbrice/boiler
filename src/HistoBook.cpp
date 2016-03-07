@@ -121,6 +121,7 @@ namespace jdb{
 	}	// Destructor
 
 	void HistoBook::save(bool saveAllInDirectory ) const  {
+		// TODO: fix hard code below!
 		DEBUG( classname(), " Save to File " << filename );
 		
 		if ( true )
@@ -208,7 +209,7 @@ namespace jdb{
 
 		// save the histo to the map
 		book[ fullPath ] = h;
-		DEBUG( " Adding \"" << fullPath <<"\"" );
+		DEBUG( classname(), "Adding \"" << fullPath <<"\"" );
 
 		// this is kept for legacy
 		//add( name, (TObject*)h );
@@ -409,7 +410,7 @@ namespace jdb{
 
 		vector<string> paths = config.childrenOf( nodeName );
 		TRACE( classname(), " Found " << paths.size() << " histogram paths " );
-		for ( int i=0; i < paths.size(); i++ ){
+		for ( unsigned int i=0; i < paths.size(); i++ ){
 			if ( "Include" == config.tagName( paths[ i ] ) ) continue;
 
 			make( config, paths[ i ] );
@@ -470,7 +471,7 @@ namespace jdb{
 		DEBUG( classname(), "( name=\"" << name << "\" dir=\"" << sdir << "\")");
 
 		if ( book.count( sdir + name ) <= 0 ) {
-			DEBUG( sdir + name  << " Does Not Exist " ) 
+			DEBUG( classname(), sdir + name  << " Does Not Exist " ) 
 			return false;
 		}
 
@@ -581,10 +582,16 @@ namespace jdb{
 		gStyle->SetFillStyle(4000);
 	}	//globalStyle
 
-	void HistoBook::ls( bool print ){
+	string HistoBook::ls( bool print ){
+		
+		stringstream lss;
 		for( auto k : book ) {
-			INFO( classname(), "[\"" << k.first << "\"] = " << k.second );
+			if ( print ){
+				INFO( classname(), "[\"" << k.first << "\"] = " << k.second );
+			}
+			lss << "[\"" << k.first << "\"] = " << k.second << endl;
 		}
+		return lss.str();
 	}
 	bool HistoBook::is1D(string name, string sdir){
 		DEBUG( classname(), "( name=\"" << name << "\" dir=\"" << sdir << "\")");

@@ -107,12 +107,12 @@ namespace jdb{
 		 */
 		template <typename T>
 		inline T get(string name, int i = 0 ){
-			DEBUG( "Checking for valid pointer at " << name );
+			DEBUG( classname(), "Checking for valid pointer at " << name );
 			if ( !data[ name ]){
 				DEBUG( classname(), name << "[ " << i << " ] Invalid data" );
 				return numeric_limits<T>::quiet_NaN();	
 			}
-			DEBUG( "Checking for valid length" )
+			DEBUG( classname(), "Checking for valid length" )
 			if ( i >= leafLength[ name ] || i < 0 ){
 				DEBUG( classname(), name << "[ " << i << " ] Out Of Bounds" );
 				return numeric_limits<T>::quiet_NaN();

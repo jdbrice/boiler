@@ -28,8 +28,10 @@ using namespace std;
 // TODO: Add @UnitTest for RooPlotLib (1)
 // TODO: Add @documentation for RooPlotLib (0)
 
+#include "IObject.h"
+
 namespace jdb{
-	class RooPlotLib {
+	class RooPlotLib : public IObject {
 
 	protected:
 
@@ -45,6 +47,7 @@ namespace jdb{
 
 	public:
 
+		virtual const char* classname() const { return "RooPlotLib"; }
 	    RooPlotLib ();
 	    ~RooPlotLib();
 

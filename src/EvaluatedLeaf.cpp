@@ -27,7 +27,7 @@ namespace jdb{
 
 	double EvaluatedLeaf::eval( DataSource * ds, int iTrack ){
 
-		for ( int i = 0; i < params.size(); i ++ ){
+		for ( unsigned int i = 0; i < params.size(); i ++ ){
 			double p = ds->get( params[ i ], iTrack );
 			fun->SetParameter( i, p );
 		}

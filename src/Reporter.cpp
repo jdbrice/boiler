@@ -23,7 +23,7 @@ namespace jdb{
 	}
 
 	Reporter::Reporter( XmlConfig &config, string np, string prefix ){
-		DEBUG( "( config, np=" << np << ", prefix=" << prefix << ")" )
+		DEBUG( classname(), "( config, np=" << np << ", prefix=" << prefix << ")" )
 
 		this->config = config;
 		this->nodePath = config.basePath( np );
@@ -36,13 +36,13 @@ namespace jdb{
 		canvas = new TCanvas( ("Reporter" + ts( instances ) ).c_str() , "canvas", w, h);
 		canvas->Print( ( filename + "[" ).c_str() );
 		
-		DEBUG( " Opening " << filename ) 
+		DEBUG( classname(), " Opening " << filename ) 
 		
 		instances++;
 
 		isOpen = true;
 
-		DEBUG( " Instance #" << instances )
+		DEBUG( classname(), " Instance #" << instances )
 	}
 
 	Reporter::~Reporter() {

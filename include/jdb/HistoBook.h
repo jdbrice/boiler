@@ -92,7 +92,7 @@ namespace jdb{
 
 
 
-		void ls( bool print = true );
+		string ls( bool print = true );
 		
 		void add( string name, TH1 * );
 		void add( string name, TObject* );

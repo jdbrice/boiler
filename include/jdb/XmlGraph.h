@@ -37,7 +37,7 @@ namespace jdb {
 			int index = -1;
 			// first find the two points we are between
 			// we assume monotomically increasing values of x
-			for ( int iX = 0; iX < x.size() - 1; iX++ ){
+			for ( unsigned int iX = 0; iX < x.size() - 1; iX++ ){
 				if ( x_val < x[ iX + 1] ){
 					index = iX;
 					break;

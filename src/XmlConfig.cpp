@@ -70,7 +70,7 @@ namespace jdb{
 		
 		map<string, string> rmap;
 		// now we need to split each pair
-		for ( int i = 0; i < pairVec.size(); i++ ){
+		for ( unsigned int i = 0; i < pairVec.size(); i++ ){
 			pair<string, string> parts = stringToPair( pairVec[ i ], mapDelim );
 			rmap[ parts.first ] = parts.second;
 		}
@@ -85,7 +85,7 @@ namespace jdb{
 		
 		map<int, int> rmap;
 		// now we need to split each pair
-		for ( int i = 0; i < pairVec.size(); i++ ){
+		for ( unsigned int i = 0; i < pairVec.size(); i++ ){
 			pair<string, string> parts = stringToPair( pairVec[ i ], mapDelim );
 			rmap[ atoi( parts.first.c_str() ) ] = atoi( parts.second.c_str() );
 		}
@@ -111,7 +111,7 @@ namespace jdb{
 
 		vector<string> vec = getStringVector( nodePath );
 		
-		for ( int i = 0; i < vec.size(); i++  ){
+		for ( unsigned int i = 0; i < vec.size(); i++  ){
 			d.push_back( atoi( vec[ i ].c_str() ) );
 		}
 		return d;
@@ -126,7 +126,7 @@ namespace jdb{
 	vector<double> XmlConfig::getDoubleVector( string nodePath ) const{
 		vector<string> vec = getStringVector( nodePath );
 		vector<double> d;
-		for ( int i = 0; i < vec.size(); i++  ){
+		for ( unsigned int i = 0; i < vec.size(); i++  ){
 			d.push_back( atof( vec[ i ].c_str() ) );
 		}
 		return d;
@@ -179,7 +179,7 @@ namespace jdb{
 		 * Remove internal whitespaces
 		 */
 		string ret = "";
-		for ( int i = 0; i < nodePath.length(); i++ ){
+		for ( unsigned int i = 0; i < nodePath.length(); i++ ){
 			if ( nodePath[i] != ' ' )
 				ret += (char)nodePath[ i ];
 		}
@@ -215,7 +215,7 @@ namespace jdb{
 				
 		vector<string> d = split( data, ',' );
 		
-		for ( int i = 0; i < d.size(); i++ ){
+		for ( unsigned int i = 0; i < d.size(); i++ ){
 			d[ i ] =  trim( d[ i ] );
 		}
 		return d;
@@ -241,7 +241,7 @@ namespace jdb{
 
 	string XmlConfig::manualToLower( string str ) const {
 		string str2 = str;
-		for ( int i = 0; i < str.length(); i++ ){
+		for ( unsigned int i = 0; i < str.length(); i++ ){
 			str2[ i ] = std::tolower( str[ i ] );
 		}
 		return str2;
@@ -254,7 +254,7 @@ namespace jdb{
 		}
 		if ( ntf.size() >= 2 ){
 			string fullPath ="";
-			for ( int i = 0; i < ntf.size() - 1; i++ ){
+			for ( unsigned int i = 0; i < ntf.size() - 1; i++ ){
 				fullPath += (ntf[ i ] + pathDelim );
 			}
 
@@ -329,6 +329,8 @@ namespace jdb{
 	}
 
 	vector<string> XmlConfig::childrenOf( string nodePath, string tag, int depth) const {
+
+		// TODO: add depth awareness
 
 		nodePath = sanitize( nodePath );
 		if ( 	nodePath[ nodePath.length() - 1] != pathDelim && 
@@ -480,23 +482,21 @@ namespace jdb{
 		return make_pair( "", "");
 	}
 
-	//vector<string> nodesWhere( string nodePath, string attr, string equals )
-
 
 	void XmlConfig::parseIncludes() {
-		DEBUG( "" );
+		DEBUG( classname(), "" );
 		vector<string> allPaths = childrenOf( "", "Include" );
 
-		DEBUG( "Found " << allPaths.size() << " Include Tag(s)" );
+		DEBUG( classname(), "Found " << allPaths.size() << " Include Tag(s)" );
 
 		for ( string path : allPaths ){
-			DEBUG( path )
-			DEBUG( "parent path: " << pathToParent( path ) )
+			DEBUG( classname(), path )
+			DEBUG( classname(), "parent path: " << pathToParent( path ) )
 
 			string ifn = getString( path + ":url" );
 			struct stat buffer;
 			bool exists = (stat (ifn.c_str(), &buffer) == 0);
-			DEBUG( "file " << ifn << " exists " << exists )
+			DEBUG( classname(), "file " << ifn << " exists " << exists )
 
 			// if we can't find it from the path directly then try relative to base config path
 			if ( !exists ) { // try relative to this config file
@@ -504,7 +504,7 @@ namespace jdb{
 				ifn = basePath + ifn;
 
 				exists = (stat (ifn.c_str(), &buffer) == 0);
-				DEBUG( "file " << ifn << " exists " << exists )
+				DEBUG( classname(), "file " << ifn << " exists " << exists )
 			}
 
 			if ( exists ){

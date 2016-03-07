@@ -117,9 +117,9 @@ namespace jdb{
 		 * @binIndex 	bin Index
 		 * @return 		bin width or 0.0 for error (also issues an ERROR(...) log)
 		 */
-		static double binWidth( vector<double> &bins, int binIndex = 0 ){
+		static double binWidth( vector<double> &bins, unsigned int binIndex = 0 ){
 
-			if ( binIndex < 0 || binIndex >= bins.size() ){
+			if ( binIndex >= bins.size() ){
 				ERROR( "HistoBins", "Bin Index " << binIndex << " out of range ( 0, " << bins.size() << " )" );
 				return 0.0;
 			}

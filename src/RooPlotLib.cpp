@@ -12,7 +12,7 @@ ClassImp( jdb::RooPlotLib );
  * 
  */
 jdb::RooPlotLib::RooPlotLib()  {
-    DEBUG("")
+    DEBUG(classname(), "");
 	// create a default canvas for generic plotting
 	//canvas[ "default" ] = shared_ptr<XmlCanvas>( new XmlCanvas( nullptr, "" ) );
 
@@ -23,11 +23,11 @@ jdb::RooPlotLib::RooPlotLib()  {
  * Dtor
  */
 jdb::RooPlotLib::~RooPlotLib(){
-    DEBUG("")
+    DEBUG(classname(), "")
 }
 
 bool jdb::RooPlotLib::validObject( TObject * obj ){
-    DEBUG("( " << obj << " )")
+    DEBUG(classname(), "( " << obj << " )")
 	if ( nullptr == obj  )
 		return false;
 
@@ -38,11 +38,11 @@ bool jdb::RooPlotLib::validObject( TObject * obj ){
 
 
 RooPlotLib & jdb::RooPlotLib::style( TObject * obj) {
-    DEBUG("( " << obj << " )")
+    DEBUG(classname(), "( " << obj << " )")
     styling = obj;
 
     if ( cfgForDefaultStyle != nullptr ){ 
-    	DEBUG( "Setting Default Style at : " << defaultStylePath )
+    	DEBUG(classname(),  "Setting Default Style at : " << defaultStylePath )
     	set( cfgForDefaultStyle, defaultStylePath );
     }
     
@@ -52,7 +52,7 @@ RooPlotLib & jdb::RooPlotLib::style( TObject * obj) {
 
 
 RooPlotLib &jdb::RooPlotLib::set( string option, initializer_list<string> l ){
-    DEBUG( "( " << option <<", initializer_list " << " )" );
+    DEBUG(classname(),  "( " << option <<", initializer_list " << " )" );
 	vector<string> params( l.begin(), l.end() );
 	return set( option, params );
 }
@@ -65,9 +65,9 @@ RooPlotLib &jdb::RooPlotLib::set( string option, initializer_list<string> l ){
  * styles loaded from configs etc.
  */
 RooPlotLib &jdb::RooPlotLib::set( string option, vector<string> params ){
-	DEBUG("( "<< option << " )")
+	DEBUG(classname(), "( "<< option << " )")
 	if ( nullptr == styling ){
-		ERROR( "Invalid object" );
+		ERROR( classname(), "Invalid object" );
 		return *this;
 	}
 
@@ -296,13 +296,13 @@ RooPlotLib &jdb::RooPlotLib::set( string option, vector<string> params ){
 }
 
 RooPlotLib &jdb::RooPlotLib::set( XmlConfig * cfg, string nodePath ){
-	DEBUG("");
+	DEBUG(classname(), "");
 
 	// get the list of attributes and set the style from that
 	vector< string > list = cfg->attributesOf( nodePath );
-	for ( int i = 0; i < list.size(); i++ ){
+	for ( unsigned int i = 0; i < list.size(); i++ ){
 		vector<string> params = cfg->getStringVector( list[ i ] );
-		DEBUG( "attr : " << cfg->attributeName( list[ i ] )  );
+		DEBUG( classname(), "attr : " << cfg->attributeName( list[ i ] )  );
 
 		if ( 0 == params.size()  )
 			params.push_back( "" );
@@ -314,9 +314,9 @@ RooPlotLib &jdb::RooPlotLib::set( XmlConfig * cfg, string nodePath ){
 
 
 RooPlotLib &jdb::RooPlotLib::draw(){
-    DEBUG("");
+    DEBUG(classname(), "");
 	if ( nullptr == styling ){
-		ERROR( "Invalid object" );
+		ERROR( classname(), "Invalid object" );
 		return *this;
 	}
 
@@ -328,7 +328,7 @@ RooPlotLib &jdb::RooPlotLib::draw(){
 
 // TODO: Add more colors
 int jdb::RooPlotLib::color( string color ) {
-    DEBUG("( " + color + " )");
+    DEBUG(classname(), "( " + color + " )");
 	transform(color.begin(), color.end(), color.begin(), ::tolower);
 	if ( "red" == color )
 		return kRed;

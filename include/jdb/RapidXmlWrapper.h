@@ -27,7 +27,7 @@ protected:
 public:
 	RapidXmlWrapper( string filename = "config.xml" ){
 
-        DEBUG( "( filename=" << filename << " )" )
+        DEBUG( "RapidXmlWrapper", "( filename=" << filename << " )" )
 		fname = filename;
 		configFile = getFileContents( filename.c_str() );
 
@@ -190,19 +190,6 @@ public:
 			makeMap( child, path, data, isAttribute, exists );
 
 		}
-
-	}
-
-
-
-	void saveMapToXml( string filename ){
-
-
-		
-
-
-
-
 
 	}
 

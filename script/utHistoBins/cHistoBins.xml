@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- A root node is required -->
+<!--  It can be anything <root></root>, it just has to exist -->
+<config>
+
+	<pt width="1" min="0" max="10" />
+	<p width="0.1" min="0" max="10" />
+	<eta nBins="500" min="0" max="10" />
+	<var> 1, 7, 8, 9, 11, 16, 20, 25</var>
+
+</config>
