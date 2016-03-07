@@ -5,10 +5,12 @@ modules that take a root file containing histograms as input.
 
 </doc>
   <base access="public">
-    <type name="IConfig" />
+    <type name="IConfig" ref="jdb::IConfig#jdb::IConfig" />
+    <brief>Interface for classes using an XmlConfig</brief>
   </base>
   <base access="public">
-    <type name="IObject" />
+    <type name="IObject" ref="jdb::IObject#jdb::IObject" />
+    <brief>Generic Object Interface</brief>
   </base>
   <constructor abstract="yes" id="jdb::HistoAnalyzer::HistoAnalyzer" name="HistoAnalyzer">
     <brief> Creates a HistoAnalyzer from an Xml Config</brief>
@@ -28,10 +30,11 @@ modules that take a root file containing histograms as input.
     <doc>Saves output and closes input
 </doc>
   </destructor>
-  <method id="jdb::HistoAnalyzer::classname" name="classname" virtual="yes">
+  <method id="jdb::HistoAnalyzer::classname" name="classname" override="yes" virtual="yes">
     <return>
       <type builtin="yes" name="char" qualifier=" const *" />
     </return>
+    <override name="IObject::classname" ref="jdb::IObject#jdb::IObject::classname" />
   </method>
   <method id="jdb::HistoAnalyzer::make" name="make" virtual="yes">
     <brief> The Maker function</brief>

@@ -3,20 +3,23 @@
     <type name="ITaskRunner" />
   </base>
   <base access="public">
-    <type name="IConfig" />
+    <type name="IConfig" ref="jdb::IConfig#jdb::IConfig" />
+    <brief>Interface for classes using an XmlConfig</brief>
   </base>
   <base access="public">
-    <type name="IObject" />
+    <type name="IObject" ref="jdb::IObject#jdb::IObject" />
+    <brief>Generic Object Interface</brief>
   </base>
   <subclass access="public" name="TreeAnalyzer" ref="jdb::TreeAnalyzer#jdb::TreeAnalyzer">
     <brief>Boiler for analyzing data distributed accross TTrees in many files</brief>
   </subclass>
   <constructor id="jdb::TaskRunner::TaskRunner" name="TaskRunner" />
   <destructor id="jdb::TaskRunner::~TaskRunner" name="~TaskRunner" virtual="yes" />
-  <method id="jdb::TaskRunner::classname" name="classname" virtual="yes">
+  <method id="jdb::TaskRunner::classname" name="classname" override="yes" virtual="yes">
     <return>
       <type builtin="yes" name="char" qualifier=" const *" />
     </return>
+    <override name="IObject::classname" ref="jdb::IObject#jdb::IObject::classname" />
   </method>
   <method id="jdb::TaskRunner::init" name="init" virtual="yes">
     <return>

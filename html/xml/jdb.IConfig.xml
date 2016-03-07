@@ -1,0 +1,30 @@
+<class xmlns="http://jessevdk.github.com/cldoc/1.0" id="jdb::IConfig" name="IConfig">
+  <brief>Interface for classes using an XmlConfig</brief>
+  <doc>Provides an XmlConfig object and nodePath variable
+</doc>
+  <subclass access="public" name="DataSource" ref="jdb::DataSource#jdb::DataSource">
+    <brief>Automatically maps tree branches and leaves</brief>
+  </subclass>
+  <subclass access="public" name="HistoBook" ref="jdb::HistoBook#jdb::HistoBook">
+    <brief>A book keeper and helper for storing and using ROOT histograms</brief>
+  </subclass>
+  <subclass access="public" name="TaskRunner" ref="jdb::TaskRunner#jdb::TaskRunner" />
+  <subclass access="public" name="HistoAnalyzer" ref="jdb::HistoAnalyzer#jdb::HistoAnalyzer">
+    <brief>Base class for creating histogram analysis projects</brief>
+  </subclass>
+  <subclass access="public" name="Reporter" ref="jdb::Reporter#jdb::Reporter">
+    <brief>Create PDF Reports in ROOT</brief>
+  </subclass>
+  <subclass access="public" name="CutCollection" ref="jdb::CutCollection#jdb::CutCollection">
+    <brief>Collection of range cuts</brief>
+  </subclass>
+  <destructor id="jdb::IConfig::~IConfig" name="~IConfig" virtual="yes" />
+  <field access="protected" id="jdb::IConfig::config" name="config">
+    <brief>the XmlConfig for this object</brief>
+    <type name="XmlConfig" ref="jdb::XmlConfig#jdb::XmlConfig" />
+  </field>
+  <field access="protected" id="jdb::IConfig::nodePath" name="nodePath">
+    <brief>path to this objects data if applicable</brief>
+    <type name="string" />
+  </field>
+</class>

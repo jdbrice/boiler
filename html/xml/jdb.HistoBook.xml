@@ -1,10 +1,12 @@
 <class xmlns="http://jessevdk.github.com/cldoc/1.0" abstract="true" id="jdb::HistoBook" name="HistoBook">
   <brief>A book keeper and helper for storing and using ROOT histograms</brief>
   <base access="public">
-    <type name="IConfig" />
+    <type name="IConfig" ref="jdb::IConfig#jdb::IConfig" />
+    <brief>Interface for classes using an XmlConfig</brief>
   </base>
   <base access="public">
-    <type name="IObject" />
+    <type name="IObject" ref="jdb::IObject#jdb::IObject" />
+    <brief>Generic Object Interface</brief>
   </base>
   <constructor abstract="yes" id="jdb::HistoBook::HistoBook" name="HistoBook">
     <argument id="jdb::HistoBook::HistoBook::name" name="name">
@@ -68,10 +70,11 @@ Subdirectories can be used if the entire path is given, paths are never relative
       <type name="string" />
     </argument>
   </method>
-  <method id="jdb::HistoBook::classname" name="classname" virtual="yes">
+  <method id="jdb::HistoBook::classname" name="classname" override="yes" virtual="yes">
     <return>
       <type builtin="yes" name="char" qualifier=" const *" />
     </return>
+    <override name="IObject::classname" ref="jdb::IObject#jdb::IObject::classname" />
   </method>
   <method abstract="yes" id="jdb::HistoBook::clone" name="clone">
     <return>
@@ -276,7 +279,7 @@ If the histo DNE then an error is reported through the Logger and execution cont
   </method>
   <method abstract="yes" id="jdb::HistoBook::ls" name="ls">
     <return>
-      <type builtin="yes" name="void" />
+      <type name="string" />
     </return>
     <argument id="jdb::HistoBook::ls::print" name="print">
       <type builtin="yes" name="bool" />

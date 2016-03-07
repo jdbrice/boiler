@@ -1,4 +1,7 @@
 <class xmlns="http://jessevdk.github.com/cldoc/1.0" id="jdb::XmlGraph" name="XmlGraph">
+  <brief>TGraph as xml</brief>
+  <doc>Stores and loads a TGraph as xml structure
+</doc>
   <constructor id="jdb::XmlGraph::XmlGraph" name="XmlGraph">
     <argument id="jdb::XmlGraph::XmlGraph::cfg" name="cfg">
       <type name="XmlConfig" qualifier="*" ref="jdb::XmlConfig#jdb::XmlConfig" />
@@ -9,6 +12,7 @@
   </constructor>
   <destructor id="jdb::XmlGraph::~XmlGraph" name="~XmlGraph" />
   <method id="jdb::XmlGraph::eval" name="eval">
+    <brief> Evaluates the graph using the given method</brief>
     <return>
       <type builtin="yes" name="double" />
     </return>
@@ -20,7 +24,9 @@
     </argument>
   </method>
   <method id="jdb::XmlGraph::linterp" name="linterp">
+    <brief> Linear interpolate between points</brief>
     <return>
+      <doc>interpolated value</doc>
       <type builtin="yes" name="double" />
     </return>
     <argument id="jdb::XmlGraph::linterp::x" name="x">
@@ -37,6 +43,51 @@
     </argument>
     <argument id="jdb::XmlGraph::linterp::y1" name="y1">
       <type builtin="yes" name="double" />
+    </argument>
+  </method>
+  <method id="jdb::XmlGraph::toXml" name="toXml" static="yes">
+    <brief> Converts a Root Graph (TGraph or subclass) to an xml data node</brief>
+    <return>
+      <doc>string representing the Graph as XML attributes</doc>
+      <type name="string" />
+    </return>
+    <argument id="jdb::XmlGraph::toXml::g" name="g">
+      <doc>Graph to export as XML attributes</doc>
+      <type name="TGraph" qualifier="*" />
+    </argument>
+    <argument id="jdb::XmlGraph::toXml::linePrefix" name="linePrefix">
+      <doc>prefix for lines</doc>
+      <type name="string" />
+    </argument>
+  </method>
+  <method id="jdb::XmlGraph::toXml" name="toXml" static="yes">
+    <brief> Converts a Root Graph with symmetric errors (TGraph or subclass) to an xml data node</brief>
+    <return>
+      <doc>string representing the Graph as XML attributes</doc>
+      <type name="string" />
+    </return>
+    <argument id="jdb::XmlGraph::toXml::g" name="g">
+      <doc>Graph to export as XML attributes</doc>
+      <type name="TGraphErrors" qualifier="*" />
+    </argument>
+    <argument id="jdb::XmlGraph::toXml::linePrefix" name="linePrefix">
+      <doc>prefix for lines</doc>
+      <type name="string" />
+    </argument>
+  </method>
+  <method id="jdb::XmlGraph::toXml" name="toXml" static="yes">
+    <brief> Converts a Root Graph with asymmetric errors (TGraphAsymmErrors or subclass) to an xml data node</brief>
+    <return>
+      <doc>string representing the Graph as XML attributes</doc>
+      <type name="string" />
+    </return>
+    <argument id="jdb::XmlGraph::toXml::g" name="g">
+      <doc>Graph to export as XML attributes</doc>
+      <type name="TGraphAsymmErrors" qualifier="*" />
+    </argument>
+    <argument id="jdb::XmlGraph::toXml::linePrefix" name="linePrefix">
+      <doc>prefix for lines</doc>
+      <type name="string" />
     </argument>
   </method>
   <field access="protected" id="jdb::XmlGraph::x" name="x">

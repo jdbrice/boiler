@@ -1,6 +1,16 @@
 <class xmlns="http://jessevdk.github.com/cldoc/1.0" abstract="true" id="jdb::RooPlotLib" name="RooPlotLib">
+  <base access="public">
+    <type name="IObject" ref="jdb::IObject#jdb::IObject" />
+    <brief>Generic Object Interface</brief>
+  </base>
   <constructor abstract="yes" id="jdb::RooPlotLib::RooPlotLib" name="RooPlotLib" />
-  <destructor abstract="yes" id="jdb::RooPlotLib::~RooPlotLib" name="~RooPlotLib" />
+  <destructor abstract="yes" id="jdb::RooPlotLib::~RooPlotLib" name="~RooPlotLib" virtual="yes" />
+  <method id="jdb::RooPlotLib::classname" name="classname" override="yes" virtual="yes">
+    <return>
+      <type builtin="yes" name="char" qualifier=" const *" />
+    </return>
+    <override name="IObject::classname" ref="jdb::IObject#jdb::IObject::classname" />
+  </method>
   <method abstract="yes" id="jdb::RooPlotLib::color" name="color">
     <return>
       <type builtin="yes" name="int" />

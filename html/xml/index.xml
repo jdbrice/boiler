@@ -4,18 +4,29 @@
     <class name="ChainLoader" ref="jdb::ChainLoader#jdb::ChainLoader">
       <brief>Static use class for loading .root files into a TChain</brief>
     </class>
-    <class name="CutCollection" ref="jdb::CutCollection#jdb::CutCollection" />
+    <class name="CutCollection" ref="jdb::CutCollection#jdb::CutCollection">
+      <brief>Collection of range cuts</brief>
+    </class>
     <class name="DataSource" ref="jdb::DataSource#jdb::DataSource">
       <brief>Automatically maps tree branches and leaves</brief>
     </class>
     <class name="EvaluatedLeaf" ref="jdb::EvaluatedLeaf#jdb::EvaluatedLeaf">
       <brief>DataSource leaf evaluated from a function string</brief>
     </class>
+    <class name="FitConfidence" ref="jdb::FitConfidence#jdb::FitConfidence">
+      <brief>Utilities for calculating and drawing fit confidence levels</brief>
+    </class>
     <class name="HistoAnalyzer" ref="jdb::HistoAnalyzer#jdb::HistoAnalyzer">
       <brief>Base class for creating histogram analysis projects</brief>
     </class>
     <class name="HistoBook" ref="jdb::HistoBook#jdb::HistoBook">
       <brief>A book keeper and helper for storing and using ROOT histograms</brief>
+    </class>
+    <class name="IConfig" ref="jdb::IConfig#jdb::IConfig">
+      <brief>Interface for classes using an XmlConfig</brief>
+    </class>
+    <class name="IObject" ref="jdb::IObject#jdb::IObject">
+      <brief>Generic Object Interface</brief>
     </class>
     <class name="Logger" ref="jdb::Logger#jdb::Logger">
       <brief>An all purpose logging utility with log level functionality.</brief>
@@ -50,7 +61,9 @@
     <class name="XmlFunction" ref="jdb::XmlFunction#jdb::XmlFunction">
       <brief>Loads a TF1 or subclass function from an Xml Config</brief>
     </class>
-    <class name="XmlGraph" ref="jdb::XmlGraph#jdb::XmlGraph" />
+    <class name="XmlGraph" ref="jdb::XmlGraph#jdb::XmlGraph">
+      <brief>TGraph as xml</brief>
+    </class>
     <class name="XmlPoint" ref="jdb::XmlPoint#jdb::XmlPoint">
       <brief>Config Point easily loads (x, y) points from XmlConfigs</brief>
     </class>

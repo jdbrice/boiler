@@ -1,0 +1,39 @@
+<class xmlns="http://jessevdk.github.com/cldoc/1.0" abstract="true" id="jdb::IObject" name="IObject">
+  <brief>Generic Object Interface</brief>
+  <doc>Provides basic functionality to objects
+</doc>
+  <subclass access="public" name="XmlConfig" ref="jdb::XmlConfig#jdb::XmlConfig">
+    <brief>Use xml formatted config files easily in projects</brief>
+  </subclass>
+  <subclass access="public" name="DataSource" ref="jdb::DataSource#jdb::DataSource">
+    <brief>Automatically maps tree branches and leaves</brief>
+  </subclass>
+  <subclass access="public" name="HistoBook" ref="jdb::HistoBook#jdb::HistoBook">
+    <brief>A book keeper and helper for storing and using ROOT histograms</brief>
+  </subclass>
+  <subclass access="public" name="TaskRunner" ref="jdb::TaskRunner#jdb::TaskRunner" />
+  <subclass access="public" name="HistoAnalyzer" ref="jdb::HistoAnalyzer#jdb::HistoAnalyzer">
+    <brief>Base class for creating histogram analysis projects</brief>
+  </subclass>
+  <subclass access="public" name="RooPlotLib" ref="jdb::RooPlotLib#jdb::RooPlotLib" />
+  <subclass access="public" name="Reporter" ref="jdb::Reporter#jdb::Reporter">
+    <brief>Create PDF Reports in ROOT</brief>
+  </subclass>
+  <subclass access="public" name="ChainLoader" ref="jdb::ChainLoader#jdb::ChainLoader">
+    <brief>Static use class for loading .root files into a TChain</brief>
+  </subclass>
+  <subclass access="public" name="CutCollection" ref="jdb::CutCollection#jdb::CutCollection">
+    <brief>Collection of range cuts</brief>
+  </subclass>
+  <destructor id="jdb::IObject::~IObject" name="~IObject" virtual="yes" />
+  <method abstract="yes" id="jdb::IObject::classname" name="classname" virtual="yes">
+    <brief> Classname</brief>
+    <doc>Used for identifying classes. Subclasses should override
+
+</doc>
+    <return>
+      <doc>"Classname"</doc>
+      <type builtin="yes" name="char" qualifier=" const *" />
+    </return>
+  </method>
+</class>

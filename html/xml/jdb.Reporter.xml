@@ -3,10 +3,12 @@
   <doc>A utility class to easily create multi-page PDF reports in ROOT
 </doc>
   <base access="public">
-    <type name="IObject" />
+    <type name="IObject" ref="jdb::IObject#jdb::IObject" />
+    <brief>Generic Object Interface</brief>
   </base>
   <base access="public">
-    <type name="IConfig" />
+    <type name="IConfig" ref="jdb::IConfig#jdb::IConfig" />
+    <brief>Interface for classes using an XmlConfig</brief>
   </base>
   <constructor abstract="yes" id="jdb::Reporter::Reporter" name="Reporter">
     <brief> Creates a Reporter</brief>
@@ -67,10 +69,11 @@
       <type builtin="yes" name="int" />
     </argument>
   </method>
-  <method id="jdb::Reporter::classname" name="classname" virtual="yes">
+  <method id="jdb::Reporter::classname" name="classname" override="yes" virtual="yes">
     <return>
       <type builtin="yes" name="char" qualifier=" const *" />
     </return>
+    <override name="IObject::classname" ref="jdb::IObject#jdb::IObject::classname" />
   </method>
   <method abstract="yes" id="jdb::Reporter::close" name="close">
     <return>

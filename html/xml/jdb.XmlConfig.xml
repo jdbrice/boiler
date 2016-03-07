@@ -2,7 +2,8 @@
   <brief>Use xml formatted config files easily in projects</brief>
   <doc>Provides a high-level interface for xml formatted configuration files. </doc>
   <base access="public">
-    <type name="IObject" />
+    <type name="IObject" ref="jdb::IObject#jdb::IObject" />
+    <brief>Generic Object Interface</brief>
   </base>
   <constructor abstract="yes" id="jdb::XmlConfig::XmlConfig" name="XmlConfig">
     <brief> Creates an XmlConfig from the given xml file</brief>
@@ -154,10 +155,11 @@ Very useful for automating tasks, building lots of objects, etc.
       <type builtin="yes" name="int" />
     </argument>
   </method>
-  <method id="jdb::XmlConfig::classname" name="classname" virtual="yes">
+  <method id="jdb::XmlConfig::classname" name="classname" override="yes" virtual="yes">
     <return>
       <type builtin="yes" name="char" qualifier=" const *" />
     </return>
+    <override name="IObject::classname" ref="jdb::IObject#jdb::IObject::classname" />
   </method>
   <method id="jdb::XmlConfig::cn" name="cn">
     <brief>*</brief>

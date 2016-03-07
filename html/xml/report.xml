@@ -33,21 +33,12 @@ return values.
       </undocumented>
     </type>
     <type documented="1" name="namespace" undocumented="0" />
-    <type documented="111" name="method" undocumented="95">
+    <type documented="127" name="method" undocumented="91">
       <undocumented id="jdb::ChainLoader::classname" name="classname">
         <location column="3" file="include/jdb/ChainLoader.h" line="20" />
       </undocumented>
-      <undocumented id="jdb::CutCollection::classname" name="classname">
-        <location column="3" file="include/jdb/CutCollection.h" line="23" />
-      </undocumented>
       <undocumented id="jdb::CutCollection::init" name="init">
-        <location column="3" file="include/jdb/CutCollection.h" line="47" />
-      </undocumented>
-      <undocumented id="jdb::CutCollection::operator[]" name="operator[]">
-        <location column="3" file="include/jdb/CutCollection.h" line="29" />
-      </undocumented>
-      <undocumented id="jdb::CutCollection::report" name="report">
-        <location column="3" file="include/jdb/CutCollection.h" line="39" />
+        <location column="3" file="include/jdb/CutCollection.h" line="69" />
       </undocumented>
       <undocumented id="jdb::DataSource::classname" name="classname">
         <location column="3" file="include/jdb/DataSource.h" line="84" />
@@ -178,32 +169,35 @@ return values.
       <undocumented id="jdb::Reporter::close" name="close">
         <location column="3" file="include/jdb/Reporter.h" line="80" />
       </undocumented>
+      <undocumented id="jdb::RooPlotLib::classname" name="classname">
+        <location column="3" file="include/jdb/RooPlotLib.h" line="50" />
+      </undocumented>
       <undocumented id="jdb::RooPlotLib::color" name="color">
-        <location column="6" file="include/jdb/RooPlotLib.h" line="78" />
+        <location column="6" file="include/jdb/RooPlotLib.h" line="81" />
       </undocumented>
       <undocumented id="jdb::RooPlotLib::defaultStyle" name="defaultStyle">
-        <location column="6" file="include/jdb/RooPlotLib.h" line="51" />
-      </undocumented>
-      <undocumented id="jdb::RooPlotLib::set" name="set">
-        <location column="6" file="include/jdb/RooPlotLib.h" line="61" />
+        <location column="6" file="include/jdb/RooPlotLib.h" line="54" />
       </undocumented>
       <undocumented id="jdb::RooPlotLib::set" name="set">
         <location column="6" file="include/jdb/RooPlotLib.h" line="64" />
       </undocumented>
       <undocumented id="jdb::RooPlotLib::set" name="set">
-        <location column="6" file="include/jdb/RooPlotLib.h" line="65" />
+        <location column="6" file="include/jdb/RooPlotLib.h" line="67" />
       </undocumented>
       <undocumented id="jdb::RooPlotLib::set" name="set">
-        <location column="6" file="include/jdb/RooPlotLib.h" line="66" />
+        <location column="6" file="include/jdb/RooPlotLib.h" line="68" />
       </undocumented>
       <undocumented id="jdb::RooPlotLib::set" name="set">
         <location column="6" file="include/jdb/RooPlotLib.h" line="69" />
       </undocumented>
+      <undocumented id="jdb::RooPlotLib::set" name="set">
+        <location column="6" file="include/jdb/RooPlotLib.h" line="72" />
+      </undocumented>
       <undocumented id="jdb::RooPlotLib::style" name="style">
-        <location column="6" file="include/jdb/RooPlotLib.h" line="58" />
+        <location column="6" file="include/jdb/RooPlotLib.h" line="61" />
       </undocumented>
       <undocumented id="jdb::RooPlotLib::validObject" name="validObject">
-        <location column="6" file="include/jdb/RooPlotLib.h" line="40" />
+        <location column="6" file="include/jdb/RooPlotLib.h" line="42" />
       </undocumented>
       <undocumented id="jdb::TaskFactory::createTaskRunner" name="createTaskRunner">
         <location column="3" file="include/jdb/TaskFactory.h" line="26" />
@@ -313,17 +307,8 @@ return values.
       <undocumented id="jdb::XmlFunction::toXml" name="toXml">
         <location column="3" file="include/jdb/XmlFunction.h" line="76" />
       </undocumented>
-      <undocumented id="jdb::XmlGraph::eval" name="eval">
-        <location column="3" file="include/jdb/XmlGraph.h" line="35" />
-      </undocumented>
-      <undocumented id="jdb::XmlGraph::linterp" name="linterp">
-        <location column="3" file="include/jdb/XmlGraph.h" line="70" />
-      </undocumented>
     </type>
-    <type documented="68" name="field" undocumented="19">
-      <undocumented id="jdb::CutCollection::ranges" name="ranges">
-        <location column="3" file="include/jdb/CutCollection.h" line="28" />
-      </undocumented>
+    <type documented="71" name="field" undocumented="18">
       <undocumented id="jdb::HistoBook::nullHisto" name="nullHisto">
         <location column="3" file="include/jdb/HistoBook.h" line="68" />
       </undocumented>
@@ -337,13 +322,13 @@ return values.
         <location column="3" file="include/jdb/Reporter.h" line="94" />
       </undocumented>
       <undocumented id="jdb::RooPlotLib::cfgForDefaultStyle" name="cfgForDefaultStyle">
-        <location column="6" file="include/jdb/RooPlotLib.h" line="42" />
+        <location column="6" file="include/jdb/RooPlotLib.h" line="44" />
       </undocumented>
       <undocumented id="jdb::RooPlotLib::defaultStylePath" name="defaultStylePath">
-        <location column="6" file="include/jdb/RooPlotLib.h" line="43" />
+        <location column="6" file="include/jdb/RooPlotLib.h" line="45" />
       </undocumented>
       <undocumented id="jdb::RooPlotLib::drawOption" name="drawOption">
-        <location column="6" file="include/jdb/RooPlotLib.h" line="38" />
+        <location column="6" file="include/jdb/RooPlotLib.h" line="40" />
       </undocumented>
       <undocumented id="jdb::TreeAnalyzer::iEventLoop" name="iEventLoop">
         <location column="3" file="include/jdb/TreeAnalyzer.h" line="79" />
@@ -361,31 +346,25 @@ return values.
         <location column="3" file="include/jdb/XmlFunction.h" line="25" />
       </undocumented>
       <undocumented id="jdb::XmlGraph::exh" name="exh">
-        <location column="3" file="include/jdb/XmlGraph.h" line="23" />
+        <location column="3" file="include/jdb/XmlGraph.h" line="26" />
       </undocumented>
       <undocumented id="jdb::XmlGraph::exl" name="exl">
-        <location column="3" file="include/jdb/XmlGraph.h" line="23" />
+        <location column="3" file="include/jdb/XmlGraph.h" line="26" />
       </undocumented>
       <undocumented id="jdb::XmlGraph::eyh" name="eyh">
-        <location column="3" file="include/jdb/XmlGraph.h" line="23" />
+        <location column="3" file="include/jdb/XmlGraph.h" line="26" />
       </undocumented>
       <undocumented id="jdb::XmlGraph::eyl" name="eyl">
-        <location column="3" file="include/jdb/XmlGraph.h" line="23" />
+        <location column="3" file="include/jdb/XmlGraph.h" line="26" />
       </undocumented>
       <undocumented id="jdb::XmlGraph::x" name="x">
-        <location column="3" file="include/jdb/XmlGraph.h" line="23" />
+        <location column="3" file="include/jdb/XmlGraph.h" line="26" />
       </undocumented>
       <undocumented id="jdb::XmlGraph::y" name="y">
-        <location column="3" file="include/jdb/XmlGraph.h" line="23" />
+        <location column="3" file="include/jdb/XmlGraph.h" line="26" />
       </undocumented>
     </type>
-    <type documented="18" name="constructor" undocumented="10">
-      <undocumented id="jdb::CutCollection::CutCollection" name="CutCollection">
-        <location column="3" file="include/jdb/CutCollection.h" line="24" />
-      </undocumented>
-      <undocumented id="jdb::CutCollection::CutCollection" name="CutCollection">
-        <location column="3" file="include/jdb/CutCollection.h" line="25" />
-      </undocumented>
+    <type documented="21" name="constructor" undocumented="8">
       <undocumented id="jdb::DataSource::DataSource" name="DataSource">
         <location column="3" file="include/jdb/DataSource.h" line="95" />
       </undocumented>
@@ -399,7 +378,7 @@ return values.
         <location column="4" file="include/jdb/Logger.h" line="70" />
       </undocumented>
       <undocumented id="jdb::RooPlotLib::RooPlotLib" name="RooPlotLib">
-        <location column="6" file="include/jdb/RooPlotLib.h" line="48" />
+        <location column="6" file="include/jdb/RooPlotLib.h" line="51" />
       </undocumented>
       <undocumented id="jdb::TaskFactory::TaskFactory" name="TaskFactory">
         <location column="3" file="include/jdb/TaskFactory.h" line="23" />
@@ -408,10 +387,10 @@ return values.
         <location column="3" file="include/jdb/TaskRunner.h" line="18" />
       </undocumented>
       <undocumented id="jdb::XmlGraph::XmlGraph" name="XmlGraph">
-        <location column="3" file="include/jdb/XmlGraph.h" line="25" />
+        <location column="3" file="include/jdb/XmlGraph.h" line="28" />
       </undocumented>
     </type>
-    <type documented="13" name="variable" undocumented="2">
+    <type documented="12" name="variable" undocumented="2">
       <undocumented id="jdb::Logger::showColors" name="showColors">
         <location column="3" file="include/jdb/Logger.h" line="111" />
       </undocumented>
@@ -419,21 +398,24 @@ return values.
         <location column="3" file="include/jdb/XmlFunction.h" line="31" />
       </undocumented>
     </type>
-    <type documented="5" name="destructor" undocumented="12">
-      <undocumented id="jdb::CutCollection::~CutCollection" name="~CutCollection">
-        <location column="3" file="include/jdb/CutCollection.h" line="26" />
-      </undocumented>
+    <type documented="7" name="destructor" undocumented="13">
       <undocumented id="jdb::EvaluatedLeaf::~EvaluatedLeaf" name="~EvaluatedLeaf">
         <location column="3" file="include/jdb/EvaluatedLeaf.h" line="55" />
       </undocumented>
       <undocumented id="jdb::HistoBook::~HistoBook" name="~HistoBook">
         <location column="3" file="include/jdb/HistoBook.h" line="74" />
       </undocumented>
+      <undocumented id="jdb::IConfig::~IConfig" name="~IConfig">
+        <location column="3" file="include/jdb/IConfig.h" line="14" />
+      </undocumented>
+      <undocumented id="jdb::IObject::~IObject" name="~IObject">
+        <location column="3" file="include/jdb/IObject.h" line="11" />
+      </undocumented>
       <undocumented id="jdb::Reporter::~Reporter" name="~Reporter">
         <location column="3" file="include/jdb/Reporter.h" line="32" />
       </undocumented>
       <undocumented id="jdb::RooPlotLib::~RooPlotLib" name="~RooPlotLib">
-        <location column="6" file="include/jdb/RooPlotLib.h" line="49" />
+        <location column="6" file="include/jdb/RooPlotLib.h" line="52" />
       </undocumented>
       <undocumented id="jdb::TaskFactory::~TaskFactory" name="~TaskFactory">
         <location column="3" file="include/jdb/TaskFactory.h" line="24" />
@@ -448,7 +430,7 @@ return values.
         <location column="3" file="include/jdb/TreeAnalyzer.h" line="103" />
       </undocumented>
       <undocumented id="jdb::XmlGraph::~XmlGraph" name="~XmlGraph">
-        <location column="3" file="include/jdb/XmlGraph.h" line="30" />
+        <location column="3" file="include/jdb/XmlGraph.h" line="33" />
       </undocumented>
       <undocumented id="jdb::XmlPoint::~XmlPoint" name="~XmlPoint">
         <location column="3" file="include/jdb/XmlPoint.h" line="55" />
@@ -457,22 +439,16 @@ return values.
         <location column="3" file="include/jdb/XmlRange.h" line="61" />
       </undocumented>
     </type>
-    <type documented="17" name="class" undocumented="5">
-      <undocumented id="jdb::CutCollection" name="CutCollection">
-        <location column="2" file="include/jdb/CutCollection.h" line="20" />
-      </undocumented>
+    <type documented="22" name="class" undocumented="3">
       <undocumented id="jdb::Logger::NullStream" name="NullStream">
         <location column="3" file="include/jdb/Logger.h" line="68" />
       </undocumented>
       <undocumented id="jdb::RooPlotLib" name="RooPlotLib">
-        <location column="2" file="include/jdb/RooPlotLib.h" line="32" />
+        <location column="2" file="include/jdb/RooPlotLib.h" line="34" />
       </undocumented>
       <undocumented id="jdb::TaskRunner" name="TaskRunner">
-        <location column="2" file="include/jdb/TaskRunner.h" line="13" />
         <location column="2" file="include/jdb/TaskFactory.h" line="12" />
-      </undocumented>
-      <undocumented id="jdb::XmlGraph" name="XmlGraph">
-        <location column="2" file="include/jdb/XmlGraph.h" line="19" />
+        <location column="2" file="include/jdb/TaskRunner.h" line="13" />
       </undocumented>
     </type>
   </coverage>
@@ -830,6 +806,38 @@ return values.
       <location column="3" file="include/jdb/XmlFunction.h" line="53" />
       <undocumented name="x" />
     </function>
+    <function id="jdb::FitConfidence::classname" name="classname">
+      <location column="3" file="include/jdb/FitConfidence.h" line="30" />
+      <undocumented-return />
+    </function>
+    <function id="jdb::FitConfidence::choleskyBands" name="choleskyBands">
+      <location column="3" file="include/jdb/FitConfidence.h" line="100" />
+      <undocumented name="rp" />
+      <misspelled name="Reporter" />
+    </function>
+    <function id="jdb::XmlGraph::eval" name="eval">
+      <location column="3" file="include/jdb/XmlGraph.h" line="47" />
+      <undocumented-return />
+      <undocumented name="x_val" />
+      <undocumented name="interpolate" />
+    </function>
+    <function id="jdb::XmlGraph::linterp" name="linterp">
+      <location column="3" file="include/jdb/XmlGraph.h" line="86" />
+      <undocumented name="y1" />
+      <undocumented name="x" />
+      <undocumented name="x0" />
+      <undocumented name="x1" />
+      <undocumented name="y0" />
+    </function>
+    <function id="jdb::CutCollection::CutCollection" name="CutCollection">
+      <location column="3" file="include/jdb/CutCollection.h" line="37" />
+      <undocumented name="_config" />
+      <undocumented name="_nodePath" />
+    </function>
+    <function id="jdb::CutCollection::operator[]" name="operator[]">
+      <location column="3" file="include/jdb/CutCollection.h" line="50" />
+      <undocumented name="name" />
+    </function>
   </arguments>
   <references>
     <typedef id="jdb::XmlConfig::map_it_type" name="map_it_type">
@@ -860,6 +868,12 @@ return values.
       <location column="3" file="include/jdb/EvaluatedLeaf.h" line="54" />
       <doctype component="tm" name="params">
         <ref name="EvaluatedLeaf /" />
+      </doctype>
+    </constructor>
+    <constructor id="jdb::CutCollection::CutCollection" name="CutCollection">
+      <location column="3" file="include/jdb/CutCollection.h" line="37" />
+      <doctype name="doc">
+        <ref name="Range" />
       </doctype>
     </constructor>
   </references>

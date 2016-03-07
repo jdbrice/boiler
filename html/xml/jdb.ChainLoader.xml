@@ -36,12 +36,14 @@ TChain * chain = new TChain( "treeName" );
 ChainLoader::loadList( chain, "path_to_dir_listfile.lis", maxFilesToLoad );
 ```</doc>
   <base access="public">
-    <type name="IObject" />
+    <type name="IObject" ref="jdb::IObject#jdb::IObject" />
+    <brief>Generic Object Interface</brief>
   </base>
-  <method id="jdb::ChainLoader::classname" name="classname" virtual="yes">
+  <method id="jdb::ChainLoader::classname" name="classname" override="yes" virtual="yes">
     <return>
       <type builtin="yes" name="char" qualifier=" const *" />
     </return>
+    <override name="IObject::classname" ref="jdb::IObject#jdb::IObject::classname" />
   </method>
   <method abstract="yes" id="jdb::ChainLoader::load" name="load" static="yes">
     <brief> Loads files in a directory to the TChain</brief>

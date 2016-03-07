@@ -1,0 +1,168 @@
+<class xmlns="http://jessevdk.github.com/cldoc/1.0" abstract="true" id="jdb::FitConfidence" name="FitConfidence">
+  <brief>Utilities for calculating and drawing fit confidence levels</brief>
+  <constructor abstract="yes" id="jdb::FitConfidence::FitConfidence" name="FitConfidence">
+    <brief>Unused - static class</brief>
+  </constructor>
+  <destructor abstract="yes" id="jdb::FitConfidence::~FitConfidence" name="~FitConfidence">
+    <brief>Unused - static class</brief>
+  </destructor>
+  <method abstract="yes" id="jdb::FitConfidence::calcCholesky" name="calcCholesky" static="yes">
+    <brief> Computes the Cholesky parameters for the given function</brief>
+    <return>
+      <type builtin="yes" name="void" />
+    </return>
+    <argument id="jdb::FitConfidence::calcCholesky::nP" name="nP">
+      <doc>Number of parameters</doc>
+      <type builtin="yes" name="int" />
+    </argument>
+    <argument id="jdb::FitConfidence::calcCholesky::fCov" name="fCov">
+      <doc>Covariance matrix - passed in</doc>
+      <type builtin="yes" name="double" qualifier="*" />
+    </argument>
+    <argument id="jdb::FitConfidence::calcCholesky::fCovSqrt" name="fCovSqrt">
+      <doc>Sqrt(Cov) matrix - passed out</doc>
+      <type builtin="yes" name="double" qualifier="*" />
+    </argument>
+  </method>
+  <method abstract="yes" id="jdb::FitConfidence::choleskyBands" name="choleskyBands" static="yes">
+    <brief> Calculate and draw Cholesky uncertainty bands for the given function</brief>
+    <return>
+      <doc>TGraphErrors containg the uncertainties</doc>
+      <type name="TGraphErrors" qualifier="*" />
+    </return>
+    <argument id="jdb::FitConfidence::choleskyBands::fitResult" name="fitResult">
+      <doc>Fit Result pointer</doc>
+      <type name="TFitResultPtr" />
+    </argument>
+    <argument id="jdb::FitConfidence::choleskyBands::f" name="f">
+      <doc>TF1 Fit pointer</doc>
+      <type name="TF1" qualifier="*" />
+    </argument>
+    <argument id="jdb::FitConfidence::choleskyBands::nSamples" name="nSamples">
+      <doc>Number of samples to use, default = 50</doc>
+      <type builtin="yes" name="int" />
+    </argument>
+    <argument id="jdb::FitConfidence::choleskyBands::nPoints" name="nPoints">
+      <doc>Number of points in graph, default = 100</doc>
+      <type builtin="yes" name="int" />
+    </argument>
+    <argument id="jdb::FitConfidence::choleskyBands::rp" name="rp">
+      <type name="Reporter" qualifier="*" ref="jdb::Reporter#jdb::Reporter" />
+    </argument>
+    <argument id="jdb::FitConfidence::choleskyBands::x1" name="x1">
+      <doc>low range of function</doc>
+      <type builtin="yes" name="double" />
+    </argument>
+    <argument id="jdb::FitConfidence::choleskyBands::x2" name="x2">
+      <doc>high range of function, if x1 == x2 == -1 then the fit range is used</doc>
+      <type builtin="yes" name="double" />
+    </argument>
+  </method>
+  <method abstract="yes" id="jdb::FitConfidence::choleskyUncertainty" name="choleskyUncertainty" static="yes">
+    <brief> Calculates the Cholesky Uncertainty at a given point for a given function</brief>
+    <return>
+      <doc>The symmetric uncertainty at the value xx</doc>
+      <type builtin="yes" name="double" />
+    </return>
+    <argument id="jdb::FitConfidence::choleskyUncertainty::xx" name="xx">
+      <doc>value at which the uncertainty should be calculated</doc>
+      <type builtin="yes" name="double" />
+    </argument>
+    <argument id="jdb::FitConfidence::choleskyUncertainty::fitResult" name="fitResult">
+      <doc>Fit result pointer</doc>
+      <type name="TFitResultPtr" />
+    </argument>
+    <argument id="jdb::FitConfidence::choleskyUncertainty::f" name="f">
+      <doc>TF1 Fit pointer</doc>
+      <type name="TF1" qualifier="*" />
+    </argument>
+    <argument id="jdb::FitConfidence::choleskyUncertainty::nSamples" name="nSamples">
+      <doc>Number of samples to use</doc>
+      <type builtin="yes" name="int" />
+    </argument>
+  </method>
+  <method abstract="yes" id="jdb::FitConfidence::choleskyUncertainty" name="choleskyUncertainty" static="yes">
+    <brief> Calculates the Cholesky Uncertainty at a given point for a given function</brief>
+    <return>
+      <doc>The symmetric uncertainty at the value xx</doc>
+      <type builtin="yes" name="double" />
+    </return>
+    <argument id="jdb::FitConfidence::choleskyUncertainty::xx" name="xx">
+      <doc>value at which the uncertainty should be calculated</doc>
+      <type builtin="yes" name="double" />
+    </argument>
+    <argument id="jdb::FitConfidence::choleskyUncertainty::fCov" name="fCov">
+      <doc>covariance matrix</doc>
+      <type builtin="yes" name="double" qualifier="*" />
+    </argument>
+    <argument id="jdb::FitConfidence::choleskyUncertainty::f" name="f">
+      <doc>TF1 Fit pointer</doc>
+      <type name="TF1" qualifier="*" />
+    </argument>
+    <argument id="jdb::FitConfidence::choleskyUncertainty::nSamples" name="nSamples">
+      <doc>Number of samples to use</doc>
+      <type builtin="yes" name="int" />
+    </argument>
+  </method>
+  <method id="jdb::FitConfidence::classname" name="classname" static="yes">
+    <brief>Classname used in the static functions</brief>
+    <doc>mirror of the IObject version</doc>
+    <return>
+      <type builtin="yes" name="char" qualifier=" const *" />
+    </return>
+  </method>
+  <method abstract="yes" id="jdb::FitConfidence::fitCL" name="fitCL" static="yes">
+    <brief> Draws the given function with its 95% confidence level and returns the histogram containing the confidence level region</brief>
+    <return>
+      <doc>TH1 * for region of confidence</doc>
+      <type name="TH1" qualifier="*" />
+    </return>
+    <argument id="jdb::FitConfidence::fitCL::f" name="f">
+      <doc>Function to draw</doc>
+      <type name="TF1" qualifier="*" />
+    </argument>
+    <argument id="jdb::FitConfidence::fitCL::name" name="name">
+      <doc>Name of histogram storing results</doc>
+      <type name="string" />
+    </argument>
+    <argument id="jdb::FitConfidence::fitCL::cl" name="cl">
+      <doc>Confidence level to use as fraction of 1.0, default = 0.95 ( 95% )</doc>
+      <type builtin="yes" name="double" />
+    </argument>
+    <argument id="jdb::FitConfidence::fitCL::nPoints" name="nPoints">
+      <doc>Number of points in graph, default = 100</doc>
+      <type builtin="yes" name="int" />
+    </argument>
+    <argument id="jdb::FitConfidence::fitCL::x1" name="x1">
+      <doc>low range of function</doc>
+      <type builtin="yes" name="double" />
+    </argument>
+    <argument id="jdb::FitConfidence::fitCL::x2" name="x2">
+      <doc>high range of function, if x1 == x2 == -1 then the fit range is used</doc>
+      <type builtin="yes" name="double" />
+    </argument>
+  </method>
+  <method abstract="yes" id="jdb::FitConfidence::randomSqrtCov" name="randomSqrtCov" static="yes">
+    <brief> Calculates random variations in a function from the sqrt of the cov matrix</brief>
+    <return>
+      <doc>function evaluated within a random gaussian distribution at the given point</doc>
+      <type builtin="yes" name="double" />
+    </return>
+    <argument id="jdb::FitConfidence::randomSqrtCov::xx" name="xx">
+      <doc>x value at which to evaluate function</doc>
+      <type builtin="yes" name="double" />
+    </argument>
+    <argument id="jdb::FitConfidence::randomSqrtCov::f" name="f">
+      <doc>TF1 * to function</doc>
+      <type name="TF1" qualifier="*" />
+    </argument>
+    <argument id="jdb::FitConfidence::randomSqrtCov::nP" name="nP">
+      <doc>number of parameters</doc>
+      <type builtin="yes" name="int" />
+    </argument>
+    <argument id="jdb::FitConfidence::randomSqrtCov::fCovSqrt" name="fCovSqrt">
+      <doc>sqrt(cov) given by calcCholesky</doc>
+      <type builtin="yes" name="double" qualifier="*" />
+    </argument>
+  </method>
+</class>

@@ -1,19 +1,27 @@
 <class xmlns="http://jessevdk.github.com/cldoc/1.0" id="jdb::CutCollection" name="CutCollection">
+  <brief>Collection of range cuts</brief>
+  <doc>Provides a collection of range cuts in a lookup table by name
+</doc>
   <base access="public">
-    <type name="IConfig" />
+    <type name="IConfig" ref="jdb::IConfig#jdb::IConfig" />
+    <brief>Interface for classes using an XmlConfig</brief>
   </base>
   <base access="public">
-    <type name="IObject" />
+    <type name="IObject" ref="jdb::IObject#jdb::IObject" />
+    <brief>Generic Object Interface</brief>
   </base>
-  <variable id="jdb::CutCollection::tag" name="tag">
-    <brief>operator[]</brief>
-    <type name="const auto" qualifier=" const" />
-  </variable>
   <field id="jdb::CutCollection::ranges" name="ranges">
+    <brief>Map that holds range cuts</brief>
     <type name="map&lt;string, shared_ptr&lt;jdb::XmlRange&gt;&gt;" />
   </field>
-  <constructor id="jdb::CutCollection::CutCollection" name="CutCollection" />
   <constructor id="jdb::CutCollection::CutCollection" name="CutCollection">
+    <brief> Default </brief>
+  </constructor>
+  <constructor id="jdb::CutCollection::CutCollection" name="CutCollection">
+    <brief> Create from config path</brief>
+    <doc>Creates all cuts &amp;lt;Range&amp;gt; children of "_nodePath"
+
+</doc>
     <argument id="jdb::CutCollection::CutCollection::_config" name="_config">
       <type name="XmlConfig" ref="jdb::XmlConfig#jdb::XmlConfig" />
     </argument>
@@ -21,14 +29,24 @@
       <type name="string" />
     </argument>
   </constructor>
-  <destructor id="jdb::CutCollection::~CutCollection" name="~CutCollection" virtual="yes" />
-  <method id="jdb::CutCollection::classname" name="classname" virtual="yes">
+  <destructor id="jdb::CutCollection::~CutCollection" name="~CutCollection" virtual="yes">
+    <brief> Default </brief>
+  </destructor>
+  <method id="jdb::CutCollection::classname" name="classname" override="yes" virtual="yes">
+    <brief> Classname</brief>
+    <doc>Used for identifying classes. Subclasses should override
+
+</doc>
     <return>
+      <doc>"Classname"</doc>
       <type builtin="yes" name="char" qualifier=" const *" />
     </return>
+    <override name="IObject::classname" ref="jdb::IObject#jdb::IObject::classname" />
   </method>
   <method id="jdb::CutCollection::operator[]" name="operator[]">
+    <brief> Get a range cut</brief>
     <return>
+      <doc>XmlRange object</doc>
       <type name="shared_ptr&lt;jdb::XmlRange&gt;" />
     </return>
     <argument id="jdb::CutCollection::operator[]::name" name="name">
@@ -36,6 +54,7 @@
     </argument>
   </method>
   <method id="jdb::CutCollection::report" name="report">
+    <brief> Reports the cut names and ranges</brief>
     <return>
       <type builtin="yes" name="void" />
     </return>
