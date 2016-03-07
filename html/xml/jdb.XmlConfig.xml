@@ -623,10 +623,11 @@ The node path "category.sub.a" yields "a"
     <type name="string" />
   </field>
   <typedef access="protected" id="jdb::XmlConfig::const_map_it_type" name="const_map_it_type">
+    <brief>map&amp;lt;string, string&amp;gt; const iterator</brief>
     <type name="__map_const_iterator&lt;__tree_const_iterator&lt;__value_type&lt;string, string &gt;&gt;" />
   </typedef>
   <typedef access="protected" id="jdb::XmlConfig::map_it_type" name="map_it_type">
-    <brief>typedef of commonly used iterator for the class</brief>
+    <brief>map&amp;lt;string, string&amp;gt; iterator</brief>
     <type name="__map_iterator&lt;__tree_iterator&lt;__value_type&lt;string, string &gt;&gt;" />
   </typedef>
   <method access="protected" id="jdb::XmlConfig::addAttribute" name="addAttribute">

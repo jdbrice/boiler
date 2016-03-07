@@ -1,35 +1,35 @@
-<class xmlns="http://jessevdk.github.com/cldoc/1.0" abstract="true" id="jdb::ConfigFunction" name="ConfigFunction">
+<class xmlns="http://jessevdk.github.com/cldoc/1.0" abstract="true" id="jdb::XmlFunction" name="XmlFunction">
   <brief>Loads a TF1 or subclass function from an Xml Config</brief>
   <doc>Loads a function from an XmlConfig.
 </doc>
-  <variable id="jdb::ConfigFunction::tag" name="tag">
+  <variable id="jdb::XmlFunction::tag" name="tag">
     <type name="const auto" qualifier=" const" />
   </variable>
-  <constructor abstract="yes" id="jdb::ConfigFunction::ConfigFunction" name="ConfigFunction">
+  <constructor abstract="yes" id="jdb::XmlFunction::XmlFunction" name="XmlFunction">
     <brief> Creates a function from xml config</brief>
-    <argument id="jdb::ConfigFunction::ConfigFunction::cfg" name="cfg">
+    <argument id="jdb::XmlFunction::XmlFunction::cfg" name="cfg">
       <type name="XmlConfig" qualifier="*" ref="jdb::XmlConfig#jdb::XmlConfig" />
     </argument>
-    <argument id="jdb::ConfigFunction::ConfigFunction::nodePath" name="nodePath">
+    <argument id="jdb::XmlFunction::XmlFunction::nodePath" name="nodePath">
       <type name="string" />
     </argument>
-    <argument id="jdb::ConfigFunction::ConfigFunction::pMod" name="pMod">
+    <argument id="jdb::XmlFunction::XmlFunction::pMod" name="pMod">
       <type name="string" />
     </argument>
-    <argument id="jdb::ConfigFunction::ConfigFunction::eMod" name="eMod">
+    <argument id="jdb::XmlFunction::XmlFunction::eMod" name="eMod">
       <type name="string" />
     </argument>
-    <argument id="jdb::ConfigFunction::ConfigFunction::formMod" name="formMod">
+    <argument id="jdb::XmlFunction::XmlFunction::formMod" name="formMod">
       <type name="string" />
     </argument>
-    <argument id="jdb::ConfigFunction::ConfigFunction::covMod" name="covMod">
+    <argument id="jdb::XmlFunction::XmlFunction::covMod" name="covMod">
       <type name="string" />
     </argument>
   </constructor>
-  <destructor id="jdb::ConfigFunction::~ConfigFunction" name="~ConfigFunction">
+  <destructor id="jdb::XmlFunction::~XmlFunction" name="~XmlFunction">
     <brief> Destructor</brief>
   </destructor>
-  <method id="jdb::ConfigFunction::eval" name="eval">
+  <method id="jdb::XmlFunction::eval" name="eval">
     <brief> Evaluate the function</brief>
     <doc>Checks for the valid state of function before eval
 
@@ -38,42 +38,42 @@
       <doc>evaluated value of function or 0.0 if function is undefined</doc>
       <type builtin="yes" name="double" />
     </return>
-    <argument id="jdb::ConfigFunction::eval::x" name="x">
+    <argument id="jdb::XmlFunction::eval::x" name="x">
       <type builtin="yes" name="double" />
     </argument>
   </method>
-  <method id="jdb::ConfigFunction::getCov" name="getCov">
+  <method id="jdb::XmlFunction::getCov" name="getCov">
     <return>
       <type name="vector&lt;double&gt;" />
     </return>
   </method>
-  <method id="jdb::ConfigFunction::getTF1" name="getTF1">
+  <method id="jdb::XmlFunction::getTF1" name="getTF1">
     <return>
       <type name="shared_ptr&lt;TF1&gt;" />
     </return>
   </method>
-  <method id="jdb::ConfigFunction::toString" name="toString">
+  <method id="jdb::XmlFunction::toString" name="toString">
     <return>
       <type name="string" />
     </return>
   </method>
-  <method id="jdb::ConfigFunction::toXml" name="toXml" static="yes">
+  <method id="jdb::XmlFunction::toXml" name="toXml" static="yes">
     <return>
       <type name="string" />
     </return>
-    <argument id="jdb::ConfigFunction::toXml::f" name="f">
+    <argument id="jdb::XmlFunction::toXml::f" name="f">
       <type name="TF1" qualifier="*" />
     </argument>
   </method>
-  <variable access="protected" id="jdb::ConfigFunction::instances" name="instances">
+  <variable access="protected" id="jdb::XmlFunction::instances" name="instances">
     <brief>instance count to make sure wee keep a unique ROOT name on our function</brief>
     <type builtin="yes" name="int" />
   </variable>
-  <field access="protected" id="jdb::ConfigFunction::func" name="func">
+  <field access="protected" id="jdb::XmlFunction::func" name="func">
     <brief>The ROOT TF1 object backing the function</brief>
     <type name="shared_ptr&lt;TF1&gt;" />
   </field>
-  <field access="protected" id="jdb::ConfigFunction::cov" name="cov">
+  <field access="protected" id="jdb::XmlFunction::cov" name="cov">
     <type name="vector&lt;double&gt;" />
   </field>
 </class>

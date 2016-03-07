@@ -1,59 +1,59 @@
-<class xmlns="http://jessevdk.github.com/cldoc/1.0" id="jdb::ConfigRange" name="ConfigRange">
-  <brief>ConfigRange easily loads (min -&gt; max) ranges from XmlConfigs</brief>
+<class xmlns="http://jessevdk.github.com/cldoc/1.0" id="jdb::XmlRange" name="XmlRange">
+  <brief>XmlRange easily loads (min -&gt; max) ranges from XmlConfigs</brief>
   <doc>This class is a utility class used for quickly loading and aliasing range data in an xml config
 
-**Headers** : ConfigRange.h
+**Headers** : XmlRange.h
 
 ``` xml
 &lt;Range min="100" max="100" /&gt;
 ```
 </doc>
-  <field id="jdb::ConfigRange::min" name="min">
+  <field id="jdb::XmlRange::min" name="min">
     <brief>Minimum value in range</brief>
     <type builtin="yes" name="double" />
   </field>
-  <field id="jdb::ConfigRange::max" name="max">
+  <field id="jdb::XmlRange::max" name="max">
     <brief>Maximum value in range</brief>
     <type builtin="yes" name="double" />
   </field>
-  <constructor id="jdb::ConfigRange::ConfigRange" name="ConfigRange">
+  <constructor id="jdb::XmlRange::XmlRange" name="XmlRange">
     <brief>Load range data from an XmlConfig</brief>
     <doc>This class reads in data from an XmlConfig instance. The underlying xml should contain a node at *nodePath* like
 ``` xml
 &lt;Range name="danny" min="100" max=":100" /&gt;
 ```
 </doc>
-    <argument id="jdb::ConfigRange::ConfigRange::cfg" name="cfg">
+    <argument id="jdb::XmlRange::XmlRange::cfg" name="cfg">
       <doc>XmlConfig instance to load data from</doc>
       <type name="XmlConfig" qualifier="*" ref="jdb::XmlConfig#jdb::XmlConfig" />
     </argument>
-    <argument id="jdb::ConfigRange::ConfigRange::np" name="np">
+    <argument id="jdb::XmlRange::XmlRange::np" name="np">
       <type name="string" />
     </argument>
-    <argument id="jdb::ConfigRange::ConfigRange::dMin" name="dMin">
+    <argument id="jdb::XmlRange::XmlRange::dMin" name="dMin">
       <doc>Default = 0 : default x value if not found in node</doc>
       <type builtin="yes" name="double" />
     </argument>
-    <argument id="jdb::ConfigRange::ConfigRange::dMax" name="dMax">
+    <argument id="jdb::XmlRange::XmlRange::dMax" name="dMax">
       <doc>Default = 0 : default y value if not found in node</doc>
       <type builtin="yes" name="double" />
     </argument>
-    <argument id="jdb::ConfigRange::ConfigRange::attrMin" name="attrMin">
+    <argument id="jdb::XmlRange::XmlRange::attrMin" name="attrMin">
       <doc>Default = ":min" : attribute tag to search for x value</doc>
       <type name="string" />
     </argument>
-    <argument id="jdb::ConfigRange::ConfigRange::attrMax" name="attrMax">
+    <argument id="jdb::XmlRange::XmlRange::attrMax" name="attrMax">
       <doc>Default = ":max" : attribute tag to search for y value</doc>
       <type name="string" />
     </argument>
   </constructor>
-  <constructor id="jdb::ConfigRange::ConfigRange" name="ConfigRange">
+  <constructor id="jdb::XmlRange::XmlRange" name="XmlRange">
     <brief> Default empty constructor</brief>
     <doc>initializes min and max to 0
 </doc>
   </constructor>
-  <destructor id="jdb::ConfigRange::~ConfigRange" name="~ConfigRange" />
-  <method id="jdb::ConfigRange::above" name="above">
+  <destructor id="jdb::XmlRange::~XmlRange" name="~XmlRange" />
+  <method id="jdb::XmlRange::above" name="above">
     <brief> Is value above max</brief>
     <doc>Test to see if value is above upper range
 
@@ -62,14 +62,14 @@
       <doc>true if past the upper edge</doc>
       <type builtin="yes" name="bool" />
     </return>
-    <argument id="jdb::ConfigRange::above::val" name="val">
+    <argument id="jdb::XmlRange::above::val" name="val">
       <type builtin="yes" name="double" />
     </argument>
-    <argument id="jdb::ConfigRange::above::includeUpperEdge" name="includeUpperEdge">
+    <argument id="jdb::XmlRange::above::includeUpperEdge" name="includeUpperEdge">
       <type builtin="yes" name="bool" />
     </argument>
   </method>
-  <method id="jdb::ConfigRange::below" name="below">
+  <method id="jdb::XmlRange::below" name="below">
     <brief> Is value below min</brief>
     <doc>Test to see if value is below lower range
 
@@ -78,14 +78,14 @@
       <doc>true if below the lower edge</doc>
       <type builtin="yes" name="bool" />
     </return>
-    <argument id="jdb::ConfigRange::below::val" name="val">
+    <argument id="jdb::XmlRange::below::val" name="val">
       <type builtin="yes" name="double" />
     </argument>
-    <argument id="jdb::ConfigRange::below::includeLowerEdge" name="includeLowerEdge">
+    <argument id="jdb::XmlRange::below::includeLowerEdge" name="includeLowerEdge">
       <type builtin="yes" name="bool" />
     </argument>
   </method>
-  <method id="jdb::ConfigRange::inExclusiveLowerInclusiveUpperRange" name="inExclusiveLowerInclusiveUpperRange">
+  <method id="jdb::XmlRange::inExclusiveLowerInclusiveUpperRange" name="inExclusiveLowerInclusiveUpperRange">
     <brief> Test if the given value is in the exclusive lower inclusive upper range</brief>
     <doc>Test if value is in ( min, max ] exclusive lower and inclusive upper bound
 </doc>
@@ -93,11 +93,11 @@
       <doc>true if in range, false otherwise</doc>
       <type builtin="yes" name="bool" />
     </return>
-    <argument id="jdb::ConfigRange::inExclusiveLowerInclusiveUpperRange::val" name="val">
+    <argument id="jdb::XmlRange::inExclusiveLowerInclusiveUpperRange::val" name="val">
       <type builtin="yes" name="double" />
     </argument>
   </method>
-  <method id="jdb::ConfigRange::inExclusiveRange" name="inExclusiveRange">
+  <method id="jdb::XmlRange::inExclusiveRange" name="inExclusiveRange">
     <brief> Test if the given value is in the exclusive range</brief>
     <doc>Test if value is in ( min, max ) exclusive lower and upper bound
 </doc>
@@ -105,11 +105,11 @@
       <doc>true if in range, false otherwise</doc>
       <type builtin="yes" name="bool" />
     </return>
-    <argument id="jdb::ConfigRange::inExclusiveRange::val" name="val">
+    <argument id="jdb::XmlRange::inExclusiveRange::val" name="val">
       <type builtin="yes" name="double" />
     </argument>
   </method>
-  <method id="jdb::ConfigRange::inInclusiveLowerExclusiveUpperRange" name="inInclusiveLowerExclusiveUpperRange">
+  <method id="jdb::XmlRange::inInclusiveLowerExclusiveUpperRange" name="inInclusiveLowerExclusiveUpperRange">
     <brief> Test if the given value is in the inclusive lower exclusive upper range</brief>
     <doc>Test if value is in [ min, max ) inclusive lower and exclusive upper bound
 </doc>
@@ -117,11 +117,11 @@
       <doc>true if in range, false otherwise</doc>
       <type builtin="yes" name="bool" />
     </return>
-    <argument id="jdb::ConfigRange::inInclusiveLowerExclusiveUpperRange::val" name="val">
+    <argument id="jdb::XmlRange::inInclusiveLowerExclusiveUpperRange::val" name="val">
       <type builtin="yes" name="double" />
     </argument>
   </method>
-  <method id="jdb::ConfigRange::inInclusiveRange" name="inInclusiveRange">
+  <method id="jdb::XmlRange::inInclusiveRange" name="inInclusiveRange">
     <brief> Test if the given value is in the inclusve range</brief>
     <doc>Test if value is in [ min, max] inclusive lower and upper bound
 </doc>
@@ -129,11 +129,11 @@
       <doc>true if in range, false otherwise</doc>
       <type builtin="yes" name="bool" />
     </return>
-    <argument id="jdb::ConfigRange::inInclusiveRange::val" name="val">
+    <argument id="jdb::XmlRange::inInclusiveRange::val" name="val">
       <type builtin="yes" name="double" />
     </argument>
   </method>
-  <method id="jdb::ConfigRange::toString" name="toString">
+  <method id="jdb::XmlRange::toString" name="toString">
     <brief> Outputs the range as a human readable string</brief>
     <return>
       <doc>A string representation of the range data in the format "( min -&gt; max )"</doc>

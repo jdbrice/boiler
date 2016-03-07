@@ -12,6 +12,7 @@ class for every new TTree structure.
     <type name="IObject" />
   </base>
   <methodtemplate id="jdb::DataSource::get" name="get">
+    <brief> Get data of of Type T from Tree</brief>
     <return>
       <type name="T" />
     </return>

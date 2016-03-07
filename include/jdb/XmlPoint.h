@@ -62,7 +62,9 @@ namespace jdb{
 			return ("( " + dts( x ) + ", " + dts( y ) + " )");
 		}
 
+#ifdef __CINT__
 		ClassDef( jdb::XmlPoint, 1 )
+#endif
 	};
 
 }

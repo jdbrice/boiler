@@ -11,9 +11,13 @@ namespace jdb {
 
 	class TaskRunner;
 
+	/* Manager for TaskRunner subclasses
+	 *
+	 */
 	class TaskFactory {
 
 	public:
+		// Maps classname to subclass of TaskRunner
 		typedef std::map<std::string, TaskRunner*(*)()> map_type;
 
 		TaskFactory(){}

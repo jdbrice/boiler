@@ -273,7 +273,7 @@ namespace jdb {
 		static int logLevelFromString( string ll ){
 			// push to lower case for comparison
 			string str2 = ll;
-			for ( int i = 0; i < str2.length(); i++ ){
+			for ( unsigned long int i = 0; i < str2.length(); i++ ){
 				str2[ i ] = std::tolower( str2[ i ] );
 			}
 

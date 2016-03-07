@@ -40,8 +40,9 @@ namespace jdb {
 		// does the nodepath point to an attribute value
 		map<string, bool> isAttribute;
 		
-		// typedef of commonly used iterator for the class
+		// map<string, string> iterator
 		typedef map<string, string>::iterator map_it_type;
+		// map<string, string> const iterator
 		typedef map<string, string>::const_iterator const_map_it_type;
 
 		//Filename of the config file
@@ -383,7 +384,7 @@ namespace jdb {
 			}
 			// rebuild as a fully sanitized and normalized path
 			string ret ="";
-			for ( int i = 0; i < goodPaths.size(); i++ ){
+			for ( unsigned long int i = 0; i < goodPaths.size(); i++ ){
 				
 				ret += goodPaths[i];
 
@@ -424,7 +425,7 @@ namespace jdb {
         	} else {
 
         		string full = "";
-        		int count = 0;
+        		unsigned long int count = 0;
         		for ( string p : paths ){
         			
         			// keep the attribute only on the last one

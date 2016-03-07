@@ -1,0 +1,60 @@
+<class xmlns="http://jessevdk.github.com/cldoc/1.0" id="XmlGraph" name="XmlGraph">
+  <constructor id="XmlGraph::XmlGraph" name="XmlGraph">
+    <argument id="XmlGraph::XmlGraph::cfg" name="cfg">
+      <type name="jdb::XmlConfig" qualifier="*" ref="jdb::XmlConfig#jdb::XmlConfig" />
+    </argument>
+    <argument id="XmlGraph::XmlGraph::nodePath" name="nodePath">
+      <type name="string" />
+    </argument>
+  </constructor>
+  <destructor id="XmlGraph::~XmlGraph" name="~XmlGraph" />
+  <method id="XmlGraph::eval" name="eval">
+    <return>
+      <type builtin="yes" name="double" />
+    </return>
+    <argument id="XmlGraph::eval::x_val" name="x_val">
+      <type builtin="yes" name="double" />
+    </argument>
+    <argument id="XmlGraph::eval::interpolate" name="interpolate">
+      <type name="string" />
+    </argument>
+  </method>
+  <method id="XmlGraph::linterp" name="linterp">
+    <return>
+      <type builtin="yes" name="double" />
+    </return>
+    <argument id="XmlGraph::linterp::x" name="x">
+      <type builtin="yes" name="double" />
+    </argument>
+    <argument id="XmlGraph::linterp::x0" name="x0">
+      <type builtin="yes" name="double" />
+    </argument>
+    <argument id="XmlGraph::linterp::y0" name="y0">
+      <type builtin="yes" name="double" />
+    </argument>
+    <argument id="XmlGraph::linterp::x1" name="x1">
+      <type builtin="yes" name="double" />
+    </argument>
+    <argument id="XmlGraph::linterp::y1" name="y1">
+      <type builtin="yes" name="double" />
+    </argument>
+  </method>
+  <field access="protected" id="XmlGraph::x" name="x">
+    <type name="vector&lt;double&gt;" />
+  </field>
+  <field access="protected" id="XmlGraph::y" name="y">
+    <type name="vector&lt;double&gt;" />
+  </field>
+  <field access="protected" id="XmlGraph::exh" name="exh">
+    <type name="vector&lt;double&gt;" />
+  </field>
+  <field access="protected" id="XmlGraph::exl" name="exl">
+    <type name="vector&lt;double&gt;" />
+  </field>
+  <field access="protected" id="XmlGraph::eyh" name="eyh">
+    <type name="vector&lt;double&gt;" />
+  </field>
+  <field access="protected" id="XmlGraph::eyl" name="eyl">
+    <type name="vector&lt;double&gt;" />
+  </field>
+</class>

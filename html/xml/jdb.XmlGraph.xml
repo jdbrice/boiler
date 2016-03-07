@@ -1,0 +1,60 @@
+<class xmlns="http://jessevdk.github.com/cldoc/1.0" id="jdb::XmlGraph" name="XmlGraph">
+  <constructor id="jdb::XmlGraph::XmlGraph" name="XmlGraph">
+    <argument id="jdb::XmlGraph::XmlGraph::cfg" name="cfg">
+      <type name="XmlConfig" qualifier="*" ref="jdb::XmlConfig#jdb::XmlConfig" />
+    </argument>
+    <argument id="jdb::XmlGraph::XmlGraph::nodePath" name="nodePath">
+      <type name="string" />
+    </argument>
+  </constructor>
+  <destructor id="jdb::XmlGraph::~XmlGraph" name="~XmlGraph" />
+  <method id="jdb::XmlGraph::eval" name="eval">
+    <return>
+      <type builtin="yes" name="double" />
+    </return>
+    <argument id="jdb::XmlGraph::eval::x_val" name="x_val">
+      <type builtin="yes" name="double" />
+    </argument>
+    <argument id="jdb::XmlGraph::eval::interpolate" name="interpolate">
+      <type name="string" />
+    </argument>
+  </method>
+  <method id="jdb::XmlGraph::linterp" name="linterp">
+    <return>
+      <type builtin="yes" name="double" />
+    </return>
+    <argument id="jdb::XmlGraph::linterp::x" name="x">
+      <type builtin="yes" name="double" />
+    </argument>
+    <argument id="jdb::XmlGraph::linterp::x0" name="x0">
+      <type builtin="yes" name="double" />
+    </argument>
+    <argument id="jdb::XmlGraph::linterp::y0" name="y0">
+      <type builtin="yes" name="double" />
+    </argument>
+    <argument id="jdb::XmlGraph::linterp::x1" name="x1">
+      <type builtin="yes" name="double" />
+    </argument>
+    <argument id="jdb::XmlGraph::linterp::y1" name="y1">
+      <type builtin="yes" name="double" />
+    </argument>
+  </method>
+  <field access="protected" id="jdb::XmlGraph::x" name="x">
+    <type name="vector&lt;double&gt;" />
+  </field>
+  <field access="protected" id="jdb::XmlGraph::y" name="y">
+    <type name="vector&lt;double&gt;" />
+  </field>
+  <field access="protected" id="jdb::XmlGraph::exh" name="exh">
+    <type name="vector&lt;double&gt;" />
+  </field>
+  <field access="protected" id="jdb::XmlGraph::exl" name="exl">
+    <type name="vector&lt;double&gt;" />
+  </field>
+  <field access="protected" id="jdb::XmlGraph::eyh" name="eyh">
+    <type name="vector&lt;double&gt;" />
+  </field>
+  <field access="protected" id="jdb::XmlGraph::eyl" name="eyl">
+    <type name="vector&lt;double&gt;" />
+  </field>
+</class>

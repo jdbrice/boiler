@@ -7,15 +7,6 @@ It can be used from the ROOT interpreter or as a library for compiled projects.<
   <class name="ChainLoader" ref="jdb::ChainLoader#jdb::ChainLoader">
     <brief>Static use class for loading .root files into a TChain</brief>
   </class>
-  <class name="ConfigFunction" ref="jdb::ConfigFunction#jdb::ConfigFunction">
-    <brief>Loads a TF1 or subclass function from an Xml Config</brief>
-  </class>
-  <class name="ConfigPoint" ref="jdb::ConfigPoint#jdb::ConfigPoint">
-    <brief>Config Point easily loads (x, y) points from XmlConfigs</brief>
-  </class>
-  <class name="ConfigRange" ref="jdb::ConfigRange#jdb::ConfigRange">
-    <brief>ConfigRange easily loads (min -&gt; max) ranges from XmlConfigs</brief>
-  </class>
   <class name="CutCollection" ref="jdb::CutCollection#jdb::CutCollection" />
   <class name="DataSource" ref="jdb::DataSource#jdb::DataSource">
     <brief>Automatically maps tree branches and leaves</brief>
@@ -39,7 +30,9 @@ It can be used from the ROOT interpreter or as a library for compiled projects.<
     <brief>Create PDF Reports in ROOT</brief>
   </class>
   <class name="RooPlotLib" ref="jdb::RooPlotLib#jdb::RooPlotLib" />
-  <class name="TaskFactory" ref="jdb::TaskFactory#jdb::TaskFactory" />
+  <class name="TaskFactory" ref="jdb::TaskFactory#jdb::TaskFactory">
+    <brief>Manager for TaskRunner subclasses</brief>
+  </class>
   <class name="TaskProgress" ref="jdb::TaskProgress#jdb::TaskProgress">
     <brief>Task Progress</brief>
   </class>
@@ -52,6 +45,16 @@ It can be used from the ROOT interpreter or as a library for compiled projects.<
   </class>
   <class name="XmlConfig" ref="jdb::XmlConfig#jdb::XmlConfig">
     <brief>Use xml formatted config files easily in projects</brief>
+  </class>
+  <class name="XmlFunction" ref="jdb::XmlFunction#jdb::XmlFunction">
+    <brief>Loads a TF1 or subclass function from an Xml Config</brief>
+  </class>
+  <class name="XmlGraph" ref="jdb::XmlGraph#jdb::XmlGraph" />
+  <class name="XmlPoint" ref="jdb::XmlPoint#jdb::XmlPoint">
+    <brief>Config Point easily loads (x, y) points from XmlConfigs</brief>
+  </class>
+  <class name="XmlRange" ref="jdb::XmlRange#jdb::XmlRange">
+    <brief>XmlRange easily loads (min -&gt; max) ranges from XmlConfigs</brief>
   </class>
   <function id="jdb::dts" name="dts">
     <brief>Converts a double to a string and trims trailing zeros</brief>

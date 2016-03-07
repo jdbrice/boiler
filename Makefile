@@ -34,7 +34,7 @@ ROOTLDFLAGS    	= $(shell root-config --ldflags)
 
 includes		= -I$(JDB_LIB)/include -I$(JDB_LIB)/include/jdb -I. -I$(ROOTSYS)/include -I$(ROOTDEV)/include 
 
-CXX           = g++ -o3 -DJDB_LOG_LEVEL=60 -Wall -Wextra -pedantic
+CXX           = g++ -o3 -DJDB_LOG_LEVEL=60 -Wgnu-zero-variadic-macro-arguments -Wall -Wextra -pedantic 
 CXXFLAGS      = -std=c++11 -fPIC 
 LD            = g++
 LDFLAGS       = -std=c++11 $(includes)

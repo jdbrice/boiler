@@ -94,6 +94,9 @@ namespace jdb{
 			line += " />";
 			return line;
 		}
+#ifdef __CINT__
+		ClassDef( jdb::XmlFunction, 1 )
+#endif
 	};
 
 }

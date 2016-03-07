@@ -12,97 +12,30 @@ return values.
 </doc>
   <coverage>
     <type documented="8" name="function" undocumented="0" />
-    <type documented="1" name="typedef" undocumented="3">
-      <undocumented id="XmlFunction" name="XmlFunction">
-        <location column="1" file="include/jdb/ConfigFunction.h" line="101" />
-      </undocumented>
-      <undocumented id="jdb::TaskFactory::map_type" name="map_type">
-        <location column="3" file="include/jdb/TaskFactory.h" line="17" />
-      </undocumented>
-      <undocumented id="jdb::XmlConfig::const_map_it_type" name="const_map_it_type">
-        <location column="3" file="include/jdb/XmlConfig.h" line="45" />
-      </undocumented>
-    </type>
-    <type documented="0" name="methodtemplate" undocumented="3">
-      <undocumented id="jdb::DataSource::get" name="get">
-        <location column="3" file="include/jdb/DataSource.h" line="106" />
-      </undocumented>
+    <type documented="3" name="typedef" undocumented="0" />
+    <type documented="1" name="methodtemplate" undocumented="2">
       <undocumented id="jdb::TaskFactory::createInstance" name="createInstance">
-        <location column="3" file="include/jdb/TaskFactory.h" line="30" />
+        <location column="3" file="include/jdb/TaskFactory.h" line="34" />
       </undocumented>
       <undocumented id="jdb::TaskFactory::registerTaskRunner" name="registerTaskRunner">
-        <location column="3" file="include/jdb/TaskFactory.h" line="33" />
+        <location column="3" file="include/jdb/TaskFactory.h" line="37" />
       </undocumented>
     </type>
     <type documented="0" name="templatetypeparameter" undocumented="3">
       <undocumented id="jdb::DataSource::get::T" name="T">
-        <location column="13" file="include/jdb/DataSource.h" line="106" />
+        <location column="13" file="include/jdb/DataSource.h" line="108" />
       </undocumented>
       <undocumented id="jdb::TaskFactory::createInstance::T" name="T">
-        <location column="12" file="include/jdb/TaskFactory.h" line="30" />
+        <location column="12" file="include/jdb/TaskFactory.h" line="34" />
       </undocumented>
       <undocumented id="jdb::TaskFactory::registerTaskRunner::T" name="T">
-        <location column="12" file="include/jdb/TaskFactory.h" line="33" />
+        <location column="12" file="include/jdb/TaskFactory.h" line="37" />
       </undocumented>
     </type>
     <type documented="1" name="namespace" undocumented="0" />
-    <type documented="111" name="method" undocumented="107">
-      <undocumented id="ConfigGraph::eval" name="eval">
-        <location column="2" file="include/jdb/ConfigGraph.h" line="33" />
-      </undocumented>
-      <undocumented id="ConfigGraph::linterp" name="linterp">
-        <location column="2" file="include/jdb/ConfigGraph.h" line="68" />
-      </undocumented>
+    <type documented="111" name="method" undocumented="95">
       <undocumented id="jdb::ChainLoader::classname" name="classname">
         <location column="3" file="include/jdb/ChainLoader.h" line="20" />
-      </undocumented>
-      <undocumented id="jdb::ConfigFunction::getCov" name="getCov">
-        <location column="3" file="include/jdb/ConfigFunction.h" line="62" />
-      </undocumented>
-      <undocumented id="jdb::ConfigFunction::getTF1" name="getTF1">
-        <location column="3" file="include/jdb/ConfigFunction.h" line="60" />
-      </undocumented>
-      <undocumented id="jdb::ConfigFunction::toString" name="toString">
-        <location column="3" file="include/jdb/ConfigFunction.h" line="64" />
-      </undocumented>
-      <undocumented id="jdb::ConfigFunction::toXml" name="toXml">
-        <location column="3" file="include/jdb/ConfigFunction.h" line="76" />
-      </undocumented>
-      <undocumented id="jdb::ConfigPoint::Class" name="Class">
-        <location column="3" file="include/jdb/ConfigPoint.h" line="65" />
-      </undocumented>
-      <undocumented id="jdb::ConfigPoint::Class_Name" name="Class_Name">
-        <location column="3" file="include/jdb/ConfigPoint.h" line="65" />
-      </undocumented>
-      <undocumented id="jdb::ConfigPoint::Class_Version" name="Class_Version">
-        <location column="3" file="include/jdb/ConfigPoint.h" line="65" />
-      </undocumented>
-      <undocumented id="jdb::ConfigPoint::DeclFileLine" name="DeclFileLine">
-        <location column="3" file="include/jdb/ConfigPoint.h" line="65" />
-      </undocumented>
-      <undocumented id="jdb::ConfigPoint::DeclFileName" name="DeclFileName">
-        <location column="3" file="include/jdb/ConfigPoint.h" line="65" />
-      </undocumented>
-      <undocumented id="jdb::ConfigPoint::Dictionary" name="Dictionary">
-        <location column="3" file="include/jdb/ConfigPoint.h" line="65" />
-      </undocumented>
-      <undocumented id="jdb::ConfigPoint::ImplFileLine" name="ImplFileLine">
-        <location column="3" file="include/jdb/ConfigPoint.h" line="65" />
-      </undocumented>
-      <undocumented id="jdb::ConfigPoint::ImplFileName" name="ImplFileName">
-        <location column="3" file="include/jdb/ConfigPoint.h" line="65" />
-      </undocumented>
-      <undocumented id="jdb::ConfigPoint::IsA" name="IsA">
-        <location column="3" file="include/jdb/ConfigPoint.h" line="65" />
-      </undocumented>
-      <undocumented id="jdb::ConfigPoint::ShowMembers" name="ShowMembers">
-        <location column="3" file="include/jdb/ConfigPoint.h" line="65" />
-      </undocumented>
-      <undocumented id="jdb::ConfigPoint::Streamer" name="Streamer">
-        <location column="3" file="include/jdb/ConfigPoint.h" line="65" />
-      </undocumented>
-      <undocumented id="jdb::ConfigPoint::StreamerNVirtual" name="StreamerNVirtual">
-        <location column="3" file="include/jdb/ConfigPoint.h" line="65" />
       </undocumented>
       <undocumented id="jdb::CutCollection::classname" name="classname">
         <location column="3" file="include/jdb/CutCollection.h" line="23" />
@@ -120,7 +53,7 @@ return values.
         <location column="3" file="include/jdb/DataSource.h" line="84" />
       </undocumented>
       <undocumented id="jdb::DataSource::getTreeName" name="getTreeName">
-        <location column="3" file="include/jdb/DataSource.h" line="161" />
+        <location column="3" file="include/jdb/DataSource.h" line="163" />
       </undocumented>
       <undocumented id="jdb::HistoAnalyzer::classname" name="classname">
         <location column="3" file="include/jdb/HistoAnalyzer.h" line="51" />
@@ -273,10 +206,10 @@ return values.
         <location column="6" file="include/jdb/RooPlotLib.h" line="40" />
       </undocumented>
       <undocumented id="jdb::TaskFactory::createTaskRunner" name="createTaskRunner">
-        <location column="3" file="include/jdb/TaskFactory.h" line="22" />
+        <location column="3" file="include/jdb/TaskFactory.h" line="26" />
       </undocumented>
       <undocumented id="jdb::TaskFactory::getMap" name="getMap">
-        <location column="3" file="include/jdb/TaskFactory.h" line="40" />
+        <location column="3" file="include/jdb/TaskFactory.h" line="44" />
       </undocumented>
       <undocumented id="jdb::TaskRunner::classname" name="classname">
         <location column="3" file="include/jdb/TaskRunner.h" line="17" />
@@ -324,73 +257,70 @@ return values.
         <location column="3" file="include/jdb/TreeAnalyzer.h" line="107" />
       </undocumented>
       <undocumented id="jdb::XmlConfig::add" name="add">
-        <location column="3" file="include/jdb/XmlConfig.h" line="581" />
+        <location column="3" file="include/jdb/XmlConfig.h" line="582" />
       </undocumented>
       <undocumented id="jdb::XmlConfig::addAttribute" name="addAttribute">
-        <location column="3" file="include/jdb/XmlConfig.h" line="633" />
+        <location column="3" file="include/jdb/XmlConfig.h" line="634" />
       </undocumented>
       <undocumented id="jdb::XmlConfig::applyOverrides" name="applyOverrides">
-        <location column="9" file="include/jdb/XmlConfig.h" line="495" />
+        <location column="9" file="include/jdb/XmlConfig.h" line="496" />
       </undocumented>
       <undocumented id="jdb::XmlConfig::attributesMap" name="attributesMap">
-        <location column="3" file="include/jdb/XmlConfig.h" line="295" />
+        <location column="3" file="include/jdb/XmlConfig.h" line="296" />
       </undocumented>
       <undocumented id="jdb::XmlConfig::classname" name="classname">
-        <location column="3" file="include/jdb/XmlConfig.h" line="105" />
+        <location column="3" file="include/jdb/XmlConfig.h" line="106" />
       </undocumented>
       <undocumented id="jdb::XmlConfig::getFilename" name="getFilename">
-        <location column="3" file="include/jdb/XmlConfig.h" line="121" />
+        <location column="3" file="include/jdb/XmlConfig.h" line="122" />
       </undocumented>
       <undocumented id="jdb::XmlConfig::getIntMap" name="getIntMap">
-        <location column="3" file="include/jdb/XmlConfig.h" line="212" />
+        <location column="3" file="include/jdb/XmlConfig.h" line="213" />
       </undocumented>
       <undocumented id="jdb::XmlConfig::indentation" name="indentation">
-        <location column="9" file="include/jdb/XmlConfig.h" line="498" />
+        <location column="9" file="include/jdb/XmlConfig.h" line="499" />
       </undocumented>
       <undocumented id="jdb::XmlConfig::join" name="join">
-        <location column="9" file="include/jdb/XmlConfig.h" line="451" />
+        <location column="9" file="include/jdb/XmlConfig.h" line="452" />
       </undocumented>
       <undocumented id="jdb::XmlConfig::loadFile" name="loadFile">
-        <location column="3" file="include/jdb/XmlConfig.h" line="120" />
+        <location column="3" file="include/jdb/XmlConfig.h" line="121" />
       </undocumented>
       <undocumented id="jdb::XmlConfig::parseIncludes" name="parseIncludes">
-        <location column="3" file="include/jdb/XmlConfig.h" line="620" />
+        <location column="3" file="include/jdb/XmlConfig.h" line="621" />
       </undocumented>
       <undocumented id="jdb::XmlConfig::pathFromFilename" name="pathFromFilename">
-        <location column="9" file="include/jdb/XmlConfig.h" line="611" />
+        <location column="9" file="include/jdb/XmlConfig.h" line="612" />
       </undocumented>
       <undocumented id="jdb::XmlConfig::report" name="report">
-        <location column="9" file="include/jdb/XmlConfig.h" line="493" />
+        <location column="9" file="include/jdb/XmlConfig.h" line="494" />
       </undocumented>
       <undocumented id="jdb::XmlConfig::toXml" name="toXml">
-        <location column="9" file="include/jdb/XmlConfig.h" line="505" />
+        <location column="9" file="include/jdb/XmlConfig.h" line="506" />
       </undocumented>
       <undocumented id="jdb::XmlConfig::toXmlFile" name="toXmlFile">
-        <location column="3" file="include/jdb/XmlConfig.h" line="568" />
+        <location column="3" file="include/jdb/XmlConfig.h" line="569" />
+      </undocumented>
+      <undocumented id="jdb::XmlFunction::getCov" name="getCov">
+        <location column="3" file="include/jdb/XmlFunction.h" line="62" />
+      </undocumented>
+      <undocumented id="jdb::XmlFunction::getTF1" name="getTF1">
+        <location column="3" file="include/jdb/XmlFunction.h" line="60" />
+      </undocumented>
+      <undocumented id="jdb::XmlFunction::toString" name="toString">
+        <location column="3" file="include/jdb/XmlFunction.h" line="64" />
+      </undocumented>
+      <undocumented id="jdb::XmlFunction::toXml" name="toXml">
+        <location column="3" file="include/jdb/XmlFunction.h" line="76" />
+      </undocumented>
+      <undocumented id="jdb::XmlGraph::eval" name="eval">
+        <location column="3" file="include/jdb/XmlGraph.h" line="35" />
+      </undocumented>
+      <undocumented id="jdb::XmlGraph::linterp" name="linterp">
+        <location column="3" file="include/jdb/XmlGraph.h" line="70" />
       </undocumented>
     </type>
     <type documented="68" name="field" undocumented="19">
-      <undocumented id="ConfigGraph::exh" name="exh">
-        <location column="2" file="include/jdb/ConfigGraph.h" line="21" />
-      </undocumented>
-      <undocumented id="ConfigGraph::exl" name="exl">
-        <location column="2" file="include/jdb/ConfigGraph.h" line="21" />
-      </undocumented>
-      <undocumented id="ConfigGraph::eyh" name="eyh">
-        <location column="2" file="include/jdb/ConfigGraph.h" line="21" />
-      </undocumented>
-      <undocumented id="ConfigGraph::eyl" name="eyl">
-        <location column="2" file="include/jdb/ConfigGraph.h" line="21" />
-      </undocumented>
-      <undocumented id="ConfigGraph::x" name="x">
-        <location column="2" file="include/jdb/ConfigGraph.h" line="21" />
-      </undocumented>
-      <undocumented id="ConfigGraph::y" name="y">
-        <location column="2" file="include/jdb/ConfigGraph.h" line="21" />
-      </undocumented>
-      <undocumented id="jdb::ConfigFunction::cov" name="cov">
-        <location column="3" file="include/jdb/ConfigFunction.h" line="25" />
-      </undocumented>
       <undocumented id="jdb::CutCollection::ranges" name="ranges">
         <location column="3" file="include/jdb/CutCollection.h" line="28" />
       </undocumented>
@@ -427,11 +357,29 @@ return values.
       <undocumented id="jdb::TreeAnalyzer::nEventLoops" name="nEventLoops">
         <location column="3" file="include/jdb/TreeAnalyzer.h" line="80" />
       </undocumented>
+      <undocumented id="jdb::XmlFunction::cov" name="cov">
+        <location column="3" file="include/jdb/XmlFunction.h" line="25" />
+      </undocumented>
+      <undocumented id="jdb::XmlGraph::exh" name="exh">
+        <location column="3" file="include/jdb/XmlGraph.h" line="23" />
+      </undocumented>
+      <undocumented id="jdb::XmlGraph::exl" name="exl">
+        <location column="3" file="include/jdb/XmlGraph.h" line="23" />
+      </undocumented>
+      <undocumented id="jdb::XmlGraph::eyh" name="eyh">
+        <location column="3" file="include/jdb/XmlGraph.h" line="23" />
+      </undocumented>
+      <undocumented id="jdb::XmlGraph::eyl" name="eyl">
+        <location column="3" file="include/jdb/XmlGraph.h" line="23" />
+      </undocumented>
+      <undocumented id="jdb::XmlGraph::x" name="x">
+        <location column="3" file="include/jdb/XmlGraph.h" line="23" />
+      </undocumented>
+      <undocumented id="jdb::XmlGraph::y" name="y">
+        <location column="3" file="include/jdb/XmlGraph.h" line="23" />
+      </undocumented>
     </type>
     <type documented="18" name="constructor" undocumented="10">
-      <undocumented id="ConfigGraph::ConfigGraph" name="ConfigGraph">
-        <location column="2" file="include/jdb/ConfigGraph.h" line="23" />
-      </undocumented>
       <undocumented id="jdb::CutCollection::CutCollection" name="CutCollection">
         <location column="3" file="include/jdb/CutCollection.h" line="24" />
       </undocumented>
@@ -454,30 +402,24 @@ return values.
         <location column="6" file="include/jdb/RooPlotLib.h" line="48" />
       </undocumented>
       <undocumented id="jdb::TaskFactory::TaskFactory" name="TaskFactory">
-        <location column="3" file="include/jdb/TaskFactory.h" line="19" />
+        <location column="3" file="include/jdb/TaskFactory.h" line="23" />
       </undocumented>
       <undocumented id="jdb::TaskRunner::TaskRunner" name="TaskRunner">
         <location column="3" file="include/jdb/TaskRunner.h" line="18" />
       </undocumented>
+      <undocumented id="jdb::XmlGraph::XmlGraph" name="XmlGraph">
+        <location column="3" file="include/jdb/XmlGraph.h" line="25" />
+      </undocumented>
     </type>
     <type documented="13" name="variable" undocumented="2">
-      <undocumented id="jdb::ConfigFunction::tag" name="tag">
-        <location column="3" file="include/jdb/ConfigFunction.h" line="31" />
-      </undocumented>
       <undocumented id="jdb::Logger::showColors" name="showColors">
         <location column="3" file="include/jdb/Logger.h" line="111" />
       </undocumented>
+      <undocumented id="jdb::XmlFunction::tag" name="tag">
+        <location column="3" file="include/jdb/XmlFunction.h" line="31" />
+      </undocumented>
     </type>
     <type documented="5" name="destructor" undocumented="12">
-      <undocumented id="ConfigGraph::~ConfigGraph" name="~ConfigGraph">
-        <location column="2" file="include/jdb/ConfigGraph.h" line="28" />
-      </undocumented>
-      <undocumented id="jdb::ConfigPoint::~ConfigPoint" name="~ConfigPoint">
-        <location column="3" file="include/jdb/ConfigPoint.h" line="55" />
-      </undocumented>
-      <undocumented id="jdb::ConfigRange::~ConfigRange" name="~ConfigRange">
-        <location column="3" file="include/jdb/ConfigRange.h" line="61" />
-      </undocumented>
       <undocumented id="jdb::CutCollection::~CutCollection" name="~CutCollection">
         <location column="3" file="include/jdb/CutCollection.h" line="26" />
       </undocumented>
@@ -494,7 +436,7 @@ return values.
         <location column="6" file="include/jdb/RooPlotLib.h" line="49" />
       </undocumented>
       <undocumented id="jdb::TaskFactory::~TaskFactory" name="~TaskFactory">
-        <location column="3" file="include/jdb/TaskFactory.h" line="20" />
+        <location column="3" file="include/jdb/TaskFactory.h" line="24" />
       </undocumented>
       <undocumented id="jdb::TaskProgress::~TaskProgress" name="~TaskProgress">
         <location column="3" file="include/jdb/Utils.h" line="143" />
@@ -505,11 +447,17 @@ return values.
       <undocumented id="jdb::TreeAnalyzer::~TreeAnalyzer" name="~TreeAnalyzer">
         <location column="3" file="include/jdb/TreeAnalyzer.h" line="103" />
       </undocumented>
-    </type>
-    <type documented="16" name="class" undocumented="6">
-      <undocumented id="ConfigGraph" name="ConfigGraph">
-        <location column="1" file="include/jdb/ConfigGraph.h" line="17" />
+      <undocumented id="jdb::XmlGraph::~XmlGraph" name="~XmlGraph">
+        <location column="3" file="include/jdb/XmlGraph.h" line="30" />
       </undocumented>
+      <undocumented id="jdb::XmlPoint::~XmlPoint" name="~XmlPoint">
+        <location column="3" file="include/jdb/XmlPoint.h" line="55" />
+      </undocumented>
+      <undocumented id="jdb::XmlRange::~XmlRange" name="~XmlRange">
+        <location column="3" file="include/jdb/XmlRange.h" line="61" />
+      </undocumented>
+    </type>
+    <type documented="17" name="class" undocumented="5">
       <undocumented id="jdb::CutCollection" name="CutCollection">
         <location column="2" file="include/jdb/CutCollection.h" line="20" />
       </undocumented>
@@ -519,12 +467,12 @@ return values.
       <undocumented id="jdb::RooPlotLib" name="RooPlotLib">
         <location column="2" file="include/jdb/RooPlotLib.h" line="32" />
       </undocumented>
-      <undocumented id="jdb::TaskFactory" name="TaskFactory">
-        <location column="2" file="include/jdb/TaskFactory.h" line="14" />
-      </undocumented>
       <undocumented id="jdb::TaskRunner" name="TaskRunner">
         <location column="2" file="include/jdb/TaskRunner.h" line="13" />
         <location column="2" file="include/jdb/TaskFactory.h" line="12" />
+      </undocumented>
+      <undocumented id="jdb::XmlGraph" name="XmlGraph">
+        <location column="2" file="include/jdb/XmlGraph.h" line="19" />
       </undocumented>
     </type>
   </coverage>
@@ -591,87 +539,87 @@ return values.
       <undocumented name="ll" />
     </function>
     <function id="jdb::XmlConfig::XmlConfig" name="XmlConfig">
-      <location column="3" file="include/jdb/XmlConfig.h" line="93" />
+      <location column="3" file="include/jdb/XmlConfig.h" line="94" />
       <undocumented name="rhs" />
     </function>
     <function id="jdb::XmlConfig::cn" name="cn">
-      <location column="3" file="include/jdb/XmlConfig.h" line="130" />
+      <location column="3" file="include/jdb/XmlConfig.h" line="131" />
       <undocumented-return />
       <undocumented name="nodePath" />
     </function>
     <function id="jdb::XmlConfig::operator[]" name="operator[]">
-      <location column="3" file="include/jdb/XmlConfig.h" line="140" />
+      <location column="3" file="include/jdb/XmlConfig.h" line="141" />
       <undocumented-return />
       <misspelled name="returns" />
     </function>
     <function id="jdb::XmlConfig::getIntVector" name="getIntVector">
-      <location column="3" file="include/jdb/XmlConfig.h" line="197" />
+      <location column="3" file="include/jdb/XmlConfig.h" line="198" />
       <undocumented-return />
       <undocumented name="defaultLength" />
       <undocumented name="defaultVal" />
       <misspelled name="return" />
     </function>
     <function id="jdb::XmlConfig::getStringMap" name="getStringMap">
-      <location column="3" file="include/jdb/XmlConfig.h" line="211" />
+      <location column="3" file="include/jdb/XmlConfig.h" line="212" />
       <undocumented-return />
     </function>
     <function id="jdb::XmlConfig::getDoubleVector" name="getDoubleVector">
-      <location column="3" file="include/jdb/XmlConfig.h" line="229" />
+      <location column="3" file="include/jdb/XmlConfig.h" line="230" />
       <undocumented-return />
       <misspelled name="return" />
     </function>
     <function id="jdb::XmlConfig::trim" name="trim">
-      <location column="3" file="include/jdb/XmlConfig.h" line="334" />
+      <location column="3" file="include/jdb/XmlConfig.h" line="335" />
       <undocumented-return />
     </function>
     <function id="jdb::XmlConfig::pathToParent" name="pathToParent">
-      <location column="9" file="include/jdb/XmlConfig.h" line="357" />
+      <location column="9" file="include/jdb/XmlConfig.h" line="358" />
       <undocumented-return />
       <undocumented name="nodePath" />
     </function>
     <function id="jdb::XmlConfig::basePath" name="basePath">
-      <location column="9" file="include/jdb/XmlConfig.h" line="367" />
+      <location column="9" file="include/jdb/XmlConfig.h" line="368" />
       <undocumented name="keepAttribute" />
     </function>
     <function id="jdb::XmlConfig::join" name="join">
-      <location column="9" file="include/jdb/XmlConfig.h" line="414" />
+      <location column="9" file="include/jdb/XmlConfig.h" line="415" />
       <undocumented-return />
       <undocumented name="paths" />
     </function>
     <function id="jdb::XmlConfig::depthOf" name="depthOf">
-      <location column="3" file="include/jdb/XmlConfig.h" line="489" />
+      <location column="3" file="include/jdb/XmlConfig.h" line="490" />
       <undocumented-return />
     </function>
     <function id="jdb::XmlConfig::manualToLower" name="manualToLower">
-      <location column="3" file="include/jdb/XmlConfig.h" line="597" />
+      <location column="3" file="include/jdb/XmlConfig.h" line="598" />
       <undocumented-return />
       <undocumented name="str" />
     </function>
     <function id="jdb::XmlConfig::sanitize" name="sanitize">
-      <location column="3" file="include/jdb/XmlConfig.h" line="599" />
+      <location column="3" file="include/jdb/XmlConfig.h" line="600" />
       <undocumented-return />
       <undocumented name="nodePath" />
     </function>
     <function id="jdb::XmlConfig::vectorFromString" name="vectorFromString">
-      <location column="3" file="include/jdb/XmlConfig.h" line="601" />
+      <location column="3" file="include/jdb/XmlConfig.h" line="602" />
       <undocumented-return />
       <undocumented name="data" />
     </function>
     <function id="jdb::XmlConfig::split" name="split">
-      <location column="3" file="include/jdb/XmlConfig.h" line="603" />
+      <location column="3" file="include/jdb/XmlConfig.h" line="604" />
       <undocumented-return />
       <undocumented name="s" />
       <undocumented name="delim" />
       <undocumented name="elems" />
     </function>
     <function id="jdb::XmlConfig::stringToPair" name="stringToPair">
-      <location column="3" file="include/jdb/XmlConfig.h" line="607" />
+      <location column="3" file="include/jdb/XmlConfig.h" line="608" />
       <undocumented-return />
       <undocumented name="s" />
       <undocumented name="delim" />
     </function>
     <function id="jdb::XmlConfig::addNode" name="addNode">
-      <location column="3" file="include/jdb/XmlConfig.h" line="624" />
+      <location column="3" file="include/jdb/XmlConfig.h" line="625" />
       <undocumented name="nodePath" />
       <undocumented name="value" />
     </function>
@@ -763,52 +711,58 @@ return values.
       <undocumented-return />
       <misspelled name="return" />
     </function>
+    <function id="jdb::DataSource::get" name="get">
+      <location column="3" file="include/jdb/DataSource.h" line="108" />
+      <undocumented-return />
+      <undocumented name="i" />
+      <undocumented name="name" />
+    </function>
     <function id="jdb::DataSource::getPointer" name="getPointer">
-      <location column="3" file="include/jdb/DataSource.h" line="126" />
+      <location column="3" file="include/jdb/DataSource.h" line="128" />
       <misspelled name="return" />
     </function>
     <function id="jdb::DataSource::get" name="get">
-      <location column="3" file="include/jdb/DataSource.h" line="136" />
+      <location column="3" file="include/jdb/DataSource.h" line="138" />
       <undocumented-return />
       <misspelled name="return" />
     </function>
     <function id="jdb::DataSource::operator()" name="operator()">
-      <location column="3" file="include/jdb/DataSource.h" line="142" />
+      <location column="3" file="include/jdb/DataSource.h" line="144" />
       <undocumented-return />
       <misspelled name="return" />
     </function>
     <function id="jdb::DataSource::getEntries" name="getEntries">
-      <location column="3" file="include/jdb/DataSource.h" line="146" />
+      <location column="3" file="include/jdb/DataSource.h" line="148" />
       <undocumented-return />
       <misspelled name="return" />
     </function>
     <function id="jdb::DataSource::getEntry" name="getEntry">
-      <location column="3" file="include/jdb/DataSource.h" line="150" />
+      <location column="3" file="include/jdb/DataSource.h" line="152" />
       <undocumented-return />
       <undocumented name="i" />
       <misspelled name="return" />
     </function>
     <function id="jdb::DataSource::cacheExists" name="cacheExists">
-      <location column="3" file="include/jdb/DataSource.h" line="180" />
+      <location column="3" file="include/jdb/DataSource.h" line="182" />
       <undocumented-return />
     </function>
     <function id="jdb::DataSource::mapBranch" name="mapBranch">
-      <location column="3" file="include/jdb/DataSource.h" line="197" />
+      <location column="3" file="include/jdb/DataSource.h" line="199" />
       <undocumented name="name" />
       <undocumented name="br" />
     </function>
     <function id="jdb::DataSource::chainLeafLength" name="chainLeafLength">
-      <location column="3" file="include/jdb/DataSource.h" line="208" />
+      <location column="3" file="include/jdb/DataSource.h" line="210" />
       <undocumented-return />
       <misspelled name="return" />
     </function>
     <function id="jdb::DataSource::singleTreeLeafLength" name="singleTreeLeafLength">
-      <location column="3" file="include/jdb/DataSource.h" line="212" />
+      <location column="3" file="include/jdb/DataSource.h" line="214" />
       <undocumented-return />
       <misspelled name="return" />
     </function>
     <function id="jdb::DataSource::memSize" name="memSize">
-      <location column="3" file="include/jdb/DataSource.h" line="217" />
+      <location column="3" file="include/jdb/DataSource.h" line="219" />
       <undocumented name="name" />
     </function>
     <function id="jdb::TreeAnalyzer::classname" name="classname">
@@ -827,34 +781,34 @@ return values.
       <undocumented-return />
       <misspelled name="return" />
     </function>
-    <function id="jdb::ConfigRange::ConfigRange" name="ConfigRange">
-      <location column="3" file="include/jdb/ConfigRange.h" line="44" />
+    <function id="jdb::XmlRange::XmlRange" name="XmlRange">
+      <location column="3" file="include/jdb/XmlRange.h" line="44" />
       <undocumented name="np" />
       <misspelled name="nodePath" />
     </function>
-    <function id="jdb::ConfigRange::inInclusiveRange" name="inInclusiveRange">
-      <location column="3" file="include/jdb/ConfigRange.h" line="81" />
+    <function id="jdb::XmlRange::inInclusiveRange" name="inInclusiveRange">
+      <location column="3" file="include/jdb/XmlRange.h" line="81" />
       <undocumented name="val" />
     </function>
-    <function id="jdb::ConfigRange::inExclusiveRange" name="inExclusiveRange">
-      <location column="3" file="include/jdb/ConfigRange.h" line="94" />
+    <function id="jdb::XmlRange::inExclusiveRange" name="inExclusiveRange">
+      <location column="3" file="include/jdb/XmlRange.h" line="94" />
       <undocumented name="val" />
     </function>
-    <function id="jdb::ConfigRange::inExclusiveLowerInclusiveUpperRange" name="inExclusiveLowerInclusiveUpperRange">
-      <location column="3" file="include/jdb/ConfigRange.h" line="107" />
+    <function id="jdb::XmlRange::inExclusiveLowerInclusiveUpperRange" name="inExclusiveLowerInclusiveUpperRange">
+      <location column="3" file="include/jdb/XmlRange.h" line="107" />
       <undocumented name="val" />
     </function>
-    <function id="jdb::ConfigRange::inInclusiveLowerExclusiveUpperRange" name="inInclusiveLowerExclusiveUpperRange">
-      <location column="3" file="include/jdb/ConfigRange.h" line="120" />
+    <function id="jdb::XmlRange::inInclusiveLowerExclusiveUpperRange" name="inInclusiveLowerExclusiveUpperRange">
+      <location column="3" file="include/jdb/XmlRange.h" line="120" />
       <undocumented name="val" />
     </function>
-    <function id="jdb::ConfigRange::above" name="above">
-      <location column="3" file="include/jdb/ConfigRange.h" line="135" />
+    <function id="jdb::XmlRange::above" name="above">
+      <location column="3" file="include/jdb/XmlRange.h" line="135" />
       <undocumented name="val" />
       <undocumented name="includeUpperEdge" />
     </function>
-    <function id="jdb::ConfigRange::below" name="below">
-      <location column="3" file="include/jdb/ConfigRange.h" line="150" />
+    <function id="jdb::XmlRange::below" name="below">
+      <location column="3" file="include/jdb/XmlRange.h" line="150" />
       <undocumented name="includeLowerEdge" />
       <undocumented name="val" />
     </function>
@@ -863,8 +817,8 @@ return values.
       <undocumented name="setup" />
       <undocumented name="config" />
     </function>
-    <function id="jdb::ConfigFunction::ConfigFunction" name="ConfigFunction">
-      <location column="3" file="include/jdb/ConfigFunction.h" line="41" />
+    <function id="jdb::XmlFunction::XmlFunction" name="XmlFunction">
+      <location column="3" file="include/jdb/XmlFunction.h" line="41" />
       <undocumented name="nodePath" />
       <undocumented name="covMod" />
       <undocumented name="pMod" />
@@ -872,20 +826,32 @@ return values.
       <undocumented name="formMod" />
       <undocumented name="eMod" />
     </function>
-    <function id="jdb::ConfigFunction::eval" name="eval">
-      <location column="3" file="include/jdb/ConfigFunction.h" line="53" />
+    <function id="jdb::XmlFunction::eval" name="eval">
+      <location column="3" file="include/jdb/XmlFunction.h" line="53" />
       <undocumented name="x" />
     </function>
   </arguments>
   <references>
+    <typedef id="jdb::XmlConfig::map_it_type" name="map_it_type">
+      <location column="3" file="include/jdb/XmlConfig.h" line="44" />
+      <doctype name="brief">
+        <ref name="string, string" />
+      </doctype>
+    </typedef>
+    <typedef id="jdb::XmlConfig::const_map_it_type" name="const_map_it_type">
+      <location column="3" file="include/jdb/XmlConfig.h" line="46" />
+      <doctype name="brief">
+        <ref name="string, string" />
+      </doctype>
+    </typedef>
     <method id="jdb::XmlConfig::getString" name="getString">
-      <location column="3" file="include/jdb/XmlConfig.h" line="170" />
+      <location column="3" file="include/jdb/XmlConfig.h" line="171" />
       <doctype name="doc">
         <ref name="cut1 /" />
       </doctype>
     </method>
     <method id="jdb::XmlConfig::getStringMap" name="getStringMap">
-      <location column="3" file="include/jdb/XmlConfig.h" line="211" />
+      <location column="3" file="include/jdb/XmlConfig.h" line="212" />
       <doctype name="brief">
         <ref name="string, string" />
       </doctype>

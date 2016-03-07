@@ -102,7 +102,9 @@ namespace jdb{
 		TChain * getChain() { return chain; }
 
 
-
+		/* Get data of of Type T from Tree
+		 * 
+		 */
 		template <typename T>
 		inline T get(string name, int i = 0 ){
 			DEBUG( "Checking for valid pointer at " << name );

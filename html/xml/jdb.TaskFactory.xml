@@ -1,4 +1,5 @@
 <class xmlns="http://jessevdk.github.com/cldoc/1.0" id="jdb::TaskFactory" name="TaskFactory">
+  <brief>Manager for TaskRunner subclasses</brief>
   <methodtemplate id="jdb::TaskFactory::createInstance" name="createInstance" static="yes">
     <return>
       <type name="TaskRunner" qualifier="*" ref="jdb::TaskRunner#jdb::TaskRunner" />
@@ -15,6 +16,7 @@
     <templatetypeparameter id="jdb::TaskFactory::registerTaskRunner::T" name="T" />
   </methodtemplate>
   <typedef id="jdb::TaskFactory::map_type" name="map_type">
+    <brief>Maps classname to subclass of TaskRunner</brief>
     <type name="map&lt;string, jdb::TaskRunner *(*)()&gt;" />
   </typedef>
   <constructor id="jdb::TaskFactory::TaskFactory" name="TaskFactory" />

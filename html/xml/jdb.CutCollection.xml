@@ -10,7 +10,7 @@
     <type name="const auto" qualifier=" const" />
   </variable>
   <field id="jdb::CutCollection::ranges" name="ranges">
-    <type name="map&lt;string, shared_ptr&lt;jdb::ConfigRange&gt;&gt;" />
+    <type name="map&lt;string, shared_ptr&lt;jdb::XmlRange&gt;&gt;" />
   </field>
   <constructor id="jdb::CutCollection::CutCollection" name="CutCollection" />
   <constructor id="jdb::CutCollection::CutCollection" name="CutCollection">
@@ -29,7 +29,7 @@
   </method>
   <method id="jdb::CutCollection::operator[]" name="operator[]">
     <return>
-      <type name="shared_ptr&lt;jdb::ConfigRange&gt;" />
+      <type name="shared_ptr&lt;jdb::XmlRange&gt;" />
     </return>
     <argument id="jdb::CutCollection::operator[]::name" name="name">
       <type name="string" />
