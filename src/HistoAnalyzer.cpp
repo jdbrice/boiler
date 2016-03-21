@@ -21,7 +21,7 @@ namespace jdb{
 		
 	    // create the book
 	    INFO( classname(), " Creating book " << this->config.getString( nodePath + ".output.data" ) )
-	    book = shared_ptr<HistoBook>(new HistoBook( this->config.getString( nodePath + ".output:path", "" ) + this->config.getString( nodePath + "output.data" ), this->config, "", "" ));
+	    book = shared_ptr<HistoBook>(new HistoBook( this->config.getString( nodePath + ".output:path", "" ) + this->config.getString( nodePath + ".output.data" ), this->config, "", "" ));
 
 
 	    INFO( classname(), " Creating report " << this->config.getString( nodePath + ".output.report" ) );
