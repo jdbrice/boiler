@@ -169,6 +169,8 @@ namespace jdb{
 	void TreeAnalyzer::initDataSource( int _jobIndex ){
 	    INFO( classname(), "( jobIndex=" << _jobIndex << ")" );
 
+
+	    treeName = this->config.getString( nodePath + ".input.dst:treeName" );
 	    chain = new TChain( this->config.getString( nodePath + ".input.dst:treeName" ).c_str() );
 
 	    if ( config.exists( config.join( nodePath, "input", "dst" ) ) ) {

@@ -60,6 +60,7 @@ namespace jdb{
 		
 		//The chain object which gets automatically set up
 		TChain 		*chain = nullptr;
+		string 		treeName;
 		
 		// the maximum number of events to process. If not set all events will be processed 
 		int nEventsToProcess;
