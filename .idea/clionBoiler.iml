@@ -3,39 +3,12 @@
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/CMakeLists.txt" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/include/UnitTest/HistoBinsUnitTest.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/include/UnitTest/HistoBookUnitTest.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/include/UnitTest/RooPlotterUnitTest.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/include/UnitTest/TreeAnalyzerUnitTest.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/include/UnitTest/UnitTest.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/include/UnitTest/XmlConfigUnitTest.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/include/jdb/ChainLoader.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/include/jdb/ConfigPoint.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/include/jdb/ConfigRange.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/include/jdb/CutSequence.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/include/jdb/DataSource.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/include/jdb/EvaluatedLeaf.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/include/jdb/HistoAnalyzer.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/include/jdb/HistoBins.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/include/jdb/HistoBook.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/include/jdb/Logger.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/include/jdb/LoggerConfig.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/include/jdb/RapidXmlWrapper.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/include/jdb/Reporter.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/include/jdb/RooPlotLib.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/include/jdb/RooPlotter.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/include/jdb/TreeAnalyzer.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/include/jdb/TreeMap.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/include/jdb/Utils.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/include/jdb/XmlConfig.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/include/rapidXML.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/ChainLoader.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/DataSource.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/Engine.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/EvaluatedLeaf.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/HistoAnalyzer.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/HistoBook.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/Linkdef.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/Logger.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/Reporter.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/RooPlotLib.cpp" isTestSource="false" />
@@ -393,34 +366,6 @@
           <root url="file:///usr/include" />
           <root url="file:///usr/local/include" />
         </SOURCES>
-        <excluded>
-          <root url="file://$MODULE_DIR$/include/UnitTest/UnitTest.h" />
-          <root url="file://$MODULE_DIR$/include/UnitTest/HistoBinsUnitTest.h" />
-          <root url="file://$MODULE_DIR$/include/UnitTest/TreeAnalyzerUnitTest.h" />
-          <root url="file://$MODULE_DIR$/include/jdb/HistoAnalyzer.h" />
-          <root url="file://$MODULE_DIR$/include/jdb/RooPlotLib.h" />
-          <root url="file://$MODULE_DIR$/include/jdb/HistoBins.h" />
-          <root url="file://$MODULE_DIR$/include/jdb/ConfigRange.h" />
-          <root url="file://$MODULE_DIR$/include/jdb/TreeAnalyzer.h" />
-          <root url="file://$MODULE_DIR$/include/jdb/TreeMap.h" />
-          <root url="file://$MODULE_DIR$/include/jdb/RooPlotter.h" />
-          <root url="file://$MODULE_DIR$/include/jdb/CutSequence.h" />
-          <root url="file://$MODULE_DIR$/include/jdb/Logger.h" />
-          <root url="file://$MODULE_DIR$/include/jdb/Utils.h" />
-          <root url="file://$MODULE_DIR$/include/jdb/XmlConfig.h" />
-          <root url="file://$MODULE_DIR$/include/jdb/ConfigPoint.h" />
-          <root url="file://$MODULE_DIR$/include/jdb/LoggerConfig.h" />
-          <root url="file://$MODULE_DIR$/include/jdb/RapidXmlWrapper.h" />
-          <root url="file://$MODULE_DIR$/include/jdb/EvaluatedLeaf.h" />
-          <root url="file://$MODULE_DIR$/include/jdb/ChainLoader.h" />
-          <root url="file://$MODULE_DIR$/include/jdb/Reporter.h" />
-          <root url="file://$MODULE_DIR$/include/jdb/DataSource.h" />
-          <root url="file://$MODULE_DIR$/include/UnitTest/HistoBookUnitTest.h" />
-          <root url="file://$MODULE_DIR$/include/jdb/HistoBook.h" />
-          <root url="file://$MODULE_DIR$/include/rapidXML.h" />
-          <root url="file://$MODULE_DIR$/include/UnitTest/XmlConfigUnitTest.h" />
-          <root url="file://$MODULE_DIR$/include/UnitTest/RooPlotterUnitTest.h" />
-        </excluded>
       </library>
     </orderEntry>
   </component>

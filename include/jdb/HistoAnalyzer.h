@@ -11,9 +11,7 @@
 #include "XmlRange.h"
 #include "XmlPoint.h"
 #include "Reporter.h"
-// Interface
-	#include "IObject.h"
-	#include "IConfig.h"
+#include "TaskRunner.h"
 
 using namespace jdb;
 
@@ -33,7 +31,7 @@ namespace jdb{
 	 * modules that take a root file containing histograms as input.
 	 *
 	 */
-	class HistoAnalyzer : public IConfig, public IObject
+	class HistoAnalyzer : public TaskRunner
 	{
 	// protected properties
 	protected:
@@ -43,8 +41,11 @@ namespace jdb{
 		// Reporter for generating pdf reports
 		shared_ptr<Reporter> 	reporter;
 		// File containing input
+		vector<TFile*> rootFiles;
+		vector<string> rootFileNames;
 		TFile 		*inFile;
-
+		string 		jobModifier;
+		string 		outputPath;
 	// public methods
 	public:
 
@@ -54,17 +55,39 @@ namespace jdb{
 		 * @nodePath The path to the node containing the HistoAnalyzer data
 		 * 
 		 */
-		HistoAnalyzer( XmlConfig config, string nodePath, bool setup = true );
-
+		HistoAnalyzer();
 		/* Destructor
 		 * Saves output and closes input
 		 */
 		~HistoAnalyzer();
 
-		/* Sets up the analyzer
-		 *
-		 */
-		void setup();
+		virtual void loadRootFiles();
+		void setCurrentFile( unsigned int index = 0){
+			if ( rootFiles.size() > index ){
+				inFile = rootFiles[index ];
+			} else {
+				ERROR( classname(), "Invalid File Index " << index );
+			}
+			return;
+		}
+		void setCurrentFile( string filename ){
+			int index = (find( rootFileNames.begin(), rootFileNames.end(), filename ) - rootFileNames.begin());
+			setCurrentFile( index );
+		}
+
+		void loadFiles(){
+
+		}
+
+		void initHistoBook( string _jobPostfix );
+		void initReporter( string _jobPostfix );
+		void initRootFiles();
+
+		virtual void init( XmlConfig _config, string _nodePath="", int _jobIndex = -1);
+		virtual void init( XmlConfig _config, string _nodePath="", string _fileList = "", string _jobPostfix = "" );
+		virtual void initialize() { DEBUG( classname(), "HistoAnalyzer" ); };
+
+		virtual void run();
 
 		/* The Maker function
 		 *

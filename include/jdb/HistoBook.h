@@ -124,7 +124,15 @@ namespace jdb{
 		
 
 		TH1 * make( string type, string name, string title, HistoBins &bx, HistoBins &by, HistoBins &bz );
-
+		TH1 * make( string type, string name, string title, HistoBins &bx, HistoBins &by ){
+			HistoBins bz;
+			return make( type, name, title, bx, by, bz );
+		}
+		TH1 * make( string type, string name, string title, HistoBins &bx ){
+			HistoBins by;
+			HistoBins bz;
+			return make( type, name, title, bx, by, bz );	
+		}
 		/*
 		 * Makes a histogram from a node in a config file 
 		 * 

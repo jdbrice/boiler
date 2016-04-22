@@ -5,20 +5,11 @@
 #include <memory>
 //ROOBARB
 #include "Utils.h"
-// #include "XmlConfig.h"
-// #include "Logger.h"
-// #include "LoggerConfig.h"
 #include "HistoBook.h"
-// #include "XmlRange.h"
-// #include "XmlPoint.h"
 #include "Reporter.h"
 #include "DataSource.h"
 #include "TaskRunner.h"
 #include "Utils.h"
-
-	// Interfaces
-	#include "IConfig.h"
-	#include "IObject.h"
 
 //ROOT
 #include "TChain.h"

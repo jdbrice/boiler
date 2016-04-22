@@ -169,6 +169,10 @@ namespace jdb{
 			this->bins = makeFixedWidthBins( width, min, max );
 		}
 
+		HistoBins() {
+			
+		}
+
 		/* Creates a HistoBins object from a vector of bin edges
 		 *
 		 */
