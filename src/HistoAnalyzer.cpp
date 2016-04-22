@@ -9,6 +9,12 @@ namespace jdb{
 
 		string jobPostfix = "_" + ts( _jobIndex ) + ".root";
 		this->jobModifier = "job_" + ts( _jobIndex ) +"_";
+
+		if ( -1 == _jobIndex ){
+ 			jobPostfix = ".root";
+ 			this->jobModifier = "";
+ 		}
+ 		
 		initHistoBook( jobPostfix );
 		initReporter( jobPostfix );
 		initRootFiles();
