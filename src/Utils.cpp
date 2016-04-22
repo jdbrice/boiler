@@ -74,6 +74,27 @@ namespace jdb{
 	}
 
 
+	std::string vts( vector<int> v ){
+	 	string str = "";
+	 	string delim = "";
+	 	for ( int i : v ){
+	 		str += delim + ts(i);
+	 		delim=", ";
+	 	}
+	 	return str;
+	 }
+
+	 std::string vts( vector<double> v ){
+	 	string str = "";
+	 	string delim = "";
+	 	for ( double i : v ){
+	 		str += delim + dts(i);
+	 		delim=", ";
+	 	}
+	 	return str;
+	 }
+
+
 	/**
 	 * Plain text progress bar that only updates when it needs to
 	 * @i 			the current step in a loop

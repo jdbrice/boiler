@@ -61,7 +61,6 @@ namespace jdb{
 		 */
 		~HistoAnalyzer();
 
-		virtual void loadRootFiles();
 		void setCurrentFile( unsigned int index = 0){
 			if ( rootFiles.size() > index ){
 				inFile = rootFiles[index ];
@@ -75,19 +74,15 @@ namespace jdb{
 			setCurrentFile( index );
 		}
 
-		void loadFiles(){
-
-		}
+		
 
 		void initHistoBook( string _jobPostfix );
 		void initReporter( string _jobPostfix );
 		void initRootFiles();
 
-		virtual void init( XmlConfig _config, string _nodePath="", int _jobIndex = -1);
-		virtual void init( XmlConfig _config, string _nodePath="", string _fileList = "", string _jobPostfix = "" );
+		virtual void init( XmlConfig &_config, string _nodePath="", int _jobIndex = -1);
+		virtual void init( XmlConfig &_config, string _nodePath="", string _fileList = "", string _jobPostfix = "" );
 		virtual void initialize() { DEBUG( classname(), "HistoAnalyzer" ); };
-
-		virtual void run();
 
 		/* The Maker function
 		 *

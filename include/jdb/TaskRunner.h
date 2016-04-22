@@ -18,7 +18,7 @@ namespace jdb {
 		TaskRunner(){}
 		~TaskRunner(){}
 
-		virtual void init(XmlConfig _config, string _nodePath="", int _jobIndex = -1) {
+		virtual void init(XmlConfig &_config, string _nodePath="", int _jobIndex = -1) {
 			DEBUG( classname(), "( " << _config.getFilename() << ", " << nodePath << ", " << _jobIndex << " )" );
 
 			this->config 	= _config;
@@ -27,7 +27,7 @@ namespace jdb {
 			this->nodePath = this->config.basePath( _nodePath );
 		}
 
-		virtual void init(XmlConfig _config, string _nodePath="", string _fileList = "", string _jobPostfix = "") {
+		virtual void init(XmlConfig &_config, string _nodePath="", string _fileList = "", string _jobPostfix = "") {
 			DEBUG( classname(), "( " << _config.getFilename() << ", " << nodePath << ", \"" << _fileList << "\", \"" << _jobPostfix << "\" )" );
 
 			this->config 	= _config;

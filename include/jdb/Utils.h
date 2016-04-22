@@ -83,7 +83,26 @@ namespace jdb{
 	 * 
 	 * @return 		the proper pluralization based on count
 	 */
-	 std::string  plural( double count, std::string fSingle, std::string fPlural );
+	std::string  plural( double count, std::string fSingle, std::string fPlural );
+
+	 /* Converts vector to string
+	  * @v 		vector to convert
+	  *
+	  * Converts vector to string
+	  *
+	  * @return string representation of vector
+	  */
+	std::string vts( vector<int> v );
+
+	 /* Converts vector to string
+	  * @v 		vector to convert
+	  *
+	  * Converts vector to string
+	  *
+	  * @return string representation of vector
+	  */
+	std::string vts( vector<double> v );
+
 
 	/* Task Timer
 	 * Utility Class for timing tasks and reporting
