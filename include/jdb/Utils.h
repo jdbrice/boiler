@@ -103,6 +103,8 @@ namespace jdb{
 	  */
 	std::string vts( vector<double> v );
 
+	std::string bts( bool b );
+
 
 	/* Task Timer
 	 * Utility Class for timing tasks and reporting

@@ -95,6 +95,13 @@ namespace jdb{
 	 }
 
 
+	 std::string bts( bool b ){
+	 	if ( b )
+	 		return "true";
+	 	return "false";
+	 }
+
+
 	/**
 	 * Plain text progress bar that only updates when it needs to
 	 * @i 			the current step in a loop
