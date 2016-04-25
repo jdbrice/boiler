@@ -94,11 +94,13 @@ namespace jdb{
 		vector<string> filenames;
 
 		// TODO : Add multiple file support!
-		DEBUG( classname(), " Loading data from " << this->config.getString( nodePath + ".input.data:url" ) )
-		inFile = new TFile( this->config.getString( nodePath + ".input.data:url" ).c_str(), "READ" );
+		string ifn = config.getString( nodePath + ".input.data:url" );
+		DEBUG( classname(), " Loading data from " << ifn )
+		inFile = new TFile( ifn.c_str(), "READ" );
 
-		if ( !inFile->IsOpen()  )
-			ERROR( classname(), "Data File Could not be opened from : " + this->config.getString( nodePath + ".input.data:url" ));
+		if ( !inFile->IsOpen() ){
+			ERROR( classname(), "Data File Could not be opened from : " + ifn );
+		}
 	}
 
 	HistoAnalyzer::~HistoAnalyzer(){

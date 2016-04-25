@@ -95,7 +95,9 @@ namespace jdb{
 		string ls( bool print = true );
 		
 		void add( string name, TH1 * );
+		void addClone( string name, TH1 * );
 		void add( string name, TObject* );
+		void addClone( string name, TObject * );
 		TH1* get( string name, string sdir = "UNSET_PATH" );
 		TH1 * operator[]( string name );
 

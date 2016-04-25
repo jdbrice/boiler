@@ -103,6 +103,13 @@ namespace jdb{
 	  */
 	std::string vts( vector<double> v );
 
+	/* Converts bool to string
+	  * @b 		bool to convert
+	  *
+	  * Converts bool to string
+	  *
+	  * @return string representation of bool
+	  */
 	std::string bts( bool b );
 
 
