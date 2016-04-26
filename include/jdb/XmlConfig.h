@@ -177,7 +177,7 @@ namespace jdb {
 		 *
 		 * @return A vector of strings or an empty vector if the node DNE
 		 */
-		vector<string> getStringVector( string nodePath ) const;
+		vector<string> getStringVector( string nodePath, string defaultVal = "", int defaultLength = 0 ) const;
 
 		/* Gets a node or attribute as integer data
 		 * @nodePath Path to node. See getString(...)
@@ -227,7 +227,7 @@ namespace jdb {
 		 * Uses atof(...) for string to double conversion.
 		 * @return vector of doubles, one for each item in the comma delimeted list
 		 */
-		vector<double> getDoubleVector( string nodePath ) const;
+		vector<double> getDoubleVector( string nodePath, double defaultVal = 0, int defaultLength = 0 ) const;
 
 		/* Gets a node or attribute as foat type
 		 * @nodePath Path to node. See getString(...)

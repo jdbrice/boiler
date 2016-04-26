@@ -57,7 +57,14 @@ namespace jdb{
 		return def;
 	}
 
-	vector<string> XmlConfig::getStringVector( string nodePath ) const {
+	vector<string> XmlConfig::getStringVector( string nodePath, string defaultVal, int defaultLength ) const {
+		
+		if ( !exists( nodePath ) ){
+			vector<string> d;
+			for ( int i = 0; i < defaultLength; i++ )
+				d.push_back( defaultVal );
+			return d;
+		}
 		string value = getString( nodePath );
 		return vectorFromString( value );
 	}
@@ -123,9 +130,17 @@ namespace jdb{
 			return atof( str.c_str() );
 		return def;
 	}
-	vector<double> XmlConfig::getDoubleVector( string nodePath ) const{
-		vector<string> vec = getStringVector( nodePath );
+	vector<double> XmlConfig::getDoubleVector( string nodePath, double defaultVal, int defaultLength ) const{
+		
 		vector<double> d;
+		// default if node does not exist
+		if ( !exists( nodePath ) ){
+			for ( int i = 0; i < defaultLength; i++ )
+				d.push_back( defaultVal );
+			return d;
+		}
+
+		vector<string> vec = getStringVector( nodePath );
 		for ( unsigned int i = 0; i < vec.size(); i++  ){
 			d.push_back( atof( vec[ i ].c_str() ) );
 		}

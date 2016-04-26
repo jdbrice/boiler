@@ -9,8 +9,9 @@ Classes = 	Logger Reporter XmlConfig ChainLoader HistoBook RooPlotLib Utils \
 			DataSource EvaluatedLeaf \
 			XmlFunction FitConfidence\
 			format
-HeaderOnlyClasses = LoggerConfig XmlPoint XmlRange XmlGraph CutCollection \
-					TaskRunner IObject IConfig
+HeaderOnlyClasses = LoggerConfig XmlPoint XmlRange XmlGraph XmlBinnedData\
+					CutCollection \
+					TaskRunner IObject IConfig 
 ##-----------------------------------------------------------------------------
 
 srcDir        = src

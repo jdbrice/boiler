@@ -216,7 +216,7 @@ namespace jdb{
 	} 	// add
 
 	void HistoBook::addClone( string name, TH1 * h ){
-		add( name, h->Clone( name.c_str() ) );
+		add( name, (TH1*)h->Clone( name.c_str() ) );
 	}
 
 	void HistoBook::add( string name, TObject* h ){
@@ -245,7 +245,7 @@ namespace jdb{
 	} 	// add
 
 	void HistoBook::addClone( string name, TObject * h ){
-		add( name, h->Clone( name.c_str() ) );
+		add( name, (TObject*)h->Clone( name.c_str() ) );
 	}
 
 	void HistoBook::mkdir( string path){

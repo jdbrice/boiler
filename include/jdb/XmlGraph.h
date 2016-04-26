@@ -4,6 +4,8 @@
 // ROOBARB
 #include "XmlConfig.h"
 #include "Utils.h"
+#include "IObject.h"
+#include "HistoBins.h"
 
 // STL
 #include <memory>
@@ -19,12 +21,13 @@ namespace jdb {
 	/* TGraph as xml
 	 * Stores and loads a TGraph as xml structure
 	 */
-	class XmlGraph
+	class XmlGraph : public IObject
 	{
 	protected:
 
 		vector<double> x, y, exh, exl, eyh, eyl;
 	public:
+		virtual const char* classname() const { return "XmlGraph"; }
 		XmlGraph( XmlConfig * cfg, string nodePath ){
 
 			x = cfg->getDoubleVector( nodePath + ".x" );
@@ -56,10 +59,15 @@ namespace jdb {
 				}
 			}
 
+			index = HistoBins::findBin( x, x_val );
+			INFO( classname(), "bins = [" << vts( x ) << "]" );
+			INFO( classname(), "index = " << index );
+
 			if ( -1 == index && x_val < x[0] ){
 				index = 0; // use the first two values
 			} else if ( -1 == index ){
 				// TODO: signal error here
+				WARN( classname(), "stupid" );
 				return 0.0;
 			}
 

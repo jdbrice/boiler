@@ -16,9 +16,12 @@ using namespace std;
 
 namespace jdb{
 
-	enum class BinEdge: unsigned char {
+	enum class BinEdge: int {
 		lower,
-		upper
+		upper,
+		underflow = -1,
+		overflow = -2,
+		undefined = -3
 	};
 	
 	/* HistoBins provides a container for storing and using bins

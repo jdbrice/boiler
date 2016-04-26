@@ -83,7 +83,7 @@ namespace jdb{
 		    	); // TODO: is reporter's path handeling broken?
 
 		    INFO( classname(), "Creating report @" << outputURL );
-	    } else{
+	    } else {
 	    	INFO( classname(), "No Reporter created, jobPostfix == " << _jobPostfix );
 			reporter = nullptr;
 	    }
@@ -105,6 +105,7 @@ namespace jdb{
 
 	HistoAnalyzer::~HistoAnalyzer(){
 		
+		// book->save();
 	}
 
 }
