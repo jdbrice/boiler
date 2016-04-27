@@ -25,6 +25,7 @@ namespace jdb {
 			// makes sure it is in the right form
 			// not ending in '.' or ':attribute' etc.
 			this->nodePath = this->config.basePath( _nodePath );
+			overrideConfig();
 		}
 
 		virtual void init(XmlConfig &_config, string _nodePath="", string _fileList = "", string _jobPostfix = "") {
@@ -34,12 +35,17 @@ namespace jdb {
 			// makes sure it is in the right form
 			// not ending in '.' or ':attribute' etc.
 			this->nodePath = this->config.basePath( _nodePath );
+			overrideConfig();
 		}
 
 		/* This is where you should set up your task
 		 *
 		 */
 		virtual void init() { DEBUG( classname(), "TaskRunner" ); }
+
+		virtual void overrideConfig() {
+			DEBUG( classname(), "" );
+		}
 
 		virtual void run(){
 			preMake();

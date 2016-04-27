@@ -544,6 +544,16 @@ namespace jdb{
 		}
 	}
 
+	void XmlConfig::set( string nodePath, string value ) {
+
+		// already exists? just override
+		if ( data.count( nodePath ) )
+			data[ nodePath ] = value;
+		else {
+			add( nodePath, value );
+		}
+	}
+
 	string XmlConfig::report( string nodePath ) const {
 
 		vector<string> allPaths = childrenOf( nodePath, -1, true );

@@ -494,6 +494,7 @@ namespace jdb {
         string report( string nodePath = "" ) const;
 
         void applyOverrides( map< string, string > over );
+        void set( string nodePath, string value );
 
 
         string indentation( int count, string tab="\t" ) const {
