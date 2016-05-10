@@ -158,8 +158,8 @@ namespace jdb{
 		if ( config.exists( nodePath + ".DataSource" ) && chain && chain->GetListOfFiles()->GetEntries() >= 1 ){
 
 			// TODO: Data source shouldn't need config pointer
-			ds = new DataSource( config, config.join(nodePath, ".DataSource") , "treename", chain );
-			chain = ds->getChain();
+			ds = new DataSource( config, config.join(nodePath, ".DataSource") , this->config.getString( nodePath + ".input.dst:treeName" ), chain );
+			// chain = ds->getChain();
 
 			DEBUG( classname(), "DataSrouce for chain : " << chain );
 

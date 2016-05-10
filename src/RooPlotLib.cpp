@@ -312,6 +312,13 @@ RooPlotLib &jdb::RooPlotLib::set( XmlConfig * cfg, string nodePath ){
 	return *this;
 }
 
+RooPlotLib &jdb::RooPlotLib::set( XmlConfig &cfg, string nodePath ){
+	DEBUG(classname(), "");
+	set( &cfg, nodePath );
+
+	return *this;
+}
+
 
 RooPlotLib &jdb::RooPlotLib::draw(){
     DEBUG(classname(), "");

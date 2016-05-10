@@ -7,6 +7,7 @@
 
 #include "XmlConfig.h"
 #include "Logger.h"
+#include "LoggerConfig.h"
 
 namespace jdb {
 
@@ -25,6 +26,7 @@ namespace jdb {
 			// makes sure it is in the right form
 			// not ending in '.' or ':attribute' etc.
 			this->nodePath = this->config.basePath( _nodePath );
+			Logger::setGlobalLogLevel( config.getString( nodePath + ".Logger:globalLogLevel", "info" ) );
 			overrideConfig();
 		}
 
@@ -35,6 +37,7 @@ namespace jdb {
 			// makes sure it is in the right form
 			// not ending in '.' or ':attribute' etc.
 			this->nodePath = this->config.basePath( _nodePath );
+			Logger::setGlobalLogLevel( config.getString( nodePath + ".Logger:globalLogLevel", "info" ) );
 			overrideConfig();
 		}
 
@@ -48,6 +51,7 @@ namespace jdb {
 		}
 
 		virtual void run(){
+
 			preMake();
 			make();
 			postMake();

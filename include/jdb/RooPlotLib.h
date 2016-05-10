@@ -70,6 +70,7 @@ namespace jdb{
 	    	return set( opt, { p0, p1, p2, p3 } );
 	    }
 	    RooPlotLib &set( XmlConfig * cfg, string np );
+	    RooPlotLib &set( XmlConfig &cfg, string np );
 
 	    /**
 	     * Draws the object being styled

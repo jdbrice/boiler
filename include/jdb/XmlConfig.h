@@ -22,6 +22,7 @@
 
 // Roobarb
 #include "Logger.h"
+#include "Utils.h"
 	// Interfaces
 	#include "IObject.h"
 
@@ -366,7 +367,7 @@ namespace jdb {
          * @return the path to the base node
          */
         string basePath( string nodePath, bool keepAttribute = false ) const{
-        	DEBUG( classname(), "(" << nodePath <<")" );
+        	DEBUG( classname(), "(nodePath=\"" << nodePath << "\", keepAttrs=" << bts( keepAttribute ) << ")" );
         	string np = sanitize( nodePath );
 
         	// first split off any attributes

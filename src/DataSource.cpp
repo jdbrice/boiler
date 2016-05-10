@@ -5,18 +5,35 @@
 
 
 #include "TLeafElement.h"
-
+#include "format.h"
 
 namespace jdb{
 	
 	DataSource::DataSource( XmlConfig _config, string _nodePath, string _treeName, TChain * _chain ){
-		DEBUG( classname(), "" );
+		DEBUG( classname(), fmt::format( "confif={0}, nodePath={1}, treeName={2}", _config.getFilename(), _nodePath, _treeName ) );
 
 		config = _config;
 		nodePath = config.basePath( _nodePath );
 		cache = NULL;
 		chain = _chain;
 		treeName = _treeName;
+		
+		init();
+	}
+
+
+	DataSource::DataSource( string _treeName, TChain * _chain ){
+		DEBUG( classname(), fmt::format( "treename={0}, chain=0x0", _treeName ) );
+
+		cache = NULL;
+		chain = _chain;
+		treeName = _treeName;
+		
+		init();
+	}
+
+	void DataSource::init(){
+
 		assert( chain );
 		/**
 		 * Now create the data access structure
@@ -24,8 +41,9 @@ namespace jdb{
 		if ( cacheExists() ){
 			INFO( classname(), "Loading cache from " << (".DataSource_" + treeName + ".xml") );
 			cache = new XmlConfig( ".DataSource_" + treeName + ".xml" );
-		} else
+		} else{
 			INFO( classname(), "No cache found for " << treeName  );
+		}
 
 		mapTree();
 		addressBranches();
@@ -35,94 +53,8 @@ namespace jdb{
 		makeAliases();
 		makeEvaluatedLeaves();
 		cacheTreeInfo();
+
 	}
-
-
-	DataSource::DataSource( string _treeName, TChain * _chain ){
-		DEBUG( classname(), "" );
-
-		cache = NULL;
-		chain = _chain;
-		treeName = _treeName;
-		assert( chain );
-		/**
-		 * Now create the data access structure
-		 */
-		if ( cacheExists() ){
-			INFO( classname(), "Loading cache from " << (".DataSource_" + treeName + ".xml") );
-			cache = new XmlConfig( ".DataSource_" + treeName + ".xml" );
-		} else
-			INFO( classname(), "No cache found for " << treeName  );
-
-		mapTree();
-		addressBranches();
-		addressLeaves();
-
-		// initializeBranchStatus();
-		// makeAliases();
-		// makeEvaluatedLeaves();
-		cacheTreeInfo();
-	}
-
-	// DataSource::DataSource( XmlConfig * _cfg, string _nodePath, string _fileList ){
-	// 	DEBUG( classname(), "( config=" << _config.getFilename() << ", nodePath = " << _nodePath << ", filelist=" << _fileList << " )" );
-
-	// 	cfg = _cfg;
-	// 	assert( cfg );
-	// 	nodePath = _nodePath;
-	// 	fileList = _fileList;
-	// 	cache = NULL;
-
-	// 	if ( config.exists( nodePath ) && config.exists( nodePath + ":treeName" ) ){
-	// 		treeName = config.getString( nodePath + ":treeName", "" );
-			
-	// 		if ( "" == treeName ){
-	// 			lg.warn(__FUNCTION__) << "Provide <DataSource treeName=\"theName\" /> " << endl;
-	// 		}
-
-	// 		chain = new TChain( treeName.c_str() );
-
-	// 		if ( "" == fileList ){
-	// 			if ( config.exists( nodePath + ":url" ) ){
-	// 				lg.info(__FUNCTION__) <<"Loading from url " << fileList << endl;
-	// 				ChainLoader::load( chain, config.getString( nodePath+":url" ), config.getInt( nodePath + ":maxFiles", -1 ) );
-	// 			} else if ( config.exists( nodePath + ":filelist" ) ){
-	// 				lg.info(__FUNCTION__) <<"Loading from filelist " << config.getString( nodePath+":filelist" ) << endl;
-	// 				ChainLoader::loadList( chain, config.getString( nodePath+":filelist" ), config.getInt( nodePath + ":maxFiles", -1 ) );
-	// 			}
-	// 			else 
-	// 				lg.warn(__FUNCTION__) << "Provide a url to folder containing data or a filelist <DataSource url=\"...\" (or) filelist=\"list.lis\" /> " << endl;
-	// 		} else if ( fileList.find( ".root" ) == std::string::npos ) {
-	// 			// normal file list
-	// 			lg.info(__FUNCTION__) <<"Loading from filelist " << fileList << endl;
-	// 			ChainLoader::loadList( chain, fileList, config.getInt( nodePath + ":maxFiles", -1 ) );
-	// 		} else {
-	// 			// load just a single .root file 
-	// 			ChainLoader::load( chain, fileList );
-	// 		}
-
-	// 		/**
-	// 		 * Now create the data access structure
-	// 		 */
-	// 		if ( cacheExists() ){
-	// 			INFO( classname(), "Loading cache from " << (".DataSource_" + treeName + ".xml") );
-	// 			cache = new XmlConfig( ".DataSource_" + treeName + ".xml" );
-	// 		} else
-	// 			INFO( classname(), "No cache found for " << treeName  );
-	// 		mapTree();
-	// 		addressBranches();
-	// 		addressLeaves();
-
-	// 		initializeBranchStatus();
-	// 		makeAliases();
-	// 		makeEvaluatedLeaves();
-	// 		cacheTreeInfo();
-
-
-	// 	} else {
-	// 		lg.error(__FUNCTION__) << "Could not create DataSource : Invalid Config " << endl;
-	// 	}
-	// }
 
 	DataSource::~DataSource(){
 
@@ -162,6 +94,9 @@ namespace jdb{
 
 		assert( chain );
 
+		// Set the Tree into decomposed object mode
+		chain->SetMakeClass(1);
+
 		nEntries = chain->GetEntries();
 		nTrees = chain->GetNtrees();
 		INFO( classname(), "Chain contains " << nTrees << " TTrees" );
@@ -177,41 +112,14 @@ namespace jdb{
 			string name = ((TBranchElement*)brs->At( i ))->GetName();
 			DEBUG( classname(), "Branch " << name );
 			branchName.push_back( name );
-
-			/*TObjArray * lfs = ((TBranchElement*)brs->At( i ))->GetListOfBranches();
-			int ll = lfs->GetEntries();
-
-			for ( int j = 0; j < ll; j++ ){
-				string tName = ((TLeafElement*)lfs->At( j ))->GetTypeName();
-				string lname = ((TLeafElement*)lfs->At( j ))->GetName();
-				lg.debug() << tName << " " << name << "." << lname << endl;
-			}*/
-
-			mapBranch( ((TBranchElement*) brs->At( i ) ), name );
-
-		}
-
-
-		
-		/**
-		 * Investigate the Leaves
-		 */
-		TObjArray * lfs = chain->GetListOfLeaves();
-		l = lfs->GetEntries();
-
-		for ( int i = 0; i < l; i++ ){
-
-			// get info on this leaf
-			string tName = ((TLeafElement*)lfs->At( i ))->GetTypeName();
-			string name = ((TLeafElement*)lfs->At( i ))->GetName();
-			string title = ((TLeafElement*)lfs->At( i ))->GetTitle();
-			string bName = ((TLeafElement*)lfs->At( i ))->GetBranch()->GetName();
-
-			//lg.debug() << tName << " " << name << " : " << bName << endl;
-			//leafName.push_back( name );
-
-			//leafType[ name ] = tName; 
 			
+			// sort of a hack
+			leafType[ name + "_" ] = "Int_t";
+			leafLength[ name + "_" ] = 1;
+			leafType[ name ] = "Int_t";
+			leafLength[ name ] = 1;
+			
+			mapBranch( ((TBranchElement*) brs->At( i ) ), name );
 		}
 
 		/**
@@ -231,6 +139,7 @@ namespace jdb{
 			INFO( classname(), "Finding Lengths : Elapsed " << tt.elapsedTime() );
 		}
 		INFO( classname(), "Complete" );
+		
 	}
 
 	void DataSource::initializeBranchStatus(){
@@ -383,21 +292,21 @@ namespace jdb{
 
 	void DataSource::addressBranches(){
 
-		// Set the Tree into decomposed object mode
-		chain->SetMakeClass(1);
-
 		for ( unsigned int i = 0; i < branchName.size(); i ++ ){
 
 			// get the data type from the "leaf" stored as "BranchName_"
 			string bName = branchName[ i ];
 			string lName = bName + "_";
 
+			DEBUG( classname(), "Addressing branch " << bName );
+
 			int ms = memSize( lName );
 
 			if ( 0 < ms ){
 				data[bName] = malloc( ms );
-				chain->SetBranchAddress( bName.c_str(), data[bName] );
-
+				branches[ bName ] = 0;
+				chain->SetBranchAddress( bName.c_str(), data[bName], &branches[ bName ] );
+				DEBUG( classname(), fmt::format("chain->SetBranchAddress( {0}, data[{0}], &branches[ {0} ] );", bName));
 				DEBUG( classname(), leafType[ lName ] << " " << bName << "(" << lName << ") addressed to " << ms << " bytes" );
 			} else {
 				DEBUG( classname(), "Cannot address branch" << bName );	
@@ -451,7 +360,7 @@ namespace jdb{
 
 
 			// Address the leaves
-			branches[ name ] = 0;
+			// branches[ name ] = 0;
 			chain->SetBranchAddress( name.c_str(), data[ name ], &branches[ name ] );
 			DEBUG( classname(), "Addressed " << name );
 		}

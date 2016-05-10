@@ -189,6 +189,8 @@ namespace jdb{
 			return false;
 		}
 
+		void init();
+
 		// Caches the tree metadata if needed
 		void cacheTreeInfo();
 
