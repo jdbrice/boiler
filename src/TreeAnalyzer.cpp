@@ -256,7 +256,7 @@ namespace jdb{
 
 			// check for datastore
 			if ( ds )
-				nEventsToProcess = config.getInt( nodePath + ".DataSource:maxEvents", nEvents );
+				nEventsToProcess = config.getInt( nodePath + ".DataSource:maxEvents", nEventsToProcess );
 			if ( nEventsToProcess > nEvents )
 				nEventsToProcess = nEvents;
 			
