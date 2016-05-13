@@ -29,6 +29,7 @@ namespace jdb{
 
 			try {
 
+				getCmdLineConfigOverrides( argc, argv );
 				// log everything for the moment
 				Logger::setGlobalLogLevel( "all" );
 
@@ -48,6 +49,7 @@ namespace jdb{
 						ERROR( classname(), "Cannot load " << argv[1] << ": File DNE" );
 					} else {
 						config.loadFile( argv[1] );
+						config.applyOverrides( cmdLineConfig );
 
 						runTasks();
 					}
@@ -85,6 +87,7 @@ namespace jdb{
 				} else if ( fileExists( _configFile ) ){
 					// INFO( classname(), "Using " << _configFile << " config for task" );
 					_taskConfig.loadFile( _configFile );
+					_taskConfig.applyOverrides( cmdLineConfig );
 				} else {
 					ERROR( classname(), "Cannot load config " << _configFile );
 					continue;
@@ -110,6 +113,40 @@ namespace jdb{
 
 	protected:
 		int jobIndex;
+
+		map<string, string> cmdLineConfig;
+		void getCmdLineConfigOverrides( int argc, char * argv[] ){
+			
+			for ( int i = 0; i < argc; i++ ){
+				string v = argv[ i ];
+				if ( 0 == v.compare( 0, 2, "--" ) ){
+					
+					vector<string> parts = split( v, '=' );
+					if ( parts.size() <= 1 ) continue;
+
+					string path = parts[0].substr( 2 );
+					string value = parts[1];
+
+					cmdLineConfig[ path ] = value;
+				} // check that it starts with "--"
+			} // loop over argc
+		}
+
+		std::vector<std::string> &split(const std::string &s, char delim, std::vector<std::string> &elems) {
+			std::stringstream ss(s);
+			std::string item;
+			while (std::getline(ss, item, delim)) {
+				elems.push_back(item);
+			}
+			return elems;
+		}
+
+
+		std::vector<std::string> split(const std::string &s, char delim) {
+			std::vector<std::string> elems;
+			split(s, delim, elems);
+			return elems;
+		}
 		
 
 

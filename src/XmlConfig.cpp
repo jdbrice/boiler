@@ -537,10 +537,7 @@ namespace jdb{
 	void XmlConfig::applyOverrides( map< string, string > over ) {
 
 		for ( auto k : over ){
-			// require that the node/attribute already exist
-			if ( data.count( k.first ) ){
-				data[ k.first ] = k.second;
-			}
+			set( k.first, k.second );
 		}
 	}
 
