@@ -44,6 +44,8 @@ LD            	= g++
 LDFLAGS       	= -std=c++11 $(includes)
 
 
+ROOT6_FEATURES 	= 1
+
 
 ifeq ($(ARCH),macosx64)
 	SOFLAGS   	= -dynamiclib -single_module -undefined dynamic_lookup
