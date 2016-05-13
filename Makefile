@@ -38,13 +38,10 @@ ROOTLDFLAGS    	= $(shell root-config --ldflags)
 
 includes		= -I$(JDB_LIB)/include -I$(JDB_LIB)/include/jdb -I. -I$(ROOTSYS)/include -I$(ROOTDEV)/include 
 
-CXX           	= g++ -o3 -Wall -Wextra -pedantic -DJDB_LOG_LEVEL=60
+CXX           	= g++ -o3 -Wall -Wextra -pedantic 
 CXXFLAGS      	= -std=c++11 -fPIC 
 LD            	= g++
 LDFLAGS       	= -std=c++11 $(includes)
-
-
-ROOT6_FEATURES 	= 1
 
 
 ifeq ($(ARCH),macosx64)
@@ -54,7 +51,7 @@ else
 endif
 
 
-CXXFLAGS     	+= $(ROOTCFLAGS)
+CXXFLAGS     	+= $(ROOTCFLAGS) -DROOT6_FEATURES -DJDB_LOG_LEVEL=60
 LIBS          	= $(ROOTLIBS) $(SYSLIBS)
 LDFLAGS 		+= $(ROOTLDFLAGS)
 
