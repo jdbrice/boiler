@@ -36,13 +36,20 @@ namespace jdb{
 
 				if ( argc >= 2 ){
 					
-					jobIndex = -1;	// job index for parallel
+					// jobIndex = -1;	// job index for parallel
 
-					if ( argc >= 3 ){
-						jobIndex = atoi( argv[ 2 ] );
+					// if ( argc >= 3 ){
+					// 	jobIndex = atoi( argv[ 2 ] );
 						
-						INFO( classname(), "JobIndex = " << jobIndex );
-					}
+					// 	INFO( classname(), "JobIndex = " << jobIndex );
+					// }
+					
+					// sets the jobIndex either from positional arg
+					// or if --jobIndex=N is given use that (dont the positional arg)
+					setJobIndex( argc, argv );
+					INFO( classname(), "Job Index = " << jobIndex );
+
+
 					// create the config file for understanding jobs
 					INFO( classname(), "Loading engine config : " << argv[1] );
 					if ( !fileExists( argv[1] ) ){
@@ -130,7 +137,25 @@ namespace jdb{
 					cmdLineConfig[ path ] = value;
 				} // check that it starts with "--"
 			} // loop over argc
-		}
+		} // getCmdLineConfigOverrides
+
+
+		// only needed so thatI cna be backwards compatibile with my old way
+		// should be called after getCmdLineConfigOverrides
+		void setJobIndex(int argc, char * argv[]){
+
+			if ( cmdLineConfig.count( "jobIndex" ) >= 1 ){
+				jobIndex = atoi( cmdLineConfig[ "jobIndex" ].c_str() );
+			} else if ( argc >= 3 ){
+				jobIndex = atoi( argv[2] );
+			} else {
+				jobIndex = -1; // not parallel job
+			}
+
+			// amke sure that the jobIndex is set in the in-memory configs
+			cmdLineConfig[ "jobIndex" ] = ts( jobIndex );
+		} // setJobIndex
+
 
 		std::vector<std::string> &split(const std::string &s, char delim, std::vector<std::string> &elems) {
 			std::stringstream ss(s);

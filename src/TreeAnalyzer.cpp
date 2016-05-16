@@ -33,7 +33,7 @@ namespace jdb{
  		
 
 		initDataSource( _jobIndex );
-		if ( chain && chain->GetListOfFiles()->GetEntries() >= 1 ){
+		if ( chain ){
 			initHistoBook( jobPostfix );
 			initReporter( jobPostfix );
 			initLogger();	
@@ -51,7 +51,7 @@ namespace jdb{
 		this->jobModifier = _jobPostfix;
 
 		initDataSource( _fileList );
-		if (  chain && chain->GetListOfFiles()->GetEntries() >= 1 ){
+		if (  chain ){
 			initHistoBook( _jobPostfix );
 			initReporter( _jobPostfix );
 			initLogger();
@@ -155,7 +155,7 @@ namespace jdb{
 
 
 		// DataSource if requested
-		if ( config.exists( nodePath + ".DataSource" ) && chain && chain->GetListOfFiles()->GetEntries() >= 1 ){
+		if ( config.exists( nodePath + ".DataSource" ) && chain && chain->GetNtrees() >= 1 ){
 
 			// TODO: Data source shouldn't need config pointer
 			ds = new DataSource( config, config.join(nodePath, ".DataSource") , this->config.getString( nodePath + ".input.dst:treeName" ), chain );
@@ -190,6 +190,7 @@ namespace jdb{
 		    		INFO( classname(), " Parallel Job index=" << _jobIndex << " splitBy=" << splitBy );
 		    		ChainLoader::loadListRange( chain, url, _jobIndex, splitBy );
 
+
 		    	} else { // load the entire list (up to maxFiles )
 
 		    		int maxFiles = this->config.getInt( nodePath + ".input.dst:maxFiles", -1 );
@@ -209,16 +210,13 @@ namespace jdb{
 	    }
 
 		// make a DataSource if you want it
-		if ( config.exists( nodePath + ".DataSource" ) && chain && chain->GetListOfFiles()->GetEntries() >= 1 ){
-
-			// TODO: Data source shouldn't need config pointer
+		if ( config.exists( nodePath + ".DataSource" ) && chain  ){
 			ds = new DataSource( config, config.join(nodePath, ".DataSource"), "treename", chain );
-			
-
 			DEBUG( classname(), "DataSource for chain : " << chain );
-
 		}
 
+
+		INFO( classname(), "Data source initialized" );
 	}
 
 
@@ -233,7 +231,7 @@ namespace jdb{
 			ERROR( classname(), "Invalid chain object" );
 			return;
 		}
-		if ( chain->GetListOfFiles()->GetEntries() <= 0 ){
+		if ( chain->GetNtrees() <= 0 ){
 			INFO( classname(), "Empty Chain" );
 			return;
 		}

@@ -18,7 +18,12 @@ namespace jdb{
 		chain = _chain;
 		treeName = _treeName;
 		
-		init();
+		if ( chain && chain->GetNtrees() >= 1 ){
+			INFO( classname(), "time for init" );
+			init();
+		} else {
+			ERROR( classname(), "Chain is empty, cannot build a DataSource Object" );
+		}
 	}
 
 
@@ -29,12 +34,17 @@ namespace jdb{
 		chain = _chain;
 		treeName = _treeName;
 		
-		init();
+		if ( chain && chain->GetNtrees() >= 1 ){
+			INFO( classname(), "time for init" );
+			init();
+		} else {
+			ERROR( classname(), "Chain is empty, cannot build a DataSource Object" );
+		}
 	}
 
 	void DataSource::init(){
 
-		assert( chain );
+		
 		/**
 		 * Now create the data access structure
 		 */
