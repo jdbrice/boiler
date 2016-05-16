@@ -18,7 +18,12 @@
 #define GET_MACRO(_1,_2,NAME,...) NAME
 #define ERROR(...) GET_MACRO(__VA_ARGS__, LOG_E_TAG, LOG_E )(__VA_ARGS__)
 #define WARN(...) GET_MACRO(__VA_ARGS__, LOG_W_TAG, LOG_W )(__VA_ARGS__)
-#define INFO(...) GET_MACRO(__VA_ARGS__, LOG_I_TAG, LOG_I )(__VA_ARGS__)
+
+#if JDB_LOG_LEVEL<JDB_LOG_LEVEL_INFO
+	#define INFO(...) 0;
+#else
+	#define INFO(...) {GET_MACRO(__VA_ARGS__, LOG_I_TAG, LOG_I )(__VA_ARGS__)};
+#endif
  
 #if JDB_LOG_LEVEL<JDB_LOG_LEVEL_DEBUG
 	#define DEBUG(...) 0;

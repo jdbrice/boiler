@@ -185,7 +185,6 @@ namespace jdb{
 		 */
 		void showProgress( int i );
 
-
 	};
 
 }

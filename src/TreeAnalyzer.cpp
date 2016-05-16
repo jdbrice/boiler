@@ -245,43 +245,58 @@ namespace jdb{
 			TaskTimer t;
 			t.start();
 
-			Int_t nEvents = (Int_t)chain->GetEntries();
-			nEventsToProcess = config.getInt( nodePath + ".input.dst:nEvents", nEvents );
 			
+			int totalNumberOfEvents = -1;
+			bool showProgress = config.getBool( nodePath + ".EventLoop:progress", false );
+
+			if ( showProgress ){
+				totalNumberOfEvents = chain->GetEntries();
+			}
+
+
+			nEventsToProcess = config.getInt( nodePath + ".input.dst:nEvents", totalNumberOfEvents );
+
 			// if neg then process all
 			if ( nEventsToProcess < 0 )
-				nEventsToProcess = nEvents;
+				nEventsToProcess = totalNumberOfEvents;
 
 			// check for datastore
 			if ( ds )
 				nEventsToProcess = config.getInt( nodePath + ".DataSource:maxEvents", nEventsToProcess );
-			if ( nEventsToProcess > nEvents )
-				nEventsToProcess = nEvents;
 			
-			INFO( classname(), "Loaded: " << nEventsToProcess << " events " );
+			if ( showProgress ){
+				INFO( classname(), "Loaded: " << nEventsToProcess << " events " );
+			}
 			
+			INFO( classname(), "Starting Event Loops" );
 			for ( iEventLoop = 0; iEventLoop < nEventLoops; iEventLoop++ ){
 
 				preEventLoop();
 
 
 				TaskProgress tp( "Event Loop", nEventsToProcess );
-				// loop over all events
-				for(Int_t i=0; i<nEventsToProcess; i++) {
-			    	chain->GetEntry(i);
+				// loop over all events 
+				Long64_t iEvent = 0;
+				while (true){ // what could go wrong 
+					Long64_t read = chain->GetEntry(iEvent);
+					
+					if ( read <= 0 || (nEventsToProcess >= 0 && iEvent >= nEventsToProcess) ){ // break if we read past end or hit limit
+						break;
+					}
 
-			    	tp.showProgress( i );
+					if ( showProgress )
+						tp.showProgress( iEvent );
 
-			    	analyzeEventBeforeCuts();
+					analyzeEventBeforeCuts();
 
-			    	if ( !keepEvent() ){
-			    		analyzeRejectedEvent();
-			    		continue;
-			    	}
+					if ( !keepEvent() ){
+						analyzeRejectedEvent();
+						continue;
+					}
 
-			    	analyzeEvent();
-			    	
-				} // end loop on events
+					analyzeEvent();
+					iEvent++;
+				} // Event Loop
 				INFO( classname(), "Completed in " << t.elapsed() );
 
 				/**
