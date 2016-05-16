@@ -211,7 +211,7 @@ namespace jdb{
 
 		// make a DataSource if you want it
 		if ( config.exists( nodePath + ".DataSource" ) && chain  ){
-			ds = new DataSource( config, config.join(nodePath, ".DataSource"), "treename", chain );
+			ds = new DataSource( config, config.join(nodePath, ".DataSource"), treeName, chain );
 			DEBUG( classname(), "DataSource for chain : " << chain );
 		}
 
