@@ -107,7 +107,7 @@ namespace jdb{
 		// Set the Tree into decomposed object mode
 		chain->SetMakeClass(1);
 
-		nEntries = chain->GetEntries();
+		nEntries = chain->GetEntriesFast();
 		nTrees = chain->GetNtrees();
 		INFO( classname(), "Chain contains " << nTrees << " TTrees" );
 
