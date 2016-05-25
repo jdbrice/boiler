@@ -411,6 +411,10 @@ namespace jdb{
 			} else {
 				WARN( classname(), "Duplicate " << hName << " Cannot Add" );
 			}
+
+			delete bx;
+			delete by;
+			delete bz;
 		}
 
 	}	// make
