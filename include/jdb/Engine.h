@@ -36,14 +36,6 @@ namespace jdb{
 
 				if ( argc >= 2 ){
 					
-					// jobIndex = -1;	// job index for parallel
-
-					// if ( argc >= 3 ){
-					// 	jobIndex = atoi( argv[ 2 ] );
-						
-					// 	INFO( classname(), "JobIndex = " << jobIndex );
-					// }
-					
 					// sets the jobIndex either from positional arg
 					// or if --jobIndex=N is given use that (dont the positional arg)
 					setJobIndex( argc, argv );
