@@ -517,11 +517,11 @@ namespace jdb{
 	}	//get3D
 
 	void HistoBook::fill( string name, double bin, double weight ){
-		if ( exists( name ) ){
-			get( name )->Fill( bin, weight );
-		} else {
-			WARN( classname(), "\"" << name << "\" Does Not Exist, cannot fill " );
-		}
+		// if ( exists( name ) ){
+		get( name )->Fill( bin, weight );
+		// } else {
+			// WARN( classname(), "\"" << name << "\" Does Not Exist, cannot fill " );
+		// }
 	}	//fill
 
 	void HistoBook::fill( string name, double binx, double biny, double weight ){
