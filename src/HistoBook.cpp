@@ -543,11 +543,7 @@ namespace jdb{
 	}	//fill
 
 	void HistoBook::fill( string name, string binLabel, double weight ){
-		if ( exists(name) ){
-			get( name )->Fill( binLabel.c_str(), weight );
-		} else {
-			WARN( classname(), "\"" << name << "\" Does Not Exist, cannot fill " );
-		}
+		get( name )->Fill( binLabel.c_str(), weight );
 	}	//fill
 
 	bool HistoBook::setBinContent( string name, int bin, double content ){
