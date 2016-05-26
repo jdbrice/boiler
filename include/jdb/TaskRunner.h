@@ -46,9 +46,7 @@ namespace jdb {
 		 */
 		virtual void init() { DEBUG( classname(), "TaskRunner" ); }
 
-		virtual void overrideConfig() {
-			DEBUG( classname(), "" );
-		}
+		
 
 		virtual void run(){
 
@@ -59,6 +57,9 @@ namespace jdb {
 			
 
 	protected:
+		virtual void overrideConfig() {
+			DEBUG( classname(), "" );
+		}
 		
 		virtual void preMake(){
 			DEBUG( classname(), "" );
