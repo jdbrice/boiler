@@ -270,7 +270,7 @@ namespace jdb{
 			
 			INFO( classname(), "Starting Event Loops" );
 			for ( iEventLoop = 0; iEventLoop < nEventLoops; iEventLoop++ ){
-
+				INFO( classname(), "Starting Event Loop " << iEventLoop+1 << " of " << nEventLoops );
 				preEventLoop();
 
 
@@ -291,6 +291,7 @@ namespace jdb{
 
 					if ( !keepEvent() ){
 						analyzeRejectedEvent();
+						iEvent++;
 						continue;
 					}
 
