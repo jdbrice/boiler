@@ -36,7 +36,7 @@ ROOTLDFLAGS    	= $(shell root-config --ldflags)
 ROOTLIBS      	= $(shell root-config --libs)
 ROOTLDFLAGS    	= $(shell root-config --ldflags)
 
-includes		= -I$(JDB_LIB)/include -I$(JDB_LIB)/include/jdb -I. -I$(ROOTSYS)/include -I$(ROOTDEV)/include 
+includes		= -Iinclude -Iinclude/jdb -I. 
 
 CXX           	= g++ -o3 -Wall -Wextra -pedantic 
 CXXFLAGS      	= -std=c++11 -fPIC 
