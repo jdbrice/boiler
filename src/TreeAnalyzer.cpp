@@ -227,6 +227,9 @@ namespace jdb{
 
 	void TreeAnalyzer::make(){
 		DEBUG( classname(), "" );
+		TaskTimer t;
+		t.start();
+
 		if ( !chain ){
 			ERROR( classname(), "Invalid chain object" );
 			return;
@@ -236,18 +239,19 @@ namespace jdb{
 			return;
 		}
 
+		
+
 		/**
 		 * Run the pre event loop
 		 */
 		if ( !skipMake ){
 			book->cd( );
 			
-			TaskTimer t;
-			t.start();
+			
 
 			
 			int totalNumberOfEvents = -1;
-			bool showProgress = config.getBool( nodePath + ".EventLoop:progress", false );
+			showProgress = config.getBool( nodePath + ".EventLoop:progress", false );
 
 			if ( showProgress ){
 				totalNumberOfEvents = chain->GetEntries();
@@ -257,7 +261,7 @@ namespace jdb{
 			nEventsToProcess = config.getInt( nodePath + ".input.dst:nEvents", totalNumberOfEvents );
 
 			// if neg then process all
-			if ( nEventsToProcess < 0 )
+			if ( nEventsToProcess < 0 || nEventsToProcess > totalNumberOfEvents )
 				nEventsToProcess = totalNumberOfEvents;
 
 			// check for datastore
@@ -271,37 +275,18 @@ namespace jdb{
 			INFO( classname(), "Starting Event Loops" );
 			for ( iEventLoop = 0; iEventLoop < nEventLoops; iEventLoop++ ){
 				INFO( classname(), "Starting Event Loop " << iEventLoop+1 << " of " << nEventLoops );
+				/**
+				 * Run the pre event-loop hook
+				 */
 				preEventLoop();
 
-
-				TaskProgress tp( "Event Loop", nEventsToProcess );
-				// loop over all events 
-				Long64_t iEvent = 0;
-				while (true){ // what could go wrong 
-					Long64_t read = chain->GetEntry(iEvent);
-					
-					if ( read <= 0 || (nEventsToProcess >= 0 && iEvent >= nEventsToProcess) ){ // break if we read past end or hit limit
-						break;
-					}
-
-					if ( showProgress )
-						tp.showProgress( iEvent );
-
-					analyzeEventBeforeCuts();
-
-					if ( !keepEvent() ){
-						analyzeRejectedEvent();
-						iEvent++;
-						continue;
-					}
-
-					analyzeEvent();
-					iEvent++;
-				} // Event Loop
-				INFO( classname(), "Completed in " << t.elapsed() );
+				/**
+				 * Run the event-loop
+				 */
+				eventLoop();
 
 				/**
-				 * Run the post event loop
+				 * Run the post event-loop hook
 				 */
 				postEventLoop();
 			} // end loop on iEventLoop
@@ -309,7 +294,48 @@ namespace jdb{
 		else {
 			postEventLoop();
 		}
+		INFO( classname(), "Make completed in " << t.elapsed() );
 	} // eventLoop
+
+
+	void TreeAnalyzer::eventLoop( ){
+		DEBUG( classname(), "EventLoop" );
+
+		TaskTimer t;
+		t.start();
+
+		TaskProgress tp( "Event Loop", nEventsToProcess );
+		
+		// loop over all events 
+		Long64_t iEvent = 0;
+		
+		while (true){ // what could go wrong 
+			Long64_t read = chain->GetEntry(iEvent);
+			
+			if ( read <= 0 || (nEventsToProcess >= 0 && iEvent >= nEventsToProcess) ){ // break if we read past end or hit limit
+				break;
+			}
+
+			if ( showProgress )
+				tp.showProgress( iEvent );
+
+			analyzeEventBeforeCuts();
+
+			if ( !keepEvent() ){
+				analyzeRejectedEvent();
+				iEvent++;
+				continue;
+			}
+
+			analyzeEvent();
+			iEvent++;
+		} // Event Loop
+		
+		if ( false == showProgress ){
+			INFO( classname(), "Event Loop Completed in " << t.elapsed() );
+		}
+	}
+
 
 	void TreeAnalyzer::preEventLoop(){
 

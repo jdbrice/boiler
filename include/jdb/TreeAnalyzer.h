@@ -71,6 +71,8 @@ namespace jdb{
 		int iEventLoop = 0;
 		int nEventLoops = 1;
 
+		bool showProgress = false;
+
 
 	// public methods
 	public:
@@ -129,6 +131,11 @@ namespace jdb{
 		 * 
 		 */
 		virtual void preEventLoop();
+
+		/* The logic for an event loop
+		 * Used for overriding just the tree reading and event loop logic
+		 */
+		virtual void eventLoop( );
 
 		/*
 		 * Called after the event loop for cleanup, 
