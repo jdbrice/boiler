@@ -138,7 +138,7 @@ namespace jdb{
 
 			if ( cmdLineConfig.count( "jobIndex" ) >= 1 ){
 				jobIndex = atoi( cmdLineConfig[ "jobIndex" ].c_str() );
-			} else if ( argc >= 3 ){
+			} else if ( argc >= 3 && cmdLineConfig.size() == 0 ){
 				jobIndex = atoi( argv[2] );
 			} else {
 				jobIndex = -1; // not parallel job

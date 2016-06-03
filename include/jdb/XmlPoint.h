@@ -1,10 +1,16 @@
 #ifndef ROOBARB_XML_POINT_H
 #define ROOBARB_XML_POINT_H
 
+
+// RooBarb
 #include "XmlConfig.h"
 #include "Utils.h"
-#include <memory>
+#include "IObject.h"
 using namespace jdb;
+
+
+#include <memory>
+
 
 namespace jdb{
 	
@@ -20,9 +26,9 @@ namespace jdb{
 	 * ```
 	 * 
 	 */
-	class XmlPoint
-	{
+	class XmlPoint  : public IObject {
 	public:
+		virtual const char * classname() const { return "XmlPoint"; }
 
 		// x value
 		double x;
@@ -44,15 +50,38 @@ namespace jdb{
 		 * ```
 		 */
 		XmlPoint( XmlConfig * cfg, std::string nodePath, double dX = 0, double dY = 0, string attrX = ":x", string attrY = ":y"){
-			if ( cfg ){
-				x = cfg->getDouble( nodePath + attrX, dX );
-				y = cfg->getDouble( nodePath + attrY, dY );
+			set( (*cfg), nodePath, dX, dY, attrX, attrY );
+		}
+
+		XmlPoint( XmlConfig &cfg, std::string nodePath, double dX = 0, double dY = 0, string attrX = ":x", string attrY = ":y"){
+			set( cfg, nodePath, dX, dY, attrX, attrY );
+		}
+
+		XmlPoint() {
+			set( 0.0, 0.0 );
+		}
+
+
+		~XmlPoint(){}
+
+		/* From Config
+		 * 
+		 */
+		void set( XmlConfig &config, std::string nodePath, double dX = 0, double dY = 0, string attrX = ":x", string attrY = ":y" ) {
+			
+			if ( config.exists( nodePath ) ){
+				x = config.getDouble( nodePath + attrX, dX );
+				y = config.getDouble( nodePath + attrY, dY );
 			} else {
 				x = dX;
 				y = dY;
 			}
 		}
-		~XmlPoint(){}
+
+		void set( double _x, double _y ){
+			x = _x;
+			y = _y;
+		}
 
 		/* Outputs the point as a human readable string
 		 *

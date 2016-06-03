@@ -4,6 +4,7 @@
 // ROOBARB
 #include "XmlConfig.h"
 #include "Utils.h"
+#include "IObject.h"
 
 // STL
 #include <memory>
@@ -18,7 +19,7 @@ namespace jdb{
 	 *
 	 * Loads a function from an XmlConfig.
 	 */
-	class XmlFunction {
+	class XmlFunction : public IObject { 
 	protected:
 		// The ROOT TF1 object backing the function
 		shared_ptr<TF1> func = nullptr;
@@ -27,8 +28,7 @@ namespace jdb{
 		// instance count to make sure wee keep a unique ROOT name on our function
 		static int instances;
 	public:
-
-		static constexpr auto tag = "XmlFunction";
+		virtual const char * classname() const { return "XmlFunction"; }
 
 		/* Creates a function from xml config
 		 *
@@ -39,6 +39,9 @@ namespace jdb{
 		 * @formMod 	Default : ':formula' - the modifier to get the formula from node path
 		 */
 		XmlFunction( XmlConfig * cfg, string nodePath, string pMod = ":p", string eMod = ":e", string formMod = ":formula", string covMod = ":cov");
+		XmlFunction( XmlConfig &cfg, string nodePath, string pMod = ":p", string eMod = ":e", string formMod = ":formula", string covMod = ":cov");
+		XmlFunction();
+		void set( XmlConfig &cfg, string nodePath, string pMod = ":p", string eMod = ":e", string formMod = ":formula", string covMod = ":cov");
 		/* Destructor
 		 *
 		 */
