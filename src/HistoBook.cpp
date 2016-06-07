@@ -422,9 +422,22 @@ namespace jdb{
 
 		vector<string> paths = config.childrenOf( nodeName );
 		TRACE( classname(), " Found " << paths.size() << " histogram paths " );
+
+		
+
 		for ( unsigned int i=0; i < paths.size(); i++ ){
 			if ( "Include" == config.tagName( paths[ i ] ) ) continue;
 
+			// check the parent node for subdir info
+			string parentNode = config.pathToParent( paths[ i ] );
+			// look for a dir to cd into
+			DEBUG( classname(), "Looking for subdir at " << parentNode + ":dir" );
+			string usedir = config.getString( parentNode + ":dir", "" );
+			DEBUG( classname(), "Found " << usedir );
+			if ( "" !=  usedir  ){
+				cd( usedir );
+			}
+			
 			make( config, paths[ i ] );
 		}
 	}	//makeAll

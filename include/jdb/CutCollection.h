@@ -64,8 +64,6 @@ namespace jdb{
 			}
 		} // report
 
-	protected:
-
 		void init( XmlConfig _config, string _nodePath ){
 
 			vector<string> children = _config.childrenOf( _nodePath, "Range" );
@@ -84,6 +82,18 @@ namespace jdb{
 				}	
 			}
 		} // init
+
+		void setDefault( string name, double min, double max ){
+			if ( ranges.count( name ) <= 0 ){
+				ranges[ name ] = shared_ptr<XmlRange>( new XmlRange( ) );
+				ranges[name]->min = min;
+				ranges[name]->max = max;
+			}
+		}
+
+	protected:
+
+		
 	};
 }
 
