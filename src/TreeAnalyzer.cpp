@@ -43,6 +43,31 @@ namespace jdb{
 		initialize();
 	}
 
+	void TreeAnalyzer::init( XmlConfig &_config, string _nodePath, int _jobIndex, TChain * _chain ){
+		DEBUG( classname(), "( " << _config.getFilename() << ", " << nodePath << ", " << _jobIndex << " )" );
+
+		TaskRunner::init( _config, _nodePath, _jobIndex );
+
+		string jobPostfix = "_" + ts( _jobIndex ) + ".root";
+		this->jobModifier = "job_" + ts( _jobIndex ) +"_";
+ 		if ( -1 == _jobIndex ){
+ 			jobPostfix = ".root";
+ 			this->jobModifier = "";
+ 		}
+
+ 	
+		this->chain = _chain;
+		sharedTree = true;
+		if ( chain ){
+			initHistoBook( jobPostfix );
+			initReporter( jobPostfix );
+			initLogger();	
+		}
+		nEventLoops = config.getInt( nodePath + ":nEventLoops", 1 );
+		DEBUG( classname(), "Common Initialization" );
+		initialize();
+	}
+
 	void TreeAnalyzer::init( XmlConfig &_config, string _nodePath, string _fileList, string _jobPostfix ){
 		DEBUG( classname(), "( " << _config.getFilename() << ", " << nodePath << ", \"" << _fileList << "\", \"" << _jobPostfix << "\" )" );
 

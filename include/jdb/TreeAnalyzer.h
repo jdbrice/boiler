@@ -18,6 +18,8 @@
 namespace jdb{
 
 
+	class SharedTreeAnalyzer;
+
 	/* Boiler for analyzing data distributed accross TTrees in many files
 	 *
 	 * Automatically loads the TTrees from each file into a TChain.
@@ -36,6 +38,7 @@ namespace jdb{
 	 */
 	class TreeAnalyzer : public TaskRunner
 	{
+		friend SharedTreeAnalyzer;
 	// protected properties
 	protected:
 		
@@ -52,6 +55,7 @@ namespace jdb{
 		//The chain object which gets automatically set up
 		TChain 		*chain = nullptr;
 		string 		treeName;
+		bool 		sharedTree = false;
 		
 		// the maximum number of events to process. If not set all events will be processed 
 		int nEventsToProcess;
@@ -98,6 +102,7 @@ namespace jdb{
 
 		virtual void init( XmlConfig &_config, string _nodePath="", int _jobIndex = -1);
 		virtual void init( XmlConfig &_config, string _nodePath="", string _fileList = "", string _jobPostfix = "" );
+		virtual void init( XmlConfig &_config, string _nodePath="", int _jobIndex = -1, TChain * chain = nullptr );
 		virtual void initialize() { DEBUG( classname(), "TreeAnalyzer" ); };
 		
 

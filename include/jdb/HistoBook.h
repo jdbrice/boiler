@@ -80,6 +80,7 @@ namespace jdb{
 
 		unsigned int size() const { return book.size(); }
 
+		TFile * getOutputFile() { return file; }
 		/*
 		 *Changes into the given directory. 
 		 *If the dir DNE it is created, or it is simply set as the current. 

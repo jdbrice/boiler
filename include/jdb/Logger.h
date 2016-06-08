@@ -16,8 +16,20 @@
 // so ERROR( "message" ) just outputs a message
 // but ERROR( "tag", "message" ) outputs [tag.__func__] message
 #define GET_MACRO(_1,_2,NAME,...) NAME
-#define ERROR(...) GET_MACRO(__VA_ARGS__, LOG_E_TAG, LOG_E )(__VA_ARGS__)
-#define WARN(...) GET_MACRO(__VA_ARGS__, LOG_W_TAG, LOG_W )(__VA_ARGS__)
+// #define ERROR(...) GET_MACRO(__VA_ARGS__, LOG_E_TAG, LOG_E )(__VA_ARGS__)
+// #define WARN(...) GET_MACRO(__VA_ARGS__, LOG_W_TAG, LOG_W )(__VA_ARGS__)
+
+#if JDB_LOG_LEVEL<JDB_LOG_LEVEL_ERROR
+	#define ERROR(...) 0;
+#else
+	#define ERROR(...) {GET_MACRO(__VA_ARGS__, LOG_E_TAG, LOG_E )(__VA_ARGS__)};
+#endif
+
+#if JDB_LOG_LEVEL<JDB_LOG_LEVEL_WARN
+	#define WARN(...) 0;
+#else
+	#define WARN(...) {GET_MACRO(__VA_ARGS__, LOG_W_TAG, LOG_W )(__VA_ARGS__)};
+#endif
 
 #if JDB_LOG_LEVEL<JDB_LOG_LEVEL_INFO
 	#define INFO(...) 0;

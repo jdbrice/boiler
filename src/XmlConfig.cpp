@@ -352,9 +352,10 @@ namespace jdb{
 
 	vector<string> XmlConfig::childrenOf( string nodePath, string tag, int depth) const {
 
-		// TODO: add depth awareness
-
 		nodePath = sanitize( nodePath );
+
+		int npDepth = depthOf( nodePath );
+
 		if ( 	nodePath[ nodePath.length() - 1] != pathDelim && 
 				nodePath[ nodePath.length() - 1] != attrDelim && "" != nodePath)
 			nodePath += pathDelim;
@@ -372,7 +373,16 @@ namespace jdb{
 			string parent = (it->first).substr( 0, nodePath.length() );
 			
 			if ( nodePath == parent && (tag == tagName( it->first )) ){
-				paths.push_back( it->first );
+				
+				if ( -1 == depth ) 
+					paths.push_back( it->first );
+				else {
+					int dp = depthOf( it->first );
+
+					if ( dp - npDepth > 0 && dp - npDepth <= depth ) 
+						paths.push_back( it->first );
+				}
+
 			} else if ( nodePath != parent ){
 				// DEBUG( "Rejected because parent does not match" )
 				// DEBUG( "parent=" << parent << ", shouldBe=" << nodePath )

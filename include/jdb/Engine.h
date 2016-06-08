@@ -68,7 +68,7 @@ namespace jdb{
 
 		void runTasks(){
 
-			vector<string> paths = config.childrenOf( "", "Task" );
+			vector<string> paths = config.childrenOf( "", "Task", 1 );
 			INFO( classname(), "Found " << paths.size() << plural( paths.size(), " task", " tasks" ) );
 
 			for ( string p : paths ){
