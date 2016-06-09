@@ -120,7 +120,7 @@ namespace jdb{
 
 
 	void SharedTreeAnalyzer::makeTreeAnalyzers(){
-		vector<string> paths = config.childrenOf( nodePath, "Task" );
+		vector<string> paths = config.childrenOf( nodePath + ".Tasks", "Task" );
 		INFO( classname(), "Found " << paths.size() << plural( paths.size(), " task", " tasks" ) );
 
 		for ( string p : paths ){
@@ -261,30 +261,35 @@ namespace jdb{
 	}
 
 	void SharedTreeAnalyzer::preEventLoop(){
+		DEBUG( classname(), "" );
 		for ( shared_ptr<TreeAnalyzer> ta : treeAnalyzers ){
 			ta->preEventLoop();
 		}
 	}
 
 	void SharedTreeAnalyzer::postEventLoop(){
+		DEBUG( classname(), "" );
 		for ( shared_ptr<TreeAnalyzer> ta : treeAnalyzers ){
 			ta->postEventLoop();
 		}
 	}
 
 	void SharedTreeAnalyzer::analyzeEvent(){
+		DEBUG( classname(), "" );
 		for ( shared_ptr<TreeAnalyzer> ta : treeAnalyzers ){
 			ta->analyzeEvent();
 		}
 	}
 
 	void SharedTreeAnalyzer::analyzeRejectedEvent(){
+		DEBUG( classname(), "" );
 		for ( shared_ptr<TreeAnalyzer> ta : treeAnalyzers ){
 			ta->analyzeRejectedEvent();
 		}
 	}
 
 	void SharedTreeAnalyzer::analyzeEventBeforeCuts(){
+		DEBUG( classname(), "" );
 		for ( shared_ptr<TreeAnalyzer> ta : treeAnalyzers ){
 			ta->analyzeEventBeforeCuts();
 		}
