@@ -50,6 +50,8 @@ namespace jdb{
 						config.loadFile( argv[1] );
 						config.applyOverrides( cmdLineConfig );
 
+						Logger::setGlobalLogLevel( config.getString( "Logger:globalLogLevel" ) );
+
 						runTasks();
 					}
 				} // if argv >= 2

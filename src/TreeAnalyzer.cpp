@@ -19,7 +19,7 @@ namespace jdb{
 
 
 	void TreeAnalyzer::init( XmlConfig &_config, string _nodePath, int _jobIndex ){
-		DEBUG( classname(), "( " << _config.getFilename() << ", " << nodePath << ", " << _jobIndex << " )" );
+		DEBUG( classname(), "( " << _config.getFilename() << ", " << _nodePath << ", " << _jobIndex << " )" );
 
 		TaskRunner::init( _config, _nodePath, _jobIndex );
 
@@ -44,7 +44,7 @@ namespace jdb{
 	}
 
 	void TreeAnalyzer::init( XmlConfig &_config, string _nodePath, int _jobIndex, TChain * _chain ){
-		DEBUG( classname(), "( " << _config.getFilename() << ", " << nodePath << ", " << _jobIndex << " )" );
+		DEBUG( classname(), "( " << _config.getFilename() << ", " << _nodePath << ", " << _jobIndex << ", chain=" << _chain << " )" );
 
 		TaskRunner::init( _config, _nodePath, _jobIndex );
 
@@ -69,7 +69,7 @@ namespace jdb{
 	}
 
 	void TreeAnalyzer::init( XmlConfig &_config, string _nodePath, string _fileList, string _jobPostfix ){
-		DEBUG( classname(), "( " << _config.getFilename() << ", " << nodePath << ", \"" << _fileList << "\", \"" << _jobPostfix << "\" )" );
+		DEBUG( classname(), "( " << _config.getFilename() << ", " << _nodePath << ", \"" << _fileList << "\", \"" << _jobPostfix << "\" )" );
 
 		TaskRunner::init( _config, _nodePath, _fileList, _jobPostfix );
 
