@@ -37,6 +37,7 @@ ROOTLIBS      	= $(shell root-config --libs)
 ROOTLDFLAGS    	= $(shell root-config --ldflags)
 
 includes		= -Iinclude -Iinclude/jdb -I. 
+cint_includes 	= -I${JDB_LIB}/include -I${JDB_LIB}/include/jdb -I${JDB_LIB}
 
 CXX           	= g++ -o3 -Wall -Wextra -pedantic 
 CXXFLAGS      	= -std=c++11 -fPIC 
@@ -81,7 +82,7 @@ sources 		:= $(shell find src -mindepth 1 -maxdepth 4 -name "*.cpp")
 # inputs : All headers for classes eg XmlConfig.h, Logger.h, etc. and the LinkDef.h needed by rootcint
 # Output: dictionary.cxx and dictionary.h
 $(srcDir)/$(Dictionary).$(srcSuf): $(ClassHeaders) $(srcDir)/Linkdef.h
-	rootcling -v -f $@ $(includes) $^ 
+	rootcling -v -f $@ $(cint_includes) $^ 
 	@cp src/dictionary_rdict.pcm lib/
 
 $(srcDir)/%$(objSuf): $(srcDir)/%$(srcSuf)
