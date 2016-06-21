@@ -102,7 +102,7 @@ namespace jdb{
 
 		virtual void init( XmlConfig &_config, string _nodePath="", int _jobIndex = -1);
 		virtual void init( XmlConfig &_config, string _nodePath="", string _fileList = "", string _jobPostfix = "" );
-		virtual void init( XmlConfig &_config, string _nodePath, int _jobIndex, TChain * chain );
+		virtual void sharedInit( XmlConfig &_config, string _nodePath, int _jobIndex, TChain * chain );
 		virtual void initialize() { DEBUG( classname(), "TreeAnalyzer" ); };
 		
 

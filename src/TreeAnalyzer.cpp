@@ -43,7 +43,7 @@ namespace jdb{
 		initialize();
 	}
 
-	void TreeAnalyzer::init( XmlConfig &_config, string _nodePath, int _jobIndex, TChain * _chain ){
+	void TreeAnalyzer::sharedInit( XmlConfig &_config, string _nodePath, int _jobIndex, TChain * _chain ){
 		DEBUG( classname(), "( " << _config.getFilename() << ", " << _nodePath << ", " << _jobIndex << ", chain=" << _chain << " )" );
 
 		TaskRunner::init( _config, _nodePath, _jobIndex );

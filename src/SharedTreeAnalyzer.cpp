@@ -156,7 +156,7 @@ namespace jdb{
 
 			treeAnalyzers.push_back( treeAnalyzer );
 
-			treeAnalyzer->init( _taskConfig, _nodePath, jobIndex, chain );
+			treeAnalyzer->sharedInit( _taskConfig, _nodePath, jobIndex, chain );
 
 		}// loop on task paths
 	}
