@@ -1,6 +1,7 @@
-#ifndef XML_STRING_FORMATTER_H
-#define XML_STRING_FORMATTER_H
+#ifndef XML_STRING_H
+#define XML_STRING_H
 
+#include "XmlConfig.h"
 
 #include <iostream>
 #include <string>
@@ -14,13 +15,19 @@ using namespace std;
 // Formats a string like
 // "this is a {key1} and {path.to.node}"
 namespace jdb{
-	class XmlStringFormatter
+	class XmlString
 	{
 	public:
-		XmlStringFormatter() {}
-		~XmlStringFormatter() {}
+		virtual const char* classname() const { return "XmlString"; }
+		XmlString( XmlConfig _cfg ) { cfg = _cfg; }
+		~XmlString() {}
 
-		map<string, string> kv;
+		void add( string k, string v ){
+			kv[ k ] = v;
+		}
+
+		XmlConfig cfg;
+		
 
 		vector<string> find_keys( string s ){
 			vector<string> keys;
@@ -31,28 +38,30 @@ namespace jdb{
 			while (std::regex_search (s,m,e)) {
 				if ( m.size() >= 2 )
 					keys.push_back( m[1] );
-				cout << m.size() << endl;
-
-				cout << m[0] << " " <<m[1] << endl;
-				// for (auto x:m) std::cout << x << " ";
-				// 	std::cout << std::endl;
+					// cout << m.size() << endl;
+					// cout << m[0] << " " <<m[1] << endl;
 					s = m.suffix().str();
 			}
 
 			return keys;
 		}
 
-		string format( string _s, map<string, string> _kv ){
+		string format( string _s ){
 			string rs = _s;
 			vector<string> keys = find_keys( _s );
 
 			for (string key : keys ){
-				cout << "Looking for " << key << endl;
+				// cout << "Looking for " << key << endl;
 				regex e( "\\{" + key + "\\}" );
-				if ( _kv.count( key ) >= 1 ){
-					rs = regex_replace( rs, e, _kv[ key ] );
+				if ( kv.count( key ) >= 1 ){
+
+					string rv = kv[ key ];
+					rs = regex_replace( rs, e, kv[ key ] );
+				} else if ( cfg.exists( key ) ) {
+					string rv = cfg.getString( key );
+					rs = regex_replace( rs, e, rv );
 				} else {
-					cout << "replacing with empty string" << endl;
+					// cout << "replacing with empty string" << endl;
 					
 					rs = regex_replace( rs, e, "" );
 				}
@@ -60,6 +69,8 @@ namespace jdb{
 			return rs;
 		}
 
+	protected:
+		map<string, string> kv;
 
 		
 	};

@@ -4,7 +4,7 @@
 #include "XmlConfig.h"
 #include "IObject.h"
 
-
+#include "XmlString.h"
 
 
 namespace jdb {
@@ -19,7 +19,7 @@ namespace jdb {
 	public:
 		virtual const char* classname() const { return "XmlTFile"; }
 		XmlTFile() {}
-		XmlTFile( XmlConfig &cfg, string nodePath ) { load( cfg, nodePath ); }
+		XmlTFile( XmlConfig &cfg, string nodePath, bool openFile = true ) { load( cfg, nodePath, openFile ); }
 		~XmlTFile() { }
 
 		TFile * getTFile() { return tfile; }
@@ -37,6 +37,11 @@ namespace jdb {
 			mode             = cfg.getString( nodePath + _mmod, mode );
 			title            = cfg.getString( nodePath + _tmod, title );
 			compressionLevel = cfg.getInt( nodePath + _cmod, compressionLevel );
+
+			INFO( classname(), "URL : " << url );
+
+			url = XmlString( cfg ).format( url );
+			INFO( classname(), "URL : " << url );
 
 			if ( tfile && tfile->IsOpen() ){
 				tfile->Close();

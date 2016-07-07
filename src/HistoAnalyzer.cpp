@@ -1,4 +1,6 @@
 #include "HistoAnalyzer.h"
+#include "XmlString.h"
+#include "XmlTFile.h"
 
 namespace jdb{
 
@@ -93,13 +95,20 @@ namespace jdb{
 	void HistoAnalyzer::initRootFiles(){
 		vector<string> filenames;
 
-		// TODO : Add multiple file support!
-		string ifn = config.getString( nodePath + ".input.data:url" );
-		DEBUG( classname(), " Loading data from " << ifn )
-		inFile = new TFile( ifn.c_str(), "READ" );
+		if ( config.exists( nodePath + ".input.TFile" ) ){
+			INFO( classname(), "TFile" );
+			XmlTFile xft( config, nodePath + ".input.TFile", true );
+			// inFile = new TFile( xft.getQualifiedUrl().c_str(), "READ" );
+			inFile = xft.getTFile();
+		} else {
+			// TODO : Add multiple file support!
+			string ifn = config.getString( nodePath + ".input.data:url" );
+			DEBUG( classname(), " Loading data from " << ifn )
+			inFile = new TFile( ifn.c_str(), "READ" );
 
-		if ( !inFile->IsOpen() ){
-			ERROR( classname(), "Data File Could not be opened from : " + ifn );
+			if ( !inFile->IsOpen() ){
+				ERROR( classname(), "Data File Could not be opened from : " + ifn );
+			}
 		}
 	}
 
