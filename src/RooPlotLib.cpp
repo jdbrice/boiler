@@ -101,7 +101,9 @@ RooPlotLib &jdb::RooPlotLib::set( string option, vector<string> params ){
 	}
 	// TODO: not really working
 	if ( "titlesize" == option || "ts" == option ){
-		if ( nullptr != h ) h->SetTitleSize( atof(params[0].c_str()) );
+		INFO( classname(), option << " " << params[0] );
+		gStyle->SetTitleFontSize( atof(params[0].c_str()) );
+		// if ( nullptr != h ) h->SetTitleSize( atof(params[0].c_str()) );
 		//if ( nullptr != g ) g->SetTitleSize( params[0].c_str() ); These don't exist?
 		//if ( nullptr != fn ) fn->SetTitleSize( params[0].c_str() );
 	}
