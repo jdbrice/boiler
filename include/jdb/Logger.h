@@ -37,18 +37,17 @@
 	#define INFO(...) {GET_MACRO(__VA_ARGS__, LOG_I_TAG, LOG_I )(__VA_ARGS__)};
 #endif
  
-#if JDB_LOG_LEVEL<JDB_LOG_LEVEL_DEBUG
-	#define DEBUG(...) 0;
-#else
-	#define DEBUG(...) {GET_MACRO(__VA_ARGS__, LOG_D_TAG, LOG_D )(__VA_ARGS__)};
-#endif
-
 #if JDB_LOG_LEVEL<JDB_LOG_LEVEL_TRACE
 	#define TRACE(...) 0;
 #else
 	#define TRACE(...) {GET_MACRO(__VA_ARGS__, LOG_T_TAG, LOG_T )(__VA_ARGS__)};
 #endif
 
+#if JDB_LOG_LEVEL<JDB_LOG_LEVEL_DEBUG
+	#define DEBUG(...) 0;
+#else
+	#define DEBUG(...) {GET_MACRO(__VA_ARGS__, LOG_D_TAG, LOG_D )(__VA_ARGS__)};
+#endif
 
 
 
