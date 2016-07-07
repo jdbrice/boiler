@@ -9,9 +9,9 @@ namespace jdb{
 
 	TreeAnalyzer::~TreeAnalyzer(){
 		DEBUG( classname(), "" );
-		if ( book )
-			delete book;
-		DEBUG( classname(), "Deleted book" );
+		// if ( book )
+		// 	delete book;
+		// DEBUG( classname(), "Deleted book" );
 		if ( reporter )
 			delete reporter;
 		DEBUG( classname(), "Deleted Reporter" );
@@ -87,44 +87,7 @@ namespace jdb{
 	}
 
 	void TreeAnalyzer::initHistoBook( string _jobPostfix ) {
-
-		string jobPrefix = "";  // will we ever use this?
-
-		outputPath = config[ nodePath + ".output:path" ];
-		// string outputDataPath = config[ config.join( nodePath, "output", "data" ) ];
-		string name = config[ config.join( nodePath, "output", "data" ) ];
-
-		// add in the inline output node
-		if ( config.exists( nodePath + ".output:name" ) )
-			name = config[ nodePath + ".output:name" ];
-
-
-		// remove .root from the name if it is in there
-		// the jobPostfix will add it back
-		// Warning - this assumes that the '.root' is at the end of the string
-		string ext = ".root";
-		size_t extPos = name.find_last_of( ext );
-		INFO( classname(), "name = \"" << name << "\"");
-		if ( extPos != std::string::npos )
-			name = name.substr( 0, extPos - (ext.length() - 1) );
-		INFO( classname(), "name = \"" << name << "\"");
-
-
-		string full = outputPath + jobPrefix + name + _jobPostfix;
-		string fullCopy = outputPath + jobPrefix + name + "_copy" + _jobPostfix;
-		
-		// create the book
-	    INFO( "TreeAnalyzer", " Creating book : " << full );
-	    
-	    // should we skip make?
-	    skipMake = config.getBool( nodePath + ".SkipMake", false );
-	    INFO( classname(), "Skip Make == " << skipMake );
-
-	    if ( !skipMake )
-		    book = new HistoBook( full, config );
-		else {
-			book = new HistoBook( fullCopy, config, full );
-		}
+		initializeHistoBook( config, nodePath, jobIndex, _jobPostfix );
 	}
 
 

@@ -7,6 +7,8 @@ ClassImp( jdb::XmlConfig );
 
 namespace jdb{
 
+	const string XmlConfig::declarationV1 = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
+
 	XmlConfig::XmlConfig( string filename){
 		DEBUG( classname(), "Loading Xml Configuration from : " << filename );
 

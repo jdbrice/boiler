@@ -9,6 +9,7 @@ namespace jdb{
 	void HistoAnalyzer::init( XmlConfig &_config, string _nodePath, int _jobIndex ){
 		TaskRunner::init( _config, _nodePath, _jobIndex );
 
+		jobIndex = _jobIndex;
 		string jobPostfix = "_" + ts( _jobIndex ) + ".root";
 		this->jobModifier = "job_" + ts( _jobIndex ) +"_";
 
@@ -35,37 +36,50 @@ namespace jdb{
 		initialize();
 	}
 
-	void HistoAnalyzer::initHistoBook( string _jobPostfix ) {
+	void HistoAnalyzer::initHistoBook( string _jobPostfix ){
 
-		string jobPrefix = "";  // will we ever use this?
+		string ofn = "";
+		if ( config.exists( nodePath + ".output.TFile:url" ) ){
+			XmlString xstr( config );
+			xstr.add( "jobIndex", jobIndex );
+			ofn = xstr.format( config.getString( nodePath + ".output.TFile:url" ) );
+		} else if ( config.exists( nodePath + ".output.data" ) ){
+			// old school - no string interp
+			string jobPrefix = "";  // will we ever use this?
+			outputPath = config[ nodePath + ".output:path" ];
+			// string outputDataPath = config[ config.join( nodePath, "output", "data" ) ];
+			string name = config[ config.join( nodePath, "output", "data" ) ];
 
-		outputPath = config[ nodePath + ".output:path" ];
-		// string outputDataPath = config[ config.join( nodePath, "output", "data" ) ];
-		string name = config[ config.join( nodePath, "output", "data" ) ];
+			// add in the inline output node
+			if ( config.exists( nodePath + ".output:name" ) )
+				name = config[ nodePath + ".output:name" ];
 
-		// add in the inline output node
-		if ( config.exists( nodePath + ".output:name" ) )
-			name = config[ nodePath + ".output:name" ];
+			// remove .root from the name if it is in there
+			// the jobPostfix will add it back
+			// Warning - this assumes that the '.root' is at the end of the string
+			string ext = ".root";
+			size_t extPos = name.find_last_of( ext );
+			DEBUG( classname(), "name = \"" << name << "\"");
+			if ( extPos != std::string::npos )
+				name = name.substr( 0, extPos - (ext.length() - 1) );
+			DEBUG( classname(), "name = \"" << name << "\"");
+			string full = outputPath + jobPrefix + name + _jobPostfix;
+			ofn = full;
+		}
 
+		// Ensure that there is a valid output filename
+		if ( ofn.size() < 4 ){
+			WARN( classname(), "No valid output filename found, default = histoAnalyzer.root" );
+			WARN( classname(), "Searching :" );
+			WARN( classname(), nodePath + ".output.TFile:url" );
+			WARN( classname(), nodePath + ".output.data" );
+			ofn = "histoAnalyzer.root";
+		}
 
-		// remove .root from the name if it is in there
-		// the jobPostfix will add it back
-		// Warning - this assumes that the '.root' is at the end of the string
-		string ext = ".root";
-		size_t extPos = name.find_last_of( ext );
-		DEBUG( classname(), "name = \"" << name << "\"");
-		if ( extPos != std::string::npos )
-			name = name.substr( 0, extPos - (ext.length() - 1) );
-		DEBUG( classname(), "name = \"" << name << "\"");
-
-
-		string full = outputPath + jobPrefix + name + _jobPostfix;
-		string fullCopy = outputPath + jobPrefix + name + "_copy" + _jobPostfix;
-		
 		// create the book
-	    DEBUG( classname(), " Creating book : " << full );
-		book = shared_ptr<HistoBook>(new HistoBook( full, config ) );
-		
+		DEBUG( classname(), " Creating book : " << ofn );
+		book = shared_ptr<HistoBook>(new HistoBook( ofn, config ) );
+
 	}
 
 	void HistoAnalyzer::initReporter( string _jobPostfix ){
@@ -94,21 +108,28 @@ namespace jdb{
 
 	void HistoAnalyzer::initRootFiles(){
 		vector<string> filenames;
-
-		if ( config.exists( nodePath + ".input.TFile" ) ){
-			INFO( classname(), "TFile" );
-			XmlTFile xft( config, nodePath + ".input.TFile", true );
-			// inFile = new TFile( xft.getQualifiedUrl().c_str(), "READ" );
-			inFile = xft.getTFile();
-		} else {
+		string inf = "";
+		/***************************************/
+		// nodePath.input.TFile:url
+		if ( config.exists( nodePath + ".input.TFile:url" ) ){
+			INFO( classname(), "Getting filename from TFile:url" );
+			XmlString xstr( config );
+			xstr.add( "jobIndex", jobIndex );
+			inf = xstr.format( config.getString( ( nodePath + ".input.TFile:url" ) ) );
+		} else if ( config.exists( nodePath + ".input.data:url" ) ){
 			// TODO : Add multiple file support!
-			string ifn = config.getString( nodePath + ".input.data:url" );
-			DEBUG( classname(), " Loading data from " << ifn )
-			inFile = new TFile( ifn.c_str(), "READ" );
+			inf = config.getString( nodePath + ".input.data:url" );
+		} else {
+			WARN( classname(), "No input file given!" );
+			WARN( classname(), "Search paths:" );
+			WARN( classname(), nodePath  << ".input.TFile:url" );
+			WARN( classname(), nodePath  << ".input.data:url" );
+		}
 
-			if ( !inFile->IsOpen() ){
-				ERROR( classname(), "Data File Could not be opened from : " + ifn );
-			}
+		DEBUG( classname(), " Loading data from " << inf )
+		inFile = new TFile( inf.c_str(), "READ" );
+		if ( !inFile->IsOpen() ){
+			ERROR( classname(), "Data File Could not be opened from : " + inf );
 		}
 	}
 

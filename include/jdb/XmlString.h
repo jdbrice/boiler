@@ -2,6 +2,7 @@
 #define XML_STRING_H
 
 #include "XmlConfig.h"
+#include "Utils.h"
 
 #include <iostream>
 #include <string>
@@ -19,34 +20,43 @@ namespace jdb{
 	{
 	public:
 		virtual const char* classname() const { return "XmlString"; }
-		XmlString( XmlConfig _cfg ) { cfg = _cfg; }
+		XmlString() { }
+		XmlString( XmlConfig &_cfg ) { cfg = _cfg; }
 		~XmlString() {}
 
 		void add( string k, string v ){
+			DEBUG( classname(), "Adding [" << k << "] = " << v );
 			kv[ k ] = v;
 		}
+		void add( string k, int v ){
+			add( k, ts(v) );
+		}
+		void add( string k, double v ){
+			add( k, dts(v) );
+		}
+		void add( string k, float v ){
+			add( k, dts(v) );
+		}
 
+		// static const XmlConfig emptyConfig;
 		XmlConfig cfg;
-		
 
 		vector<string> find_keys( string s ){
+			DEBUG( classname(), "Finding interpolation keys in : " << s );
 			vector<string> keys;
-			std::smatch m;
-	  		std::regex e ("\\{(.*?)\\}");
-
+			smatch m;
+	  		regex e ("\\{(.*?)\\}");
 	  		regex_search( s, m, e );
-			while (std::regex_search (s,m,e)) {
+			while ( regex_search (s,m,e) ) {
 				if ( m.size() >= 2 )
 					keys.push_back( m[1] );
-					// cout << m.size() << endl;
-					// cout << m[0] << " " <<m[1] << endl;
 					s = m.suffix().str();
 			}
-
 			return keys;
 		}
 
 		string format( string _s ){
+			DEBUG( classname(), "Formatting : " << _s );
 			string rs = _s;
 			vector<string> keys = find_keys( _s );
 

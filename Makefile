@@ -11,7 +11,7 @@ Classes = 	Logger Reporter XmlConfig ChainLoader HistoBook RooPlotLib Utils \
 			format
 HeaderOnlyClasses = LoggerConfig XmlPoint XmlRange XmlGraph XmlBinnedData XmlString\
 					CutCollection \
-					TaskRunner IObject IConfig 
+					TaskRunner IObject IConfig IOutputMaker
 ##-----------------------------------------------------------------------------
 
 srcDir        = src

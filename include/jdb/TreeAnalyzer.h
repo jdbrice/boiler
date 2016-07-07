@@ -11,6 +11,8 @@
 #include "TaskRunner.h"
 #include "Utils.h"
 
+#include "IHistoBookMaker.h"
+
 //ROOT
 #include "TChain.h"
 #include "TError.h"
@@ -36,7 +38,7 @@ namespace jdb{
 	 *  	postMake()
 	 * 
 	 */
-	class TreeAnalyzer : public TaskRunner
+	class TreeAnalyzer : public TaskRunner, public IHistoBookMaker
 	{
 		friend SharedTreeAnalyzer;
 	// protected properties
@@ -45,9 +47,6 @@ namespace jdb{
 		
 		//Basepath for output of data and reports
 		string 		outputPath;
-		
-		//Store project histograms and data
-		HistoBook 	*book = nullptr;
 		
 		//For generating generic reports
 		Reporter 	*reporter = nullptr;

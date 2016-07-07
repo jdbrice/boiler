@@ -71,6 +71,8 @@ namespace jdb {
 		string currentNode = "";
 	public:
 
+		static const string declarationV1;
+
 		/* Creates an XmlConfig from the given xml file
 		 *@filename The file containg valid xml to load
 		 *

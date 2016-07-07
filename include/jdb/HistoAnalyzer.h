@@ -46,6 +46,8 @@ namespace jdb{
 		TFile 		*inFile;
 		string 		jobModifier;
 		string 		outputPath;
+
+		int jobIndex = -1;
 	// public methods
 	public:
 
@@ -78,6 +80,15 @@ namespace jdb{
 
 		void initHistoBook( string _jobPostfix );
 		void initReporter( string _jobPostfix );
+		/* Initialize the input file(s)
+		 *
+		 * initRootFiles sets up the input files for the HistoAnalyzer
+		 * It searches the config paths :
+		 *		nodePath.input.TFile:url ( applies string format interpolation )
+		 *		nodePath.input.data:url
+		 *
+		 * @return void
+		 */
 		void initRootFiles();
 
 		virtual void init( XmlConfig &_config, string _nodePath="", int _jobIndex = -1);

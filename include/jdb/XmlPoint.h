@@ -91,6 +91,10 @@ namespace jdb{
 			return ("( " + dts( x ) + ", " + dts( y ) + " )");
 		}
 
+		string toXml( string _nodeName ="XmlPoint" ){
+			return "<" + _nodeName + " x=\"" + dts( x ) + "\" y=\"" + dts( y ) + "\" />";
+		}
+
 #ifdef __CINT__
 		ClassDef( jdb::XmlPoint, 1 )
 #endif
