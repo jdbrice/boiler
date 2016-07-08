@@ -8,6 +8,7 @@
 #include "Logger.h"
 #include "LoggerConfig.h"
 #include "HistoBook.h"
+	#include "IHistoBookMaker.h"
 #include "XmlRange.h"
 #include "XmlPoint.h"
 #include "Reporter.h"
@@ -31,13 +32,11 @@ namespace jdb{
 	 * modules that take a root file containing histograms as input.
 	 *
 	 */
-	class HistoAnalyzer : public TaskRunner
+	class HistoAnalyzer : public TaskRunner, public IHistoBookMaker
 	{
 	// protected properties
 	protected:
 		
-		// HistoBook used to organize ROOT objects
-		shared_ptr<HistoBook> 	book;
 		// Reporter for generating pdf reports
 		shared_ptr<Reporter> 	reporter;
 		// File containing input
@@ -45,7 +44,6 @@ namespace jdb{
 		vector<string> rootFileNames;
 		TFile 		*inFile;
 		string 		jobModifier;
-		string 		outputPath;
 
 		int jobIndex = -1;
 	// public methods

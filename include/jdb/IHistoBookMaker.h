@@ -4,8 +4,8 @@
 #include "IObject.h"
 #include "Logger.h"
 #include "XmlConfig.h"
-#include "HistoBook.h"
-#include "XmlString.h"
+#include "XmlHistoBook.h"
+
 
 #include "TFile.h"
 
@@ -20,21 +20,30 @@ public:
 
 	//Store project histograms and data
 	shared_ptr<HistoBook> 	book = nullptr;
+	string outputPath = "";
 
-	virtual void initializeHistoBook( XmlConfig &config, string nodePath, int jobIndex, string _jobPostfix ){
-		INFO( classname(), "hmm" );
-		// do something with tfileOutput
-		string outputPath ="";
-		string ofn = "";
-		if ( config.exists( nodePath + ".output.TFile:url" ) ){
-			XmlString xstr( config );
-			xstr.add( "jobIndex", jobIndex );
-			ofn = xstr.format( config.getString( nodePath + ".output.TFile:url" ) );
-		} else if ( config.exists( nodePath + ".output.data" ) ){
+	virtual void initializeHistoBook( XmlConfig &config, string nodePath, string _jobPostfix ){
+		// look for histobooks
+		// Take the first one
+		vector<string> searchPaths = {
+			".output.HistoBook",
+			".output.TFile"
+		};
+
+		for ( string p : searchPaths ){
+			if ( !config.exists( nodePath + p ) ) continue;
+			book = XmlHistoBook( config, nodePath + p ).getBook();
+			if ( nullptr != book )
+				break;
+		}
+		
+		// None of the new forms work
+		// probably the old output.data using ouput:path etc.
+		// DEPRECIATE v4
+		if ( nullptr == book ){
 			// old school - no string interp
 			string jobPrefix = "";  // will we ever use this?
 			outputPath = config[ nodePath + ".output:path" ];
-			// string outputDataPath = config[ config.join( nodePath, "output", "data" ) ];
 			string name = config[ config.join( nodePath, "output", "data" ) ];
 
 			// add in the inline output node
@@ -51,21 +60,10 @@ public:
 				name = name.substr( 0, extPos - (ext.length() - 1) );
 			DEBUG( classname(), "name = \"" << name << "\"");
 			string full = outputPath + jobPrefix + name + _jobPostfix;
-			ofn = full;
+			// // create the book
+			DEBUG( classname(), " Creating book : " << full );
+			book = shared_ptr<HistoBook>(new HistoBook( full, config ) );
 		}
-
-		// Ensure that there is a valid output filename
-		if ( ofn.size() < 4 ){
-			WARN( classname(), "No valid output filename found, default = histoAnalyzer.root" );
-			WARN( classname(), "Searching :" );
-			WARN( classname(), nodePath + ".output.TFile:url" );
-			WARN( classname(), nodePath + ".output.data" );
-			ofn = "histoBook.root";
-		}
-
-		// create the book
-		DEBUG( classname(), " Creating book : " << ofn );
-		book = shared_ptr<HistoBook>(new HistoBook( ofn, config ) );
 	}
 	
 };

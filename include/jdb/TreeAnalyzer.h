@@ -44,10 +44,6 @@ namespace jdb{
 	// protected properties
 	protected:
 		
-		
-		//Basepath for output of data and reports
-		string 		outputPath;
-		
 		//For generating generic reports
 		Reporter 	*reporter = nullptr;
 		

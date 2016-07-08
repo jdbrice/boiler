@@ -10,6 +10,8 @@
 #include <iterator>
 #include <string>
 #include <map>
+#include <cstdlib>
+
 
 using namespace std;
 
@@ -38,7 +40,6 @@ namespace jdb{
 			add( k, dts(v) );
 		}
 
-		// static const XmlConfig emptyConfig;
 		XmlConfig cfg;
 
 		vector<string> find_keys( string s ){
@@ -59,20 +60,21 @@ namespace jdb{
 			DEBUG( classname(), "Formatting : " << _s );
 			string rs = _s;
 			vector<string> keys = find_keys( _s );
+			int nkvs = kv.size();
 
 			for (string key : keys ){
 				// cout << "Looking for " << key << endl;
 				regex e( "\\{" + key + "\\}" );
-				if ( kv.count( key ) >= 1 ){
-
+				if ( nkvs >= 1 && kv.count( key ) >= 1 ){
 					string rv = kv[ key ];
 					rs = regex_replace( rs, e, kv[ key ] );
 				} else if ( cfg.exists( key ) ) {
 					string rv = cfg.getString( key );
 					rs = regex_replace( rs, e, rv );
+				} else  if ( getenv( key.c_str() ) ) {
+					string env = getenv( key.c_str() );
+					rs = regex_replace( rs, e, env );
 				} else {
-					// cout << "replacing with empty string" << endl;
-					
 					rs = regex_replace( rs, e, "" );
 				}
 			}

@@ -87,7 +87,7 @@ namespace jdb{
 	}
 
 	void TreeAnalyzer::initHistoBook( string _jobPostfix ) {
-		initializeHistoBook( config, nodePath, jobIndex, _jobPostfix );
+		initializeHistoBook( config, nodePath, _jobPostfix );
 	}
 
 

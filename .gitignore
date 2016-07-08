@@ -17,3 +17,6 @@ src/dictionary_rdict.pcm
 
 /bin/Debug/*
 /docs_venv/
+
+.sconsign.dblite
+/sandbox
