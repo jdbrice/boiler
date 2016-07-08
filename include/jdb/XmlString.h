@@ -61,6 +61,7 @@ namespace jdb{
 			string rs = _s;
 			vector<string> keys = find_keys( _s );
 			int nkvs = kv.size();
+			string nullString = "";
 
 			for (string key : keys ){
 				// cout << "Looking for " << key << endl;
@@ -75,7 +76,7 @@ namespace jdb{
 					string env = getenv( key.c_str() );
 					rs = regex_replace( rs, e, env );
 				} else {
-					rs = regex_replace( rs, e, "" );
+					rs = regex_replace( rs, e, nullString );
 				}
 			}
 			return rs;
