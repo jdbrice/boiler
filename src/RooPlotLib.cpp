@@ -255,7 +255,7 @@ RooPlotLib &jdb::RooPlotLib::set( string option, vector<string> params ){
 			if ( colorFromString >= 0 )
 				c = colorFromString;
 
-#ifdef ROOT6_FEATURES
+#if ROOT6 > 0
 			if ( "" != params[ 1 ] ){
 				if ( nullptr != h )
 					h->SetFillColorAlpha( c, atof( params[ 1 ].c_str() ) );
