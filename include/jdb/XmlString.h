@@ -80,6 +80,7 @@ namespace jdb{
 					rs = regex_replace( rs, e, nullString );
 				}
 			}
+			DEBUG( classname(), "Result : " << rs );
 			return rs;
 		}
 
