@@ -52,6 +52,7 @@ namespace jdb{
 				if ( m.size() >= 2 )
 					keys.push_back( m[1] );
 					s = m.suffix().str();
+					DEBUG( classname(), m[1] );
 			}
 			return keys;
 		}
