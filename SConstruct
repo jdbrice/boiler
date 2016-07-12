@@ -75,7 +75,7 @@ rootcint_env.Append( BUILDERS 		= { 'RootCint' : rootcint } )
 # hack to make the rootcint use abs path to headers
 rootcint_env[ "_CPPINCFLAGS" ] = str( " -I" + Dir(".").abspath + "/src/" ) + str( " -I" + Dir(".").abspath + "/include/" ) + str( " -I" + Dir(".").abspath + "/include/jdb" )
 
-root_dict_src = rootcint_env.RootCint( "src/CintDictionary.cpp", [Glob( "include/*.h" ), Glob( "src/Linkdef.h" ) ] )
+root_dict_src = rootcint_env.RootCint( "src/CintDictionary.cpp", [Glob( "include/jdb/*.h" ), Glob( "src/Linkdef.h" ) ] )
 # Clean( root_dict, "src/TreeData/CintDictionary_rdict.pcm" )
 
 rootcint_env.Alias( 'rootcint', root_dict_src )
@@ -90,7 +90,6 @@ root_dict_lib = rootcint_env.SharedLibrary( target='lib/RooBarb', source=[Glob( 
 Depends( root_dict_lib, target )
 rootcint_env.Alias( 'dll', root_dict_lib )
 
-print( "done?" )
 
 
 
