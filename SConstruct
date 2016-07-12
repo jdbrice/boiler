@@ -64,23 +64,33 @@ if "LD_LIBRARY_PATH" in os.environ :
 else :
 	LD_LIBRARY_PATH = ""
 rootcint_env = Environment(ENV = {'PATH' : os.environ['PATH'], 'ROOTSYS' : os.environ[ "ROOTSYS" ], 'LD_LIBRARY_PATH' : LD_LIBRARY_PATH })
-rootcint_env.Append(LINKFLAGS 		= cxxFlags)
+rootcint_env.Append(CPPDEFINES 	 = cppDefines)
+rootcint_env.Append(CPPFLAGS 		  = cppFlags)
+rootcint_env.Append(CXXFLAGS 		  = cxxFlags)
+rootcint_env.Append(LINKFLAGS 	  = cxxFlags )
+rootcint_env.Append(CPPPATH		    = paths)
 
 rootcint = Builder( action='rootcint -f $TARGET -c $_CPPINCFLAGS $SOURCES.file' )  
 rootcint_env.Append( BUILDERS 		= { 'RootCint' : rootcint } )
 # hack to make the rootcint use abs path to headers
-rootcint_env[ "_CPPINCFLAGS" ] = str( " -I" + Dir(".").abspath + "/src/" ) + str( " -I" + Dir(".").abspath + "/include/" )
+rootcint_env[ "_CPPINCFLAGS" ] = str( " -I" + Dir(".").abspath + "/src/" ) + str( " -I" + Dir(".").abspath + "/include/" ) + str( " -I" + Dir(".").abspath + "/include/jdb" )
 
 root_dict_src = rootcint_env.RootCint( "src/CintDictionary.cpp", [Glob( "include/*.h" ), Glob( "src/Linkdef.h" ) ] )
 # Clean( root_dict, "src/TreeData/CintDictionary_rdict.pcm" )
 
 rootcint_env.Alias( 'rootcint', root_dict_src )
 rootcint_env[ "_LIBFLAGS" ] = common_env[ "_LIBFLAGS" ] + " " + ROOTLIBS + " "
-rootcint_env['STATIC_AND_SHARED_OBJECTS_ARE_THE_SAME']=1
-root_cint_obj = rootcint_env.Object( target='CintDictionary', source=["src/CintDictionary.cpp"] )
-root_cint_lib = rootcint_env.SharedLibrary( target='lib/RooBarb', source=[Glob( "src/*.o" )] )
-Depends( root_cint_lib, target )
-rootcint_env.Alias( 'dll', root_cint_lib )
+# rootcint_env['STATIC_AND_SHARED_OBJECTS_ARE_THE_SAME']=1
+# root_dict_obj = rootcint_env.Object( target='CintDictionary', source=["src/CintDictionary.cpp"] )
+
+# rootcint_env.Alias( 'rootobj', root_dict_obj )
+# Depends( root_dict_obj, root_dict_src )
+root_dict_lib = rootcint_env.SharedLibrary( target='lib/RooBarb', source=[Glob( "src/*.cpp" )] )
+
+Depends( root_dict_lib, target )
+rootcint_env.Alias( 'dll', root_dict_lib )
+
+print( "done?" )
 
 
 

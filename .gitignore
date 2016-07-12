@@ -9,8 +9,10 @@
 *.root
 #object types
 *.o
+*.os
 src/dictionary_rdict.pcm
 /src/dictionary.*
+/src/CintDictionary*
 /lib/*
 /script/.DataSource*
 /script/sandbox/
