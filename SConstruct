@@ -64,6 +64,9 @@ if "LD_LIBRARY_PATH" in os.environ :
 else :
 	LD_LIBRARY_PATH = ""
 rootcint_env = Environment(ENV = {'PATH' : os.environ['PATH'], 'ROOTSYS' : os.environ[ "ROOTSYS" ], 'LD_LIBRARY_PATH' : LD_LIBRARY_PATH })
+rootcint_env.Append(CPPFLAGS 		= cppFlags)
+rootcint_env.Append(CXXFLAGS 		= cxxFlags)
+
 rootcint = Builder( action='rootcint -f $TARGET -c $_CPPINCFLAGS $SOURCES.file' )  
 rootcint_env.Append( BUILDERS 		= { 'RootCint' : rootcint } )
 # hack to make the rootcint use abs path to headers
