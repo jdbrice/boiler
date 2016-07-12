@@ -15,7 +15,7 @@ JDB_LIB			= os.environ[ "JDB_LIB" ]
 
 cppDefines 		= {}
 cppFlags 		= ['-Wall' ]#, '-Werror']
-cxxFlags 		= ['-std=c++11' ]
+cxxFlags 		= ['-std=c++11', '-fPIC' ]
 cxxFlags.extend( ROOTCFLAGS )
 
 paths 			= [ '.', 			# dont really like this but ended up needing for root dict to work ok
@@ -54,3 +54,31 @@ common_env.Append(CXXFLAGS 		= "-DROOT6=${ROOT6}" )
 
 target = common_env.StaticLibrary( target='lib/RooBarb', source=[Glob( "src/*.cpp" )] )
 Default( target )
+
+
+
+
+########################### ROOT dictionary creation ##########################
+if "LD_LIBRARY_PATH" in os.environ :
+	LD_LIBRARY_PATH = os.environ[ "LD_LIBRARY_PATH" ]
+else :
+	LD_LIBRARY_PATH = ""
+rootcint_env = Environment(ENV = {'PATH' : os.environ['PATH'], 'ROOTSYS' : os.environ[ "ROOTSYS" ], 'LD_LIBRARY_PATH' : LD_LIBRARY_PATH })
+rootcint = Builder( action='rootcint -f $TARGET -c $_CPPINCFLAGS $SOURCES.file' )  
+rootcint_env.Append( BUILDERS 		= { 'RootCint' : rootcint } )
+# hack to make the rootcint use abs path to headers
+rootcint_env[ "_CPPINCFLAGS" ] = str( " -I" + Dir(".").abspath + "/src/" ) + str( " -I" + Dir(".").abspath + "/include/" )
+
+root_dict_src = rootcint_env.RootCint( "src/CintDictionary.cpp", [Glob( "include/*.h" ), Glob( "src/Linkdef.h" ) ] )
+# Clean( root_dict, "src/TreeData/CintDictionary_rdict.pcm" )
+
+rootcint_env.Alias( 'rootcint', root_dict_src )
+rootcint_env[ "_LIBFLAGS" ] = common_env[ "_LIBFLAGS" ] + " " + ROOTLIBS + " "
+rootcint_env['STATIC_AND_SHARED_OBJECTS_ARE_THE_SAME']=1
+root_cint_obj = rootcint_env.Object( target='CintDictionary', source=["src/CintDictionary.cpp"] )
+root_cint_lib = rootcint_env.SharedLibrary( target='lib/RooBarb', source=[Glob( "src/*.o" )] )
+Depends( root_cint_lib, target )
+rootcint_env.Alias( 'dll', root_cint_lib )
+
+
+

@@ -30,9 +30,9 @@ namespace jdb {
 		static const char* classname() { return "FitConfidence"; }
 		
 		// Unused - static class
-		FitConfidence();
+		FitConfidence(){}
 		// Unused - static class
-		~FitConfidence();
+		~FitConfidence(){}
 
 
 		/* Draws the given function with its 95% confidence level and returns the histogram containing the confidence level region

@@ -46,7 +46,7 @@ namespace jdb{
 			DEBUG( classname(), "Finding interpolation keys in : " << s );
 			vector<string> keys;
 			smatch m;
-	  		regex e ("\{(.*?)\}");
+	  		regex e ( "\\{(.*?)\\}");
 	  		regex_search( s, m, e );
 			while ( regex_search (s,m,e) ) {
 				if ( m.size() >= 2 )
