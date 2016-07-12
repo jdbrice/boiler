@@ -107,7 +107,7 @@ namespace jdb {
 		static const int llNone 	= 1;
 
 		// The default log level at compile time
-		static const int llDefault	= llWarn;
+		static const int llDefault	= llDebug;
 		// The global log level - used by any newly created log IF not overridden
 		static int llGlobal;
 

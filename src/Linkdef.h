@@ -13,6 +13,7 @@
 #pragma link C++ class jdb::Logger+;
 #pragma link C++ class jdb::Reporter-;
 #pragma link C++ class jdb::XmlConfig+;
+#pragma link C++ class jdb::XmlString+;
 #pragma link C++ class jdb::XmlBinnedData+;
 
 #pragma link C++ class jdb::LoggerConfig-;

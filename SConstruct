@@ -80,12 +80,12 @@ root_dict_src = rootcint_env.RootCint( "src/CintDictionary.cpp", [Glob( "include
 
 rootcint_env.Alias( 'rootcint', root_dict_src )
 rootcint_env[ "_LIBFLAGS" ] = common_env[ "_LIBFLAGS" ] + " " + ROOTLIBS + " "
-# rootcint_env['STATIC_AND_SHARED_OBJECTS_ARE_THE_SAME']=1
+rootcint_env['STATIC_AND_SHARED_OBJECTS_ARE_THE_SAME']=1
 # root_dict_obj = rootcint_env.Object( target='CintDictionary', source=["src/CintDictionary.cpp"] )
 
 # rootcint_env.Alias( 'rootobj', root_dict_obj )
 # Depends( root_dict_obj, root_dict_src )
-root_dict_lib = rootcint_env.SharedLibrary( target='lib/RooBarb', source=[Glob( "src/*.cpp" )] )
+root_dict_lib = rootcint_env.SharedLibrary( target='lib/RooBarb', source=[Glob( "src/*.o" )] )
 
 Depends( root_dict_lib, target )
 rootcint_env.Alias( 'dll', root_dict_lib )
