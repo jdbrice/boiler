@@ -154,6 +154,7 @@ namespace jdb{
 		
 		unsigned long int min = _jobIndex * _splitBy;
 		unsigned long int max = (_jobIndex + 1) * _splitBy - 1;
+		DEBUG( classname, "range = (" << min << ", " << max << ") " );
 		
 		if ( 0 > _splitBy || 0 > _jobIndex ){
 			DEBUG( classname, "splitBy or jobIndex are negative" );
