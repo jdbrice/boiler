@@ -301,6 +301,7 @@ namespace jdb{
 			Long64_t read = chain->GetEntry(iEvent);
 			
 			if ( read <= 0 || (nEventsToProcess >= 0 && iEvent >= nEventsToProcess) ){ // break if we read past end or hit limit
+				INFO( classname(), "Ending event loop on iEvent = " << iEvent );
 				break;
 			}
 
