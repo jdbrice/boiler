@@ -44,6 +44,7 @@ namespace jdb{
 			for (double i = low; i <= high; i += step ){
 				bins.push_back( i );
 			}
+			if ( bins.size() >= 1 && high != bins[ bins.size() - 1 ] ) bins.push_back( high );
 			return bins;
 		}	// binsFrom
 		

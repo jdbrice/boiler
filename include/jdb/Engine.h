@@ -84,9 +84,10 @@ namespace jdb{
 
 				INFO( classname(), "Running " << _type << " " << _name );
 				if ( "" == _configFile ){
+					INFO( classname(), "Using main config" );
 					_taskConfig = config;
 				} else if ( fileExists( _configFile ) ){
-					// INFO( classname(), "Using " << _configFile << " config for task" );
+					INFO( classname(), "Using " << _configFile << " config for task" );
 					_taskConfig.loadFile( _configFile );
 					_taskConfig.applyOverrides( cmdLineConfig );
 				} else {
