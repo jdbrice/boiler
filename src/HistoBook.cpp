@@ -348,7 +348,7 @@ namespace jdb{
 				return new TH3D( _name.c_str(), _title.c_str(), _bx.nBins(), _bx.bins.data(), _by.nBins(), _by.bins.data(), _bz.nBins(), _bz.bins.data() );
 		} // make 2Ds
 
-		WARN( classname(), "Unable to make Histogram" );
+		WARN( classname(), "Unable to make Histogram " << _type << ", " << _name << ", " << _title );
 		return nullptr;
 	}
 
@@ -401,7 +401,7 @@ namespace jdb{
 
 				if ( nullptr != tmp ){
 					add( hName, tmp );
-				} else  {
+				} else if ( config.exists( nodeName + ":bins_x" ) || config.exists( nodeName + ":bins_y" ) || config.exists( nodeName + ":bins_z" ) ) {
 					ERROR( classname(), "could not make histogram : " << hName );
 					ERROR( classname(), "x bins : " << bx->toString() );
 					ERROR( classname(), "y bins : " << by->toString() );
@@ -432,9 +432,9 @@ namespace jdb{
 			string parentNode = config.pathToParent( paths[ i ] );
 			// look for a dir to cd into
 			DEBUG( classname(), "Looking for subdir at " << parentNode + ":dir" );
-			string usedir = config.getString( parentNode + ":dir", "" );
+			string usedir = config.getString( parentNode + ":dir", "NADIR" );
 			DEBUG( classname(), "Found " << usedir );
-			if ( "" !=  usedir  ){
+			if ( "NADIR" !=  usedir  ){
 				cd( usedir );
 			}
 			
