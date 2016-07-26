@@ -83,6 +83,20 @@ public:
         }
     }
 
+    static string eq( double life, double hope, double tolerance = 0.001 /*percent of life */) {
+        nTotal++;
+        if ( abs( life - hope ) < ( life * tolerance ) ){
+            passed = true;
+            nPassed ++;
+            return green( "PASS" );
+        }
+        else {
+            passed = false;
+            nFailed++;
+            return  dts(life) + " != " + dts(hope) + red( " FAIL" );
+        }
+    }
+
     static string eq( string life, string hope ){
         // 033[1;32m
         // 033[0;m

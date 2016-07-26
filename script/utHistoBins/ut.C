@@ -1,10 +1,12 @@
 #define UNITTEST_NO_CXX
 #include "../UnitTest.h"
+#include "HistoBins.h"
+
 
 void ut(){
 
 	using namespace jdb;
-	Logger::setGlobalLogLevel( "trace" );
+	Logger::setGlobalLogLevel( "all" );
 	Logger::setGlobalColor( true );
 
 	UT_START( "HistoBins" );
@@ -32,14 +34,16 @@ void ut(){
 
     INFO( endl << "Testing Creating From Config : " );
     jdb::XmlConfig config( "cHistoBins.xml" );
+    INFO( "", "filename " << config.getFilename() );
 
+    // XmlConfig cfg2 = config;
     HistoBins hbc1( config, "pt" );
     INFO( hbc1.toString() );
     INFO( UT_EQ( hbc1.nBins(), 10) << " : Created bins from config.pt" );
 
     HistoBins hbc2( config, "p" );
     INFO( hbc2.toString() );
-    INFO( UT_EQ( hbc2.nBins(), 100) << " : Created bins from config.p" );
+    INFO( UT_EQ( hbc2.findBinWidth( 0.5 ), 0.32323) << " : Created bins from config.p" );
 
     HistoBins hbc3( config, "eta" );
     INFO( hbc3.toString() );
@@ -49,11 +53,15 @@ void ut(){
     INFO( hbc4.toString() );
     INFO( UT_EQ( hbc4.nBins(), 7) << " : Created bins from config.var" );
     val = 12.0;
-    INFO( UT_EQ( hbc4.findBin( val ), 4) << " : findBin( " << val <<" )"  );
+    INFO( UT_EQ( hbc4.findBin( val ), 4) << " : findBin( " << val <<" ) == 4"  );
     val = 7.0;
     INFO( UT_EQ( hbc4.findBin( val, BinEdge::upper ), 0) << " : findBin( " << val <<" ) == 0 (BinEdge::upper)"  );
     val = 7.0;
     INFO( UT_EQ( hbc4.findBin( val, BinEdge::lower ), 1) << " : findBin( " << val <<" ) == 1 (BinEdge::lower)"  );
+
+    INFO( UT_EQ( hbc4.findBinWidth( val, BinEdge::lower ), 1.0) << " : findBinWidth( " << val <<" ) == 1 (BinEdge::lower)"  );
+    INFO( UT_EQ( hbc4.findBinWidth( val, BinEdge::upper ), 6.0) << " : findBinWidth( " << val <<" ) == 6 (BinEdge::upper)"  );
+
 
 
     INFO( UT_SUMMARY );

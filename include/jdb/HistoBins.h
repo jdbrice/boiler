@@ -8,10 +8,12 @@
 
 	#include "IObject.h"
 
+
 // STL
 #include <memory>
 #include <string> 
 #include <algorithm>
+#include <math.h>
 using namespace std;
 
 namespace jdb{
@@ -37,16 +39,19 @@ namespace jdb{
 		/* Makes a vector of bins with fixed width
 		 * Divides the range high - low into a fixed number of bins from low to high"
 		 */
-		static vector<double> makeNBins( int nBins, double low, double high ){
-
+		static vector<double> makeNBins( int nBins, double low, double high, bool forceFixedWidth = false ){
+			DEBUG( "HistoBins", "(nBins=" << nBins << ", low=" << low << ", high=" << high << ")" );
 			vector<double> bins;
-			double step = (high - low ) / (double) nBins;
-			for (double i = low; i <= high; i += step ){
-				bins.push_back( i );
+			double step 	= (high - low ) / (double) nBins;
+			double binEdge 	= low;
+			for (int iBin = 0; iBin < nBins; iBin++ ){
+				bins.push_back( binEdge );
+				binEdge += step;
 			}
-			if ( bins.size() >= 1 && high > bins[ bins.size() - 1 ] ) bins.push_back( high );
+			bins.push_back( high ); // last bin edge is upper limit
+		
 			return bins;
-		}	// binsFrom
+		}	// makeNBins
 		
 		/* Makes a vector of bin edges for bins of a fixed width
 		 * @binWidth the width of each bin. The last bin may be smaller.
@@ -54,13 +59,20 @@ namespace jdb{
 		 * @high the high edge of the bins
 		 * @return vector of bin edges from low to high
 		 */
-		static vector<double> makeFixedWidthBins( double binWidth, double low, double high ){
-            DEBUG( "HistoBins", "( binWidth=" << binWidth << ", low="<<low << ", high=" << high << " )" );
+		static vector<double> makeFixedWidthBins( double binWidth, double low, double high, bool canExtendMax = true ){
+            DEBUG( "HistoBins", "(binWidth=" << binWidth << ", low=" << low << ", high=" << high << " , canExtendMax=" << bts(canExtendMax) << ")" );
 			vector<double> bins;
-			for (double i = low; i <= high; i += binWidth ){
-				bins.push_back( i );
+			int nBins = ceil(( high - low ) / binWidth);
+			double binEdge 	= low;
+			for (int iBin = 0; iBin < nBins; iBin++ ){
+				bins.push_back( binEdge );
+				binEdge += binWidth;
 			}
-			if ( bins.size() >= 1 && high > bins[ bins.size() - 1 ] ) bins.push_back( high );
+			if ( false == canExtendMax )
+				bins.push_back( high ); // last bin edge is upper limit
+			else 
+				bins.push_back( binEdge );
+		
 			return bins;
 		}	// binsFrom
 
@@ -131,6 +143,11 @@ namespace jdb{
 			return (bins[ binIndex + 1 ] - bins[ binIndex ]);
 		}
 
+		static double findBinWidth( vector<double> &bins, double value, BinEdge includeEdge = BinEdge::lower ){
+			int binIndex = findBin( bins, value, includeEdge );
+			return binWidth( bins, binIndex );
+		}
+
 		/* Finds the bin containing a given value
 		 * @val The value for which the corresponding bin is desired 
 		 * @includeEdge 	which edge of the bin to include, upper or lower
@@ -146,6 +163,9 @@ namespace jdb{
 		 */
 		double binWidth( int binIndex = 0 ){
 			return binWidth( bins, binIndex );
+		}
+		double findBinWidth( double value, BinEdge includeEdge = BinEdge::lower ) {
+			return findBinWidth( bins, value, includeEdge );
 		}
 
 		/*
@@ -165,6 +185,9 @@ namespace jdb{
   		 */
 		int nBins(){
 			return bins.size() - 1;
+		}
+		int nBinEdges() {
+			return bins.size();
 		}
 
 		/* Constructor : fixed width bins
@@ -196,14 +219,22 @@ namespace jdb{
 		 *  <Bins>10, 12, 14, 16, 18, 20</Bins>
 		 * ```
 		 */
-		HistoBins( XmlConfig config, string nodePath, string ml = "" ){
+		HistoBins( XmlConfig &_config, string _nodePath, string _lm = "" ){
+			load( _config, _nodePath, _lm );
+		} // Constructor
+
+		void load( XmlConfig &_config, string _nodePath, string _lm = "" ) {
+			DEBUG( classname(), "(" << _config.getFilename() << ", " << _nodePath << ", " << _lm << " )"  );
+			// return;
 
 			// get the bins as an array of edges
-			if ( config.exists( nodePath ) && config.getDoubleVector( nodePath ).size() >= 2 ){
-				bins = config.getDoubleVector( nodePath );
+			if ( _config.exists( _nodePath ) && _config.getDoubleVector( _nodePath ).size() >= 2 ){
+				bins = _config.getDoubleVector( _nodePath );
 				min = bins[ 0 ];
 				max = bins[ nBins() ];
-				width = -1;
+				width = -1;	// not loading from fixed width
+				numberofBins = -1; // not loading from nbins
+				DEBUG( classname(), "Found vector of bin edges @ " << _nodePath );
 				return;
 			}  
 
@@ -212,63 +243,42 @@ namespace jdb{
 			string maxt = ":max";
 			string nt = ":nBins";
 
-			DEBUG( classname(), "Lowercase! mod is " << ml );
-
 			// Specail case : for modifier "x" also allow no modifier - this makes th histobook able to make 1D histos without a modifier in the xml
 			// skip for others so that we dont make the same bins for other modifiers
-			if ( "" == ml || "x" == ml ){
-				getValuesFromConfig( config, nodePath, wt, nt, mint, maxt );
+			if ( "" == _lm || "x" == _lm ){
+				getValuesFromConfig( _config, _nodePath, wt, nt, mint, maxt );
 				if ( goodValues() ){
-					
-					DEBUG( classname(), "Found HistoBins @ " << nodePath << " with " << wt << nt << mint << maxt );
-					
-					bins = makeFixedWidthBins( width, min, max );
+					DEBUG( classname(), "Found HistoBins @ " << _nodePath << " with " << wt << nt << mint << maxt );
+					if ( width > 0 ){
+						bins = makeFixedWidthBins( width, min, max );
+						max = bins[ nBins() ];
+					}
+					else 
+						bins = makeNBins( numberofBins, min, max );
 					return;
 				}
 			}
 
 			// something like "width_y, max_y, min_y, nBins_y"
-			string mml = "_" + ml;
-			getValuesFromConfig( config, nodePath, wt + mml, nt + mml, mint + mml, maxt + mml );
+			string mml = "_" + _lm;
+			getValuesFromConfig( _config, _nodePath, wt + mml, nt + mml, mint + mml, maxt + mml );
 			if ( goodValues() ){
-				DEBUG( classname(), "Found HistoBins @ " << nodePath << " with " << wt + mml << nt + mml << mint + mml << maxt + mml );
-				bins = makeFixedWidthBins( width, min, max );
+				DEBUG( classname(), "Found HistoBins @ " << _nodePath << " with " << wt + mml << nt + mml << mint + mml << maxt + mml );
+				if ( width > 0 ){
+					bins = makeFixedWidthBins( width, min, max );
+					max = bins[ nBins() ];
+				}
+				else 
+					bins = makeNBins( numberofBins, min, max );
 				return;
 			}
 			
 			
-			TRACE( classname(), "Could not make HistoBins @ " << nodePath );
-
-		} // Constructor
-
-
-		void getValuesFromConfig( XmlConfig config, string nodePath, 
-			string widthTag =":width", string nBinsTag=":nBins", string minTag = ":min", string maxTag=":max" ){
-
-			DEBUG( classname(), nodePath );
-			DEBUG( classname(), widthTag << " " << nBinsTag << " " << minTag << " " << maxTag );
-			min = 1;
-			max = 0;
-			width = 0.0;
-
-			min = config.getDouble( nodePath + minTag, min );
-			max = config.getDouble( nodePath + maxTag, max );
-			width = config.getDouble( nodePath + widthTag, width );
-
-
-
-			if ( config.exists( nodePath + nBinsTag ) ){
-				int  n = config.getInt( nodePath + nBinsTag );
-				width = ( max - min ) / (double)n;
-			}
-			DEBUG( classname(), "min=" << min << ", max=" << max << ", width=" << width );
+			TRACE( classname(), "Could not make HistoBins @ " << _nodePath );
 		}
 
-		bool goodValues(){
-			if ( max > min && width > 0 )
-				return true;
-			return false;
-		}
+
+		
 
 
 		/* Gets a bin edge from the underlying vector of bin edges"
@@ -282,8 +292,10 @@ namespace jdb{
 		 * @return A string represenation of the bin edges.
 		 */
 		string toString() {
-			if ( width > 0 )
+			if ( numberofBins > 0 )
 				return "< " + ts( nBins() ) + " bins ( " + ts(min) + "->" + ts(max) + " )  >";
+			else if ( width > 0 )
+				return "< " + ts( nBins() ) + ", width=" + dts(width) + ", bins ( " + ts(min) + "->" + ts(max) + " )  >";
 			else {
 				string ba = "< " + ts( nBins() ) + " bins { ";
 
@@ -307,13 +319,47 @@ namespace jdb{
 		
 		// Returns a copy of the vector of bin edges
 		vector<double> getBins(){ return bins; }
-
+		
+		// TODO: make the bin edges protected
 		// Vector of bin edges
-		vector<double> bins;
+		vector<double> bins;	
+
+protected:
+		void getValuesFromConfig( XmlConfig &config, string &nodePath, 
+			string widthTag =":width", string nBinsTag=":nBins", string minTag = ":min", string maxTag=":max" ){
+
+			DEBUG( classname(), nodePath );
+			DEBUG( classname(), widthTag << " " << nBinsTag << " " << minTag << " " << maxTag );
+			min = 1;
+			max = 0;
+			width = 0.0;
+
+			min = config.getDouble( nodePath + minTag, min );
+			max = config.getDouble( nodePath + maxTag, max );
+			width = config.getDouble( nodePath + widthTag, width );
+
+
+
+			if ( config.exists( nodePath + nBinsTag ) ){
+				numberofBins = config.getInt( nodePath + nBinsTag );
+				width = -1;
+				// width = ( max - min ) / (double)n;
+			}
+			DEBUG( classname(), "min=" << min << ", max=" << max << ", width=" << width );
+		}
+
+		bool goodValues(){
+			if ( max > min && (width > 0 || numberofBins > 0 ) )
+				return true;
+			return false;
+		}
+
+		
 		// Width of bins if fixed with or fixed number of bins is used
-		double width;
+		double width = -1;
+		int numberofBins = -1;
 		// min and max of bin range
-		double min, max;
+		double min = -1, max = -1;
 
 	};
 

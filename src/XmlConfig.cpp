@@ -27,22 +27,26 @@ namespace jdb{
 	XmlConfig::~XmlConfig(){
 	}
 
-	void XmlConfig::loadFile( string filename ){
+	void XmlConfig::loadFile( string _filename ){
+		DEBUG( classname(), "Loading " << _filename );
+		
 		// check that the config file exists
-		this->filename = filename;
+		this->filename = _filename;
 		struct stat buffer;   
-		bool exists = (stat (filename.c_str(), &buffer) == 0);
+		bool exists = (stat (_filename.c_str(), &buffer) == 0);
 	
 		if ( exists ){
 #ifndef __CINT__
-			RapidXmlWrapper rxw( filename );
+			RapidXmlWrapper rxw( _filename );
 #endif
 			rxw.getMaps( &data, &isAttribute, &nodeExists );
 
 			parseIncludes();
 		} else {
-			ERROR( classname(), "Config File \"" << filename << "\" DNE " ); 
+			ERROR( classname(), "Config File \"" << _filename << "\" DNE " ); 
 		}
+
+		INFO( classname(), "Loaded " << getFilename() );
 	}
 
 

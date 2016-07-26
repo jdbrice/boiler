@@ -97,13 +97,16 @@ namespace jdb {
 		 */
 		XmlConfig( const XmlConfig &rhs){
 			DEBUG( classname(), "copy constructor!" );
-
 			setDefaults();
 
+			DEBUG( classname(), "Copying filename" );
 			this->filename = rhs.filename;
 
+			DEBUG(classname(), "Copying NodeExist map" );
 			this->nodeExists = rhs.nodeExists;
+			DEBUG(classname(), "Copying Data map" );
 			this->data = rhs.data;
+			DEBUG(classname(), "Copying Attribute map" );
 			this->isAttribute = rhs.isAttribute;
 		}
 
@@ -113,6 +116,7 @@ namespace jdb {
 		 * 
 		 */
 		void setDefaults(){
+			DEBUG( classname(), "Setting Defaults" );
 			// currently set may change
 			pathDelim = '.';
 			attrDelim = ':';
