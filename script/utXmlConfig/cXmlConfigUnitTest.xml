@@ -4,6 +4,7 @@
 <!--  It can be anything <root></root>, it just has to exist -->
 <config>
 
+	<jobIndex>all</jobIndex>
 	<Analyzer1 name="MakerOfThings" p1="workerOfKings" p2="RunnerOfDreams">
 		<Include url="./guts1.xml" />
 	</Analyzer1>
