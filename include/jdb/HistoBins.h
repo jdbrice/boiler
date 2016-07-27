@@ -76,6 +76,36 @@ namespace jdb{
 			return bins;
 		}	// binsFrom
 
+
+		static vector<double> makeQuantileBins( vector<double> &values, int nBins, double min=-1.0, double max=-1.0 ){
+			int nEntries = values.size();
+			if ( nEntries <= 0 )
+				return { 0 };
+			std::sort( values.begin(), values.end() );
+			vector<double> binEdges;
+
+			double step = (double)nEntries / (double)nBins;
+			if ( abs( -1.0 - min ) < 0.001 ) 
+				min = values[0];
+			if ( abs( -1.0 - max ) < 0.001 || max < min) 
+				max = values[values.size() - 1 ];
+			binEdges.push_back( min );
+
+			for ( int i = 1; i < nBins; i++ ){
+				int iVal = step * i;
+				if ( iVal > nEntries ){
+					// warn?
+					break;
+				}
+				double vat = values.at( iVal );	
+				binEdges.push_back( vat );
+			}
+			binEdges.push_back( max );
+			
+			return binEdges;
+
+		}
+
 		/* Finds the bin containing a given value
 		 * @bins 		The bin edges to search in
 		 * @val 		The value for which the corresponding bin is desired
