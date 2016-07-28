@@ -39,7 +39,7 @@ namespace jdb{
 		/* Makes a vector of bins with fixed width
 		 * Divides the range high - low into a fixed number of bins from low to high"
 		 */
-		static vector<double> makeNBins( int nBins, double low, double high, bool forceFixedWidth = false ){
+		static vector<double> makeNBins( int nBins, double low, double high ){
 			DEBUG( "HistoBins", "(nBins=" << nBins << ", low=" << low << ", high=" << high << ")" );
 			vector<double> bins;
 			double step 	= (high - low ) / (double) nBins;
@@ -78,9 +78,11 @@ namespace jdb{
 
 
 		static vector<double> makeQuantileBins( vector<double> &values, int nBins, double min=-1.0, double max=-1.0 ){
+			DEBUG( "HistoBins", "( data.size=" << values.size() << ", nBins=" << nBins << ", min=" << min << ", max=" << max << ")" );
 			int nEntries = values.size();
 			if ( nEntries <= 0 )
-				return { 0 };
+				return makeNBins( nBins, min, max );
+
 			std::sort( values.begin(), values.end() );
 			vector<double> binEdges;
 
