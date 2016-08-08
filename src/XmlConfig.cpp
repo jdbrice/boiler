@@ -1,6 +1,9 @@
 #include "XmlConfig.h"
 #include <sys/stat.h>
 
+
+#include "XmlString.h"
+
 #ifdef __CINT__
 ClassImp( jdb::XmlConfig );
 #endif
@@ -62,7 +65,6 @@ namespace jdb{
 		equalDelim = '=';
 		mapDelim = "::";
 
-		xStr = shared_ptr<XmlString>( new  XmlString( *this ) );
 	}
 
 
@@ -81,7 +83,8 @@ namespace jdb{
 
 	string XmlConfig::getXString( string nodePath, string def ) const {
 		string raw = getString( nodePath, def );
-		return xStr->format( raw );
+		XmlConfig clone = *this;
+		// return XmlString( clone ).format( raw );
 	}
 
 	vector<string> XmlConfig::getStringVector( string nodePath, string defaultVal, int defaultLength ) const {

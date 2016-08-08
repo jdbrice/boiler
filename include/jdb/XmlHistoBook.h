@@ -29,7 +29,7 @@ namespace jdb {
 			}
 
 			// searchs :url first, if not uses the value in the node itself, if nothing there (but node exists?) then default to "histobook.root"
-			string _url = XmlString( cfg ).format( 
+			string _url = XmlString().format( cfg, 
 					cfg.getString( 
 						nodePath + ":url", 
 						cfg.getString( nodePath, "histobook.root" ) 

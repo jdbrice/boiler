@@ -27,9 +27,12 @@
 	// Interfaces
 	#include "IObject.h"
 
-#include "XmlString.h"
+// #include "XmlString.h"
 
 namespace jdb {
+
+	class XmlString;
+
 	class XmlConfig : public IObject
 	{
 	protected:
@@ -72,7 +75,7 @@ namespace jdb {
 		// Current node for relative path finding
 		string currentNode = "";
 
-		shared_ptr<XmlString> xStr;
+		// shared_ptr<XmlString> xStr = nullptr;
 	public:
 
 		static const string declarationV1;

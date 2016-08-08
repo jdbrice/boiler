@@ -69,9 +69,9 @@ namespace jdb{
 		// nodePath.input.TFile:url
 		if ( config.exists( nodePath + ".input.TFile:url" ) ){
 			INFO( classname(), "Getting filename from TFile:url" );
-			XmlString xstr( config );
-			xstr.add( "jobIndex", jobIndex );
-			inf = xstr.format( config.getString( ( nodePath + ".input.TFile:url" ) ) );
+			XmlString xstr;
+			// xstr.add( "jobIndex", jobIndex );
+			inf = xstr.format( config, config.getString( ( nodePath + ".input.TFile:url" ) ) );
 		} else if ( config.exists( nodePath + ".input.data:url" ) ){
 			// TODO : Add multiple file support!
 			inf = config.getString( nodePath + ".input.data:url" );

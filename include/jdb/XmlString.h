@@ -15,7 +15,7 @@
 #include "TString.h"
 #include "TRegexp.h"
 #include <regex.h> 
-
+#include "XmlConfig.h"
 
 
 using namespace std;
@@ -31,10 +31,7 @@ namespace jdb{
 	public:
 		virtual const char* classname() const { return "XmlString"; }
 		XmlString();
-		XmlString( XmlConfig &_cfg );
 		~XmlString();
-
-		void setConfig( XmlConfig &_cfg );
 
 		void add( string k, string v ){
 			DEBUG( classname(), "Adding [" << k << "] = " << v );
@@ -49,10 +46,6 @@ namespace jdb{
 		void add( string k, float v ){
 			add( k, dts(v) );
 		}
-
-		XmlConfig *cfg;
-		
-		
 
 		string first_token_at( string &s, int &index, int &len, int pos = 0 ) const {
 			string rs = s;
@@ -74,22 +67,16 @@ namespace jdb{
 			return rs;
 		}
 
-		void replace_token( string &_s, string &_key, int index, int len );
+		void replace_token( XmlConfig &cfg, string &_s, string &_key, int index, int len );
 
 		string format( XmlConfig &_cfg, string _s ) {
-			setConfig( _cfg );
-			return format( _s );
-		}
-
-		string format( string _s ) { 
-
 			int index = -1;
 			int len = -1;
 			int pos = 0;
 			string key = first_token_at( _s, index, len, pos );
 			while ( index >= 0 ){
 
-				replace_token( _s, key, index, len );
+				replace_token( _cfg, _s, key, index, len );
 				DEBUG( classname(), "new : " << _s );
 
 				pos = index+1;

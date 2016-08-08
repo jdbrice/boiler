@@ -40,7 +40,7 @@ namespace jdb {
 
 			INFO( classname(), "URL : " << url );
 
-			url = XmlString( cfg ).format( url );
+			url = XmlString().format( cfg, url );
 			INFO( classname(), "URL : " << url );
 
 			if ( tfile && tfile->IsOpen() ){
