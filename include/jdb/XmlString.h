@@ -1,7 +1,7 @@
 #ifndef XML_STRING_H
 #define XML_STRING_H
 
-#include "XmlConfig.h"
+
 #include "Utils.h"
 
 #include <iostream>
@@ -17,18 +17,24 @@
 #include <regex.h> 
 
 
+
 using namespace std;
 
 // Formats a string like
 // "this is a {key1} and {path.to.node}"
 namespace jdb{
+
+	class XmlConfig;
+
 	class XmlString
 	{
 	public:
 		virtual const char* classname() const { return "XmlString"; }
-		XmlString() { }
-		XmlString( XmlConfig &_cfg ) { cfg = _cfg; }
-		~XmlString() {}
+		XmlString();
+		XmlString( XmlConfig &_cfg );
+		~XmlString();
+
+		void setConfig( XmlConfig &_cfg );
 
 		void add( string k, string v ){
 			DEBUG( classname(), "Adding [" << k << "] = " << v );
@@ -44,11 +50,11 @@ namespace jdb{
 			add( k, dts(v) );
 		}
 
-		XmlConfig cfg;
+		XmlConfig *cfg;
 		
 		
 
-		string first_token_at( string &s, int &index, int &len, int pos = 0 ){
+		string first_token_at( string &s, int &index, int &len, int pos = 0 ) const {
 			string rs = s;
 				
 			string _tkstart = "{";
@@ -68,23 +74,14 @@ namespace jdb{
 			return rs;
 		}
 
-		void replace_token( string &_s, string &_key, int index, int len ){
+		void replace_token( string &_s, string &_key, int index, int len );
 
-			if ( kv.count( _key ) >= 1 ){
-				string rv = kv[ _key ];
-				_s.replace( index, len, rv );
-			} else if ( getenv( _key.c_str() ) ) {
-				string env = getenv( _key.c_str() );
-				_s.replace( index, len, env );
-			} else if ( cfg.exists( _key ) ) {
-				string rv = cfg.getString( _key );
-				_s.replace( index, len, rv );
-			} else {
-				_s.replace( index, len, "" );
-			}
+		string format( XmlConfig &_cfg, string _s ) {
+			setConfig( _cfg );
+			return format( _s );
 		}
 
-		string format( string _s, string _re ="" ){ 
+		string format( string _s ) { 
 
 			int index = -1;
 			int len = -1;

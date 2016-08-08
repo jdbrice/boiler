@@ -27,6 +27,7 @@
 	// Interfaces
 	#include "IObject.h"
 
+#include "XmlString.h"
 
 namespace jdb {
 	class XmlConfig : public IObject
@@ -70,6 +71,8 @@ namespace jdb {
 
 		// Current node for relative path finding
 		string currentNode = "";
+
+		shared_ptr<XmlString> xStr;
 	public:
 
 		static const string declarationV1;
@@ -112,19 +115,7 @@ namespace jdb {
 
 		virtual const char* classname() const { return "XmlConfig";}
 
-		/* Sets the default strings / delimeters
-		 * 
-		 */
-		void setDefaults(){
-			DEBUG( classname(), "Setting Defaults" );
-			// currently set may change
-			pathDelim = '.';
-			attrDelim = ':';
-			indexOpenDelim = "[";
-			indexCloseDelim = "]";
-			equalDelim = '=';
-			mapDelim = "::";
-		}
+		void setDefaults();
 
 		void loadFile( string filename );
 		string getFilename() const { return filename; }
@@ -177,6 +168,8 @@ namespace jdb {
 		   @return The underlying xml data at nodePath as a string
 		 */
 		string getString( string nodePath, string def = "" ) const;
+
+		string getXString( string nodePath, string def = "" ) const;
 
 		/* Gets a vector of strings from a comma delimeter list
 		 * @nodePath Path to node. See getString.

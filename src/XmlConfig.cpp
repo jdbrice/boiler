@@ -49,6 +49,22 @@ namespace jdb{
 		INFO( classname(), "Loaded " << getFilename() );
 	}
 
+	/* Sets the default strings / delimeters
+	 * 
+	 */
+	void XmlConfig::setDefaults(){
+		DEBUG( classname(), "Setting Defaults" );
+		// currently set may change
+		pathDelim = '.';
+		attrDelim = ':';
+		indexOpenDelim = "[";
+		indexCloseDelim = "]";
+		equalDelim = '=';
+		mapDelim = "::";
+
+		xStr = shared_ptr<XmlString>( new  XmlString( *this ) );
+	}
+
 
 	string XmlConfig::getString( string nodePath, string def ) const {
 
@@ -61,6 +77,11 @@ namespace jdb{
 			}
 		}
 		return def;
+	}
+
+	string XmlConfig::getXString( string nodePath, string def ) const {
+		string raw = getString( nodePath, def );
+		return xStr->format( raw );
 	}
 
 	vector<string> XmlConfig::getStringVector( string nodePath, string defaultVal, int defaultLength ) const {
