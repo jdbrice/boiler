@@ -122,7 +122,7 @@ namespace jdb{
 		    	INFO( classname(), " Loading data from " << config.getString( nodePath + ".input.dst:url" ) );
 
 		    	ChainLoader::load( 	chain, 
-		    						this->config.getString( nodePath + ".input.dst:url" ), 
+		    						this->config.getXString( nodePath + ".input.dst:url" ), 
 		    						this->config.getInt( nodePath + ".input.dst:maxFiles", -1 ) );
 		    } else { // or parallel
 			    	// star-submit style condor files
@@ -165,7 +165,7 @@ namespace jdb{
 	    	
 	    	// create the Chain object
 	    	
-		    string url = this->config.getString( nodePath + ".input.dst:url" );
+		    string url = this->config.getXString( nodePath + ".input.dst:url" );
 
 		    // load from a file list!
 		    if ( url.find( ".lis" ) != std::string::npos ){
