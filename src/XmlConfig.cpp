@@ -83,8 +83,9 @@ namespace jdb{
 
 	string XmlConfig::getXString( string nodePath, string def ) const {
 		string raw = getString( nodePath, def );
+		// TODO: more efficient way
 		XmlConfig clone = *this;
-		// return XmlString( clone ).format( raw );
+		return XmlString().format( clone, raw );
 	}
 
 	vector<string> XmlConfig::getStringVector( string nodePath, string defaultVal, int defaultLength ) const {
