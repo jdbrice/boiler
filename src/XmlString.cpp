@@ -17,7 +17,7 @@ namespace jdb{
 			string env = getenv( _key.c_str() );
 			_s.replace( index, len, env );
 		} else if ( cfg.exists( _key ) ) {
-			string rv = cfg.getString( _key );
+			string rv = cfg.getXString( _key ); // careful this could cause infinite recursion
 			_s.replace( index, len, rv );
 		} else {
 			_s.replace( index, len, "" );
