@@ -77,6 +77,27 @@ namespace jdb{
 				rootFiles[ name ] = f;
 		}
 
+
+		TObject * getObj( string hName, string fn = "" ){
+			if ( "" == fn && nullptr != inFile ){
+				return inFile->Get( hName.c_str() );
+			} else if ( rootFiles.count( fn ) > 0 && nullptr != rootFiles[ fn ] ){
+				return rootFiles[ fn ]->Get( hName.c_str() );
+			}
+			return nullptr;
+		}
+
+		TH1 * get1D( string hName, string fn = "" ){
+			return (TH1*)getObj( hName, fn );
+		}
+		TH2 * get2D( string hName, string fn = "" ){
+			return (TH2*)getObj( hName, fn );
+		}
+		TH3 * get3D( string hName, string fn = "" ){
+			return (TH3*)getObj( hName, fn );
+		}
+
+
 		
 
 		void initHistoBook( string _jobPostfix );
