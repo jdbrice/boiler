@@ -77,8 +77,8 @@ namespace jdb{
 				string name = config.getString( tfPath + ":name", config.getString( tfPath + ":as", fn ) );
 				INFO( classname(), "Loading " << fn << " with name = " << name );
 				addRootFile( fn, name );
+				setCurrentFile( name );
 			}
-			setCurrentFile( 0 );
 		} else if ( config.exists( nodePath + ".input.data:url" ) ){
 			// TODO : Add multiple file support!
 			inf = config.getString( nodePath + ".input.data:url" );
