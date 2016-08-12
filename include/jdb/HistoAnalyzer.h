@@ -61,7 +61,7 @@ namespace jdb{
 		~HistoAnalyzer();
 
 		void setCurrentFile( string name ){
-			if ( rootFiles.count( name ) >= 0 ){
+			if ( rootFiles.count( name ) > 0 ){
 				inFile = rootFiles[ name ];
 			} else {
 				ERROR( classname(), "No file named " << name << " available" );
