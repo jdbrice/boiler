@@ -14,7 +14,6 @@ void ut(){
 	HistoAnalyzer ta;
 	ta.init( config, "HistoAnalyzer", -1 );
 
-	ta.listFiles();
 
 	INFO( "ut", UT_SUMMARY );
 
