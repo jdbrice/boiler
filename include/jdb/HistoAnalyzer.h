@@ -40,8 +40,7 @@ namespace jdb{
 		// Reporter for generating pdf reports
 		shared_ptr<Reporter> 	reporter;
 		// File containing input
-		vector<TFile*> rootFiles;
-		vector<string> rootFileNames;
+		map<string, TFile*> rootFiles;
 		TFile 		*inFile;
 		string 		jobModifier;
 
@@ -61,17 +60,21 @@ namespace jdb{
 		 */
 		~HistoAnalyzer();
 
-		void setCurrentFile( unsigned int index = 0){
-			if ( rootFiles.size() > index ){
-				inFile = rootFiles[index ];
+		void setCurrentFile( string name ){
+			if ( rootFiles.count( name ) >= 0 ){
+				inFile = rootFiles[ name ];
 			} else {
-				ERROR( classname(), "Invalid File Index " << index );
+				ERROR( classname(), "No file named " << name << " available" );
 			}
-			return;
 		}
-		void setCurrentFile( string filename ){
-			int index = (find( rootFileNames.begin(), rootFileNames.end(), filename ) - rootFileNames.begin());
-			setCurrentFile( index );
+
+		void addRootFile( string filename, string name = "" ){
+			TFile * f = new TFile( filename.c_str(), "READ" );
+			
+			if ( "" == name )
+				rootFiles[ filename ] = f;
+			else 
+				rootFiles[ name ] = f;
 		}
 
 		
