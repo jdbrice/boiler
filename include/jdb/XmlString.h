@@ -33,6 +33,10 @@ namespace jdb{
 		XmlString();
 		~XmlString();
 
+
+		static string TOKEN_START;
+		static string TOKEN_STOP;
+
 		void add( string k, string v ){
 			DEBUG( classname(), "Adding [" << k << "] = " << v );
 			kv[ k ] = v;
@@ -50,8 +54,8 @@ namespace jdb{
 		string first_token_at( string &s, int &index, int &len, int pos = 0 ) const {
 			string rs = s;
 				
-			string _tkstart = "{";
-			string _tkstop = "}";
+			string &_tkstart = XmlString::TOKEN_START;
+			string &_tkstop = XmlString::TOKEN_STOP;
 
 			index = s.find( _tkstart, pos );
 
@@ -67,9 +71,9 @@ namespace jdb{
 			return rs;
 		}
 
-		void replace_token( XmlConfig &cfg, string &_s, string &_key, int index, int len );
+		void replace_token( const XmlConfig &cfg, string &_s, string &_key, int index, int len );
 
-		string format( XmlConfig &_cfg, string _s ) {
+		string format( const XmlConfig &_cfg, string _s ) {
 			int index = -1;
 			int len = -1;
 			int pos = 0;
