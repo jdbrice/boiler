@@ -1,5 +1,5 @@
 #include "RooPlotLib.h"
-
+#include "HistoBook.h"
 
 //#include "TROOT.h" 
 #include "TStyle.h"
@@ -36,6 +36,9 @@ bool jdb::RooPlotLib::validObject( TObject * obj ){
 	return false;
 }
 
+void jdb::RooPlotLib::link( HistoBook *book ){
+	this->linkedBook = book;
+}
 
 RooPlotLib & jdb::RooPlotLib::style( TObject * obj) {
     DEBUG(classname(), "( " << obj << " )")
@@ -47,6 +50,14 @@ RooPlotLib & jdb::RooPlotLib::style( TObject * obj) {
     }
     
 
+	return *this;
+}
+RooPlotLib & jdb::RooPlotLib::style( string name ) {
+	if ( nullptr != this->linkedBook ){
+		styling = this->linkedBook->get( name );
+	} else {
+		ERROR( classname(), "No HistoBook available for lookup" );
+	}
 	return *this;
 }
 
