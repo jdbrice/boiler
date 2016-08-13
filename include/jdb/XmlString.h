@@ -83,7 +83,7 @@ namespace jdb{
 				replace_token( _cfg, _s, key, index, len );
 				DEBUG( classname(), "new : " << _s );
 
-				pos = index+1;
+				pos = index;
 				DEBUG( classname(), "pos = " << pos );
 				DEBUG( classname(), key );
 				key = first_token_at( _s, index, len, pos );
