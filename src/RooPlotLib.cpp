@@ -36,7 +36,7 @@ bool jdb::RooPlotLib::validObject( TObject * obj ){
 	return false;
 }
 
-void jdb::RooPlotLib::link( HistoBook *book ){
+void jdb::RooPlotLib::link( shared_ptr<HistoBook> book ){
 	this->linkedBook = book;
 }
 
