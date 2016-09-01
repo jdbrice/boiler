@@ -42,6 +42,16 @@ namespace jdb{
 		// Map that holds range cuts
 		map< string, shared_ptr<XmlRange> > ranges;
 
+
+		/* Find out if a named range exists
+		 *
+		 */
+		bool has( string name ){
+			if ( ranges.count( name ) > 0 )
+				return true;
+			return false;
+		}
+
 		/* Get a range cut
 		 * 
 		 * @name the name of the cut to get
