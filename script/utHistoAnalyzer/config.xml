@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- A root node is required -->
+<!--  It can be anything <root></root>, it just has to exist -->
+
+<config>
+
+	<HistoAnalyzer>
+		
+		<input>
+			<TFile url="input_1.root" name="data" />
+			<TFile url="input_2.root" name="mc" />
+			<TFile url="input_3.root" />
+		</input>
+
+		<output>
+			<TFile url="./output.root" />
+		</output>
+
+
+	</HistoAnalyzer>
+
+</config>

@@ -31,6 +31,9 @@ using namespace std;
 #include "IObject.h"
 
 namespace jdb{
+
+	class HistoBook;
+
 	class RooPlotLib : public IObject {
 
 	protected:
@@ -43,6 +46,8 @@ namespace jdb{
 
 	    XmlConfig * cfgForDefaultStyle = nullptr;
 	    string defaultStylePath ="";
+
+	    shared_ptr<HistoBook> linkedBook;
 
 
 	public:
@@ -59,6 +64,9 @@ namespace jdb{
 
 
 	    RooPlotLib &style( TObject * );
+	    RooPlotLib &style( string name );
+
+	    void link( shared_ptr<HistoBook> book );
 
 	    
 	    RooPlotLib &set( string opt, float p0 = -999, float p1 = -999, float p2 = -999, float p3 = -999 ){

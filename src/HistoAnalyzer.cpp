@@ -67,11 +67,18 @@ namespace jdb{
 		string inf = "";
 		/***************************************/
 		// nodePath.input.TFile:url
-		if ( config.exists( nodePath + ".input.TFile:url" ) ){
-			INFO( classname(), "Getting filename from TFile:url" );
-			XmlString xstr;
-			// xstr.add( "jobIndex", jobIndex );
-			inf = xstr.format( config, config.getString( ( nodePath + ".input.TFile:url" ) ) );
+
+		vector<string> pathTFile = config.childrenOf( nodePath + ".input", "TFile" );
+		INFO( classname(), "Found " << pathTFile.size() << plural( pathTFile.size(), " TFile", " TFiles" ) );
+
+		if ( pathTFile.size() >= 1 ){
+			for ( string tfPath : pathTFile ){
+				string fn = config.getXString( tfPath + ":url" );
+				string name = config.getString( tfPath + ":name", config.getString( tfPath + ":as", fn ) );
+				INFO( classname(), "Loading " << fn << " with name = " << name );
+				addRootFile( fn, name );
+				setCurrentFile( name );
+			}
 		} else if ( config.exists( nodePath + ".input.data:url" ) ){
 			// TODO : Add multiple file support!
 			inf = config.getString( nodePath + ".input.data:url" );
@@ -82,8 +89,11 @@ namespace jdb{
 			WARN( classname(), nodePath  << ".input.data:url" );
 		}
 
-		DEBUG( classname(), " Loading data from " << inf )
-		inFile = new TFile( inf.c_str(), "READ" );
+		if ( "" != inf ){
+			DEBUG( classname(), " Loading data from " << inf )
+			inFile = new TFile( inf.c_str(), "READ" );
+		}
+
 		if ( !inFile->IsOpen() ){
 			ERROR( classname(), "Data File Could not be opened from : " + inf );
 		}

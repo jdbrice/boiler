@@ -40,8 +40,7 @@ namespace jdb{
 		// Reporter for generating pdf reports
 		shared_ptr<Reporter> 	reporter;
 		// File containing input
-		vector<TFile*> rootFiles;
-		vector<string> rootFileNames;
+		map<string, TFile*> rootFiles;
 		TFile 		*inFile;
 		string 		jobModifier;
 
@@ -61,18 +60,43 @@ namespace jdb{
 		 */
 		~HistoAnalyzer();
 
-		void setCurrentFile( unsigned int index = 0){
-			if ( rootFiles.size() > index ){
-				inFile = rootFiles[index ];
+		void setCurrentFile( string name ){
+			if ( rootFiles.count( name ) > 0 ){
+				inFile = rootFiles[ name ];
 			} else {
-				ERROR( classname(), "Invalid File Index " << index );
+				ERROR( classname(), "No file named " << name << " available" );
 			}
-			return;
 		}
-		void setCurrentFile( string filename ){
-			int index = (find( rootFileNames.begin(), rootFileNames.end(), filename ) - rootFileNames.begin());
-			setCurrentFile( index );
+
+		void addRootFile( string filename, string name = "" ){
+			TFile * f = new TFile( filename.c_str(), "READ" );
+			
+			if ( "" == name )
+				rootFiles[ filename ] = f;
+			else 
+				rootFiles[ name ] = f;
 		}
+
+
+		TObject * getObj( string hName, string fn = "" ){
+			if ( "" == fn && nullptr != inFile ){
+				return inFile->Get( hName.c_str() );
+			} else if ( rootFiles.count( fn ) > 0 && nullptr != rootFiles[ fn ] ){
+				return rootFiles[ fn ]->Get( hName.c_str() );
+			}
+			return nullptr;
+		}
+
+		TH1 * get1D( string hName, string fn = "" ){
+			return (TH1*)getObj( hName, fn );
+		}
+		TH2 * get2D( string hName, string fn = "" ){
+			return (TH2*)getObj( hName, fn );
+		}
+		TH3 * get3D( string hName, string fn = "" ){
+			return (TH3*)getObj( hName, fn );
+		}
+
 
 		
 

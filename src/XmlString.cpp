@@ -7,8 +7,11 @@ namespace jdb{
 	XmlString::XmlString() {}
 	XmlString::~XmlString() {}
 
+	string XmlString::TOKEN_START = "{";
+	string XmlString::TOKEN_STOP = "}";
 
-	void XmlString::replace_token( XmlConfig &cfg, string &_s, string &_key, int index, int len ) {
+
+	void XmlString::replace_token( const XmlConfig &cfg, string &_s, string &_key, int index, int len ) {
 
 		if ( kv.count( _key ) >= 1 ){
 			string rv = kv[ _key ];

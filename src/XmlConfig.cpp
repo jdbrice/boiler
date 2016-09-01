@@ -83,9 +83,7 @@ namespace jdb{
 
 	string XmlConfig::getXString( string nodePath, string def ) const {
 		string raw = getString( nodePath, def );
-		// TODO: more efficient way
-		XmlConfig clone = *this;
-		return XmlString().format( clone, raw );
+		return XmlString().format( (*this), raw );
 	}
 
 	vector<string> XmlConfig::getStringVector( string nodePath, string defaultVal, int defaultLength ) const {
@@ -96,7 +94,7 @@ namespace jdb{
 				d.push_back( defaultVal );
 			return d;
 		}
-		string value = getString( nodePath );
+		string value = getXString( nodePath );
 		return vectorFromString( value );
 	}
 	// vector<string> XmlConfig::getStringVector( string nodePath, vector<string> defaultVals ) const {
@@ -125,7 +123,7 @@ namespace jdb{
 	map<int, int> XmlConfig::getIntMap( string nodePath ) const{
 
 		// first get a vector of comma delimeted pairs
-		string value = getString( nodePath );
+		string value = getXString( nodePath );
 		vector<string> pairVec =  vectorFromString( value );
 		
 		map<int, int> rmap;
@@ -138,7 +136,7 @@ namespace jdb{
 	}
 
 	int XmlConfig::getInt( string nodePath, int def  ) const{
-		string str = getString( nodePath, "" );
+		string str = getXString( nodePath, "" );
 		if ( "" != str && str.length() >= 1 )
 			return atoi( str.c_str() );
 		return def;
@@ -163,7 +161,7 @@ namespace jdb{
 	}
 
 	double XmlConfig::getDouble( string nodePath, double def  ) const {
-		string str = getString( nodePath, "" );
+		string str = getXString( nodePath, "" );
 		if ( "" != str && str.length() >= 1 )
 			return atof( str.c_str() );
 		return def;
@@ -192,7 +190,7 @@ namespace jdb{
 
 	bool XmlConfig::getBool( string nodePath, bool def  ) const{
 
-		string str = getString( nodePath );
+		string str = getXString( nodePath );
 
 		// first check for string literal "true" or "false"
 		// push to lower case
