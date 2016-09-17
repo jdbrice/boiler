@@ -13,31 +13,45 @@ namespace jdb{
 			
 		}
 
+		void SharedTreeAnalyzer::init( XmlConfig &_config, string _nodePath ){
+			DEBUG( classname(), "( " << _config.getFilename() << ", " << nodePath << " )" );
+			TaskRunner::init( _config, _nodePath );
 
-		void SharedTreeAnalyzer::init( XmlConfig &_config, string _nodePath, int _jobIndex ){
-			DEBUG( classname(), "( " << _config.getFilename() << ", " << nodePath << ", " << _jobIndex << " )" );
-			TaskRunner::init( _config, _nodePath, _jobIndex );
 
-			this->jobIndex = _jobIndex;
+			this->jobIndex = config.getInt( "jobIndex", -1 );
 
 	 		initLogger();
-			initDataSource( _jobIndex );
+			initDataSource( this->jobIndex );
 			
 			DEBUG( classname(), "Common Initialization" );
 			initialize();
 		}
 
-		void SharedTreeAnalyzer::init( XmlConfig &_config, string _nodePath, string _fileList, string _jobPostfix ){
-			DEBUG( classname(), "( " << _config.getFilename() << ", " << nodePath << ", \"" << _fileList << "\", \"" << _jobPostfix << "\" )" );
 
-			TaskRunner::init( _config, _nodePath, _fileList, _jobPostfix );
+		// void SharedTreeAnalyzer::init( XmlConfig &_config, string _nodePath, int _jobIndex ){
+		// 	DEBUG( classname(), "( " << _config.getFilename() << ", " << nodePath << ", " << _jobIndex << " )" );
+		// 	TaskRunner::init( _config, _nodePath, _jobIndex );
 
-			initLogger();
-			initDataSource( _fileList );
+		// 	this->jobIndex = _jobIndex;
 
-			DEBUG( classname(), "Common Initialization" );
-			initialize();
-		}
+	 // 		initLogger();
+		// 	initDataSource( _jobIndex );
+			
+		// 	DEBUG( classname(), "Common Initialization" );
+		// 	initialize();
+		// }
+
+		// void SharedTreeAnalyzer::init( XmlConfig &_config, string _nodePath, string _fileList, string _jobPostfix ){
+		// 	DEBUG( classname(), "( " << _config.getFilename() << ", " << nodePath << ", \"" << _fileList << "\", \"" << _jobPostfix << "\" )" );
+
+		// 	TaskRunner::init( _config, _nodePath, _fileList, _jobPostfix );
+
+		// 	initLogger();
+		// 	initDataSource( _fileList );
+
+		// 	DEBUG( classname(), "Common Initialization" );
+		// 	initialize();
+		// }
 
 
 
@@ -156,7 +170,7 @@ namespace jdb{
 
 			treeAnalyzers.push_back( treeAnalyzer );
 
-			treeAnalyzer->sharedInit( _taskConfig, _nodePath, jobIndex, chain );
+			treeAnalyzer->sharedInit( _taskConfig, _nodePath, chain );
 
 		}// loop on task paths
 	}

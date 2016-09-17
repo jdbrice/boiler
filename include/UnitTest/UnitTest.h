@@ -7,6 +7,7 @@
 
 // ROOBARB
 #include "Utils.h"
+#include "Logger.h"
 using namespace jdb;
 
 // STL
@@ -22,7 +23,7 @@ using namespace std;
 #define UT_EQ( x, y ) UnitTest::eq( x, y )
 #define UT_R_NAMED( x, y ) UnitTest::root_named( x, y )
 #define UT_TRUE( x ) UnitTest::eq_true( x )
-
+#define UT_TEST( x, y ) INFO( "", x << " : " << y )
 
 #define UT_PASSED UnitTest::passed
 #define UT_FAILED !UnitTest::passed

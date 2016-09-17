@@ -518,6 +518,10 @@ namespace jdb {
 			string ind = indentation( tabCount, tab );
 			nodePath = basePath( nodePath );
 			string tn = tagName( nodePath );
+
+			// scrub out include tags?
+			if ( "Include" == tn )
+				return "";
 			// handle root node export:
 			if ( "" == tn || "" == nodePath )
 				tn = "config";
@@ -536,7 +540,7 @@ namespace jdb {
 
 			// write the encoding if we are exporting from root node
 			if ( "config" == tn && "" == nodePath )
-				xml += ( nl + "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + nl );
+				xml += ( nl + XmlConfig::declarationV1 + nl );
 
 			// write the header
 			xml += nl + ind + "<" + tn;
@@ -553,8 +557,8 @@ namespace jdb {
 				xml += ">";	// just close the open tag
 
 			// write contents if they exist
-			// if ( "" != content )
-				// xml += ( nl + ind + tab + content );
+			if ( "" != content )
+				xml += ( nl + ind + tab + content );
 
 			// handle children
 			if ( 0 < children.size() ){

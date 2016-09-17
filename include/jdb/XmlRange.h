@@ -60,6 +60,11 @@ namespace jdb{
 		}
 		~XmlRange(){}
 
+		void loadConfig( XmlConfig &_cfg, string np, double dMin = 0, double dMax = 0, string attrMin = ":min", string attrMax = ":max" ){
+			min = _cfg.getDouble( np + attrMin, dMin );
+			max = _cfg.getDouble( np + attrMax, dMax );
+		}
+
 		/* Outputs the range as a human readable string
 		 *
 		 * @return A string representation of the range data in the format "( min -> max )"

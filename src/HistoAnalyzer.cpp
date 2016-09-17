@@ -4,11 +4,17 @@ namespace jdb{
 
 	HistoAnalyzer::HistoAnalyzer(){	} 
 
-	void HistoAnalyzer::init( XmlConfig &_config, string _nodePath, int _jobIndex ){
-		TaskRunner::init( _config, _nodePath, _jobIndex );
+	void HistoAnalyzer::init( XmlConfig &_config, string _nodePath ){
+		TaskRunner::init( _config, _nodePath );
+
+		int _jobIndex = config.getInt( "jobIndex", -1 );
 
 		jobIndex = _jobIndex;
 		string jobPostfix = "_" + ts( _jobIndex ) + ".root";
+		
+		if ( -1 >=_jobIndex )
+			jobPostfix = ".root";
+
 		this->jobModifier = "job_" + ts( _jobIndex ) +"_";
 
 		if ( -1 == _jobIndex ){
@@ -23,16 +29,16 @@ namespace jdb{
 		initialize();
 	}
 
-	void HistoAnalyzer::init( XmlConfig &_config, string _nodePath, string _fileList, string _jobPostfix ){
-		TaskRunner::init( _config, _nodePath, _fileList, _jobPostfix );
+	// void HistoAnalyzer::init( XmlConfig &_config, string _nodePath, string _fileList, string _jobPostfix ){
+	// 	TaskRunner::init( _config, _nodePath, _fileList, _jobPostfix );
 
-		this->jobModifier = _jobPostfix;
-		initHistoBook( _jobPostfix );
-		initReporter( _jobPostfix );
-		initRootFiles();
+	// 	this->jobModifier = _jobPostfix;
+	// 	initHistoBook( _jobPostfix );
+	// 	initReporter( _jobPostfix );
+	// 	initRootFiles();
 
-		initialize();
-	}
+	// 	initialize();
+	// }
 
 	void HistoAnalyzer::initHistoBook( string _jobPostfix ){
 		initializeHistoBook( config, nodePath, _jobPostfix );

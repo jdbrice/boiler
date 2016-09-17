@@ -18,12 +18,17 @@ namespace jdb{
 	}
 
 
-	void TreeAnalyzer::init( XmlConfig &_config, string _nodePath, int _jobIndex ){
-		DEBUG( classname(), "( " << _config.getFilename() << ", " << _nodePath << ", " << _jobIndex << " )" );
+	void TreeAnalyzer::init( XmlConfig &_config, string _nodePath ){
+		DEBUG( classname(), "( " << _config.getFilename() << ", " << _nodePath << " )" );
 
-		TaskRunner::init( _config, _nodePath, _jobIndex );
+		TaskRunner::init( _config, _nodePath );
 
+		int _jobIndex = config.getInt( "jobIndex", -1 );
+		DEBUG( classname(), "jobIndex = " << _jobIndex );
 		string jobPostfix = "_" + ts( _jobIndex ) + ".root";
+		if ( -1 >= jobIndex )
+			jobPostfix = ".root";
+
 		this->jobModifier = "job_" + ts( _jobIndex ) +"_";
  		if ( -1 == _jobIndex ){
  			jobPostfix = ".root";
@@ -43,12 +48,42 @@ namespace jdb{
 		initialize();
 	}
 
-	void TreeAnalyzer::sharedInit( XmlConfig &_config, string _nodePath, int _jobIndex, TChain * _chain ){
-		DEBUG( classname(), "( " << _config.getFilename() << ", " << _nodePath << ", " << _jobIndex << ", chain=" << _chain << " )" );
 
-		TaskRunner::init( _config, _nodePath, _jobIndex );
+	// void TreeAnalyzer::init( XmlConfig &_config, string _nodePath, int _jobIndex ){
+	// 	DEBUG( classname(), "( " << _config.getFilename() << ", " << _nodePath << ", " << _jobIndex << " )" );
 
+	// 	TaskRunner::init( _config, _nodePath, _jobIndex );
+
+	// 	string jobPostfix = "_" + ts( _jobIndex ) + ".root";
+	// 	this->jobModifier = "job_" + ts( _jobIndex ) +"_";
+ // 		if ( -1 == _jobIndex ){
+ // 			jobPostfix = ".root";
+ // 			this->jobModifier = "";
+ // 		}
+
+ 		
+
+	// 	initDataSource( _jobIndex );
+	// 	if ( chain ){
+	// 		initHistoBook( jobPostfix );
+	// 		initReporter( jobPostfix );
+	// 		initLogger();	
+	// 	}
+	// 	nEventLoops = config.getInt( nodePath + ":nEventLoops", 1 );
+	// 	DEBUG( classname(), "Common Initialization" );
+	// 	initialize();
+	// }
+
+	void TreeAnalyzer::sharedInit( XmlConfig &_config, string _nodePath, TChain * _chain ){
+		DEBUG( classname(), "( " << _config.getFilename() << ", " << _nodePath << ", chain=" << _chain << " )" );
+
+		TaskRunner::init( _config, _nodePath );
+
+		int _jobIndex = config.getInt( "jobIndex", -1 );
 		string jobPostfix = "_" + ts( _jobIndex ) + ".root";
+		if ( -1 >= _jobIndex )
+			jobPostfix = ".root";
+
 		this->jobModifier = "job_" + ts( _jobIndex ) +"_";
  		if ( -1 == _jobIndex ){
  			jobPostfix = ".root";
@@ -68,23 +103,27 @@ namespace jdb{
 		initialize();
 	}
 
-	void TreeAnalyzer::init( XmlConfig &_config, string _nodePath, string _fileList, string _jobPostfix ){
-		DEBUG( classname(), "( " << _config.getFilename() << ", " << _nodePath << ", \"" << _fileList << "\", \"" << _jobPostfix << "\" )" );
+	// void TreeAnalyzer::init( XmlConfig &_config, string _nodePath, string _fileList, string _jobPostfix ){
+	// 	DEBUG( classname(), "( " << _config.getFilename() << ", " << _nodePath << ", \"" << _fileList << "\", \"" << _jobPostfix << "\" )" );
 
-		TaskRunner::init( _config, _nodePath, _fileList, _jobPostfix );
+	// 	TaskRunner::init( _config, _nodePath, _fileList, _jobPostfix );
 
-		this->jobModifier = _jobPostfix;
+	// 	this->jobModifier = _jobPostfix;
 
-		initDataSource( _fileList );
-		if (  chain ){
-			initHistoBook( _jobPostfix );
-			initReporter( _jobPostfix );
-			initLogger();
-		}
-		nEventLoops = config.getInt( nodePath + ":nEventLoops", 1 );
-		DEBUG( classname(), "Common Initialization" );
-		initialize();
-	}
+	// 	initDataSource( _fileList );
+	// 	if (  chain ){
+	// 		initHistoBook( _jobPostfix );
+	// 		initReporter( _jobPostfix );
+	// 		initLogger();
+	// 	}
+	// 	nEventLoops = config.getInt( nodePath + ":nEventLoops", 1 );
+	// 	DEBUG( classname(), "Common Initialization" );
+	// 	initialize();
+	// }
+
+
+
+
 
 	void TreeAnalyzer::initHistoBook( string _jobPostfix ) {
 		initializeHistoBook( config, nodePath, _jobPostfix );

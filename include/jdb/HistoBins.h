@@ -216,8 +216,11 @@ namespace jdb{
 		 * Number of bins stored in the underlying vector of bin edges. Equal to size() - 1.
   		 */
 		int nBins(){
-			return bins.size() - 1;
+			int _nBins = bins.size() - 1;
+			if ( _nBins < 0 ) _nBins = 0;
+			return _nBins;
 		}
+		
 		int nBinEdges() {
 			return bins.size();
 		}

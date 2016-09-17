@@ -19,20 +19,31 @@ namespace jdb {
 		TaskRunner(){}
 		~TaskRunner(){}
 
-		virtual void init(XmlConfig &_config, string _nodePath="", int _jobIndex = -1) {
-			DEBUG( classname(), "( " << _config.getFilename() << ", " << _nodePath << ", " << _jobIndex << " )" );
+		// virtual void init(XmlConfig &_config, string _nodePath="", int _jobIndex = -1) {
+		// 	DEBUG( classname(), "( " << _config.getFilename() << ", " << _nodePath << ", " << _jobIndex << " )" );
 
-			this->config 	= _config;
-			// makes sure it is in the right form
-			// not ending in '.' or ':attribute' etc.
-			this->nodePath = this->config.basePath( _nodePath );
-			Logger::setGlobalLogLevel( config.getString( nodePath + ".Logger:globalLogLevel", "info" ) );
-			overrideConfig();
-		}
+		// 	this->config 	= _config;
+		// 	// makes sure it is in the right form
+		// 	// not ending in '.' or ':attribute' etc.
+		// 	this->nodePath = this->config.basePath( _nodePath );
+		// 	Logger::setGlobalLogLevel( config.getString( nodePath + ".Logger:globalLogLevel", "info" ) );
+		// 	overrideConfig();
+		// }
 
-		virtual void init(XmlConfig &_config, string _nodePath="", string _fileList = "", string _jobPostfix = "") {
-			DEBUG( classname(), "( " << _config.getFilename() << ", " << _nodePath << ", \"" << _fileList << "\", \"" << _jobPostfix << "\" )" );
+		// virtual void init(XmlConfig &_config, string _nodePath="", string _fileList = "", string _jobPostfix = "") {
+		// 	DEBUG( classname(), "( " << _config.getFilename() << ", " << _nodePath << ", \"" << _fileList << "\", \"" << _jobPostfix << "\" )" );
 
+		// 	this->config 	= _config;
+		// 	// makes sure it is in the right form
+		// 	// not ending in '.' or ':attribute' etc.
+		// 	this->nodePath = this->config.basePath( _nodePath );
+		// 	Logger::setGlobalLogLevel( config.getString( nodePath + ".Logger:globalLogLevel", "info" ) );
+		// 	overrideConfig();
+		// }
+
+
+		virtual void init( XmlConfig &_config, string _nodePath ) {
+			DEBUG( classname(), "( " << _config.getFilename() << ", " << _nodePath << " )" );
 			this->config 	= _config;
 			// makes sure it is in the right form
 			// not ending in '.' or ':attribute' etc.
