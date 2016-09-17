@@ -76,7 +76,9 @@ rootcint_env.Append( BUILDERS 		= { 'RootCint' : rootcint } )
 rootcint_env[ "_CPPINCFLAGS" ] = str( " -I" + Dir(".").abspath + "/src/" ) + str( " -I" + Dir(".").abspath + "/include/" ) + str( " -I" + Dir(".").abspath + "/include/jdb" )
 
 root_dict_src = rootcint_env.RootCint( "src/CintDictionary.cpp", [Glob( "include/jdb/*.h" ), Glob( "src/Linkdef.h" ) ] )
-# Clean( root_dict, "src/TreeData/CintDictionary_rdict.pcm" )
+Clean( root_dict_src, "src/TreeData/CintDictionary.o" )
+Clean( root_dict_src, "src/TreeData/CintDictionary.cpp" )
+Clean( root_dict_src, "src/TreeData/CintDictionary_rdict.pcm" )
 
 rootcint_env.Alias( 'rootcint', root_dict_src )
 rootcint_env[ "_LIBFLAGS" ] = common_env[ "_LIBFLAGS" ] + " " + ROOTLIBS + " "
