@@ -52,7 +52,7 @@ common_env[ "_LIBFLAGS" ] = common_env[ "_LIBFLAGS" ] + " " + ROOTLIBS + " "
 common_env.Append(CXXFLAGS 		= "-DJDB_LOG_LEVEL=${LL}" )
 common_env.Append(CXXFLAGS 		= "-DROOT6=${ROOT6}" )
 
-target = common_env.StaticLibrary( target='lib/RooBarb', source=[Glob( "src/*.cpp" )] )
+target = common_env.StaticLibrary( target='lib/RooBarb', source=[Glob( "src/*.cpp" ), Glob( "src/UnitTest/UnitTest.cpp" )] )
 Default( target )
 
 
