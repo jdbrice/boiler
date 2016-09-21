@@ -323,6 +323,26 @@ namespace jdb{
 			return bins[ nIndex ];
 		}
 
+		
+
+		/* Converts a single bin to a string representation
+		 * @_binIndex 	index of the bin to report
+		 */
+		string toString( int _binIndex, BinEdge includeEdge = BinEdge::lower  ){
+			string str = "";
+			string close = "";
+			if ( includeEdge == BinEdge::lower ){
+				str += "["; close = ")";
+			} else if ( includeEdge == BinEdge::upper ){
+				str += "("; close = "]";
+			} 
+
+			if ( _binIndex >= 0 && _binIndex < nBins() ){
+				return str + dts( bins[ _binIndex ] ) + " --> " + dts( bins[ _binIndex + 1 ] ) + close;
+			}
+			return "()";
+		}
+
 		/* Converts the bin edges into a human readable string
 		 * @return A string represenation of the bin edges.
 		 */
@@ -345,24 +365,6 @@ namespace jdb{
 			}
 
 			return "";
-		}
-
-		/* Converts a single bin to a string representation
-		 * @_binIndex 	index of the bin to report
-		 */
-		string toString( int _binIndex, BinEdge includeEdge = BinEdge::lower  ){
-			string str = "";
-			string close = "";
-			if ( includeEdge == BinEdge::lower ){
-				str += "["; close = ")";
-			} else if ( includeEdge == BinEdge::upper ){
-				str += "("; close = "]";
-			} 
-
-			if ( _binIndex >= 0 && _binIndex < nBins() ){
-				return str + dts( bins[ _binIndex ] ) + " --> " + dts( bins[ _binIndex + 1 ] ) + close;
-			}
-			return "()";
 		}
 
 		/* Destructor

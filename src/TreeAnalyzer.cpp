@@ -30,14 +30,12 @@ namespace jdb{
 			jobPostfix = ".root";
 
 		this->jobModifier = "job_" + ts( _jobIndex ) +"_";
- 		if ( -1 == _jobIndex ){
- 			jobPostfix = ".root";
- 			this->jobModifier = "";
- 		}
+		if ( -1 == _jobIndex ){
+			jobPostfix = ".root";
+			this->jobModifier = "";
+		}
 
- 		
-
-		initDataSource( _jobIndex );
+		initDataSource( );
 		if ( chain ){
 			initHistoBook( jobPostfix );
 			initReporter( jobPostfix );
@@ -61,7 +59,7 @@ namespace jdb{
  // 			this->jobModifier = "";
  // 		}
 
- 		
+		
 
 	// 	initDataSource( _jobIndex );
 	// 	if ( chain ){
@@ -85,12 +83,12 @@ namespace jdb{
 			jobPostfix = ".root";
 
 		this->jobModifier = "job_" + ts( _jobIndex ) +"_";
- 		if ( -1 == _jobIndex ){
- 			jobPostfix = ".root";
- 			this->jobModifier = "";
- 		}
+		if ( -1 == _jobIndex ){
+			jobPostfix = ".root";
+			this->jobModifier = "";
+		}
 
- 	
+	
 		this->chain = _chain;
 		sharedTree = true;
 		if ( chain ){
@@ -136,105 +134,100 @@ namespace jdb{
 		string pRepOut = config.join( nodePath, "Reporter", "output:url" );
 		string outputURL = config[ pRepOut ];
 
-	   	// Default reporter
-	    if ( ".root" == _jobPostfix && config.exists( pRepOut ) ) {
-		    reporter = new Reporter( config, config.join( nodePath, "Reporter" ), "" ); // TODO: is reporter's path handeling broken?
-		    INFO( classname(), "Creating report @" << outputURL );
-	    } else{
-	    	INFO( classname(), "No Reporter created, jobPostfix == " << _jobPostfix );
+		// Default reporter
+		if ( ".root" == _jobPostfix && config.exists( pRepOut ) ) {
+			reporter = new Reporter( config, config.join( nodePath, "Reporter" ), "" ); // TODO: is reporter's path handeling broken?
+			INFO( classname(), "Creating report @" << outputURL );
+		} else{
+			INFO( classname(), "No Reporter created, jobPostfix == " << _jobPostfix );
 			reporter = nullptr;
-	    }
-	}
-
-
-	void TreeAnalyzer::initDataSource( string _fileList ){
-		INFO( classname(), "( fileList=" << _fileList << ")" );
-		
-		chain = new TChain( this->config.getString( nodePath + ".input.dst:treeName" ).c_str() );
-
-		if ( config.exists( config.join( nodePath, "input", "dst" ) ) ) {
-	    	
-	    	
-
-	    	// single job
-		    if ( "" == _fileList ){
-		    	INFO( classname(), " Loading data from " << config.getString( nodePath + ".input.dst:url" ) );
-
-		    	ChainLoader::load( 	chain, 
-		    						this->config.getXString( nodePath + ".input.dst:url" ), 
-		    						this->config.getInt( nodePath + ".input.dst:maxFiles", -1 ) );
-		    } else { // or parallel
-			    	// star-submit style condor files
-		    	INFO( classname(), " Parallel Job From " << _fileList );
-
-				ChainLoader::loadList( 	chain, 
-										_fileList, 
-										this->config.getInt( nodePath + ".input.dst:maxFiles", -1 ) );	
-		    }
-
-
-	    	
-	    } else {
-	    	chain = nullptr;
-	    	ERROR( classname(), "No Chain was created" );
-	    	return;
-	    }
-
-
-		// DataSource if requested
-		if ( config.exists( nodePath + ".DataSource" ) && chain && chain->GetNtrees() >= 1 ){
-
-			// TODO: Data source shouldn't need config pointer
-			ds = new DataSource( config, config.join(nodePath, ".DataSource") , this->config.getString( nodePath + ".input.dst:treeName" ), chain );
-			// chain = ds->getChain();
-
-			DEBUG( classname(), "DataSrouce for chain : " << chain );
-
 		}
 	}
 
-	void TreeAnalyzer::initDataSource( int _jobIndex ){
-	    INFO( classname(), "( jobIndex=" << _jobIndex << ")" );
+
+	// void TreeAnalyzer::initDataSource( string _fileList ){
+	// 	INFO( classname(), "( fileList=" << _fileList << ")" );
+		
+	// 	chain = new TChain( this->config.getString( nodePath + ".input.dst:treeName" ).c_str() );
+
+	// 	if ( config.exists( config.join( nodePath, "input", "dst" ) ) ) {
+			
+			
+
+	// 		// single job
+	// 		if ( "" == _fileList ){
+	// 			INFO( classname(), " Loading data from " << config.getString( nodePath + ".input.dst:url" ) );
+
+	// 			ChainLoader::load( 	chain, 
+	// 								this->config.getXString( nodePath + ".input.dst:url" ), 
+	// 								this->config.getInt( nodePath + ".input.dst:maxFiles", -1 ) );
+	// 		} else { // or parallel
+	// 				// star-submit style condor files
+	// 			INFO( classname(), " Parallel Job From " << _fileList );
+
+	// 			ChainLoader::loadList( 	chain, 
+	// 									_fileList, 
+	// 									this->config.getInt( nodePath + ".input.dst:maxFiles", -1 ) );	
+	// 		}
 
 
-	    treeName = this->config.getString( nodePath + ".input.dst:treeName" );
-	    chain = new TChain( this->config.getString( nodePath + ".input.dst:treeName" ).c_str() );
-
-	    if ( config.exists( config.join( nodePath, "input", "dst" ) ) ) {
-	    	
-	    	// create the Chain object
-	    	
-		    string url = this->config.getXString( nodePath + ".input.dst:url" );
-
-		    // load from a file list!
-		    if ( url.find( ".lis" ) != std::string::npos ){
-		    	
-		    	INFO( classname(), " Loading data from listfile : " << url );
-		    	// parallel job - load from list range
-		    	if ( _jobIndex >= 0 ){
-
-		    		int splitBy = config.getInt( nodePath + ".input.dst:splitBy", 50 );
-		    		INFO( classname(), " Parallel Job index=" << _jobIndex << " splitBy=" << splitBy );
-		    		ChainLoader::loadListRange( chain, url, _jobIndex, splitBy );
+			
+	// 	} else {
+	// 		chain = nullptr;
+	// 		ERROR( classname(), "No Chain was created" );
+	// 		return;
+	// 	}
 
 
-		    	} else { // load the entire list (up to maxFiles )
+	// 	// DataSource if requested
+	// 	if ( config.exists( nodePath + ".DataSource" ) && chain && chain->GetNtrees() >= 1 ){
 
-		    		int maxFiles = this->config.getInt( nodePath + ".input.dst:maxFiles", -1 );
-		    		ChainLoader::loadList( 	chain, url, maxFiles );
+	// 		// TODO: Data source shouldn't need config pointer
+	// 		ds = new DataSource( config, config.join(nodePath, ".DataSource") , this->config.getString( nodePath + ".input.dst:treeName" ), chain );
+	// 		// chain = ds->getChain();
 
-		    	}
+	// 		DEBUG( classname(), "DataSrouce for chain : " << chain );
+	// 	}
+	// }
 
-		    } else { // NOT a list file - a directory or file
-				INFO( classname(), " Loading data from file or dir: " << url );
+	void TreeAnalyzer::initDataSource( ){
+		
+		int _jobIndex = config.getInt( "jobIndex", -1 );
+
+		if ( !config.exists( config.join( nodePath, "input", "dst" ) ) ){
+			treeName = "";
+			chain = nullptr;
+			ERROR( classname(), "No Chain was created because the <" + nodePath + ".input.dst> could not be found" );
+			return;
+		}
+
+		// create the Chain object
+		treeName   = this->config.getString( nodePath + ".input.dst:treeName" );
+		chain      = new TChain( treeName.c_str() );
+		string url = this->config.getXString( nodePath + ".input.dst:url" );
+
+		// load from a file list!
+		if ( url.find( ".lis" ) != std::string::npos ){
+			INFO( classname(), " Loading data from listfile : " << url );
+			// parallel job - load from list range
+			if ( _jobIndex >= 0 ){
+				int splitBy = config.getInt( nodePath + ".input.dst:splitBy", 50 );
+				INFO( classname(), " Parallel Job index=" << _jobIndex << " splitBy=" << splitBy );
+				ChainLoader::loadListRange( chain, url, _jobIndex, splitBy );
+			} else { // load the entire list (up to maxFiles )
 				int maxFiles = this->config.getInt( nodePath + ".input.dst:maxFiles", -1 );
-				ChainLoader::load( 	chain, url, maxFiles ); 
-		    }	
-	    } else {
-	    	chain = nullptr;
-	    	ERROR( classname(), "No Chain was created" );
-	    	return;
-	    }
+				ChainLoader::loadList( 	chain, url, maxFiles );
+			}
+
+		} else { // NOT a list file - a directory or file
+			INFO( classname(), " Loading data from file or dir: " << url );
+			int maxFiles = this->config.getInt( nodePath + ".input.dst:maxFiles", -1 );
+			if ( _jobIndex != -1 ){
+				WARN( classname(), "Range loading not allowed for directory listings" );
+			}
+			ChainLoader::load( chain, url, maxFiles ); 
+		}	
+
 
 		// make a DataSource if you want it
 		if ( config.exists( nodePath + ".DataSource" ) && chain  ){
@@ -334,7 +327,7 @@ namespace jdb{
 		TaskProgress tp( "Event Loop", nEventsToProcess );
 		
 		// loop over all events 
-		Long64_t iEvent = 0;
+		iEvent = 0;
 		
 		while (true){ // what could go wrong 
 			Long64_t read = chain->GetEntry(iEvent);
@@ -343,6 +336,11 @@ namespace jdb{
 				INFO( classname(), "Ending event loop on iEvent = " << iEvent );
 				break;
 			}
+			if ( finishCurrentEventLoopEarly ){
+				finishCurrentEventLoopEarly = false;
+				break;
+			}
+
 
 			if ( showProgress )
 				tp.showProgress( iEvent );

@@ -67,10 +67,12 @@ namespace jdb{
 		int jobIndex;
 		string jobModifier;
 
+		Long64_t iEvent;
 		int iEventLoop = 0;
 		int nEventLoops = 1;
 
 		bool showProgress = false;
+		bool finishCurrentEventLoopEarly = false;
 
 
 	// public methods
@@ -106,8 +108,8 @@ namespace jdb{
 	protected:
 		void initHistoBook( string _jobPostfix );
 		void initReporter( string _jobPostfix );
-		void initDataSource( int _jobIndex );
-		void initDataSource( string _fileList );
+		void initDataSource( );
+		// void initDataSource( string _fileList );
 		void initLogger(  );
 
 

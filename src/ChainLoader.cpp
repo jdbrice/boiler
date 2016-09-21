@@ -12,7 +12,7 @@ namespace jdb{
 							string ntdir, 	// the directory in which to look for ntuples
 							int maxFiles 
 							) {
-		
+		INFO( "ChainLoader", "( chain=" << chain << ", dir=" << ntdir << ", maxFiles=" << maxFiles << ")" );
 
 		
 		if ( chain == nullptr ){
@@ -75,7 +75,7 @@ namespace jdb{
 							int firstFile,
 							int nFiles
 							) {
-		
+		INFO( "ChainLoader", "( chain=" << chain << ", dir=" << ntdir << ", firstFile=" << firstFile << ", nFiles" << nFiles << ")" );
 
 		Logger * logger = new Logger( Logger::llGlobal, "ChainLoader" );
 
@@ -117,7 +117,7 @@ namespace jdb{
 	void ChainLoader::loadList(  TChain * _chain, string _listFile, int _maxFiles ){
 		
 		string classname = "ChainLoader";
-		DEBUG( classname, "( chain, listFile=" << _listFile << ", maxFiles=" << _maxFiles << " )" );
+		INFO( classname, "( chain" << _chain << ", listFile=" << _listFile << ", maxFiles=" << _maxFiles << " )" );
 
 		int nFiles = 0;
 
@@ -150,7 +150,7 @@ namespace jdb{
 	void ChainLoader::loadListRange(  TChain * _chain, string _listFile, int _jobIndex, int _splitBy ){
 		
 		string classname = "ChainLoader";
-		DEBUG( classname, "( chain, listFile=" << _listFile << ", index=" << _jobIndex << ", splitBy=" << _splitBy << ")" )
+		INFO( classname, "( chain" << _chain << ", listFile=" << _listFile << ", index=" << _jobIndex << ", splitBy=" << _splitBy << ")" )
 		
 		unsigned long int min = _jobIndex * _splitBy;
 		unsigned long int max = (_jobIndex + 1) * _splitBy - 1;
