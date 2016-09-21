@@ -25,8 +25,8 @@ void ut(){
 	// // 	cout << k.first << " = " << k.second << endl;
 	// // }
 
-	XmlString xstr( config );
-	string fstr = xstr.format( config[ "XmlString:url" ] );
+	XmlString xstr;
+	string fstr = xstr.format( config, config[ "XmlString:url" ] );
 	INFO( "UT", UT_EQ( fstr, "DestroyerOfThings_hasComeAgain" ) );
 
 	INFO( "ut", UT_SUMMARY );
