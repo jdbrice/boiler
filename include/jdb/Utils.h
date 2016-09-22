@@ -58,6 +58,7 @@ namespace jdb{
 	 * @return The input string with trailing zeros removed
 	 */
 	std::string trimTrailingZeros( string in );
+	
 	/* Converts a double to a string and trims trailing zeros
 	 * @d double to convert
 	 *

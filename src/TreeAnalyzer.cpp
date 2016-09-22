@@ -46,32 +46,6 @@ namespace jdb{
 		initialize();
 	}
 
-
-	// void TreeAnalyzer::init( XmlConfig &_config, string _nodePath, int _jobIndex ){
-	// 	DEBUG( classname(), "( " << _config.getFilename() << ", " << _nodePath << ", " << _jobIndex << " )" );
-
-	// 	TaskRunner::init( _config, _nodePath, _jobIndex );
-
-	// 	string jobPostfix = "_" + ts( _jobIndex ) + ".root";
-	// 	this->jobModifier = "job_" + ts( _jobIndex ) +"_";
- // 		if ( -1 == _jobIndex ){
- // 			jobPostfix = ".root";
- // 			this->jobModifier = "";
- // 		}
-
-		
-
-	// 	initDataSource( _jobIndex );
-	// 	if ( chain ){
-	// 		initHistoBook( jobPostfix );
-	// 		initReporter( jobPostfix );
-	// 		initLogger();	
-	// 	}
-	// 	nEventLoops = config.getInt( nodePath + ":nEventLoops", 1 );
-	// 	DEBUG( classname(), "Common Initialization" );
-	// 	initialize();
-	// }
-
 	void TreeAnalyzer::sharedInit( XmlConfig &_config, string _nodePath, TChain * _chain ){
 		DEBUG( classname(), "( " << _config.getFilename() << ", " << _nodePath << ", chain=" << _chain << " )" );
 
@@ -101,32 +75,9 @@ namespace jdb{
 		initialize();
 	}
 
-	// void TreeAnalyzer::init( XmlConfig &_config, string _nodePath, string _fileList, string _jobPostfix ){
-	// 	DEBUG( classname(), "( " << _config.getFilename() << ", " << _nodePath << ", \"" << _fileList << "\", \"" << _jobPostfix << "\" )" );
-
-	// 	TaskRunner::init( _config, _nodePath, _fileList, _jobPostfix );
-
-	// 	this->jobModifier = _jobPostfix;
-
-	// 	initDataSource( _fileList );
-	// 	if (  chain ){
-	// 		initHistoBook( _jobPostfix );
-	// 		initReporter( _jobPostfix );
-	// 		initLogger();
-	// 	}
-	// 	nEventLoops = config.getInt( nodePath + ":nEventLoops", 1 );
-	// 	DEBUG( classname(), "Common Initialization" );
-	// 	initialize();
-	// }
-
-
-
-
-
 	void TreeAnalyzer::initHistoBook( string _jobPostfix ) {
 		initializeHistoBook( config, nodePath, _jobPostfix );
 	}
-
 
 	void TreeAnalyzer::initReporter( string _jobPostfix ){
 
@@ -143,52 +94,6 @@ namespace jdb{
 			reporter = nullptr;
 		}
 	}
-
-
-	// void TreeAnalyzer::initDataSource( string _fileList ){
-	// 	INFO( classname(), "( fileList=" << _fileList << ")" );
-		
-	// 	chain = new TChain( this->config.getString( nodePath + ".input.dst:treeName" ).c_str() );
-
-	// 	if ( config.exists( config.join( nodePath, "input", "dst" ) ) ) {
-			
-			
-
-	// 		// single job
-	// 		if ( "" == _fileList ){
-	// 			INFO( classname(), " Loading data from " << config.getString( nodePath + ".input.dst:url" ) );
-
-	// 			ChainLoader::load( 	chain, 
-	// 								this->config.getXString( nodePath + ".input.dst:url" ), 
-	// 								this->config.getInt( nodePath + ".input.dst:maxFiles", -1 ) );
-	// 		} else { // or parallel
-	// 				// star-submit style condor files
-	// 			INFO( classname(), " Parallel Job From " << _fileList );
-
-	// 			ChainLoader::loadList( 	chain, 
-	// 									_fileList, 
-	// 									this->config.getInt( nodePath + ".input.dst:maxFiles", -1 ) );	
-	// 		}
-
-
-			
-	// 	} else {
-	// 		chain = nullptr;
-	// 		ERROR( classname(), "No Chain was created" );
-	// 		return;
-	// 	}
-
-
-	// 	// DataSource if requested
-	// 	if ( config.exists( nodePath + ".DataSource" ) && chain && chain->GetNtrees() >= 1 ){
-
-	// 		// TODO: Data source shouldn't need config pointer
-	// 		ds = new DataSource( config, config.join(nodePath, ".DataSource") , this->config.getString( nodePath + ".input.dst:treeName" ), chain );
-	// 		// chain = ds->getChain();
-
-	// 		DEBUG( classname(), "DataSrouce for chain : " << chain );
-	// 	}
-	// }
 
 	void TreeAnalyzer::initDataSource( ){
 		
